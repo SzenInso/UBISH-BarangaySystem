@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
     <title>Sign Up Page</title>
 </head>
 <body>
@@ -18,7 +18,7 @@
     </header>
     <main>
         <?php 
-            include 'dbconfig.php';
+            include 'config/dbconfig.php';
             $fetchQuery = "SELECT emp_id FROM employee_details WHERE emp_id = :emp_id";
             $fetchEmpId = $pdo->prepare($fetchQuery);
             $fetchEmpId->execute([":emp_id" => htmlspecialchars($_GET['emp_id'])]);
@@ -29,7 +29,7 @@
             <?php
                 if ($fetchEmpId->rowCount() < 0) {
                     echo "<br><p><center>Employee ID not found.<center></p>";
-                    echo "<button><a href='register.php'>Go Back</a></button>";
+                    echo "<button><a href='pages/register.php'>Go Back</a></button>";
                 } else {
                     $empId = $fetchEmpId->fetchColumn();
             ?>
@@ -82,14 +82,14 @@
                         echo "
                             <script>
                                 alert('Account created successfully!');
-                                window.location.href = 'login.php';
+                                window.location.href = 'pages/login.php';
                             </script>
                         ";
                     } else {
                         echo "
                             <script>
                                 alert('Failed to create account. Please try again.');
-                                window.location.href = 'register.php';
+                                window.location.href = 'pages/register.php';
                             </script>
                         ";
                     }

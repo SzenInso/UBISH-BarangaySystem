@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
     <title>Login Page</title>
 </head>
 <body>
@@ -16,7 +16,7 @@
             <nav>
                 <ul>
                     <li>
-                        <a href="register.php">Sign Up</a>
+                        <a href="../pages/register.php">Sign Up</a>
                     </li>
                 </ul>
             </nav>
@@ -40,7 +40,7 @@
         </form>
         <!-- PHP CODE -->
         <?php
-            include 'dbconfig.php';
+            include '../config/dbconfig.php';
             session_start();
 
             if (isset($_POST['login'])) {
@@ -59,7 +59,7 @@
                     echo "
                         <script>
                             alert('Logged in successfully!');
-                            window.location.href = 'dashboard.php';
+                            window.location.href = '../pages/dashboard.php';
                         </script>
                     ";
                 } else {

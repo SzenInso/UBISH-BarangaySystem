@@ -1,6 +1,6 @@
 <!-- PHP CODE -->
 <?php
-    include 'dbconfig.php';
+    include '../config/dbconfig.php';
 
     if (isset($_POST['register'])) {
         $fname = $_POST['fname'];
@@ -63,7 +63,7 @@
 
         if ($register) {
             $emp_id = $pdo->lastInsertId();
-            header('location:signup.php?emp_id=' . $emp_id);
+            header('location:../pages/signup.php?emp_id=' . $emp_id);
             exit();
         }
     }
@@ -74,7 +74,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
     <title>Register Page</title>
 </head>
 <body>
