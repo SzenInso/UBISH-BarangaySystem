@@ -19,7 +19,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/css/style.css">
-    <title>Dashboard</title>
+    <title>UBISH Dashboard | Home</title>
 </head>
 <body>
     <header>
@@ -41,34 +41,27 @@
         <hr>
     </header>
     <main>
-        <?php 
-            $query = "SELECT * FROM employee_details WHERE emp_id = :emp_id";
-            $empDetails = $pdo->prepare($query);
-            $empDetails->execute([":emp_id" => $_SESSION['emp_id']]);
-        ?>
-        <div class="employee-dashboard">
-            <h1><center>Barangay Dashboard</center></h1>
-            <br>
-        <?php 
-            foreach ($empDetails as $row) {
-        ?>
-                <img 
-                    src="<?php echo "../" . $row['picture']; ?>"
-                    alt="Employee Picture"
-                    style="
-                        width: 200px;
-                        border-radius: 50%; 
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        margin: 0 auto;
-                    "
-                >
-                <br>
-                <h2><center>Welcome, <?php echo $row['first_name']; ?>!</center></h2>
-        <?php
-            }
-        ?>
+        <div class="dashboard-main">
+            <div class="dashboard-sidebar">
+                <ul>
+                    <li class="active"><a href="../pages/dashboard.php">Home</a></li>
+                    <li><a href="../pages/account.php">Account</a></li>
+                </ul>
+            </div>
+            <div class="dashboard-content">
+                <h1><center>Barangay Dashboard</center></h1><br>
+            <?php 
+                $query = "SELECT * FROM employee_details WHERE emp_id = :emp_id";
+                $empDetails = $pdo->prepare($query);
+                $empDetails->execute([":emp_id" => $_SESSION['emp_id']]);
+
+                foreach ($empDetails as $row) {
+            ?>
+                    <h2><center>Welcome, <?php echo $row['first_name']; ?>!</center></h2>
+            <?php
+                }
+            ?>
+            </div>
         </div>
     </main>
     <footer>
