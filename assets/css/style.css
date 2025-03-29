@@ -24,6 +24,12 @@ body {
 .logo h1 {
     padding-left: 16px;
 }
+.logo img {
+    display: block;
+    width: 100px;
+    height: auto;
+    border-radius: 50%;
+}
 nav ul {
     display: flex;
     align-items: center;

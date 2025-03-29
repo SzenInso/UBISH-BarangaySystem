@@ -81,7 +81,7 @@
     <header>
         <div class="navigation">
             <div class="logo">
-                <img src="https://placehold.co/100" alt="UBISH Logo">
+                <img src="../assets/img/greenwater-village-logo.jpg" alt="Greenwater Village Logo">
                 <h1>UBISH</h1>
             </div>
         </div>
