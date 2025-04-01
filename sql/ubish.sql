@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 29, 2025 at 12:07 PM
+-- Generation Time: Apr 01, 2025 at 03:46 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -38,6 +38,7 @@ CREATE TABLE `employee_details` (
   `religion` varchar(100) NOT NULL,
   `civil_status` varchar(20) NOT NULL,
   `legislature` varchar(100) NOT NULL,
+  `access_level` tinyint(4) NOT NULL,
   `phone_no` varchar(11) NOT NULL,
   `picture` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -46,9 +47,9 @@ CREATE TABLE `employee_details` (
 -- Dumping data for table `employee_details`
 --
 
-INSERT INTO `employee_details` (`emp_id`, `first_name`, `middle_name`, `last_name`, `date_of_birth`, `sex`, `address`, `religion`, `civil_status`, `legislature`, `phone_no`, `picture`) VALUES
-(1007, 'Admin', 'Santos', 'Dela Cruz', '2000-01-01', 'M', 'Philippines', 'Atheist', 'Single', 'Other Barangay Personnel', '09123456789', 'uploads/default_profile.jpg'),
-(1008, 'Mark Simon', 'Zuilan', 'Bringas', '2005-02-16', 'M', 'Baguio City', 'Roman Catholic', 'Single', 'Other Barangay Personnel', '09987654321', 'uploads/67e7d41da3b68.jpg');
+INSERT INTO `employee_details` (`emp_id`, `first_name`, `middle_name`, `last_name`, `date_of_birth`, `sex`, `address`, `religion`, `civil_status`, `legislature`, `access_level`, `phone_no`, `picture`) VALUES
+(1001, 'Admin', 'Santos', 'Dela Cruz', '2000-01-01', 'F', 'Philippines', 'Atheist', 'Single', 'Punong Barangay', 3, '09123456789', '../uploads/default_profile.jpg'),
+(1002, 'Mark Simon', 'Zuilan', 'Bringas', '2005-02-16', 'M', 'Baguio City, Philippines', 'Roman Catholic', 'Single', 'Other Barangay Personnel', 1, '09987654321', '../uploads/67ebdf0643e66.jpg');
 
 -- --------------------------------------------------------
 
@@ -69,8 +70,8 @@ CREATE TABLE `login_details` (
 --
 
 INSERT INTO `login_details` (`user_id`, `emp_id`, `username`, `email`, `password`) VALUES
-(1, 1007, 'admin', 'admin@email.com', '$2y$10$b/1jygV3hNcCfTkp6gmuHOfuOLEb9Q.Shf6uIqp0JITDjorDEWJwi'),
-(2, 1008, 'mbringas', 'mbringas@email.com', '$2y$10$ontf6LlsYG8/pfAg.F5pN.Zf9q5q.NALXEoih3s4c9rGbpajPVo8u');
+(1, 1001, 'admin', 'admin@email.com', '$2y$10$0iylyu1wZasjzL9CnMRLN.8yCdNHV7UITtmyUctM4VRdah17Rjm46'),
+(2, 1002, 'mbringas', 'mbringas@email.com', '$2y$10$GS81dsvvhFZwDUqRJ73OmOFZgKEzctb9Aod9sb7OOLcHdrZNPTXxi');
 
 --
 -- Indexes for dumped tables
@@ -97,7 +98,7 @@ ALTER TABLE `login_details`
 -- AUTO_INCREMENT for table `employee_details`
 --
 ALTER TABLE `employee_details`
-  MODIFY `emp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1009;
+  MODIFY `emp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1003;
 
 --
 -- AUTO_INCREMENT for table `login_details`
