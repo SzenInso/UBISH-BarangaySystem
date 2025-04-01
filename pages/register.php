@@ -12,24 +12,36 @@
         $religion = $_POST['religion'];
         $civilstatus = $_POST['civilstatus'];
         $legislature = $_POST['legislature'];
+
+        $accesslvl = 0; // no access level
+        $limitedAccess = array("Sangguniang Kabataan Member", "Other Barangay Personnel");
+        $standardAccess = array("Sangguniang Barangay Member", "Sangguniang Kabataan Chairperson", "Barangay Secretary", "Barangay Treasurer");
+        $fullAccess = array("Punong Barangay");
+        if (in_array($legislature, $limitedAccess)) {
+            $accesslvl = 1; // limited access
+        } elseif (in_array($legislature, $standardAccess)) {
+            $accesslvl = 2; // standard access
+        } elseif (in_array($legislature, $fullAccess)) {
+            $accesslvl = 3; // full access
+        }
+
         $phonenum = $_POST['phonenum'];
-        $uploadedFilePath = "uploads/default_profile.jpg"; // default profile picture path
-        
+        $uploadedFilePath = "../uploads/default_profile.jpg"; // default profile picture path
         if (isset($_FILES['picture']) && $_FILES['picture']['error'] == UPLOAD_ERR_OK) {
-            $fileName = $_FILES['picture']['name'];
             $fileTmpPath = $_FILES['picture']['tmp_name'];
+            $fileName = $_FILES['picture']['name'];
             $fileSize = $_FILES['picture']['size'];
             $fileType = $_FILES['picture']['type'];
-            $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
-            $allowedFileTypes = array("png", "jpg", "jpeg");
+            $fileExtension = strtolower(pathinfo(basename($fileName), PATHINFO_EXTENSION));
+            $allowedFileExtensions = array('jpg', 'png', 'jpeg');
             $maxFileSize = 10 * 1024 * 1024; // 10MB
 
-            if (in_array($fileExtension, $allowedFileTypes)) {
+            if (in_array($fileExtension, $allowedFileExtensions)) {
                 if ($fileSize <= $maxFileSize) {
                     $newFileName = uniqid() . '.' . $fileExtension;
-                    $targetFilePath = 'uploads/' . $newFileName;
+                    $targetFilePath = "../uploads/" . $newFileName;
                     if (move_uploaded_file($fileTmpPath, $targetFilePath)) {
-                        $uploadedFilePath = $targetFilePath; // update path to uploaded file
+                        $uploadedFilePath = $targetFilePath;
                     } else {
                         echo "<br><p><center>Failed to upload file.<center></p>";
                     }
@@ -42,9 +54,9 @@
         }
 
         $query = "  INSERT INTO employee_details (
-                        first_name, middle_name, last_name, date_of_birth, sex, address, religion, civil_status, legislature, phone_no, picture
+                        first_name, middle_name, last_name, date_of_birth, sex, address, religion, civil_status, legislature, access_level, phone_no, picture
                     ) VALUES (
-                        :fname, :mname, :lname, :dob, :sex, :address, :religion, :civilstatus, :legislature, :phonenum, :picture
+                        :fname, :mname, :lname, :dob, :sex, :address, :religion, :civilstatus, :legislature, :accesslvl, :phonenum, :picture
                     )";
         $register = $pdo->prepare($query);
         $register->execute([
@@ -57,6 +69,7 @@
             ":religion" => $religion,
             ":civilstatus" => $civilstatus,
             ":legislature" => $legislature,
+            ":accesslvl" => $accesslvl,
             ":phonenum" => $phonenum,
             ":picture" => $uploadedFilePath
         ]);
@@ -67,6 +80,7 @@
             exit();
         }
     }
+    // place cancel logic here
 ?>
 
 <!DOCTYPE html>
@@ -156,7 +170,10 @@
                     <p>Profile Picture</p>
                     <input type="file" name="picture" placeholder="Upload Photo">
                 </div>
-                <button name="register">Register</button>
+                <div class="signup-btns">
+                    <button name="register">Register</button>
+                    <button id="cancel" name="cancel">Cancel</button>
+                </div>
             </div>
         </form>
     </main>

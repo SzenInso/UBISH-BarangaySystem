@@ -63,11 +63,9 @@ form {
     border-radius: 4px;
     cursor: pointer;
 }
-
 .login-form button:hover {
     background-color: lightgray;
 }
-
 .login-credentials {
     margin: 12px 0;
 }
@@ -92,11 +90,12 @@ button.logout {
     border-radius: 4px;
     cursor: pointer;
 }
-
+.signup-form #cancel {
+    margin-left: 8px;
+}
 .signup-form button:hover {
     background-color: lightgray;
 }
-
 .signup-credentials {
     margin: 12px 0;
 }
@@ -105,25 +104,33 @@ button.logout {
     padding: 4px;
     width: 256px;
 }
-
+.signup-credentials select {
+    margin-top: 4px;
+    padding: 4px;
+    width: 256px;
+}
 .dashboard-main {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(5, 1fr);
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
+    grid-template-columns: 250px 1fr; 
+    grid-template-rows: 1fr; 
+    min-height: 100vh; 
 }
-
-.dashboard-sidebar { grid-area: 1 / 1 / 6 / 2; }
-.dashboard-content { 
-    grid-area: 1 / 2 / 6 / 7;
+.dashboard-sidebar {
+    grid-area: 1 / 1 / 2 / 2; 
+    overflow-y: auto; 
+    padding: 16px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); 
+}
+.dashboard-content {
+    grid-area: 1 / 2 / 2 / 3; 
+    padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    height: 100%; 
+    justify-content: flex-start; 
+    background-color: #fff;
+    overflow-y: auto;
 }
-
 .dashboard-sidebar ul {
     list-style-type: none;
     padding: 0;
@@ -134,16 +141,19 @@ button.logout {
     border: 2px solid gray;
     border-radius: 4px;
     text-align: center;
+    background-color: white;
     cursor: pointer;
+}
+.dashboard-sidebar ul li:hover {
+    background-color: lightgray;
 }
 .dashboard-sidebar ul li a {
     display: block;
-    padding: 4px;
+    padding: 10px;
     text-decoration: none;
-    width: 100%;
-    height: 100%;
+    color: black;
 }
-.active {
+.dashboard-sidebar ul li.active {
     background-color: lightgray;
 }
 .dashboard-content table {
@@ -152,7 +162,6 @@ button.logout {
 .dashboard-content table tr td {
     padding: 4px 8px;
 }
-
 footer p {
     text-align: center;
     padding: 8px;

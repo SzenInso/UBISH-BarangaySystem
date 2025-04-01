@@ -1,17 +1,5 @@
 <?php
-    include '../config/dbconfig.php';
-    session_start();
-
-    if (!isset($_SESSION['user_id'])) {
-        header('location:../index.php');
-        exit;
-    }
-
-    if (isset($_POST['logout'])) {
-        session_destroy();
-        header('location:../index.php');   
-        exit;
-    }
+    include '../config/dbfetch.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,6 +34,18 @@
                 <ul>
                     <li class="active"><a href="../pages/dashboard.php">Home</a></li>
                     <li><a href="../pages/account.php">Account</a></li>
+                    <?php
+                        // placeholder access control pages
+                        if ($accessLevel >= 1) {
+                            echo '<li><a href="#">Limited Access</a></li>';
+                        }
+                        if ($accessLevel >= 2) {
+                            echo '<li><a href="#">Standard Access</a></li>';
+                        }
+                        if ($accessLevel >= 3) {
+                            echo '<li><a href="#">Full Access</a></li>';
+                        }
+                    ?>
                 </ul>
             </div>
             <div class="dashboard-content">

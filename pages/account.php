@@ -1,17 +1,5 @@
 <?php
-    include '../config/dbconfig.php';
-    session_start();
-
-    if (!isset($_SESSION['user_id'])) {
-        header('location:../index.php');
-        exit;
-    }
-
-    if (isset($_POST['logout'])) {
-        session_destroy();
-        header('location:../index.php');   
-        exit;
-    }
+    include '../config/dbfetch.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,19 +34,27 @@
                 <ul>
                     <li><a href="../pages/dashboard.php">Home</a></li>
                     <li class="active"><a href="../pages/account.php">Account</a></li>
+                    <?php
+                        // placeholder access control pages
+                        if ($accessLevel >= 1) {
+                            echo '<li><a href="#">Limited Access</a></li>';
+                        }
+                        if ($accessLevel >= 2) {
+                            echo '<li><a href="#">Standard Access</a></li>';
+                        }
+                        if ($accessLevel >= 3) {
+                            echo '<li><a href="#">Full Access</a></li>';
+                        }
+                    ?>
                 </ul>
             </div>
             <div class="dashboard-content">
                 <h1><center>Account Page</center></h1><br>
             <?php 
-                $query = "SELECT * FROM employee_details WHERE emp_id = :emp_id";
-                $empDetails = $pdo->prepare($query);
-                $empDetails->execute([":emp_id" => $_SESSION['emp_id']]);
-
                 foreach ($empDetails as $row) {
             ?>
                     <img 
-                        src="<?php echo "../" . $row['picture']; ?>"
+                        src="<?php echo $row['picture']; ?>"
                         alt="Employee Picture"
                         style="
                             width: 200px;
@@ -145,28 +141,6 @@
                             </td>
                             <td>
                                 <?php echo $row['legislature'] ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <strong>Access Level: </strong>
-                            </td>
-                            <td>
-                                <?php
-                                    $limitedAccess = array("Sangguniang Kabataan Member", "Other Barangay Personnel");
-                                    $standardAccess = array("Sangguniang Barangay Member", "Sangguniang Kabataan Chairperson", "Barangay Secretary", "Barangay Treasurer");
-                                    $fullAccess = array("Punong Barangay");
-
-                                    if (in_array($row['legislature'], $limitedAccess)) {
-                                        echo "Limited Access";
-                                    } elseif (in_array($row['legislature'], $standardAccess)) {
-                                        echo "Standard Access";
-                                    } elseif (in_array($row['legislature'], $fullAccess)) {
-                                        echo "Full Access";
-                                    } else {
-                                        echo "No/Unknown Access";
-                                    }
-                                ?>
                             </td>
                         </tr>
                     </table>
