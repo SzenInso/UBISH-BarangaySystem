@@ -27,8 +27,9 @@ body {
 .logo img {
     display: block;
     width: 100px;
-    height: auto;
+    height: 100px;
     border-radius: 50%;
+    object-fit: cover;
 }
 nav ul {
     display: flex;
@@ -111,9 +112,11 @@ button.logout {
 }
 .signup-credentials img#profile-preview {
     width: 150px;
+    height: 150px;
     margin-top: 12px;
     height: auto;
     border-radius: 50%;
+    object-fit: cover;
 }
 .dashboard-main {
     display: grid;
@@ -167,6 +170,16 @@ button.logout {
 }
 .dashboard-content table tr td {
     padding: 4px 8px;
+}
+.dashboard-content img#employee-picture {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    object-fit: cover;
 }
 footer p {
     text-align: center;

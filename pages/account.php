@@ -53,18 +53,7 @@
             <?php 
                 foreach ($empDetails as $row) {
             ?>
-                    <img 
-                        src="<?php echo $row['picture']; ?>"
-                        alt="Employee Picture"
-                        style="
-                            width: 200px;
-                            border-radius: 50%; 
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            margin: 0 auto;
-                        "
-                    >
+                    <img id="employee-picture" src="<?php echo $row['picture']; ?>" alt="Employee Picture">
                     <table>
                         <tr>
                             <td>
