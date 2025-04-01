@@ -168,7 +168,14 @@
                 </div>
                 <div class="signup-credentials">
                     <p>Profile Picture</p>
-                    <input type="file" name="picture" placeholder="Upload Photo">
+                    <input type="file" id="picture" name="picture" placeholder="Upload Photo">
+                    <br>
+                    <img 
+                        id="profile-preview"
+                        src="../uploads/default_profile.jpg" 
+                        alt="Profile Preview"
+                    >
+                    <script src="../assets/js/profilePreview.js"></script>
                 </div>
                 <div class="signup-btns">
                     <button name="register">Register</button>
