@@ -37,13 +37,13 @@
                     <?php
                         // placeholder access control pages
                         if ($accessLevel >= 1) {
-                            echo '<li><a href="#">Limited Access</a></li>';
+                            echo '<li><a href="#">Documents</a></li>';
                         }
                         if ($accessLevel >= 2) {
-                            echo '<li><a href="#">Standard Access</a></li>';
+                            echo '<li><a href="../pages/employee_table.php">Employee Table</a></li>';
                         }
                         if ($accessLevel >= 3) {
-                            echo '<li><a href="#">Full Access</a></li>';
+                            echo '<li><a href="#">Profile Change Request</a></li>';
                         }
                     ?>
                 </ul>
