@@ -8,8 +8,12 @@
     $access->execute([":emp_id" => $_SESSION['emp_id']]);
     $accessLevel = $access->fetchColumn();
 
-    // fetches employee details
+    // fetches single employee details
     $empQuery = "SELECT * FROM employee_details WHERE emp_id = :emp_id";
     $empDetails = $pdo->prepare($empQuery);
     $empDetails->execute([":emp_id" => $_SESSION['emp_id']]);
+
+    // fetches all employee details
+    $empAllQuery = "SELECT * FROM employee_details";
+    $empAllDetails = $pdo->query($empAllQuery);
 ?>
