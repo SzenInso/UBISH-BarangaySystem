@@ -1,0 +1,210 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+body {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+}
+.navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 16px 32px;
+}
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.logo h1 {
+    padding-left: 16px;
+}
+.logo img {
+    display: block;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+nav ul {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+nav ul li {
+    padding: 0 16px;
+    list-style-type:none;
+}
+nav ul li a{
+    text-decoration: none;
+    color: black;
+}
+main {
+    margin: 32px;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.login-form {
+    margin: auto;
+}
+.login-form button {
+    border: 2px solid gray;
+    background-color: white;
+    color: black;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.login-form button:hover {
+    background-color: lightgray;
+}
+.login-credentials {
+    margin: 12px 0;
+}
+.login-credentials input {
+    margin-top: 4px;
+    padding: 4px;
+    width: 256px;
+}
+button.logout {
+    border: none;
+    background-color: white;
+    font-size: 16px;
+}
+.signup-form {
+    margin: auto;
+}
+.signup-form button {
+    border: 2px solid gray;
+    background-color: white;
+    color: black;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.signup-form #cancel {
+    margin-left: 8px;
+}
+.signup-form button:hover {
+    background-color: lightgray;
+}
+.signup-credentials {
+    margin: 12px 0;
+}
+.signup-credentials input {
+    margin-top: 4px;
+    padding: 4px;
+    width: 256px;
+}
+.signup-credentials select {
+    margin-top: 4px;
+    padding: 4px;
+    width: 256px;
+}
+.signup-credentials img#profile-preview {
+    width: 150px;
+    height: 150px;
+    margin-top: 12px;
+    height: auto;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.dashboard-main {
+    display: grid;
+    grid-template-columns: 250px 1fr; 
+    grid-template-rows: 1fr; 
+    min-height: 100vh; 
+}
+.dashboard-sidebar {
+    grid-area: 1 / 1 / 2 / 2; 
+    overflow-y: auto; 
+    padding: 16px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); 
+}
+.dashboard-content {
+    grid-area: 1 / 2 / 2 / 3; 
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; 
+    background-color: #fff;
+    overflow-y: auto;
+}
+.dashboard-sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+.dashboard-sidebar ul li {
+    margin: 8px 0;
+    border: 2px solid gray;
+    border-radius: 4px;
+    text-align: center;
+    background-color: white;
+    cursor: pointer;
+}
+.dashboard-sidebar ul li:hover {
+    background-color: lightgray;
+}
+.dashboard-sidebar ul li a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+}
+.dashboard-sidebar ul li.active {
+    background-color: lightgray;
+}
+.dashboard-content table {
+    margin: 24px 0;
+}
+.dashboard-content table tr td {
+    padding: 4px 8px;
+}
+.dashboard-content img#employee-picture {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    object-fit: cover;
+}
+div#employee-table-container {
+    max-height: 500px;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+.dashboard-content table#employee-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 2px solid gray;
+}
+.dashboard-content table#employee-table tr td,
+.dashboard-content table#employee-table tr th {
+    text-align: left;
+    padding: 8px 12px;
+}
+.dashboard-content table#employee-table tr:nth-child(odd) td {
+    text-align: left;
+    background-color: rgb(245, 245, 245);
+}
+.dashboard-content table#employee-table tr th {
+    text-align: center;
+    background-color: lightgray;
+}
+footer p {
+    text-align: center;
+    padding: 8px;
+}
