@@ -38,6 +38,7 @@
                         // placeholder access control pages
                         if ($accessLevel >= 1) {
                             echo '<li><a href="#">Documents</a></li>';
+                            echo '<li><a href="../pages/announcements.php">Post Announcement</a></li>';
                         }
                         if ($accessLevel >= 2) {
                             echo '<li class="active"><a href="../pages/employee_table.php">Employee Table</a></li>';

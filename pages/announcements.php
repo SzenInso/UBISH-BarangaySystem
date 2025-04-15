@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/css/style.css">
-    <title>UBISH Dashboard | Home</title>
+    <title>UBISH Dashboard | Create Announcement</title>
 </head>
 <body>
     <header>
@@ -29,16 +29,16 @@
         <hr>
     </header>
     <main>
-        <div class="dashboard-main">
+    <div class="dashboard-main">
             <div class="dashboard-sidebar">
                 <ul>
-                    <li class="active"><a href="../pages/dashboard.php">Home</a></li>
+                    <li><a href="../pages/dashboard.php">Home</a></li>
                     <li><a href="../pages/account.php">Account</a></li>
                     <?php
                         // placeholder access control pages
                         if ($accessLevel >= 1) {
                             echo '<li><a href="#">Documents</a></li>';
-                            echo '<li><a href="../pages/announcements.php">Post Announcement</a></li>';
+                            echo '<li class="active"><a href="../pages/announcements.php">Post Announcement</a></li>';
                         }
                         if ($accessLevel >= 2) {
                             echo '<li><a href="../pages/employee_table.php">Employee Table</a></li>';
@@ -50,18 +50,8 @@
                 </ul>
             </div>
             <div class="dashboard-content">
-                <h1><center>Barangay Dashboard</center></h1><br>
-            <?php 
-                $query = "SELECT * FROM employee_details WHERE emp_id = :emp_id";
-                $empDetails = $pdo->prepare($query);
-                $empDetails->execute([":emp_id" => $_SESSION['emp_id']]);
-
-                foreach ($empDetails as $row) {
-            ?>
-                    <h2><center>Welcome, <?php echo $row['first_name']; ?>!</center></h2>
-            <?php
-                }
-            ?>
+                <h1><center>Post an Announcement</center></h1><br>
+                <!-- form for announcement posting -->
             </div>
         </div>
     </main>
