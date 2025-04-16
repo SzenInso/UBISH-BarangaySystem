@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 15, 2025 at 05:05 PM
+-- Generation Time: Apr 16, 2025 at 02:09 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -33,8 +33,9 @@ CREATE TABLE `announcements` (
   `body` text NOT NULL,
   `privacy` varchar(7) NOT NULL,
   `category` varchar(100) NOT NULL,
-  `author` int(11) NOT NULL,
-  `post_date` datetime DEFAULT current_timestamp()
+  `author_id` int(11) NOT NULL,
+  `post_date` datetime DEFAULT current_timestamp(),
+  `thumbnail` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -114,7 +115,7 @@ INSERT INTO `login_details` (`user_id`, `emp_id`, `username`, `email`, `password
 --
 ALTER TABLE `announcements`
   ADD PRIMARY KEY (`announcement_id`),
-  ADD KEY `author` (`author`);
+  ADD KEY `author` (`author_id`) USING BTREE;
 
 --
 -- Indexes for table `attachments`
@@ -144,13 +145,13 @@ ALTER TABLE `login_details`
 -- AUTO_INCREMENT for table `announcements`
 --
 ALTER TABLE `announcements`
-  MODIFY `announcement_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2001;
+  MODIFY `announcement_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2005;
 
 --
 -- AUTO_INCREMENT for table `attachments`
 --
 ALTER TABLE `attachments`
-  MODIFY `attachment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3001;
+  MODIFY `attachment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3008;
 
 --
 -- AUTO_INCREMENT for table `employee_details`
@@ -172,7 +173,7 @@ ALTER TABLE `login_details`
 -- Constraints for table `announcements`
 --
 ALTER TABLE `announcements`
-  ADD CONSTRAINT `announcements_ibfk_1` FOREIGN KEY (`author`) REFERENCES `login_details` (`user_id`);
+  ADD CONSTRAINT `announcements_ibfk_1` FOREIGN KEY (`author_id`) REFERENCES `login_details` (`user_id`);
 
 --
 -- Constraints for table `attachments`
