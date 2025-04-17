@@ -1,3 +1,4 @@
+// custom category script - displays input field with "Others" option in category is selected
 document.addEventListener("DOMContentLoaded", 
     function () {
         const categoryOthers = document.getElementById("categoryOthers");
@@ -7,11 +8,11 @@ document.addEventListener("DOMContentLoaded",
         categoryRadios.forEach(radio => {
             radio.addEventListener("change", 
                     function () {
-                        if (categoryOthers.checked) {
-                            customCategoryInput.style.display = "block"; 
+                        if (categoryOthers.checked) { // if selected
+                            customCategoryInput.style.display = "block"; // display: block applied in input field beside "Others" option
                             customCategoryInput.required = true; 
-                        } else {
-                            customCategoryInput.style.display = "none"; 
+                        } else { // else if not selected, or option is changed
+                            customCategoryInput.style.display = "none"; // display: none applied in input field
                             customCategoryInput.required = false;
                             customCategoryInput.value = ""; 
                         }
