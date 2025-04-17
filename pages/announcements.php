@@ -160,7 +160,6 @@
                     </form>
                     <!-- ACTUAL CODE -->
                     <?php
-                        /*
                         if (isset($_POST['post'])) {
                             $title = $_POST['title'];
                             $privacy = $_POST['privacy'];
@@ -281,14 +280,13 @@
                                     ]);
                                 }
                     
-                                echo "<p style='color:green;'>Announcement posted successfully!</p>";
+                                echo "<br><p style='color:green;'>Announcement posted successfully!</p>";
                             } else {
                                 foreach ($errors as $err) {
                                     echo "<p style='color:red;'>$err</p><br>";
                                 }
                             }
                         }
-                        */
                     ?>
                     <!-- DEBUG CODE -->
                     <?php include '../config/debug/announcements_debug.php'; ?>
