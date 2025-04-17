@@ -19,11 +19,10 @@
 
     // fetches announcements (debug)
     $announcementQuery = "
-        SELECT A.*, E.first_name, E.middle_name, E.last_name FROM announcements AS A
+        SELECT A.*, L.username, E.first_name, E.middle_name, E.last_name FROM announcements AS A
         JOIN login_details AS L ON A.author_id = L.user_id
         JOIN employee_details AS E ON L.emp_id = E.emp_id
         ORDER BY A.post_date DESC
     ";
-    $stmt = $pdo->query($announcementQuery);
-    $announcements = $stmt->fetchAll();
+    $announcementDetails = $pdo->query($announcementQuery);
 ?>

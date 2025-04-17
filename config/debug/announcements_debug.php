@@ -17,7 +17,7 @@ if (isset($_POST['post'])) {
     echo "Title: $title<br>";
     echo "Privacy: $privacy<br>";
     echo "Category: $category<br>";
-    echo "Description: " . nl2br(htmlspecialchars($description)) . "<br>";
+    echo "Description:<br>" . nl2br(htmlspecialchars($description)) . "<br>";
     echo "Author ID: $author<br>";
     echo "Post Date: $post_date<br><br>";
 
@@ -44,27 +44,23 @@ if (isset($_POST['post'])) {
             'image/vnd.microsoft.icon', 'image/svg+xml', 'image/heif', 'image/heic', 'image/jp2', 'image/avif',     
             'image/x-icon', 'image/apng'
         );
-        $fileMIMEType = mime_content_type($thumbnailTmpName);
-        if (!in_array($fileMIMEType, $allowedMIMETypes)) {
-            $errors[] = "Invalid file type for thumbnail. Only image files are allowed.";
-        }
-        
+
         if ($thumbnailError !== UPLOAD_ERR_OK) {
             $errors[] = "Error uploading thumbnail.";
         } elseif ($thumbnailSize > $maxSize) {
             $errors[] = "Thumbnail " . basename($_FILES['thumbnail']['name']) . " exceeds 10MB size limit.";
         } else {
-            $thumbnailMIMEType = mime_content_type($thumbnailTmpName);
-            echo "- Detected MIME Type: $thumbnailMIMEType<br>";
-
-            if (!in_array($thumbnailMIMEType, $allowedMIMETypes)) {
-                $errors[] = "Invalid file type for thumbnail. Only image files are allowed.";
+            if (file_exists($thumbnailTmpName)) {
+                $fileMIMEType = mime_content_type($thumbnailTmpName);
+                echo "- Detected MIME Type: $fileMIMEType<br>";
+            
+                if (!in_array($fileMIMEType, $allowedMIMETypes)) {
+                    $errors[] = "Invalid file type for thumbnail. Only image files are allowed.";
+                } else {
+                    $thumbnailPath = $uploadDir . "thumbnail_" . $fileTimestamp . '_' . basename($_FILES['thumbnail']['name']);
+                }
             } else {
-                $thumbnailName = "thumbnail_" . $fileTimestamp . '_' . basename($_FILES['thumbnail']['name']);
-                $thumbnailPath = $uploadDir . $thumbnailName;
-                
-                echo "Saved As: $thumbnailName<br>";
-                echo "Save Path: $thumbnailPath<br><br>";
+                $errors[] = "Temporary thumbnail file not found.";
             }
         }
     }
