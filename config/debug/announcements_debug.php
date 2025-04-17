@@ -17,7 +17,7 @@ if (isset($_POST['post'])) {
     echo "Title: $title<br>";
     echo "Privacy: $privacy<br>";
     echo "Category: $category<br>";
-    echo "Description: $description<br>";
+    echo "Description: " . nl2br(htmlspecialchars($description)) . "<br>";
     echo "Author ID: $author<br>";
     echo "Post Date: $post_date<br><br>";
 
