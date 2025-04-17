@@ -29,6 +29,7 @@ if (isset($_POST['post'])) {
     
     // thumbnail upload validation
     $thumbnail = null;
+    $thumbnailPath = null;
     if (isset($_FILES['thumbnail']) && $_FILES['thumbnail']['error'] !== UPLOAD_ERR_NO_FILE) {
         $thumbnailTmpName = $_FILES['thumbnail']['tmp_name'];
         $thumbnailError = $_FILES['thumbnail']['error'];
@@ -50,17 +51,13 @@ if (isset($_POST['post'])) {
         } elseif ($thumbnailSize > $maxSize) {
             $errors[] = "Thumbnail " . basename($_FILES['thumbnail']['name']) . " exceeds 10MB size limit.";
         } else {
-            if (file_exists($thumbnailTmpName)) {
-                $fileMIMEType = mime_content_type($thumbnailTmpName);
-                echo "- Detected MIME Type: $fileMIMEType<br>";
+            $fileMIMEType = $_FILES['thumbnail']['type'];
+            echo "- Detected MIME Type: $fileMIMEType<br>";
             
-                if (!in_array($fileMIMEType, $allowedMIMETypes)) {
-                    $errors[] = "Invalid file type for thumbnail. Only image files are allowed.";
-                } else {
-                    $thumbnailPath = $uploadDir . "thumbnail_" . $fileTimestamp . '_' . basename($_FILES['thumbnail']['name']);
-                }
+            if (!in_array($fileMIMEType, $allowedMIMETypes)) {
+                $errors[] = "Invalid file type for thumbnail. Only image files are allowed.";
             } else {
-                $errors[] = "Temporary thumbnail file not found.";
+                $thumbnailPath = $uploadDir . "thumbnail_" . $fileTimestamp . '_' . basename($_FILES['thumbnail']['name']);
             }
         }
     }
