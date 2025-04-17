@@ -51,17 +51,73 @@
             </div>
             <div class="dashboard-content">
                 <h1><center>Barangay Dashboard</center></h1><br>
-            <?php 
-                $query = "SELECT * FROM employee_details WHERE emp_id = :emp_id";
-                $empDetails = $pdo->prepare($query);
-                $empDetails->execute([":emp_id" => $_SESSION['emp_id']]);
+                <div class="dashboard-greetings">
+                    <?php 
+                        $query = "SELECT * FROM employee_details WHERE emp_id = :emp_id";
+                        $empDetails = $pdo->prepare($query);
+                        $empDetails->execute([":emp_id" => $_SESSION['emp_id']]);
 
-                foreach ($empDetails as $row) {
-            ?>
-                    <h2><center>Welcome, <?php echo $row['first_name']; ?>!</center></h2>
-            <?php
-                }
-            ?>
+                        foreach ($empDetails as $row) {
+                    ?>
+                            <h2><center>Welcome, <?php echo $row['first_name']; ?>!</center></h2>
+                    <?php
+                        }
+                    ?>
+                </div>
+                <br>
+                <!-- initial styles -->
+                <style>
+                    img#announcementThumbnail {
+                        max-width: 400px;
+                        max-height: 300px;
+                        object-fit: cover;
+                    }
+                    p#badge {
+                        display: inline-block;
+                        padding: 0.25em 0.6em;
+                        font-size: 0.75rem;
+                        font-weight: bold;
+                        background-color: lightgray;
+                        border-radius: 999px;
+                        text-align: center;
+                        vertical-align: middle;
+                        white-space: nowrap;
+                    }
+                </style>
+                <div class="dashboard-announcements">
+                    <?php 
+                        if ($announcementDetails->rowCount() < 1) {
+                            echo "<p><center>No announcements.</center></p>";
+                        } else {
+                            foreach ($announcementDetails as $ann) {
+                    ?>
+                                <div class="announcement-card" style="border: 1px solid red;">
+                                    <h2><?php echo $ann['title']; ?></h2>
+                                    <p>
+                                        <strong>Issued By:</strong>&nbsp;<?php echo $ann['first_name'] . ' ' . $ann['last_name']; ?> 
+                                        <i>(<?php echo $ann['username']; ?>)</i>
+                                    </p>
+                                    <p><?php echo date("F j, Y g:i:s A", strtotime($ann['post_date'])); ?></p>
+                                    <p id="badge"><?php echo $ann['category'] ?></p><br>
+                                    <?php 
+                                        if (!empty($ann['thumbnail'])) {
+                                    ?>
+                                            <img src="<?php echo $ann['thumbnail']; ?>" alt="thumbnail_<?php echo $ann['announcement_id']; ?>" id="announcementThumbnail">
+                                    <?php
+                                        }
+                                    ?>
+                                    <p><?php echo nl2br(htmlspecialchars($ann['body'])); ?></p>
+                                    <?php
+                                        if (!empty($ann['file_path'])) {
+                                            echo '<a href="'. $ann['file_path'] . '" target="_blank">' . $ann['file_name'] . '</a>';
+                                        }
+                                    ?>
+                                </div>
+                    <?php
+                            }
+                    }
+                    ?>
+                </div>
             </div>
         </div>
     </main>
