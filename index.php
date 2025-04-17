@@ -1,14 +1,6 @@
 <?php 
     include 'config/dbconfig.php';
-
-    $announcementQuery = "
-        SELECT A.*, L.username, E.first_name, E.middle_name, E.last_name FROM announcements AS A
-        JOIN login_details AS L ON A.author_id = L.user_id
-        JOIN employee_details AS E ON L.emp_id = E.emp_id
-        WHERE A.privacy = 'Public'
-        ORDER BY A.post_date DESC
-    ";
-    $announcementDetails = $pdo->query($announcementQuery);
+    include 'config/dbfetch_public.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -61,10 +53,10 @@
         </style>
         <div class="dashboard-announcements">
             <?php 
-                if ($announcementDetails->rowCount() < 1) {
+                if (count($publicAnnouncementDetails) < 1) {
                     echo "<p><center>No announcements.</center></p>";
                 } else {
-                    foreach ($announcementDetails as $ann) {
+                    foreach ($publicAnnouncementDetails as $ann) {
             ?>
                         <div class="announcement-card" style="border: 1px solid red;">
                             <h2><?php echo $ann['title']; ?></h2>
