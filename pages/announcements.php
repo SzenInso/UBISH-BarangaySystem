@@ -29,13 +29,12 @@
         <hr>
     </header>
     <main>
-    <div class="dashboard-main">
+        <div class="dashboard-main">
             <div class="dashboard-sidebar">
                 <ul>
                     <li><a href="../pages/dashboard.php">Home</a></li>
                     <li><a href="../pages/account.php">Account</a></li>
                     <?php
-                        // placeholder access control pages
                         if ($accessLevel >= 1) {
                             echo '<li><a href="#">Documents</a></li>';
                             echo '<li class="active"><a href="../pages/announcements.php">Post Announcement</a></li>';
@@ -158,7 +157,6 @@
                         </div>
                         <button name="post">Post Announcement</button>
                     </form>
-                    <!-- ACTUAL CODE -->
                     <?php
                         if (isset($_POST['post'])) {
                             $title = $_POST['title'];
@@ -168,16 +166,14 @@
                                 $category = $_POST['custom-category'];
                             }
                             $description = $_POST['description'];
-                            $author = $_SESSION['user_id']; // session user id is login_id from login_details table
+                            $author = $_SESSION['user_id'];
                             $post_date = date('Y-m-d H:i:s');
                             
-                            // for upload directory
                             $uploadDir = '../uploads/attachments/';
-                            $maxSize = 10 * 1024 * 1024; // 10MB
+                            $maxSize = 10 * 1024 * 1024;
                             $fileTimestamp = time();
                             $errors = [];
                             
-                            // thumbnail upload validation
                             $thumbnail = null;
                             if (isset($_FILES['thumbnail']) && $_FILES['thumbnail']['error'] !== UPLOAD_ERR_NO_FILE) {
                                 $thumbnailTmpName = $_FILES['thumbnail']['tmp_name'];
@@ -204,7 +200,6 @@
                                 }
                             }
                     
-                            // attachment upload validation
                             $validAttachments = [];
                             if (!empty($_FILES['attachments']['name'][0])) {
                                 foreach ($_FILES['attachments']['name'] as $index => $name) {
@@ -217,11 +212,9 @@
                                     } elseif ($size > $maxSize) {
                                         $errors[] = "Attachment " . htmlspecialchars($name) . " exceeds 10MB size limit.";
                                     } else {
-                                        // NOTE: To add: check for allowed attachment MIME types
-                                        $uniqueName = "attachment_" . $fileTimestamp . '_' . basename($name); // unique name for dealing with duplicate files
+                                        $uniqueName = "attachment_" . $fileTimestamp . '_' . basename($name);
                                         $filePath = $uploadDir . $uniqueName;
                     
-                                        // appends valid attachment to the array
                                         $validAttachments[] = [
                                             "originalName" => $name,
                                             "tmpName" => $tmpName,
@@ -232,9 +225,7 @@
                                 }
                             }
                     
-                            // checks for errors
                             if (empty($errors)) {
-                                // uploads thumbnail if present
                                 if (isset($thumbnailPath)) {
                                     if (move_uploaded_file($_FILES['thumbnail']['tmp_name'], $thumbnailPath)) {
                                         $thumbnail = $thumbnailPath;
@@ -243,7 +234,6 @@
                                     }
                                 }
                     
-                                // uploads attachments if present
                                 foreach ($validAttachments as $validAttachment) {
                                     if (!move_uploaded_file($validAttachment['tmpName'], $validAttachment['filePath'])) {
                                         $errors[] = "Failed to move attachment: " . htmlspecialchars($validAttachment['originalName']);
@@ -252,7 +242,6 @@
                             }
                     
                             if (empty($errors)) {
-                                // insert announcement if no errors
                                 $announcementQuery = "  INSERT INTO announcements (title, body, privacy, category, author_id, post_date, thumbnail) 
                                                         VALUES (:title, :body, :privacy, :category, :author_id, :post_date, :thumbnail)";
                                 $stmt = $pdo->prepare($announcementQuery);
@@ -266,7 +255,6 @@
                                     ":thumbnail" => $thumbnail
                                 ]);
                                 
-                                // inserts attachments if no errors
                                 $announcement_id = $pdo->lastInsertId();
                                 foreach ($validAttachments as $validAttachment) {
                                     $attachmentQuery = "INSERT INTO attachments (announcement_id, file_path, file_name, upload_date) 
@@ -288,8 +276,6 @@
                             }
                         }
                     ?>
-                    <!-- DEBUG CODE -->
-                    <?php include '../config/debug/announcements_debug.php'; ?>
                 </div>
             </div>
         </div>
