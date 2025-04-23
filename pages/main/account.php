@@ -1,19 +1,19 @@
 <?php
-    include '../config/dbfetch.php';
+    include '../../config/dbfetch.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
     <title>UBISH Dashboard | Account</title>
 </head>
 <body>
     <header>
         <div class="navigation">
             <div class="logo">
-                <img src="../assets/img/greenwater-village-logo.jpg" alt="Greenwater Village Logo">
+                <img src="../../assets/img/greenwater-village-logo.jpg" alt="Greenwater Village Logo">
                 <h1>UBISH</h1>
             </div>
             <form method="POST">
@@ -32,19 +32,19 @@
         <div class="dashboard-main">
             <div class="dashboard-sidebar">
                 <ul>
-                    <li><a href="../pages/dashboard.php">Home</a></li>
-                    <li class="active"><a href="../pages/account.php">Account</a></li>
+                    <li><a href="../main/dashboard.php">Home</a></li>
+                    <li class="active"><a href="../main/account.php">Account</a></li>
                     <?php
                         // placeholder access control pages
                         if ($accessLevel >= 1) {
                             echo '<li><a href="#">Documents</a></li>';
-                            echo '<li><a href="../pages/announcements.php">Post Announcement</a></li>';
+                            echo '<li><a href="../main/announcements.php">Post Announcement</a></li>';
                         }
                         if ($accessLevel >= 2) {
-                            echo '<li><a href="../pages/employee_table.php">Employee Table</a></li>';
+                            echo '<li><a href="../main/employee_table.php">Employee Table</a></li>';
                         }
                         if ($accessLevel >= 3) {
-                            echo '<li><a href="#">Profile Change Request</a></li>';
+                            echo '<li><a href="#">Edit Requests</a></li>';
                         }
                     ?>
                 </ul>

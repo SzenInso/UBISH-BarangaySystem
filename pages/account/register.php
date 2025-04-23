@@ -1,6 +1,6 @@
 <!-- PHP CODE -->
 <?php
-    include '../config/dbconfig.php';
+    include '../../config/dbconfig.php';
 
     if (isset($_POST['register'])) {
         $fname = $_POST['fname'];
@@ -26,7 +26,7 @@
         }
 
         $phonenum = $_POST['phonenum'];
-        $uploadedFilePath = "../uploads/default_profile.jpg"; // default profile picture path
+        $uploadedFilePath = "../../uploads/default_profile.jpg"; // default profile picture path
         if (isset($_FILES['picture']) && $_FILES['picture']['error'] == UPLOAD_ERR_OK) {
             $fileTmpPath = $_FILES['picture']['tmp_name'];
             $fileName = $_FILES['picture']['name'];
@@ -39,7 +39,7 @@
             if (in_array($fileExtension, $allowedFileExtensions)) {
                 if ($fileSize <= $maxFileSize) {
                     $newFileName = uniqid() . '.' . $fileExtension;
-                    $targetFilePath = "../uploads/" . $newFileName;
+                    $targetFilePath = "../../uploads/" . $newFileName;
                     if (move_uploaded_file($fileTmpPath, $targetFilePath)) {
                         $uploadedFilePath = $targetFilePath;
                     } else {
@@ -76,7 +76,7 @@
 
         if ($register) {
             $emp_id = $pdo->lastInsertId();
-            header('location:../pages/signup.php?emp_id=' . $emp_id);
+            header('location:../account/signup.php?emp_id=' . $emp_id);
             exit();
         }
     }
@@ -88,14 +88,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
     <title>Register Page</title>
 </head>
 <body>
     <header>
         <div class="navigation">
             <div class="logo">
-                <img src="../assets/img/greenwater-village-logo.jpg" alt="Greenwater Village Logo">
+                <img src="../../assets/img/greenwater-village-logo.jpg" alt="Greenwater Village Logo">
                 <h1>UBISH</h1>
             </div>
         </div>
@@ -172,10 +172,10 @@
                     <br>
                     <img 
                         id="profile-preview"
-                        src="../uploads/default_profile.jpg" 
+                        src="../../uploads/default_profile.jpg" 
                         alt="Profile Preview"
                     >
-                    <script src="../assets/js/profilePreview.js"></script>
+                    <script src="../../assets/js/profilePreview.js"></script>
                 </div>
                 <div class="signup-btns">
                     <button name="register">Register</button>
