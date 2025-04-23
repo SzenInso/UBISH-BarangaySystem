@@ -1,0 +1,205 @@
+<?php
+    include '../../config/dbfetch.php';
+
+    // handles querying for the announcement to delete
+    if (isset($_GET['announcement_id'])) {
+        $announcementID = $_GET['announcement_id'];
+        
+        // fetches single row of certain announcement for deletion
+        $announcement = toBeDeletedAnnouncement($pdo, $announcementID);
+        if (!$announcement) {
+            echo "
+                <script>
+                    alert('No announcement found.');
+                    window.location.href = '../main/dashboard.php';
+                </script>
+            ";
+        }
+    } else {
+        echo "
+            <script>
+                alert('Invalid announcement ID.');
+                window.location.href = '../main/dashboard.php';
+            </script>
+        ";
+    }
+
+    if (isset($_POST['delete-announcement'])) {
+        // requests delete from attachments and announcements table
+        try {
+            $pdo->beginTransaction();
+
+            // physically deletes attachments
+            if (!empty($announcement['file_path']) && file_exists($announcement['file_path'])) {
+                unlink('../../uploads/attachments/' . $announcement['file_path']);
+            }
+            if (!empty($announcement['thumbnail']) && file_exists($announcement['thumbnail'])) {
+                unlink('../../uploads/attachments/' . $announcement['thumbnail']);
+            }
+
+            $deleteAttachmentQuery = "DELETE FROM attachments WHERE announcement_id = :announcement_id";
+            $stmt1 = $pdo->prepare($deleteAttachmentQuery);
+            $stmt1->execute([":announcement_id" => $announcementID]);
+
+            $deleteAnnouncementQuery = "DELETE FROM announcements WHERE announcement_id = :announcement_id";
+            $stmt2 = $pdo->prepare($deleteAnnouncementQuery);
+            $stmt2->execute([":announcement_id" => $announcementID]);
+
+            if ($pdo->commit()) {
+                echo "
+                    <script>
+                        alert('Announcement deleted successfully.');
+                        window.location.href = '../main/dashboard.php';
+                    </script>
+                ";
+            } else {
+                $pdo->rollBack();
+                echo "
+                    <script>
+                        alert('Failed to delete announcement.');
+                        window.location.href = '../main/dashboard.php';
+                    </script>
+                ";
+            }
+        } catch (Exception $e) {
+            $pdo->rollBack();
+            echo "
+                <script>
+                    alert('Error: " . $e->getMessage() . "');
+                    window.location.href = '../main/dashboard.php';
+                </script>
+            ";
+        }
+
+    }
+
+    if (isset($_POST['cancel'])) {
+        header("location: ../main/dashboard.php");
+        exit;
+    }
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <title>UBISH Dashboard | Delete Announcement</title>
+</head>
+<body>
+    <header>
+        <div class="navigation">
+            <div class="logo">
+                <img src="../../assets/img/greenwater-village-logo.jpg" alt="Greenwater Village Logo">
+                <h1>UBISH</h1>
+            </div>
+            <form method="POST">
+                <nav>
+                    <ul>
+                        <li>
+                            <button class="logout" style="cursor: pointer;" name="logout">Log Out</button>
+                        </li>
+                    </ul>
+                </nav>
+            </form>
+        </div>
+        <hr>
+    </header>
+    <main>
+        <div class="dashboard-main">
+            <div class="dashboard-sidebar">
+                <ul>
+                    <li><a href="../main/dashboard.php">Home</a></li>
+                    <li><a href="../main/account.php">Account</a></li>
+                    <?php
+                        // placeholder access control pages
+                        if ($accessLevel >= 1) {
+                            echo '<li><a href="#">Documents</a></li>';
+                            echo '<li><a href="../main/announcements.php">Post Announcement</a></li>';
+                        }
+                        if ($accessLevel >= 2) {
+                            echo '<li><a href="../main/employee_table.php">Employee Table</a></li>';
+                        }
+                        if ($accessLevel >= 3) {
+                            echo '<li><a href="#">Edit Requests</a></li>';
+                        }
+                    ?>
+                </ul>
+            </div>
+            <style>
+                img#announcementThumbnail {
+                    max-width: 400px;
+                    max-height: 300px;
+                    object-fit: cover;
+                }
+                p#badge {
+                    display: inline-block;
+                    padding: 0.25em 0.6em;
+                    font-size: 0.75rem;
+                    font-weight: bold;
+                    background-color: lightgray;
+                    border-radius: 999px;
+                    text-align: center;
+                    vertical-align: middle;
+                    white-space: nowrap;
+                }
+                div#deleteAnnouncement {
+                    width: 100%;   
+                }
+                .delete-announcement-actions {
+                    margin: 8px 0 16px;
+                }
+                .delete-announcement-actions button {
+                    border: 2px solid gray;
+                    background-color: white;
+                    color: black;
+                    margin: 0 8px;
+                    padding: 8px;
+                    border-radius: 4px;
+                    cursor: pointer;
+                }
+                .delete-announcement-actions button:hover {
+                    background-color: lightgray;
+                }
+            </style>
+            <div class="dashboard-content">
+                <h1>Delete Announcement</h1>
+                <p>Are you sure you want to delete this announcement?</p>
+                <form method="POST">
+                    <div class="delete-announcement-actions">
+                        <button name="delete-announcement">Delete</button>
+                        <button name="cancel">Cancel</button>
+                    </div>
+                </form>
+                <div class="announcement-card" id="deleteAnnouncement" style="border: 1px solid red;">
+                    <h2><?php echo htmlspecialchars($announcement['title']); ?></h2>
+                    <p>
+                        <strong>Issued By:</strong>&nbsp;
+                        <?php echo htmlspecialchars($announcement['first_name'] . ' ' . $announcement['last_name']); ?> 
+                        <i>(<?php echo htmlspecialchars($announcement['username']); ?>)</i>
+                    </p>
+                    <p>
+                        <?php 
+                        echo !empty($announcement['post_date']) 
+                            ? date("F j, Y g:i:s A", strtotime($announcement['post_date'])) 
+                            : 'No Date Provided'; 
+                        ?>
+                    </p>
+                    <p id="badge"><?php echo htmlspecialchars($announcement['category']); ?></p><br>
+                    <?php if (!empty($announcement['thumbnail'])) { ?>
+                        <img src="<?php echo htmlspecialchars($announcement['thumbnail']); ?>" alt="thumbnail_<?php echo htmlspecialchars($announcement['announcement_id']); ?>" id="announcementThumbnail">
+                    <?php } ?>
+                    <p><?php echo nl2br(htmlspecialchars($announcement['body'])); ?></p>
+                    <?php if (!empty($announcement['file_path'])) { ?>
+                        <a href="<?php echo htmlspecialchars($announcement['file_path']); ?>" target="_blank"><?php echo htmlspecialchars($announcement['file_name']); ?></a>
+                    <?php } ?>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <hr>
+        <p><?php echo "&copy; " . date('Y') . " | Unified Barangay Information Service Hub"; ?></p>
+    </footer>
+</body>
+</html>
