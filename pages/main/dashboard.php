@@ -172,23 +172,7 @@
                 </div>
             </div>
         </div>
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                document.querySelectorAll(".kebab-btn").forEach(button => {
-                    button.addEventListener("click", function (e) {
-                        const menu = this.nextElementSibling;
-                        const isVisible = menu.style.display === "block";
-                        document.querySelectorAll(".kebab-menu").forEach(m => m.style.display = "none");
-                        menu.style.display = isVisible ? "none" : "block";
-                        e.stopPropagation();
-                    });
-                });
-
-                document.addEventListener("click", function () {
-                    document.querySelectorAll(".kebab-menu").forEach(menu => menu.style.display = "none");
-                });
-            });
-        </script>
+        <script src="../../assets/js/announcementActions.js"></script>
     </main>
     <footer>
         <hr>
