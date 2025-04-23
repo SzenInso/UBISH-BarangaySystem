@@ -1,6 +1,6 @@
 <?php 
-    include '../config/dbconfig.php';
-    include '../config/session.php';
+    include '../../config/dbconfig.php';
+    include '../../config/session.php';
 
     // fetches access control
     $accessQuery = "SELECT access_level FROM employee_details WHERE emp_id = :emp_id";
