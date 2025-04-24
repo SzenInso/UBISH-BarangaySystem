@@ -1,19 +1,19 @@
 <?php
-    include '../config/dbfetch.php';
+    include '../../config/dbfetch.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
     <title>UBISH Dashboard | Home</title>
 </head>
 <body>
     <header>
         <div class="navigation">
             <div class="logo">
-                <img src="../assets/img/greenwater-village-logo.jpg" alt="Greenwater Village Logo">
+                <img src="../../assets/img/greenwater-village-logo.jpg" alt="Greenwater Village Logo">
                 <h1>UBISH</h1>
             </div>
             <form method="POST">
@@ -32,19 +32,19 @@
         <div class="dashboard-main">
             <div class="dashboard-sidebar">
                 <ul>
-                    <li class="active"><a href="../pages/dashboard.php">Home</a></li>
-                    <li><a href="../pages/account.php">Account</a></li>
+                    <li class="active"><a href="../main/dashboard.php">Home</a></li>
+                    <li><a href="../main/account.php">Account</a></li>
                     <?php
                         // placeholder access control pages
                         if ($accessLevel >= 1) {
                             echo '<li><a href="#">Documents</a></li>';
-                            echo '<li><a href="../pages/announcements.php">Post Announcement</a></li>';
+                            echo '<li><a href="../main/announcements.php">Post Announcement</a></li>';
                         }
                         if ($accessLevel >= 2) {
-                            echo '<li><a href="../pages/employee_table.php">Employee Table</a></li>';
+                            echo '<li><a href="../main/employee_table.php">Employee Table</a></li>';
                         }
                         if ($accessLevel >= 3) {
-                            echo '<li><a href="#">Profile Change Request</a></li>';
+                            echo '<li><a href="#">Edit Requests</a></li>';
                         }
                     ?>
                 </ul>
@@ -83,8 +83,40 @@
                         vertical-align: middle;
                         white-space: nowrap;
                     }
+                    .announcement-menu {
+                        position: relative;
+                        margin-right: 16px;
+                    }
+                    .announcement-menu button {
+                        background: none;
+                        border: none;
+                        cursor: pointer;
+                    }
+                    .kebab-menu {
+                        position: absolute;
+                        top: 100%;
+                        right: 0;
+                        background-color: white;
+                        border: 1px solid lightgray;
+                        border-radius: 4px;
+                        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                        z-index: 10;
+                        display: none;
+                    }
+                    .kebab-menu button {
+                        display: block;
+                        width: 100%;
+                        padding: 8px 16px;
+                        background: none;
+                        border: none;
+                        text-align: left;
+                        cursor: pointer;
+                    }
+                    .kebab-menu button:hover {
+                        background-color: lightgray;
+                    }
                 </style>
-                <div class="dashboard-announcements">
+                <div class="dashboard-announcements">                  
                     <?php 
                         if ($announcementDetails->rowCount() < 1) {
                             echo "<p><center>No announcements.</center></p>";
@@ -92,7 +124,26 @@
                             foreach ($announcementDetails as $ann) {
                     ?>
                                 <div class="announcement-card" style="border: 1px solid red;">
-                                    <h2><?php echo $ann['title']; ?></h2>
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <h2><?php echo $ann['title']; ?></h2>
+                                        <?php 
+                                            if ($accessLevel >= 2) {
+                                        ?>
+                                                <div class="announcement-menu">
+                                                    <button class="kebab-btn"><p style="font-size: x-large;">⁝</p></button>
+                                                    <div class="kebab-menu">
+                                                        <form method="GET" action="edit_announcement.php">
+                                                            <input type="hidden" name="announcement_id" value="<?php echo $ann['announcement_id']; ?>">
+                                                            <button type="submit">Edit Announcement</button>
+                                                        </form>
+                                                        <form method="GET" action="delete_announcement.php">
+                                                            <input type="hidden" name="announcement_id" value="<?php echo $ann['announcement_id']; ?>">
+                                                            <button type="submit" style="color: crimson;">Delete Announcement</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                        <?php } ?>
+                                    </div>
                                     <p>
                                         <strong>Issued By:</strong>&nbsp;<?php echo $ann['first_name'] . ' ' . $ann['last_name']; ?> 
                                         <i>(<?php echo $ann['username']; ?>)</i>
@@ -112,6 +163,7 @@
                                             echo '<a href="'. $ann['file_path'] . '" target="_blank">' . $ann['file_name'] . '</a>';
                                         }
                                     ?>
+                                    <input type="hidden" name="announcement_id" value="<?php echo $ann['announcement_id']; ?>">
                                 </div>
                     <?php
                             }
@@ -120,6 +172,7 @@
                 </div>
             </div>
         </div>
+        <script src="../../assets/js/announcementActions.js"></script>
     </main>
     <footer>
         <hr>

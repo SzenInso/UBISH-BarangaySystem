@@ -1,6 +1,6 @@
 <br><?php 
 /* FOR DEBUGGING PURPOSES ONLY -Mark */
-include '../config/dbconfig.php';
+include '../../config/dbconfig.php';
 
 if (isset($_POST['post'])) {
     $title = $_POST['title'];
@@ -22,7 +22,7 @@ if (isset($_POST['post'])) {
     echo "Post Date: $post_date<br><br>";
 
     // for upload directory
-    $uploadDir = '../uploads/attachments/';
+    $uploadDir = '../../uploads/attachments/';
     $maxSize = 10 * 1024 * 1024; // 10MB
     $fileTimestamp = time();
     $errors = [];
