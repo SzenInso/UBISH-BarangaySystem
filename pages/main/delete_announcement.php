@@ -121,7 +121,7 @@
                             echo '<li><a href="../main/employee_table.php">Employee Table</a></li>';
                         }
                         if ($accessLevel >= 3) {
-                            echo '<li><a href="#">Edit Requests</a></li>';
+                            echo '<li><a href="../main/account_requests.php">Account Requests</a></li>';
                         }
                     ?>
                 </ul>
