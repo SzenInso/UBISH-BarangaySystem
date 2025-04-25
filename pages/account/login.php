@@ -1,3 +1,9 @@
+<?php
+    include '../../config/dbconfig.php';
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,9 +46,6 @@
         </form>
         <!-- PHP CODE -->
         <?php
-            include '../../config/dbconfig.php';
-            session_start();
-
             if (isset($_POST['login'])) {
                 $username = $_POST['username'];
                 $password = $_POST['password'];
