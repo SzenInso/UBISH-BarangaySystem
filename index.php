@@ -1,6 +1,16 @@
-<?php 
+<?php
     include 'config/dbconfig.php';
     include 'config/dbfetch_public.php';
+
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+    
+    // redirect if user is already logged in
+    if (isset($_SESSION['user_id'])) {
+        header('location:pages/main/dashboard.php');
+        exit;
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
