@@ -2,6 +2,10 @@
 <?php
     include '../../config/dbconfig.php';
 
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+
     if (isset($_POST['register'])) {
         $fname = $_POST['fname'];
         $mname = $_POST['mname'];
@@ -39,7 +43,7 @@
             if (in_array($fileExtension, $allowedFileExtensions)) {
                 if ($fileSize <= $maxFileSize) {
                     $newFileName = uniqid() . '.' . $fileExtension;
-                    $targetFilePath = "../../uploads/" . $newFileName;
+                    $targetFilePath = "../../uploads/temp/" . $newFileName;
                     if (move_uploaded_file($fileTmpPath, $targetFilePath)) {
                         $uploadedFilePath = $targetFilePath;
                     } else {
@@ -53,6 +57,48 @@
             }
         }
 
+        $registerQuery = "
+            INSERT INTO employee_registration (
+                first_name, middle_name, last_name, 
+                date_of_birth, sex, address, 
+                religion, civil_status, legislature, 
+                access_level, phone_no, picture
+            ) VALUES (
+                :fname, :mname, :lname, 
+                :dob, :sex, :address, 
+                :religion, :civilstatus, :legislature, 
+                :accesslvl, :phonenum, :picture
+            )
+        ";
+        $register = $pdo->prepare($registerQuery);
+        $register->execute([
+            ":fname" => $fname,
+            ":mname" => $mname,
+            ":lname" => $lname,
+            ":dob" => $dob,
+            ":sex" => $sex,
+            ":address" => $address,
+            ":religion" => $religion,
+            ":civilstatus" => $civilstatus,
+            ":legislature" => $legislature,
+            ":accesslvl" => $accesslvl,
+            ":phonenum" => $phonenum,
+            ":picture" => $uploadedFilePath
+        ]);
+        
+        if ($register) {
+            $_SESSION['registration_emp_id'] = $pdo->lastInsertId();
+            header('location:../account/signup.php');
+            exit;
+        } else {
+            echo "
+                <script>
+                    alert('Failed to register employee information. Please try again.');
+                    window.location.href = '../account/register.php';
+                </script>
+            ";
+        }
+        /*
         $query = "  INSERT INTO employee_details (
                         first_name, middle_name, last_name, date_of_birth, sex, address, religion, civil_status, legislature, access_level, phone_no, picture
                     ) VALUES (
@@ -79,6 +125,7 @@
             header('location:../account/signup.php?emp_id=' . $emp_id);
             exit();
         }
+        */
     }
     // place cancel logic here
 ?>

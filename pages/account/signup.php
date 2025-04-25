@@ -1,3 +1,50 @@
+<!-- PHP CODE -->
+<?php
+    include '../../config/dbconfig.php';
+
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    // redirects back to registration if not registered
+    if (!isset($_SESSION['registration_emp_id'])) {
+        header('location:../account/register.php');
+        exit;
+    }
+
+    if (isset($_POST['signup'])) {
+        $username = $_POST['username'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $confirmPassword = $_POST['confirmPassword'];
+
+        if ($password !== $confirmPassword) {
+            echo "<br><p><center>Passwords do not match.<center></p>";
+        } else {
+            $protectedPassword = password_hash($password, PASSWORD_DEFAULT);
+            $signupQuery = "INSERT INTO login_registration (username, email, password) VALUES (:username, :email, :password)";
+            $signup = $pdo->prepare($signupQuery);
+            $signup->execute([
+                ":username" => $username,
+                ":email" => $email,
+                ":password" => $protectedPassword
+            ]);
+
+            if ($signup) {
+                $_SESSION['registration_login_id'] = $pdo->lastInsertId();
+                header('location:../account/process_registration.php');
+                exit;
+            } else {
+                echo "
+                    <script>
+                        alert('Failed to create account. Please try again.');
+                        window.location.href = '../account/register.php';
+                    </script>
+                ";
+            }
+        }
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,85 +64,28 @@
         <hr>
     </header>
     <main>
-        <?php 
-            include '../../config/dbconfig.php';
-            $fetchQuery = "SELECT emp_id FROM employee_details WHERE emp_id = :emp_id";
-            $fetchEmpId = $pdo->prepare($fetchQuery);
-            $fetchEmpId->execute([":emp_id" => htmlspecialchars($_GET['emp_id'])]);
-        ?>
         <form method="POST">
             <div class="signup-form">
                 <h1>Enter Credentials For Logging In</h1>
-            <?php
-                if ($fetchEmpId->rowCount() < 0) {
-                    echo "<br><p><center>Employee ID not found.<center></p>";
-                    echo "<button><a href='pages/account/register.php'>Go Back</a></button>";
-                } else {
-                    $empId = $fetchEmpId->fetchColumn();
-            ?>
-                    <input type="hidden" name="emp_id" value="<?php echo htmlspecialchars($empId); ?>">
-                    <div class="signup-credentials">
-                        <p>Username</p>
-                        <input type="text" name="username" placeholder="Enter username" required>
-                    </div>
-                    <div class="signup-credentials">
-                        <p>Email Address</p>
-                        <input type="email" name="email" placeholder="Enter email" required>
-                    </div>
-                    <div class="signup-credentials">
-                        <p>Password</p>
-                        <input type="password" name="password" placeholder="Enter password" required>
-                    </div>
-                    <div class="signup-credentials">
-                        <p>Confirm Password</p>
-                        <input type="password" name="confirmPassword" placeholder="Confirm entered password" required>
-                    </div>
-                    <button name="signup">Sign Up</button>
-            <?php
-                }
-            ?>
+                <div class="signup-credentials">
+                    <p>Username</p>
+                    <input type="text" name="username" placeholder="Enter username" required>
+                </div>
+                <div class="signup-credentials">
+                    <p>Email Address</p>
+                    <input type="email" name="email" placeholder="Enter email" required>
+                </div>
+                <div class="signup-credentials">
+                    <p>Password</p>
+                    <input type="password" name="password" placeholder="Enter password" required>
+                </div>
+                <div class="signup-credentials">
+                    <p>Confirm Password</p>
+                    <input type="password" name="confirmPassword" placeholder="Confirm entered password" required>
+                </div>
+                <button name="signup">Sign Up</button>
             </div>
         </form>
-        <!-- PHP CODE -->
-        <?php
-            if (isset($_POST['signup'])) {
-                $emp_id = $_POST['emp_id'];
-                $username = $_POST['username'];
-                $email = $_POST['email'];
-                $password = $_POST['password'];
-                $confirmPassword = $_POST['confirmPassword'];
-
-                if ($password !== $confirmPassword) {
-                    echo "<br><p><center>Passwords do not match.<center></p>";
-                } else {
-                    $protectedPassword = password_hash($password, PASSWORD_DEFAULT);
-                    $query = "INSERT INTO login_details (emp_id, username, email, password) VALUES (:emp_id, :username, :email, :password)";
-                    $signup = $pdo->prepare($query);
-                    $signup->execute([
-                        ":emp_id" => $emp_id,
-                        ":username" => $username,
-                        ":email" => $email,
-                        ":password" => $protectedPassword
-                    ]);
-
-                    if ($signup) {
-                        echo "
-                            <script>
-                                alert('Account created successfully!');
-                                window.location.href = '../account/login.php';
-                            </script>
-                        ";
-                    } else {
-                        echo "
-                            <script>
-                                alert('Failed to create account. Please try again.');
-                                window.location.href = '../account/register.php';
-                            </script>
-                        ";
-                    }
-                }
-            }
-        ?>
     </main>
     <footer>
         <hr>
