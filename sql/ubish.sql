@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 23, 2025 at 07:01 PM
+-- Generation Time: Apr 25, 2025 at 07:38 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -104,6 +104,35 @@ INSERT INTO `employee_details` (`emp_id`, `first_name`, `middle_name`, `last_nam
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `employee_registration`
+--
+
+CREATE TABLE `employee_registration` (
+  `registration_emp_id` int(11) NOT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `middle_name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `date_of_birth` date NOT NULL,
+  `sex` varchar(1) NOT NULL,
+  `address` text NOT NULL,
+  `religion` varchar(100) NOT NULL,
+  `civil_status` varchar(20) NOT NULL,
+  `legislature` varchar(100) NOT NULL,
+  `access_level` tinyint(4) NOT NULL,
+  `phone_no` varchar(11) NOT NULL,
+  `picture` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `employee_registration`
+--
+
+INSERT INTO `employee_registration` (`registration_emp_id`, `first_name`, `middle_name`, `last_name`, `date_of_birth`, `sex`, `address`, `religion`, `civil_status`, `legislature`, `access_level`, `phone_no`, `picture`) VALUES
+(202, 'William', 'Defiesta', 'Dosil', '2005-01-01', 'M', 'Isabela, Philippines', 'Roman Catholic', 'Single', 'Other Barangay Personnel', 1, '09000000000', '../../uploads/temp/680bc45e12b02.jpg');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `login_details`
 --
 
@@ -124,6 +153,47 @@ INSERT INTO `login_details` (`user_id`, `emp_id`, `username`, `email`, `password
 (2, 1002, 'mbringas', 'mbringas@email.com', '$2y$10$GS81dsvvhFZwDUqRJ73OmOFZgKEzctb9Aod9sb7OOLcHdrZNPTXxi'),
 (4, 1004, 'jdoe', 'jdoe@email.com', '$2y$10$VCPFcQVgrnx1lzn4DxZWbedaopwO.0jAZWLzRMuMkqI7MMIfz5noq'),
 (5, 1005, 'janedoe', 'janedoe@email.com', '$2y$10$U/coR838qZmmSZHbZWKRy.VIzDD98pjSqSg7CwXUMZbuUl4eejPpa');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `login_registration`
+--
+
+CREATE TABLE `login_registration` (
+  `registration_login_id` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `login_registration`
+--
+
+INSERT INTO `login_registration` (`registration_login_id`, `username`, `email`, `password`) VALUES
+(302, 'wdosil', 'wdosil@gmail.com', '$2y$10$rm/LXAJATeIcrluIPMZum.GBDvhPS1WMyiyzQOuY1O.8ToMIboaj2');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `registration`
+--
+
+CREATE TABLE `registration` (
+  `registration_id` int(11) NOT NULL,
+  `registration_emp_id` int(11) NOT NULL,
+  `registration_login_id` int(11) NOT NULL,
+  `status` enum('Pending','Approved','Denied') DEFAULT 'Pending',
+  `request_date` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `registration`
+--
+
+INSERT INTO `registration` (`registration_id`, `registration_emp_id`, `registration_login_id`, `status`, `request_date`) VALUES
+(102, 202, 302, 'Pending', '2025-04-26 01:20:39');
 
 --
 -- Indexes for dumped tables
@@ -150,11 +220,31 @@ ALTER TABLE `employee_details`
   ADD PRIMARY KEY (`emp_id`);
 
 --
+-- Indexes for table `employee_registration`
+--
+ALTER TABLE `employee_registration`
+  ADD PRIMARY KEY (`registration_emp_id`);
+
+--
 -- Indexes for table `login_details`
 --
 ALTER TABLE `login_details`
   ADD PRIMARY KEY (`user_id`),
   ADD KEY `fk_user_emp` (`emp_id`);
+
+--
+-- Indexes for table `login_registration`
+--
+ALTER TABLE `login_registration`
+  ADD PRIMARY KEY (`registration_login_id`);
+
+--
+-- Indexes for table `registration`
+--
+ALTER TABLE `registration`
+  ADD PRIMARY KEY (`registration_id`),
+  ADD KEY `fk_registration_employee` (`registration_emp_id`),
+  ADD KEY `fk_registration_login` (`registration_login_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -179,10 +269,28 @@ ALTER TABLE `employee_details`
   MODIFY `emp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1006;
 
 --
+-- AUTO_INCREMENT for table `employee_registration`
+--
+ALTER TABLE `employee_registration`
+  MODIFY `registration_emp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=203;
+
+--
 -- AUTO_INCREMENT for table `login_details`
 --
 ALTER TABLE `login_details`
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `login_registration`
+--
+ALTER TABLE `login_registration`
+  MODIFY `registration_login_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=303;
+
+--
+-- AUTO_INCREMENT for table `registration`
+--
+ALTER TABLE `registration`
+  MODIFY `registration_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
 
 --
 -- Constraints for dumped tables
@@ -205,6 +313,13 @@ ALTER TABLE `attachments`
 --
 ALTER TABLE `login_details`
   ADD CONSTRAINT `fk_user_emp` FOREIGN KEY (`emp_id`) REFERENCES `employee_details` (`emp_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `registration`
+--
+ALTER TABLE `registration`
+  ADD CONSTRAINT `fk_registration_employee` FOREIGN KEY (`registration_emp_id`) REFERENCES `employee_registration` (`registration_emp_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_registration_login` FOREIGN KEY (`registration_login_id`) REFERENCES `login_registration` (`registration_login_id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
