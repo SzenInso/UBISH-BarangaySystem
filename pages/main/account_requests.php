@@ -47,21 +47,27 @@
             ]);
             $empID = $pdo->lastInsertId();
 
-            $tempPath = $empApprove['picture'];
-            $newPath = "../../uploads/profiles/" . basename($tempPath);
-            $transferPath = rename($tempPath, $newPath);
-            if (!$transferPath) {
-                throw new Exception("Failed to move profile picture.");
-            }
-
-            $updatePathQuery = "UPDATE employee_details SET picture = :picture WHERE emp_id = :emp_id";
-            $updatePath = $pdo->prepare($updatePathQuery);
-            $updatePath->execute([
-                ":picture" => $newPath,
-                ":emp_id" => $empID
-            ]);
-            if (!$updatePath) {
-                throw new Exception("Failed to update profile picture path.");
+            if ($empApprove['picture'] !== "../../uploads/default_profile.jpg") {
+                $tempPath = $empApprove['picture'];
+                $newPath = "../../uploads/profiles/" . basename($tempPath);
+                if (file_exists($tempPath)) {
+                    $transferPath = rename($tempPath, $newPath);
+                    if (!$transferPath) {
+                        throw new Exception("Failed to move profile picture.");
+                    }
+            
+                    $updatePathQuery = "UPDATE employee_details SET picture = :picture WHERE emp_id = :emp_id";
+                    $updatePath = $pdo->prepare($updatePathQuery);
+                    $updatePath->execute([
+                        ":picture" => $newPath,
+                        ":emp_id" => $empID
+                    ]);
+                    if (!$updatePath) {
+                        throw new Exception("Failed to update profile picture path.");
+                    }
+                } else {
+                    throw new Exception("Profile picture file not found.");
+                }
             }
 
             $fetchLoginApproveQuery = "SELECT * FROM login_registration WHERE registration_login_id = :registration_login_id";
@@ -86,7 +92,7 @@
             if ($approved) {
                 echo "
                     <script>
-                        alert('Request approved successfully!');
+                        alert('Request approved successfully.');
                         window.location.href='../main/account_requests.php';
                     </script>
                 ";
@@ -103,9 +109,56 @@
             ";
         }
         
+    }
 
+    if (isset($_POST['deny'])) {
+        $selected = $_POST['deny'];
 
+        try {
+            $pdo->beginTransaction();
 
+            $registrationQuery = "SELECT * FROM registration WHERE registration_id = :registration_id";
+            $registration = $pdo->prepare($registrationQuery);
+            $registration->execute([":registration_id" => $selected]);
+            $registrationDetails = $registration->fetch();
+            
+            $deleteTempQuery = "SELECT * FROM employee_registration WHERE registration_emp_id = :registration_emp_id";
+            $deleteTemp = $pdo->prepare($deleteTempQuery);
+            $deleteTemp->execute([":registration_emp_id" => $registrationDetails['registration_emp_id']]);
+            $deleteTempPath = $deleteTemp->fetch();
+
+            if ($deleteTempPath['picture'] !== "../../uploads/default_profile.jpg") {
+                if (file_exists($deleteTempPath['picture'])) {
+                    unlink($deleteTempPath['picture']);
+                } else {
+                    throw new Exception("Failed to delete profile picture.");
+                }
+            }
+
+            $updateRegQuery = "UPDATE registration SET status = 'Denied' WHERE registration_id = :registration_id";
+            $updateReg = $pdo->prepare($updateRegQuery);
+            $updateReg->execute([":registration_id" => $selected]);
+
+            $denied = $pdo->commit();
+            if ($denied) {
+                echo "
+                    <script>
+                        alert('Request denied successfully.');
+                        window.location.href='../main/account_requests.php';
+                    </script>
+                ";
+            } else {
+                throw new Exception("Failed to deny request.");
+            }
+        } catch (Exception $e) {
+            $pdo->rollBack();
+            echo "
+                <script>
+                    alert('Failed to deny request: " . $e->getMessage() . "');
+                    window.location.href='../main/account_requests.php';
+                </script>
+            ";
+        }
     }
 ?>
 <!DOCTYPE html>
@@ -229,7 +282,7 @@
                                                         View More
                                                     </button>
                                                     <button name="approve" value="<?php echo $reg['registration_id']; ?>">Approve</button>
-                                                    <button name="deny">Deny</button>
+                                                    <button name="deny" value="<?php echo $reg['registration_id']; ?>">Deny</button>
                                                 </td>
                                             </tr>
                                             <tr colspan="8">
