@@ -186,6 +186,24 @@
         .registration-main button:hover {
             background-color: lightgray;
         }
+        .dashboard-content table#registration-requests {
+            width: 100%;
+            border-collapse: collapse;
+            border: 2px solid gray;
+        }
+        .dashboard-content table#registration-requests tr td,
+        .dashboard-content table#registration-requests tr th {
+            text-align: left;
+            padding: 8px 12px;
+        }
+        .dashboard-content table#registration-requests tr:nth-child(odd) td {
+            text-align: left;
+            background-color: rgb(245, 245, 245);
+        }
+        .dashboard-content table#registration-requests tr th {
+            text-align: center;
+            background-color: lightgray;
+        }
     </style>
 </head>
 <body>
@@ -239,7 +257,7 @@
                         ?>
                                 <!-- Multiple selection actions -->
                                 <button type="button" id="viewAllBtn" onclick="toggleRegistrationViewAll(this)">View All</button>
-                                <table border="1">
+                                <table id="registration-requests">
                                     <tr>
                                         <th>Selection</th>
                                         <th>Profile</th>
