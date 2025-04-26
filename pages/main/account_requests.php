@@ -448,7 +448,7 @@
                                         <th>Last Name</th>
                                         <th>Username</th>
                                         <th>Status</th>
-                                        <th colspan="3">Action</th>
+                                        <th colspan="3">Actions</th>
                                     </tr>
                                     <?php 
                                         foreach ($registration as $reg) {

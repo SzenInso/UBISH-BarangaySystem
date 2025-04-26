@@ -69,7 +69,7 @@
                                 <th>Legislature</th>
                                 <?php if ($accessLevel >= 3) { echo "<th>Access Level</th>"; } ?>
                                 <th>Phone Number</th>
-                                <?php if ($accessLevel >= 3) { echo "<th>Actions</th>"; } ?>
+                                <?php if ($accessLevel >= 3) { echo "<th>Action</th>"; } ?>
                             </tr>
                             <?php foreach ($empAllDetails as $row) { ?>
                                 <tr>
