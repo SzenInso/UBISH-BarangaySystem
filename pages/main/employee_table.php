@@ -52,50 +52,73 @@
             <div class="dashboard-content">
                 <h1><center>Employee Table</center></h1><br>
                 <div id="employee-table-container">
-                    <table id="employee-table">
-                        <tr>
-                            <th>Employee ID</th>
-                            <th>First Name</th>
-                            <th>Middle Name</th>
-                            <th>Last Name</th>
-                            <th>Date of Birth</th>
-                            <th>Sex</th>
-                            <th>Address</th>
-                            <th>Religion</th>
-                            <th>Civil Status</th>
-                            <th>Legislature</th>
-                            <?php 
-                                if ($accessLevel >= 3) { 
-                                    echo "<th>Access Level</th>"; 
-                                }
-                            ?>
-                            <th>Phone Number</th>
-                            <th>Profile Picture</th>
-                        </tr>
-                        <?php 
-                            foreach ($empAllDetails as $row) {
-                        ?>
-                                <tr>
-                                    <td><?php echo $row['emp_id']; ?></td>
-                                    <td><?php echo $row['first_name']; ?></td>
-                                    <td><?php echo $row['middle_name']; ?></td>
-                                    <td><?php echo $row['last_name']; ?></td>
-                                    <td><?php echo $row['date_of_birth']; ?></td>
-                                    <td><?php echo $row['sex']; ?></td>
-                                    <td><?php echo $row['address']; ?></td>
-                                    <td><?php echo $row['religion']; ?></td>
-                                    <td><?php echo $row['civil_status']; ?></td>
-                                    <td><?php echo $row['legislature']; ?></td>
-                        <?php 
-                                if ($accessLevel >= 3) {
-                                    echo "<td>" . $row['access_level'] . "</td>";
-                                }
-                        ?>
-                                    <td><?php echo $row['phone_no']; ?></td>
-                                    <td><?php echo basename($row['picture']); ?></td>
-                                </tr>
+                    <form method="POST" action="../main/employee_table.php">
+                        <?php if ($accessLevel >= 3) { ?>
+                            <button type="submit" id="deleteEmp" name="delete-selected" style="justify-content: flex-start; cursor: pointer;">Delete Selected</button>
                         <?php } ?>
-                    </table>
+                        <table id="employee-table">
+                            <tr>
+                                <?php if ($accessLevel >= 3) { echo "<th>Selection</th>"; } ?>
+                                <th>Profile Picture</th>
+                                <th>Full Name</th>
+                                <th>Date of Birth</th>
+                                <th>Sex</th>
+                                <th>Address</th>
+                                <th>Religion</th>
+                                <th>Civil Status</th>
+                                <th>Legislature</th>
+                                <?php if ($accessLevel >= 3) { echo "<th>Access Level</th>"; } ?>
+                                <th>Phone Number</th>
+                                <?php if ($accessLevel >= 3) { echo "<th>Actions</th>"; } ?>
+                            </tr>
+                            <?php foreach ($empAllDetails as $row) { ?>
+                                <tr>
+                                <?php if ($accessLevel >= 3) { ?>
+                                        <td>
+                                            <center>
+                                                <input 
+                                                    type="checkbox" 
+                                                    name="select_employee[]" 
+                                                    value="<?php echo $row['emp_id']; ?>"
+                                                    style="cursor: pointer;"
+                                                >
+                                            </center>
+                                        </td>
+                                <?php } ?>
+                                        <td>
+                                            <img 
+                                                src="<?php echo $row['picture']; ?>" 
+                                                alt="<?php echo $row['first_name'] . " " . $row['middle_name'] . " " . $row['last_name']; ?>"
+                                                title="<?php echo $row['first_name'] . " " . $row['middle_name'] . " " . $row['last_name']; ?>"
+                                                style="width: 75px; height: 75px; border-radius: 50%; object-fit: cover;"
+                                            >
+                                        </td>
+                                        <td><?php echo $row['first_name'] . " " . $row['middle_name'] . " " . $row['last_name']; ?></td>
+                                        <td><?php echo $row['date_of_birth']; ?></td>
+                                        <td><?php echo $row['sex']; ?></td>
+                                        <td><?php echo $row['address']; ?></td>
+                                        <td><?php echo $row['religion']; ?></td>
+                                        <td><?php echo $row['civil_status']; ?></td>
+                                        <td><?php echo $row['legislature']; ?></td>
+                                <?php 
+                                    if ($accessLevel >= 3) {
+                                        $accessLevel = array('Limited Access', 'Standard Access', 'Full Access', 'Administrator');
+                                        echo "<td>" . $accessLevel[$row['access_level'] - 1] . "</td>";  
+                                    } 
+                                ?>
+                                        <td><?php echo $row['phone_no']; ?></td>
+                                <?php if ($accessLevel >= 3) { ?>
+                                        <td>
+                                            <form method="POST" action="../main/employee_table.php">
+                                                <input type="hidden" name="emp_id" value="<?php echo $row['emp_id']; ?>">
+                                                <button type="submit" id="deleteEmp" name="delete-employee" style="cursor: pointer;">Delete</button>
+                                            </form>
+                                        </td>
+                                <?php } ?>
+                                </tr>
+                            <?php } ?>
+                        </table>
+                    </form>
                 </div>
             </div>
         </div>
