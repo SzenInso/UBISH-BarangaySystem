@@ -444,7 +444,13 @@
                                             <tr>
                                                 <td>
                                                     <center>
-                                                        <input type="checkbox" class="selection-checkbox" name="selection[]" value="<?php echo $reg['registration_id']; ?>">
+                                                        <input 
+                                                            type="checkbox" 
+                                                            class="selection-checkbox" 
+                                                            name="selection[]" 
+                                                            value="<?php echo $reg['registration_id']; ?>"
+                                                            style="cursor: pointer;"
+                                                        >
                                                     </center>
                                                 </td>
                                                 <td>
@@ -515,16 +521,19 @@
                         <?php } ?>
                     </div>
                     <script src="../../assets/js/toggleRegistrationViews.js"></script>
+                    <br>
 
-                    <h1><center>Profile Edit Requests</center></h1><br>
+                    <h1><center>Profile Edit Requests</center></h1>
                     <div class="profile-edit-main">
                         <p>No account edit requests at the moment.</p>
                     </div>
+                    <br>
 
-                    <h1><center>Password Reset Requests</center></h1><br>
+                    <h1><center>Password Reset Requests</center></h1>
                     <div class="password-reset-main">
                         <p>No password reset requests at the moment.</p>
                     </div>
+                    <br>
                 </form>
             </div>
         </div>
