@@ -221,6 +221,7 @@
                         id="profile-preview"
                         src="../../uploads/default_profile.jpg" 
                         alt="Profile Preview"
+                        style="width: 150px; height: 150px; object-fit: cover;"
                     >
                     <script src="../../assets/js/profilePreview.js"></script>
                 </div>
