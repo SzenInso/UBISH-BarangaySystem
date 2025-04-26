@@ -3,6 +3,35 @@
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
     }
+
+    if (isset($_POST['login'])) {
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+    
+        $query = "SELECT * FROM login_details WHERE username = :username";
+        $login = $pdo->prepare($query);
+        $login->execute([":username" => $username]);
+        $activeUser = $login->fetch();
+    
+        if ($activeUser && password_verify($password, $activeUser['password'])) {
+            $_SESSION['user_id'] = $activeUser['user_id'];
+            $_SESSION['emp_id'] = $activeUser['emp_id'];
+            $_SESSION['username'] = $activeUser['username'];
+            echo "
+                <script>
+                    alert('Logged in successfully!');
+                    window.location.href = '../main/dashboard.php';
+                </script>
+            ";
+        } else {
+            echo "<br><p><center>Invalid username or password.</center></p>";
+        }
+    }
+
+    if (isset($_POST['cancel'])) {
+        header('location:../../index.php');
+        exit;
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,35 +70,12 @@
                     <p>Password</p>
                     <input type="password" name="password" placeholder="Enter password">
                 </div>
-                <button name="login">Log In</button>
+                <div class="login-btns">
+                    <button name="login">Log In</button>
+                    <button name="cancel">Cancel</button>
+                </div>
             </div>
         </form>
-        <!-- PHP CODE -->
-        <?php
-            if (isset($_POST['login'])) {
-                $username = $_POST['username'];
-                $password = $_POST['password'];
-
-                $query = "SELECT * FROM login_details WHERE username = :username";
-                $login = $pdo->prepare($query);
-                $login->execute([":username" => $username]);
-                $activeUser = $login->fetch();
-
-                if ($activeUser && password_verify($password, $activeUser['password'])) {
-                    $_SESSION['user_id'] = $activeUser['user_id'];
-                    $_SESSION['emp_id'] = $activeUser['emp_id'];
-                    $_SESSION['username'] = $activeUser['username'];
-                    echo "
-                        <script>
-                            alert('Logged in successfully!');
-                            window.location.href = '../main/dashboard.php';
-                        </script>
-                    ";
-                } else {
-                    echo "<br><p><center>Invalid username or password.</center></p>";
-                }
-            }
-        ?>
     </main>
     <footer>
         <hr>
