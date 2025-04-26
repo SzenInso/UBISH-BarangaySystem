@@ -124,7 +124,7 @@
     }
     
     if (isset($_POST['cancel'])) {
-        header('location:../account/login.php');
+        header('location:../../index.php');
         exit;
     }
 ?>
