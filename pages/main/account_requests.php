@@ -161,14 +161,13 @@
         }
     }
 
-    /* 
     if (isset($_POST['approve-selected']) && isset($_POST['selection'])) {
-        $selectedIds = $_POST['selection'];
+        $selectedIDs = $_POST['selection'];
 
         try {
             $pdo->beginTransaction();
 
-            foreach ($selectedIds as $selected) {
+            foreach ($selectedIDs as $selected) {
                 $registrationQuery = "SELECT * FROM registration WHERE registration_id = :registration_id";
                 $registration = $pdo->prepare($registrationQuery);
                 $registration->execute([":registration_id" => $selected]);
@@ -269,7 +268,58 @@
             ";
         }
     }
-    */
+
+    if (isset($_POST['deny-selected'])) {
+        $selectedIDs = $_POST['selection'];
+
+        try {
+            $pdo->beginTransaction();
+
+            foreach ($selectedIDs as $selected) {
+                $registrationQuery = "SELECT * FROM registration WHERE registration_id = :registration_id";
+                $registration = $pdo->prepare($registrationQuery);
+                $registration->execute([":registration_id" => $selected]);
+                $registrationDetails = $registration->fetch();
+
+                $deleteTempQuery = "SELECT * FROM employee_registration WHERE registration_emp_id = :registration_emp_id";
+                $deleteTemp = $pdo->prepare($deleteTempQuery);
+                $deleteTemp->execute([":registration_emp_id" => $registrationDetails['registration_emp_id']]);
+                $deleteTempPath = $deleteTemp->fetch();
+
+                if ($deleteTempPath['picture'] !== "../../uploads/default_profile.jpg") {
+                    if (file_exists($deleteTempPath['picture'])) {
+                        unlink($deleteTempPath['picture']);
+                    } else {
+                        throw new Exception("Failed to delete profile picture.");
+                    }
+                }
+
+                $updateRegQuery = "UPDATE registration SET status = 'Denied' WHERE registration_id = :registration_id";
+                $updateReg = $pdo->prepare($updateRegQuery);
+                $updateReg->execute([":registration_id" => $selected]);
+            }
+
+            $denied = $pdo->commit();
+            if ($denied) {
+                echo "
+                    <script>
+                        alert('Selected requests denied successfully.');
+                        window.location.href='../main/account_requests.php';
+                    </script>
+                ";
+            } else {
+                throw new Exception("Failed to deny requests.");
+            }
+        } catch (Exception $e) {
+            $pdo->rollBack();
+            echo "
+                <script>
+                    alert('Failed to deny requests: " . $e->getMessage() . "');
+                    window.location.href='../main/account_requests.php';
+                </script>
+            ";
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -295,6 +345,12 @@
         }
         .registration-main button:hover {
             background-color: lightgray;
+        }
+        .registration-main button:disabled {
+            opacity: 0.5;
+        }
+        .registration-main button:disabled:hover {
+            background-color: white;
         }
         .dashboard-content table#registration-requests {
             width: 100%;
@@ -368,8 +424,8 @@
                                 <!-- Multiple selection actions -->
                                 <div class="registration-actions-multiple">
                                     <button type="button" id="viewAllBtn" onclick="toggleRegistrationViewAll(this)">View All</button>
-                                    <button type="submit" name="approve-selected" class="approve-selected-btn">Approve Selected</button>
-                                    <button type="submit" name="deny-selected" class="deny-selected-btn">Deny Selected</button>
+                                    <button type="submit" id="approveSelectedBtn" name="approve-selected" class="approve-selected-btn" disabled>Approve Selected</button>
+                                    <button type="submit" id="denySelectedBtn" name="deny-selected" class="deny-selected-btn" disabled>Deny Selected</button>
                                 </div>
                                 <table id="registration-requests">
                                     <tr>
@@ -388,7 +444,7 @@
                                             <tr>
                                                 <td>
                                                     <center>
-                                                        <input type="checkbox" name="selection[]" value="<?php echo $reg['registration_id']; ?>">
+                                                        <input type="checkbox" class="selection-checkbox" name="selection[]" value="<?php echo $reg['registration_id']; ?>">
                                                     </center>
                                                 </td>
                                                 <td>
@@ -477,5 +533,27 @@
         <hr>
         <p><?php echo "&copy; " . date('Y') . " | Unified Barangay Information Service Hub"; ?></p>
     </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const checkboxes = document.querySelectorAll('.selection-checkbox');
+            const approveButton = document.getElementById('approveSelectedBtn');
+            const denyButton = document.getElementById('denySelectedBtn');
+
+            // Function to check if any checkbox is selected
+            function toggleButtons() {
+                const anyChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+                approveButton.disabled = !anyChecked;
+                denyButton.disabled = !anyChecked;
+            }
+
+            // Add event listeners to all checkboxes
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', toggleButtons);
+            });
+
+            // Initial check on page load
+            toggleButtons();
+        });
+    </script>
 </body>
 </html>
