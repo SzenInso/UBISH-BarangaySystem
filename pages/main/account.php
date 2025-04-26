@@ -1,5 +1,10 @@
 <?php
     include '../../config/dbfetch.php';
+
+    if (isset($_POST['change-password'])) {
+        header('location: change_password.php');
+        exit;
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -137,6 +142,12 @@
             <?php
                 }
             ?>
+                <form method="POST">
+                    <div class="account-actions">
+                        <button type="submit" name="update" class="update-btn" id="updateBtn">Update Account</button>
+                        <button type="submit" name="change-password" class="change-password" id="changePwdBtn">Change Password</button>
+                    </div>
+                </form>
             </div>
         </div>
     </main>
