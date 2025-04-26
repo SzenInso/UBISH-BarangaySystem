@@ -140,6 +140,30 @@ button.logout {
     background-color: #fff;
     overflow-y: auto;
 }
+.account-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.dashboard-content input#changePwdField {
+    margin-top: 4px;
+    padding: 4px;
+    width: 256px;
+}
+.dashboard-content button#updateBtn,
+.dashboard-content button#changePwdBtn {
+    border: 2px solid gray;
+    background-color: white;
+    color: black;
+    margin: 0 8px;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.dashboard-content button#updateBtn:hover,
+.dashboard-content button#changePwdBtn:hover {
+    background-color: lightgray;
+}
 .dashboard-sidebar ul {
     list-style-type: none;
     padding: 0;
@@ -182,7 +206,7 @@ button.logout {
     object-fit: cover;
 }
 div#employee-table-container {
-    max-height: 500px;
+    max-height: 750px;
     overflow-x: auto;
     overflow-y: auto;
 }
@@ -194,7 +218,7 @@ div#employee-table-container {
 .dashboard-content table#employee-table tr td,
 .dashboard-content table#employee-table tr th {
     text-align: left;
-    padding: 8px 12px;
+    padding: 4px 8px;
 }
 .dashboard-content table#employee-table tr:nth-child(odd) td {
     text-align: left;
@@ -202,6 +226,18 @@ div#employee-table-container {
 }
 .dashboard-content table#employee-table tr th {
     text-align: center;
+    background-color: lightgray;
+}
+.dashboard-content button#deleteEmp {
+    border: 2px solid gray;
+    background-color: white;
+    color: black;
+    margin: 0 8px;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.dashboard-content button#deleteEmp:hover {
     background-color: lightgray;
 }
 footer p {

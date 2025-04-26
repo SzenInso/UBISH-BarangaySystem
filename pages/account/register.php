@@ -2,16 +2,22 @@
 <?php
     include '../../config/dbconfig.php';
 
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+
     if (isset($_POST['register'])) {
-        $fname = $_POST['fname'];
-        $mname = $_POST['mname'];
-        $lname = $_POST['lname'];
-        $dob = $_POST['dob'];
-        $sex = $_POST['sex'];
-        $address = $_POST['address'];
-        $religion = $_POST['religion'];
-        $civilstatus = $_POST['civilstatus'];
-        $legislature = $_POST['legislature'];
+        $fname = !empty($_POST['fname']) ? trim($_POST['fname']) : null;
+        $mname = !empty($_POST['mname']) ? trim($_POST['mname']) : null;
+        $lname = !empty($_POST['lname']) ? trim($_POST['lname']) : null;
+        $dob = !empty($_POST['dob']) ? $_POST['dob'] : null;
+        $sex = !empty($_POST['sex']) ? $_POST['sex'] : null;
+        $address = !empty($_POST['address']) ? trim($_POST['address']) : null;
+        $religion = !empty($_POST['religion']) ? trim($_POST['religion']) : null;
+        $civilstatus = !empty($_POST['civilstatus']) ? $_POST['civilstatus'] : null;
+        $legislature = !empty($_POST['legislature']) ? $_POST['legislature'] : null;
+        $phonenum = !empty($_POST['phonenum']) ? trim($_POST['phonenum']) : null;
+        $phPhoneNumRegex = '/^09\d{9}$/'; // regex for Philippine phone numbers
 
         $accesslvl = 0; // no access level
         $limitedAccess = array("Sangguniang Kabataan Member", "Other Barangay Personnel");
@@ -39,7 +45,7 @@
             if (in_array($fileExtension, $allowedFileExtensions)) {
                 if ($fileSize <= $maxFileSize) {
                     $newFileName = uniqid() . '.' . $fileExtension;
-                    $targetFilePath = "../../uploads/" . $newFileName;
+                    $targetFilePath = "../../uploads/temp/" . $newFileName;
                     if (move_uploaded_file($fileTmpPath, $targetFilePath)) {
                         $uploadedFilePath = $targetFilePath;
                     } else {
@@ -53,34 +59,74 @@
             }
         }
 
-        $query = "  INSERT INTO employee_details (
-                        first_name, middle_name, last_name, date_of_birth, sex, address, religion, civil_status, legislature, access_level, phone_no, picture
-                    ) VALUES (
-                        :fname, :mname, :lname, :dob, :sex, :address, :religion, :civilstatus, :legislature, :accesslvl, :phonenum, :picture
-                    )";
-        $register = $pdo->prepare($query);
-        $register->execute([
-            ":fname" => $fname,
-            ":mname" => $mname,
-            ":lname" => $lname,
-            ":dob" => $dob,
-            ":sex" => $sex,
-            ":address" => $address,
-            ":religion" => $religion,
-            ":civilstatus" => $civilstatus,
-            ":legislature" => $legislature,
-            ":accesslvl" => $accesslvl,
-            ":phonenum" => $phonenum,
-            ":picture" => $uploadedFilePath
-        ]);
-
-        if ($register) {
-            $emp_id = $pdo->lastInsertId();
-            header('location:../account/signup.php?emp_id=' . $emp_id);
-            exit();
+        if (empty($fname) || empty($mname) || empty($lname) || 
+            empty($dob) || empty($sex) || empty($address) || 
+            empty($religion) || empty($civilstatus) || empty($legislature) || 
+            empty($phonenum) || empty($accesslvl) || empty($uploadedFilePath)) {
+            echo "
+                <script>
+                    alert('Please enter all required fields.');
+                    window.location.href = '../account/register.php';
+                </script>
+            ";
+            exit;
+        } else if (!preg_match($phPhoneNumRegex, $phonenum)) {
+            echo "
+                <script>
+                    alert('Please enter a valid phone number.');
+                    window.location.href = '../account/register.php';
+                </script>
+            ";
+            exit;
+        } else {
+            $registerQuery = "
+                INSERT INTO employee_registration (
+                    first_name, middle_name, last_name, 
+                    date_of_birth, sex, address, 
+                    religion, civil_status, legislature, 
+                    access_level, phone_no, picture
+                ) VALUES (
+                    :fname, :mname, :lname, 
+                    :dob, :sex, :address, 
+                    :religion, :civilstatus, :legislature, 
+                    :accesslvl, :phonenum, :picture
+                )
+            ";
+            $register = $pdo->prepare($registerQuery);
+            $register->execute([
+                ":fname" => $fname,
+                ":mname" => $mname,
+                ":lname" => $lname,
+                ":dob" => $dob,
+                ":sex" => $sex,
+                ":address" => $address,
+                ":religion" => $religion,
+                ":civilstatus" => $civilstatus,
+                ":legislature" => $legislature,
+                ":accesslvl" => $accesslvl,
+                ":phonenum" => $phonenum,
+                ":picture" => $uploadedFilePath
+            ]);
+            
+            if ($register) {
+                $_SESSION['registration_emp_id'] = $pdo->lastInsertId();
+                header('location:../account/signup.php');
+                exit;
+            } else {
+                echo "
+                    <script>
+                        alert('Failed to register employee information. Please try again.');
+                        window.location.href = '../account/register.php';
+                    </script>
+                ";
+            }
         }
     }
-    // place cancel logic here
+    
+    if (isset($_POST['cancel'])) {
+        header('location:../../index.php');
+        exit;
+    }
 ?>
 
 <!DOCTYPE html>
@@ -107,23 +153,23 @@
                 <h1>Register to UBISH</h1>
                 <div class="signup-credentials">
                     <p>First Name</p>
-                    <input type="text" name="fname" placeholder="Enter First Name" required>
+                    <input type="text" name="fname" placeholder="Enter First Name">
                 </div>
                 <div class="signup-credentials">
                     <p>Middle Name</p>
-                    <input type="text" name="mname" placeholder="Enter Middle Name" required>
+                    <input type="text" name="mname" placeholder="Enter Middle Name">
                 </div>
                 <div class="signup-credentials">
                     <p>Last Name</p>
-                    <input type="text" name="lname" placeholder="Enter Last Name" required>
+                    <input type="text" name="lname" placeholder="Enter Last Name">
                 </div>
                 <div class="signup-credentials">
                     <p>Date of Birth</p>
-                    <input type="date" name="dob" required>
+                    <input type="date" name="dob">
                 </div>
                 <div class="signup-credentials">
                     <p>Biological Sex</p>
-                    <select name="sex" required>
+                    <select name="sex">
                         <option value="" disabled selected>Select Biological Sex</option>
                         <option value="M">Male</option>
                         <option value="F">Female</option>
@@ -132,15 +178,15 @@
                 </div>
                 <div class="signup-credentials">
                     <p>Residential Address</p>
-                    <input type="text" name="address" placeholder="Enter Address" required>
+                    <input type="text" name="address" placeholder="Enter Address">
                 </div>
                 <div class="signup-credentials">
                     <p>Religion</p>
-                    <input type="text" name="religion" placeholder="Enter Religion" required>
+                    <input type="text" name="religion" placeholder="Enter Religion">
                 </div>
                 <div class="signup-credentials">
                     <p>Civil Status</p>
-                    <select name="civilstatus" required>
+                    <select name="civilstatus">
                         <option value="" disabled selected>Select Civil Status</option>
                         <option value="Single">Single</option>
                         <option value="Married">Married</option>
@@ -151,7 +197,7 @@
                 </div>
                 <div class="signup-credentials">
                     <p>Legislature</p>
-                    <select name="legislature" required>
+                    <select name="legislature">
                         <option value="" disabled selected>Select Legislature</option>
                         <option value="Punong Barangay">Punong Barangay</option>
                         <option value="Sangguniang Barangay Member">Sangguniang Barangay Member</option>
@@ -164,7 +210,7 @@
                 </div>
                 <div class="signup-credentials">
                     <p>Phone Number</p>
-                    <input type="text" name="phonenum" placeholder="Enter Phone Number" required>
+                    <input type="text" name="phonenum" placeholder="Enter Phone Number">
                 </div>
                 <div class="signup-credentials">
                     <p>Profile Picture</p>
@@ -174,6 +220,7 @@
                         id="profile-preview"
                         src="../../uploads/default_profile.jpg" 
                         alt="Profile Preview"
+                        style="width: 150px; height: 150px; object-fit: cover;"
                     >
                     <script src="../../assets/js/profilePreview.js"></script>
                 </div>

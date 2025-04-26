@@ -8,6 +8,25 @@
     $access->execute([":emp_id" => $_SESSION['emp_id']]);
     $accessLevel = $access->fetchColumn();
 
+    // fetches registration requests
+    $registrationQuery = "
+        SELECT REG.*, EMP.*, LOG.* 
+        FROM registration AS REG
+        JOIN employee_registration AS EMP 
+            ON REG.registration_emp_id = EMP.registration_emp_id
+        JOIN login_registration AS LOG 
+            ON REG.registration_login_id = LOG.registration_login_id
+        WHERE REG.status = 'Pending'
+        ORDER BY REG.request_date DESC
+    ";
+    $registration = $pdo->query($registrationQuery);
+
+    // fetches password !! SENSITIVE !!
+    $passwordQuery = "SELECT password FROM login_details WHERE emp_id = :emp_id";
+    $password = $pdo->prepare($passwordQuery);
+    $password->execute([":emp_id" => $_SESSION['emp_id']]);
+    $passwordHash = $password->fetchColumn();
+
     // fetches single employee details
     $empQuery = "SELECT * FROM employee_details WHERE emp_id = :emp_id";
     $empDetails = $pdo->prepare($empQuery);

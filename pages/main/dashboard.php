@@ -44,7 +44,7 @@
                             echo '<li><a href="../main/employee_table.php">Employee Table</a></li>';
                         }
                         if ($accessLevel >= 3) {
-                            echo '<li><a href="#">Edit Requests</a></li>';
+                            echo '<li><a href="../main/account_requests.php">Account Requests</a></li>';
                         }
                     ?>
                 </ul>
@@ -65,7 +65,6 @@
                     ?>
                 </div>
                 <br>
-                <!-- initial styles -->
                 <style>
                     img#announcementThumbnail {
                         max-width: 400px;
@@ -154,9 +153,7 @@
                                         if (!empty($ann['thumbnail'])) {
                                     ?>
                                             <img src="<?php echo $ann['thumbnail']; ?>" alt="thumbnail_<?php echo $ann['announcement_id']; ?>" id="announcementThumbnail">
-                                    <?php
-                                        }
-                                    ?>
+                                    <?php } ?>
                                     <p><?php echo nl2br(htmlspecialchars($ann['body'])); ?></p>
                                     <?php
                                         if (!empty($ann['file_path'])) {
