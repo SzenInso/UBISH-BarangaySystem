@@ -352,6 +352,15 @@
         .registration-main button:disabled:hover {
             background-color: white;
         }
+        .registration-actions-multiple {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 16px;
+        }
+        .registration-actions-multiple button {
+            margin: 0 8px;
+        }
         .dashboard-content table#registration-requests {
             width: 100%;
             border-collapse: collapse;
@@ -360,7 +369,10 @@
         .dashboard-content table#registration-requests tr td,
         .dashboard-content table#registration-requests tr th {
             text-align: left;
-            padding: 8px 12px;
+            padding: 4px 8px;
+        }
+        .action-btns button {
+            margin: 0 8px;
         }
         .dashboard-content table#registration-requests tr:nth-child(odd) td {
             text-align: left;
@@ -467,7 +479,7 @@
                                                 <td><?php echo $reg['last_name']; ?></td>
                                                 <td><?php echo $reg['username']; ?></td>
                                                 <td><?php echo $reg['status']; ?></td>
-                                                <td>
+                                                <td class="action-btns">
                                                     <button 
                                                         class="view-btn" 
                                                         type="button" 
