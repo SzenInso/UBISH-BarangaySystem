@@ -21,6 +21,12 @@
     ";
     $registration = $pdo->query($registrationQuery);
 
+    // fetches password !! SENSITIVE !!
+    $passwordQuery = "SELECT password FROM login_details WHERE emp_id = :emp_id";
+    $password = $pdo->prepare($passwordQuery);
+    $password->execute([":emp_id" => $_SESSION['emp_id']]);
+    $passwordHash = $password->fetchColumn();
+
     // fetches single employee details
     $empQuery = "SELECT * FROM employee_details WHERE emp_id = :emp_id";
     $empDetails = $pdo->prepare($empQuery);
