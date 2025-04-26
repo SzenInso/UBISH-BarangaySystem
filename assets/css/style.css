@@ -140,6 +140,30 @@ button.logout {
     background-color: #fff;
     overflow-y: auto;
 }
+.account-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.dashboard-content input#changePwdField {
+    margin-top: 4px;
+    padding: 4px;
+    width: 256px;
+}
+.dashboard-content button#updateBtn,
+.dashboard-content button#changePwdBtn {
+    border: 2px solid gray;
+    background-color: white;
+    color: black;
+    margin: 0 8px;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.dashboard-content button#updateBtn:hover,
+.dashboard-content button#changePwdBtn:hover {
+    background-color: lightgray;
+}
 .dashboard-sidebar ul {
     list-style-type: none;
     padding: 0;
