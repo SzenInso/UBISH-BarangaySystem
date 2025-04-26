@@ -160,6 +160,116 @@
             ";
         }
     }
+
+    /* 
+    if (isset($_POST['approve-selected']) && isset($_POST['selection'])) {
+        $selectedIds = $_POST['selection'];
+
+        try {
+            $pdo->beginTransaction();
+
+            foreach ($selectedIds as $selected) {
+                $registrationQuery = "SELECT * FROM registration WHERE registration_id = :registration_id";
+                $registration = $pdo->prepare($registrationQuery);
+                $registration->execute([":registration_id" => $selected]);
+                $registrationDetails = $registration->fetch();
+
+                $fetchEmpApproveQuery = "SELECT * FROM employee_registration WHERE registration_emp_id = :registration_emp_id";
+                $fetchEmpApprove = $pdo->prepare($fetchEmpApproveQuery);
+                $fetchEmpApprove->execute([":registration_emp_id" => $registrationDetails['registration_emp_id']]);
+                $empApprove = $fetchEmpApprove->fetch();
+
+                $empInsertQuery = "
+                    INSERT INTO employee_details (
+                        first_name, middle_name, last_name, 
+                        date_of_birth, sex, address, 
+                        religion, civil_status, legislature, 
+                        access_level, phone_no, picture
+                    ) VALUES (
+                        :fname, :mname, :lname, 
+                        :dob, :sex, :address, 
+                        :religion, :civilstatus, :legislature, 
+                        :accesslvl, :phonenum, :picture
+                    )
+                ";
+                $empInsert = $pdo->prepare($empInsertQuery);
+                $empInsert->execute([
+                    ":fname" => $empApprove['first_name'],
+                    ":mname" => $empApprove['middle_name'],
+                    ":lname" => $empApprove['last_name'],
+                    ":dob" => $empApprove['date_of_birth'],
+                    ":sex" => $empApprove['sex'],
+                    ":address" => $empApprove['address'],
+                    ":religion" => $empApprove['religion'],
+                    ":civilstatus" => $empApprove['civil_status'],
+                    ":legislature" => $empApprove['legislature'],
+                    ":accesslvl" => $empApprove['access_level'],
+                    ":phonenum" => $empApprove['phone_no'],
+                    ":picture" => $empApprove['picture']
+                ]);
+                $empID = $pdo->lastInsertId();
+
+                if ($empApprove['picture'] !== "../../uploads/default_profile.jpg") {
+                    $tempPath = $empApprove['picture'];
+                    $newPath = "../../uploads/profiles/" . basename($tempPath);
+                    if (file_exists($tempPath)) {
+                        $transferPath = rename($tempPath, $newPath);
+                        if (!$transferPath) {
+                            throw new Exception("Failed to move profile picture.");
+                        }
+
+                        $updatePathQuery = "UPDATE employee_details SET picture = :picture WHERE emp_id = :emp_id";
+                        $updatePath = $pdo->prepare($updatePathQuery);
+                        $updatePath->execute([":picture" => $newPath, ":emp_id" => $empID]);
+                        if (!$updatePath) {
+                            throw new Exception("Failed to update profile picture path.");
+                        }
+                    } else {
+                        throw new Exception("Profile picture file not found.");
+                    }
+                }
+
+                $fetchLoginApproveQuery = "SELECT * FROM login_registration WHERE registration_login_id = :registration_login_id";
+                $fetchLoginApprove = $pdo->prepare($fetchLoginApproveQuery);
+                $fetchLoginApprove->execute([":registration_login_id" => $registrationDetails['registration_login_id']]);
+                $loginApprove = $fetchLoginApprove->fetch();
+
+                $loginInsertQuery = "INSERT INTO login_details (emp_id, username, password, email) VALUES (:emp_id, :username, :password, :email)";
+                $loginInsert = $pdo->prepare($loginInsertQuery);
+                $loginInsert->execute([
+                    ":emp_id" => $empID,
+                    ":username" => $loginApprove['username'],
+                    ":password" => $loginApprove['password'],
+                    ":email" => $loginApprove['email']
+                ]);
+
+                $updateRegQuery = "UPDATE registration SET status = 'Approved' WHERE registration_id = :registration_id";
+                $updateReg = $pdo->prepare($updateRegQuery);
+                $updateReg->execute([":registration_id" => $selected]);
+            }
+
+            $approved = $pdo->commit();
+            if ($approved) {
+                echo "
+                    <script>
+                        alert('Selected requests approved successfully.');
+                        window.location.href='../main/account_requests.php';
+                    </script>
+                ";
+            } else {
+                throw new Exception("Failed to approve requests.");
+            }
+        } catch (Exception $e) {
+            $pdo->rollBack();
+            echo "
+                <script>
+                    alert('Failed to approve requests: " . $e->getMessage() . "');
+                    window.location.href='../main/account_requests.php';
+                </script>
+            ";
+        }
+    }
+    */
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -256,7 +366,11 @@
                             } else {
                         ?>
                                 <!-- Multiple selection actions -->
-                                <button type="button" id="viewAllBtn" onclick="toggleRegistrationViewAll(this)">View All</button>
+                                <div class="registration-actions-multiple">
+                                    <button type="button" id="viewAllBtn" onclick="toggleRegistrationViewAll(this)">View All</button>
+                                    <button type="submit" name="approve-selected" class="approve-selected-btn">Approve Selected</button>
+                                    <button type="submit" name="deny-selected" class="deny-selected-btn">Deny Selected</button>
+                                </div>
                                 <table id="registration-requests">
                                     <tr>
                                         <th>Selection</th>
