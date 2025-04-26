@@ -116,21 +116,15 @@
                         <table>
                             <tr>
                                 <td>Current Password:</td>
-                                <td>
-                                    <input type="password" name="old_password" id="changePwdField" placeholder="Enter old password">
-                                </td>
+                                <td><input type="password" name="old_password" id="changePwdField" placeholder="Enter old password"></td>
                             </tr>
                             <tr>
                                 <td>New Password:</td>
-                                <td>
-                                    <input type="password" name="new_password" id="changePwdField" placeholder="Enter new password">
-                                </td>
+                                <td><input type="password" name="new_password" id="changePwdField" placeholder="Enter new password"></td>
                             </tr>
                             <tr>
                                 <td>Confirm New Password:</td>
-                                <td>
-                                    <input type="password" name="confirm_new_password" id="changePwdField" placeholder="Confirm new password">
-                                </td>
+                                <td><input type="password" name="confirm_new_password" id="changePwdField" placeholder="Confirm new password"></td>
                             </tr>
                         </table>
                     </div>

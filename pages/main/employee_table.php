@@ -94,9 +94,7 @@
                                     <td><?php echo $row['phone_no']; ?></td>
                                     <td><?php echo basename($row['picture']); ?></td>
                                 </tr>
-                        <?php
-                            }
-                        ?>
+                        <?php } ?>
                     </table>
                 </div>
             </div>
