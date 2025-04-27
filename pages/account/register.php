@@ -1,129 +1,10 @@
 <!-- PHP CODE -->
 <?php
     include '../../config/dbconfig.php';
-
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
     }
-
-    if (isset($_POST['register'])) {
-        $fname = !empty($_POST['fname']) ? trim($_POST['fname']) : null;
-        $mname = !empty($_POST['mname']) ? trim($_POST['mname']) : null;
-        $lname = !empty($_POST['lname']) ? trim($_POST['lname']) : null;
-        $dob = !empty($_POST['dob']) ? $_POST['dob'] : null;
-        $sex = !empty($_POST['sex']) ? $_POST['sex'] : null;
-        $address = !empty($_POST['address']) ? trim($_POST['address']) : null;
-        $religion = !empty($_POST['religion']) ? trim($_POST['religion']) : null;
-        $civilstatus = !empty($_POST['civilstatus']) ? $_POST['civilstatus'] : null;
-        $legislature = !empty($_POST['legislature']) ? $_POST['legislature'] : null;
-        $phonenum = !empty($_POST['phonenum']) ? trim($_POST['phonenum']) : null;
-        $phPhoneNumRegex = '/^09\d{9}$/'; // regex for Philippine phone numbers
-
-        $accesslvl = 0; // no access level
-        $limitedAccess = array("Sangguniang Kabataan Member", "Other Barangay Personnel");
-        $standardAccess = array("Sangguniang Barangay Member", "Sangguniang Kabataan Chairperson", "Barangay Secretary", "Barangay Treasurer");
-        $fullAccess = array("Punong Barangay");
-        if (in_array($legislature, $limitedAccess)) {
-            $accesslvl = 1; // limited access
-        } elseif (in_array($legislature, $standardAccess)) {
-            $accesslvl = 2; // standard access
-        } elseif (in_array($legislature, $fullAccess)) {
-            $accesslvl = 3; // full access
-        }
-
-        $phonenum = $_POST['phonenum'];
-        $uploadedFilePath = "../../uploads/default_profile.jpg"; // default profile picture path
-        if (isset($_FILES['picture']) && $_FILES['picture']['error'] == UPLOAD_ERR_OK) {
-            $fileTmpPath = $_FILES['picture']['tmp_name'];
-            $fileName = $_FILES['picture']['name'];
-            $fileSize = $_FILES['picture']['size'];
-            $fileType = $_FILES['picture']['type'];
-            $fileExtension = strtolower(pathinfo(basename($fileName), PATHINFO_EXTENSION));
-            $allowedFileExtensions = array('jpg', 'png', 'jpeg');
-            $maxFileSize = 10 * 1024 * 1024; // 10MB
-
-            if (in_array($fileExtension, $allowedFileExtensions)) {
-                if ($fileSize <= $maxFileSize) {
-                    $newFileName = uniqid() . '.' . $fileExtension;
-                    $targetFilePath = "../../uploads/temp/" . $newFileName;
-                    if (move_uploaded_file($fileTmpPath, $targetFilePath)) {
-                        $uploadedFilePath = $targetFilePath;
-                    } else {
-                        echo "<br><p><center>Failed to upload file.<center></p>";
-                    }
-                } else {
-                    echo "<br><p><center>File size exceeds the maximum limit of 10MB.<center></p>";
-                }
-            } else {
-                echo "<br><p><center>Invalid file type. Only PNG, JPG, and JPEG are allowed.<center></p>";
-            }
-        }
-
-        if (empty($fname) || empty($mname) || empty($lname) || 
-            empty($dob) || empty($sex) || empty($address) || 
-            empty($religion) || empty($civilstatus) || empty($legislature) || 
-            empty($phonenum) || empty($accesslvl) || empty($uploadedFilePath)) {
-            echo "
-                <script>
-                    alert('Please enter all required fields.');
-                    window.location.href = '../account/register.php';
-                </script>
-            ";
-            exit;
-        } else if (!preg_match($phPhoneNumRegex, $phonenum)) {
-            echo "
-                <script>
-                    alert('Please enter a valid phone number.');
-                    window.location.href = '../account/register.php';
-                </script>
-            ";
-            exit;
-        } else {
-            $registerQuery = "
-                INSERT INTO employee_registration (
-                    first_name, middle_name, last_name, 
-                    date_of_birth, sex, address, 
-                    religion, civil_status, legislature, 
-                    access_level, phone_no, picture
-                ) VALUES (
-                    :fname, :mname, :lname, 
-                    :dob, :sex, :address, 
-                    :religion, :civilstatus, :legislature, 
-                    :accesslvl, :phonenum, :picture
-                )
-            ";
-            $register = $pdo->prepare($registerQuery);
-            $register->execute([
-                ":fname" => $fname,
-                ":mname" => $mname,
-                ":lname" => $lname,
-                ":dob" => $dob,
-                ":sex" => $sex,
-                ":address" => $address,
-                ":religion" => $religion,
-                ":civilstatus" => $civilstatus,
-                ":legislature" => $legislature,
-                ":accesslvl" => $accesslvl,
-                ":phonenum" => $phonenum,
-                ":picture" => $uploadedFilePath
-            ]);
-            
-            if ($register) {
-                $_SESSION['registration_emp_id'] = $pdo->lastInsertId();
-                header('location:../account/signup.php');
-                exit;
-            } else {
-                echo "
-                    <script>
-                        alert('Failed to register employee information. Please try again.');
-                        window.location.href = '../account/register.php';
-                    </script>
-                ";
-            }
-        }
-    }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -217,7 +98,7 @@
                 </div>
                 <div class="signup-credentials">
                     <p>Profile Picture</p>
-                    <input type="file" id="picture" name="picture" placeholder="Upload Photo">
+                    <input type="file" id="picture" name="picture" placeholder="Upload Photo" accept="image/*">
                     <br>
                     <img 
                         id="profile-preview"
@@ -227,6 +108,123 @@
                     >
                     <script src="../../assets/js/profilePreview.js"></script>
                 </div>
+                <?php
+                    if (isset($_POST['register'])) {
+                        $fname = !empty($_POST['fname']) ? trim($_POST['fname']) : null;
+                        $mname = !empty($_POST['mname']) ? trim($_POST['mname']) : null;
+                        $lname = !empty($_POST['lname']) ? trim($_POST['lname']) : null;
+                        $dob = !empty($_POST['dob']) ? $_POST['dob'] : null;
+                        $sex = !empty($_POST['sex']) ? $_POST['sex'] : null;
+                        $address = !empty($_POST['address']) ? trim($_POST['address']) : null;
+                        $religion = !empty($_POST['religion']) ? trim($_POST['religion']) : null;
+                        $civilstatus = !empty($_POST['civilstatus']) ? $_POST['civilstatus'] : null;
+                        $legislature = !empty($_POST['legislature']) ? $_POST['legislature'] : null;
+                        $phonenum = !empty($_POST['phonenum']) ? trim($_POST['phonenum']) : null;
+                        $phPhoneNumRegex = '/^09\d{9}$/'; // regex for Philippine phone numbers
+                
+                        $accesslvl = 0; // no access level
+                        $limitedAccess = array("Sangguniang Kabataan Member", "Other Barangay Personnel");
+                        $standardAccess = array("Sangguniang Barangay Member", "Sangguniang Kabataan Chairperson", "Barangay Secretary", "Barangay Treasurer");
+                        $fullAccess = array("Punong Barangay");
+                        if (in_array($legislature, $limitedAccess)) {
+                            $accesslvl = 1; // limited access
+                        } elseif (in_array($legislature, $standardAccess)) {
+                            $accesslvl = 2; // standard access
+                        } elseif (in_array($legislature, $fullAccess)) {
+                            $accesslvl = 3; // full access
+                        }
+                
+                        $uploadedFilePath = "../../uploads/default_profile.jpg"; // default profile picture path
+                        if (isset($_FILES['picture']) && $_FILES['picture']['error'] == UPLOAD_ERR_OK) {
+                            $fileTmpPath = $_FILES['picture']['tmp_name'];
+                            $fileName = $_FILES['picture']['name'];
+                            $fileSize = $_FILES['picture']['size'];
+                            $fileType = $_FILES['picture']['type'];
+                            $fileExtension = strtolower(pathinfo(basename($fileName), PATHINFO_EXTENSION));
+                            $allowedFileExtensions = array('jpg', 'png', 'jpeg');
+                            $maxFileSize = 10 * 1024 * 1024; // 10MB
+                
+                            if (in_array($fileExtension, $allowedFileExtensions)) {
+                                if ($fileSize <= $maxFileSize) {
+                                    $newFileName = uniqid() . '.' . $fileExtension;
+                                    $targetFilePath = "../../uploads/temp/" . $newFileName;
+                                    if (move_uploaded_file($fileTmpPath, $targetFilePath)) {
+                                        $uploadedFilePath = $targetFilePath;
+                                    } else {
+                                        echo "<br><p><center>Failed to upload file.<center></p>";
+                                    }
+                                } else {
+                                    echo "<br><p><center>File size exceeds the maximum limit of 10MB.<center></p>";
+                                }
+                            } else {
+                                echo "<br><p><center>Invalid file type. Only PNG, JPG, and JPEG are allowed.<center></p>";
+                            }
+                        }
+                
+                        if (empty($fname) || empty($mname) || empty($lname) || 
+                            empty($dob) || empty($sex) || empty($address) || 
+                            empty($religion) || empty($civilstatus) || empty($legislature) || 
+                            empty($phonenum) || empty($accesslvl) || empty($uploadedFilePath)) {
+                            echo "
+                                <script>
+                                    alert('Please enter all required fields.');
+                                    window.location.href = '../account/register.php';
+                                </script>
+                            ";
+                            exit;
+                        } else if (!preg_match($phPhoneNumRegex, $phonenum)) {
+                            echo "
+                                <script>
+                                    alert('Please enter a valid phone number.');
+                                    window.location.href = '../account/register.php';
+                                </script>
+                            ";
+                            exit;
+                        } else {
+                            $registerQuery = "
+                                INSERT INTO employee_registration (
+                                    first_name, middle_name, last_name, 
+                                    date_of_birth, sex, address, 
+                                    religion, civil_status, legislature, 
+                                    access_level, phone_no, picture
+                                ) VALUES (
+                                    :fname, :mname, :lname, 
+                                    :dob, :sex, :address, 
+                                    :religion, :civilstatus, :legislature, 
+                                    :accesslvl, :phonenum, :picture
+                                )
+                            ";
+                            $register = $pdo->prepare($registerQuery);
+                            $register->execute([
+                                ":fname" => $fname,
+                                ":mname" => $mname,
+                                ":lname" => $lname,
+                                ":dob" => $dob,
+                                ":sex" => $sex,
+                                ":address" => $address,
+                                ":religion" => $religion,
+                                ":civilstatus" => $civilstatus,
+                                ":legislature" => $legislature,
+                                ":accesslvl" => $accesslvl,
+                                ":phonenum" => $phonenum,
+                                ":picture" => $uploadedFilePath
+                            ]);
+                            
+                            if ($register) {
+                                $_SESSION['registration_emp_id'] = $pdo->lastInsertId();
+                                header('location:../account/signup.php');
+                                exit;
+                            } else {
+                                echo "
+                                    <script>
+                                        alert('Failed to register employee information. Please try again.');
+                                        window.location.href = '../account/register.php';
+                                    </script>
+                                ";
+                            }
+                        }
+                    }
+                ?>
                 <div class="signup-btns">
                     <button name="register">Register</button>
                 </div>
