@@ -41,26 +41,7 @@
         <hr>
     </header>
     <main>
-        <?php echo "<center><h1>Homepage</h1></center>" ?>
-        <style>
-            img#announcementThumbnail {
-                aspect-ratio: 3 / 2;
-                width: 100%;
-                max-width: 300px;
-                overflow: hidden;
-            }
-            p#badge {
-                display: inline-block;
-                padding: 0.25em 0.6em;
-                font-size: 0.75rem;
-                font-weight: bold;
-                background-color: lightgray;
-                border-radius: 999px;
-                text-align: center;
-                vertical-align: middle;
-                white-space: nowrap;
-            }
-        </style>
+        <h1 id="homepage"><center>Homepage</center></h1>
         <div class="dashboard-announcements">
             <?php 
                 if (count($publicAnnouncementDetails) < 1) {
@@ -68,7 +49,7 @@
                 } else {
                     foreach ($publicAnnouncementDetails as $ann) {
             ?>
-                        <div class="announcement-card" style="border: 1px solid red;">
+                        <div class="announcement-card">
                             <h2><?php echo $ann['title']; ?></h2>
                             <p>
                                 <strong>Issued By:</strong>&nbsp;<?php echo $ann['first_name'] . ' ' . $ann['last_name']; ?> 
