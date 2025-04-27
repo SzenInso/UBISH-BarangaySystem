@@ -44,32 +44,40 @@
         <h1 id="homepage"><center>Homepage</center></h1>
         <div class="dashboard-announcements">
             <?php 
-                if (count($publicAnnouncementDetails) < 1) {
-                    echo "<p><center>No announcements.</center></p>";
-                } else {
+                if (count($publicAnnouncementDetails) < 1) { echo "<p><center>No announcements.</center></p>"; } else {
                     foreach ($publicAnnouncementDetails as $ann) {
             ?>
                         <div class="announcement-card">
                             <h2><?php echo $ann['title']; ?></h2>
                             <p>
                                 <strong>Issued By:</strong>&nbsp;<?php echo $ann['first_name'] . ' ' . $ann['last_name']; ?> 
-                                <i>(<?php echo $ann['username']; ?>)</i>
+                                <i>(<?php echo $ann['username']; ?>)</i> | 
+                                <?php echo date("F j, Y g:i:s A", strtotime($ann['post_date'])); ?>
                             </p>
-                            <p><?php echo date("F j, Y g:i:s A", strtotime($ann['post_date'])); ?></p>
                             <p id="badge"><?php echo $ann['category'] ?></p><br>
-                            <?php 
-                                if (!empty($ann['thumbnail'])) {
-                            ?>
-                                    <img src="<?php echo str_replace('../', '', $ann['thumbnail']); ?>" alt="thumbnail_<?php echo $ann['announcement_id']; ?>" id="announcementThumbnail">
-                            <?php
-                                }
-                            ?>
+                            <?php if (!empty($ann['thumbnail'])) {?>
+                                <img src="<?php echo str_replace('../', '', $ann['thumbnail']); ?>" alt="thumbnail_<?php echo $ann['announcement_id']; ?>" id="announcementThumbnail">
+                            <?php } ?>
                             <p><?php echo nl2br(htmlspecialchars($ann['body'])); ?></p>
-
+                            <?php 
+                                $announcementAttachments = $attachmentsByAnnouncement[$ann['announcement_id']] ?? [];
+                                if (!empty($announcementAttachments)) {
+                            ?>
+                                <div class="announcement-attachment">
+                                    <h2>Attachments:</h2>
+                                    <?php foreach ($announcementAttachments as $attach) { ?>
+                                        <div>
+                                            <a href="<?php echo htmlspecialchars(str_replace('../', '', $attach['file_path'])); ?>" target="_blank">
+                                                <?php echo htmlspecialchars($attach['file_name']); ?>
+                                            </a>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                            <?php } ?>
                         </div>
             <?php
                     }
-            }
+                }
             ?>
         </div>
     </main>
