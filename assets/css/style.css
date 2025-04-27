@@ -231,6 +231,72 @@ div#employee-table-container {
     text-align: center;
     background-color: lightgray;
 }
+.registration-view, 
+.profile-edit-requests-view {
+    display: none;
+}
+.registration-view.active, 
+.profile-edit-requests-view.active {
+    display: block;
+}
+.registration-main button, 
+.profile-edit-main button {
+    border: 2px solid gray;
+    background-color: white;
+    color: black;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.registration-main button:hover, 
+.profile-edit-main button:hover {
+    background-color: lightgray;
+}
+.registration-main button:disabled, 
+.profile-edit-main button:disabled {
+    opacity: 0.5;
+}
+.registration-main button:disabled:hover, 
+.profile-edit-main button:disabled:hover {
+    background-color: white;
+}
+.registration-actions-multiple, 
+.profile-edit-actions-multiple {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 16px;
+}
+.registration-actions-multiple button, 
+.profile-edit-actions-multiple button {
+    margin: 0 8px;
+}
+.dashboard-content table#registration-requests, 
+.dashboard-content table#profile-edit-requests {
+    width: 100%;
+    border-collapse: collapse;
+    border: 2px solid gray;
+}
+.dashboard-content table#registration-requests tr td,
+.dashboard-content table#profile-edit-requests tr td,
+.dashboard-content table#registration-requests tr th, 
+.dashboard-content table#profile-edit-requests tr th {
+    text-align: left;
+    padding: 4px 8px;
+}
+.action-btns button {
+    margin: 0 8px;
+}
+.dashboard-content table#registration-requests tr:nth-child(odd) td, 
+.dashboard-content table#profile-edit-requests tr:nth-child(odd) td {
+    text-align: left;
+    background-color: rgb(245, 245, 245);
+}
+.dashboard-content table#registration-requests tr th, 
+.dashboard-content table#profile-edit-requests tr th {
+    text-align: center;
+    background-color: lightgray;
+}
 .dashboard-content button#deleteEmp {
     border: 2px solid gray;
     background-color: white;
