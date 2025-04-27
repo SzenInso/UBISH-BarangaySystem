@@ -78,6 +78,7 @@
 
         $username = !empty($_POST['username']) ? trim($_POST['username']) : null;
         $email = !empty($_POST['email']) ? trim($_POST['email']) : null;
+        $reason = !empty($_POST['reason']) ? trim($_POST['reason']) : null;
 
         if (!preg_match($phPhoneNumRegex, $phonenum)) {
             echo "
@@ -134,11 +135,11 @@
                         INSERT INTO employee_update (
                             emp_id, update_first_name, update_middle_name, update_last_name, update_date_of_birth, 
                             update_sex, update_address, update_religion, update_civil_status, update_legislature, 
-                            update_access_level, update_status
+                            update_access_level, update_status, update_reason
                         ) VALUES (
                             :emp_id, :update_first_name, :update_middle_name, :update_last_name, :update_date_of_birth,
                             :update_sex, :update_address, :update_religion, :update_civil_status, :update_legislature,
-                            :update_access_level, 'Pending'
+                            :update_access_level, 'Pending', :update_reason
                         )
                     ";
                     $reviewUpdate = $pdo->prepare($reviewUpdateQuery);
@@ -153,7 +154,8 @@
                         ":update_religion" => $religion,
                         ":update_civil_status" => $civilstatus,
                         ":update_legislature" => $legislature,
-                        ":update_access_level" => $accesslvl
+                        ":update_access_level" => $accesslvl,
+                        ":update_reason" => $reason
                     ]);
 
                     $updateRequest = true;
@@ -216,6 +218,12 @@
             margin-top: 4px;
             padding: 4px;
             width: 256px;
+        }
+        .account-main textarea {
+            padding: 8px;
+            width: 354px;
+            resize: vertical;
+            overflow: hidden;
         }
         .employee-details, .account-details {
             margin: 0 16px;
@@ -388,6 +396,14 @@
                                     <tr>
                                         <td><strong>Email: </strong></td>
                                         <td><input type="email" name="email" placeholder="Update email" value="<?php echo $row['email'] ?>"></td>
+                                    </tr>
+                                </table>
+                                <table>
+                                    <tr>
+                                        <td colspan="2"><h2>Reason for Update</h2></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><textarea name="reason" placeholder="Specify reason"></textarea></td>
                                     </tr>
                                 </table>
                             </div>

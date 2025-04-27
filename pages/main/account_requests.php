@@ -1,6 +1,7 @@
 <?php 
     include '../../config/dbfetch.php';
 
+    // approve individual registration request
     if (isset($_POST['approve'])) {
         $selected = $_POST['approve'];
 
@@ -101,16 +102,17 @@
             }
         } catch (Exception $e) {
             $pdo->rollBack();
+            error_log("Failed to approve request: " . $e->getMessage());
             echo "
                 <script>
-                    alert('Failed to approve request: " . $e->getMessage() . "');
+                    alert('Failed to approve request.');
                     window.location.href='../main/account_requests.php';
                 </script>
             ";
         }
-        
     }
 
+    // deny individual registration request
     if (isset($_POST['deny'])) {
         $selected = $_POST['deny'];
 
@@ -152,15 +154,17 @@
             }
         } catch (Exception $e) {
             $pdo->rollBack();
+            error_log("Failed to deny request: " . $e->getMessage());
             echo "
                 <script>
-                    alert('Failed to deny request: " . $e->getMessage() . "');
+                    alert('Failed to deny request.');
                     window.location.href='../main/account_requests.php';
                 </script>
             ";
         }
     }
 
+    // approve multiple registration requests
     if (isset($_POST['approve-selected']) && isset($_POST['selection'])) {
         $selectedIDs = $_POST['selection'];
 
@@ -260,16 +264,18 @@
             }
         } catch (Exception $e) {
             $pdo->rollBack();
+            error_log("Failed to approve requests: " . $e->getMessage());
             echo "
                 <script>
-                    alert('Failed to approve requests: " . $e->getMessage() . "');
+                    alert('Failed to approve requests.');
                     window.location.href='../main/account_requests.php';
                 </script>
             ";
         }
     }
 
-    if (isset($_POST['deny-selected'])) {
+    // deny multiple registration requests
+    if (isset($_POST['deny-selected']) && isset($_POST['selection'])) {
         $selectedIDs = $_POST['selection'];
 
         try {
@@ -312,9 +318,217 @@
             }
         } catch (Exception $e) {
             $pdo->rollBack();
+            error_log("Failed to deny requests: " . $e->getMessage());
             echo "
                 <script>
-                    alert('Failed to deny requests: " . $e->getMessage() . "');
+                    alert('Failed to deny requests.');
+                    window.location.href='../main/account_requests.php';
+                </script>
+            ";
+        }
+    }
+
+    // approve individual profile edit request
+    if (isset($_POST['approve-update'])) {
+        $selected = $_POST['approve-update'];
+
+        try {
+            $pdo->beginTransaction();
+
+            $updateQuery = "SELECT * FROM employee_update WHERE update_id = :update_id";
+            $update = $pdo->prepare($updateQuery);
+            $update->execute([":update_id" => $selected]);
+            $updateDetails = $update->fetch();
+
+            $approveUpdateQuery = "
+                UPDATE employee_details SET
+                    first_name = :fname, 
+                    middle_name = :mname, 
+                    last_name = :lname, 
+                    date_of_birth = :dob,
+                    sex = :sex,
+                    address = :address,
+                    religion = :religion,
+                    civil_status = :civilstatus,
+                    legislature = :legislature,
+                    access_level = :accesslvl
+                WHERE emp_id = :emp_id
+            ";
+            $approveUpdate = $pdo->prepare($approveUpdateQuery);
+            $approveUpdate->execute([
+                ":fname" => $updateDetails['update_first_name'],
+                ":mname" => $updateDetails['update_middle_name'],
+                ":lname" => $updateDetails['update_last_name'],
+                ":dob" => $updateDetails['update_date_of_birth'],
+                ":sex" => $updateDetails['update_sex'],
+                ":address" => $updateDetails['update_address'],
+                ":religion" => $updateDetails['update_religion'],
+                ":civilstatus" => $updateDetails['update_civil_status'],
+                ":legislature" => $updateDetails['update_legislature'],
+                ":accesslvl" => $updateDetails['update_access_level'],
+                ":emp_id" => $updateDetails['emp_id']
+            ]);
+
+            $updateStatusQuery = "UPDATE employee_update SET update_status = 'Approved' WHERE update_id = :update_id";
+            $updateStatus = $pdo->prepare($updateStatusQuery);
+            $updateStatus->execute([":update_id" => $selected]);
+
+            $approved = $pdo->commit();
+            if ($approved) {
+                echo "
+                    <script>
+                        alert('Update request approved successfully.');
+                        window.location.href='../main/account_requests.php';
+                    </script>
+                ";
+            } else {
+                throw new Exception("Failed to approve update request.");
+            }
+        } catch (Exception $e) {
+            $pdo->rollBack();
+            error_log("Failed to approve update request: " . $e->getMessage());
+            echo "
+                <script>
+                    alert('Failed to approve update request:');
+                </script>
+            ";
+        }
+    }
+
+    // deny individual profile edit request
+    if (isset($_POST['deny-update'])) {
+        $selected = $_POST['deny-update'];
+
+        try {
+            $pdo->beginTransaction();
+
+            $updateQuery = "UPDATE employee_update SET update_status = 'Denied' WHERE update_id = :update_id";
+            $update = $pdo->prepare($updateQuery);
+            $update->execute([":update_id" => $selected]);
+
+            $denied = $pdo->commit();
+            if ($denied) {
+                echo "
+                    <script>
+                        alert('Update request denied successfully.');
+                        window.location.href='../main/account_requests.php';
+                    </script>
+                ";
+            } else {
+                throw new Exception("Failed to deny update request.");
+            }
+        } catch (Exception $e) {
+            $pdo->rollBack();
+            error_log("Failed to deny update request: " . $e->getMessage());
+            echo "
+                <script>
+                    alert('Failed to deny update request.');
+                    window.location.href='../main/account_requests.php';
+                </script>
+            ";
+        }
+    }
+
+    // approve multiple profile edit requests
+    if (isset($_POST['approve-update-selected']) && isset($_POST['updates'])) {
+        $selectedIDs = $_POST['updates'];
+
+        try {
+            $pdo->beginTransaction();
+
+            foreach ($selectedIDs as $selected) {
+                $updateQuery = "SELECT * FROM employee_update WHERE update_id = :update_id";
+                $update = $pdo->prepare($updateQuery);
+                $update->execute([":update_id" => $selected]);
+                $updateDetails = $update->fetch();
+
+                $approveUpdateQuery = "
+                    UPDATE employee_details SET
+                        first_name = :fname, 
+                        middle_name = :mname, 
+                        last_name = :lname, 
+                        date_of_birth = :dob,
+                        sex = :sex,
+                        address = :address,
+                        religion = :religion,
+                        civil_status = :civilstatus,
+                        legislature = :legislature,
+                        access_level = :accesslvl
+                    WHERE emp_id = :emp_id
+                ";
+                $approveUpdate = $pdo->prepare($approveUpdateQuery);
+                $approveUpdate->execute([
+                    ":fname" => $updateDetails['update_first_name'],
+                    ":mname" => $updateDetails['update_middle_name'],
+                    ":lname" => $updateDetails['update_last_name'],
+                    ":dob" => $updateDetails['update_date_of_birth'],
+                    ":sex" => $updateDetails['update_sex'],
+                    ":address" => $updateDetails['update_address'],
+                    ":religion" => $updateDetails['update_religion'],
+                    ":civilstatus" => $updateDetails['update_civil_status'],
+                    ":legislature" => $updateDetails['update_legislature'],
+                    ":accesslvl" => $updateDetails['update_access_level'],
+                    ":emp_id" => $updateDetails['emp_id']
+                ]);
+
+                $updateStatusQuery = "UPDATE employee_update SET update_status = 'Approved' WHERE update_id = :update_id";
+                $updateStatus = $pdo->prepare($updateStatusQuery);
+                $updateStatus->execute([":update_id" => $selected]);
+
+                $approved = $pdo->commit();
+                if ($approved) {
+                    echo "
+                        <script>
+                            alert('Selected update requests approved successfully.');
+                            window.location.href='../main/account_requests.php';
+                        </script>
+                    ";
+                } else {
+                    throw new Exception("Failed to approve update request.");
+                }
+            }
+        } catch (Exception $e) {
+            $pdo->rollBack();
+            error_log("Failed to approve update requests: " . $e->getMessage());
+            echo "
+                <script>
+                    alert('Failed to approve update requests.');
+                    window.location.href='../main/account_requests.php';
+                </script>
+            ";
+        }
+    }
+
+    // deny multiple profile edit requests
+    if (isset($_POST['deny-update-selected']) && isset($_POST['updates'])) {
+        $selectedIDs = $_POST['updates'];
+
+        try {
+            $pdo->beginTransaction();
+
+            foreach ($selectedIDs as $selected) {
+                $updateQuery = "UPDATE employee_update SET update_status = 'Denied' WHERE update_id = :update_id";
+                $update = $pdo->prepare($updateQuery);
+                $update->execute([":update_id" => $selected]);
+            }
+
+            $denied = $pdo->commit();
+            if ($denied) {
+                echo "
+                    <script>
+                        alert('Selected update requests denied successfully.');
+                        window.location.href='../main/account_requests.php';
+                    </script>
+                ";
+            } else {
+                throw new Exception("Failed to deny update requests.");
+            }
+        } catch (Exception $e) {
+            $pdo->rollBack();
+            error_log("Failed to deny update requests: " . $e->getMessage());
+            echo "
+                <script>
+                    alert('Failed to deny update requests.');
                     window.location.href='../main/account_requests.php';
                 </script>
             ";
@@ -329,71 +543,16 @@
     <link rel="stylesheet" href="../../assets/css/style.css">
     <title>UBISH Dashboard | Account Requests</title>
     <style>
-        .registration-view, 
-        .profile-edit-requests-view {
-            display: none;
+        .update-reason {
+            max-width: 500px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
-        .registration-view.active, 
-        .profile-edit-requests-view.active {
-            display: block;
-        }
-        .registration-main button, 
-        .profile-edit-main button {
-            border: 2px solid gray;
-            background-color: white;
-            color: black;
-            padding: 8px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .registration-main button:hover, 
-        .profile-edit-main button:hover {
-            background-color: lightgray;
-        }
-        .registration-main button:disabled, 
-        .profile-edit-main button:disabled {
-            opacity: 0.5;
-        }
-        .registration-main button:disabled:hover, 
-        .profile-edit-main button:disabled:hover {
-            background-color: white;
-        }
-        .registration-actions-multiple, 
-        .profile-edit-actions-multiple {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 16px;
-        }
-        .registration-actions-multiple button, 
-        .profile-edit-actions-multiple button {
-            margin: 0 8px;
-        }
-        .dashboard-content table#registration-requests, 
-        .dashboard-content table#profile-edit-requests {
-            width: 100%;
-            border-collapse: collapse;
-            border: 2px solid gray;
-        }
-        .dashboard-content table#registration-requests tr td,
-        .dashboard-content table#profile-edit-requests tr td,
-        .dashboard-content table#registration-requests tr th, 
-        .dashboard-content table#profile-edit-requests tr th {
-            text-align: left;
-            padding: 4px 8px;
-        }
-        .action-btns button {
-            margin: 0 8px;
-        }
-        .dashboard-content table#registration-requests tr:nth-child(odd) td, 
-        .dashboard-content table#profile-edit-requests tr:nth-child(odd) td {
-            text-align: left;
-            background-color: rgb(245, 245, 245);
-        }
-        .dashboard-content table#registration-requests tr th, 
-        .dashboard-content table#profile-edit-requests tr th {
-            text-align: center;
-            background-color: lightgray;
+        .profile-edit-requests-view p#update-reason {
+            max-width: 1000px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
     </style>
 </head>
@@ -590,7 +749,7 @@
                                                 >
                                             </td>
                                             <td><?php echo $upd['first_name'] . " " . $upd['middle_name'] . " " . $upd['last_name']; ?></td>
-                                            <td><?php echo $upd['update_reason']; ?></td>
+                                            <td class="update-reason"><?php echo $upd['update_reason']; ?></td>
                                             <td><?php echo $upd['update_status']; ?></td>
                                             <td class="action-btns">
                                                 <button 
@@ -600,13 +759,15 @@
                                                 >
                                                     View More
                                                 </button>
-                                                <button name="approve" value="<?php echo $upd['update_id']; ?>">Approve</button>
-                                                <button name="deny" value="<?php echo $upd['update_id']; ?>">Deny</button>
+                                                <button name="approve-update" value="<?php echo $upd['update_id']; ?>">Approve</button>
+                                                <button name="deny-update" value="<?php echo $upd['update_id']; ?>">Deny</button>
                                             </td>
                                         </tr>
                                         <tr colspan="8">
                                             <td colspan="8">
                                                 <div class="profile-edit-requests-view" id="updatesView_<?php echo $upd['update_id']; ?>">
+                                                    <h3>Reason</h3>
+                                                    <p id="update-reason"><?php echo $upd['update_reason']; ?></p>
                                                     <h3>Updates</h3>
                                                     <?php
                                                         $currentValQuery = "SELECT * FROM employee_details WHERE emp_id = :emp_id";
