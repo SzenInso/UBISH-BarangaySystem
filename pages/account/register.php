@@ -98,7 +98,7 @@
                 </div>
                 <div class="signup-credentials">
                     <p>Profile Picture</p>
-                    <input type="file" id="picture" name="picture" placeholder="Upload Photo" accept="image/*">
+                    <input type="file" id="picture" name="picture" placeholder="Upload Photo">
                     <br>
                     <img 
                         id="profile-preview"
@@ -212,7 +212,7 @@
                             
                             if ($register) {
                                 $_SESSION['registration_emp_id'] = $pdo->lastInsertId();
-                                header('location:../account/signup.php');
+                                echo "<script>window.location.href = '../account/signup.php';</script>";
                                 exit;
                             } else {
                                 echo "
