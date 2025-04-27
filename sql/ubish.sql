@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 26, 2025 at 04:56 PM
+-- Generation Time: Apr 27, 2025 at 04:46 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -97,10 +97,12 @@ CREATE TABLE `employee_details` (
 
 INSERT INTO `employee_details` (`emp_id`, `first_name`, `middle_name`, `last_name`, `date_of_birth`, `sex`, `address`, `religion`, `civil_status`, `legislature`, `access_level`, `phone_no`, `picture`) VALUES
 (1001, 'Admin', 'Santos', 'Dela Cruz', '2000-01-01', 'F', 'Philippines', 'Atheist', 'Single', 'Punong Barangay', 3, '09123456789', '../../uploads/default_profile.jpg'),
-(1002, 'Mark Simon', 'Zuilan', 'Bringas', '2005-02-16', 'M', 'Baguio City, Philippines', 'Roman Catholic', 'Single', 'Other Barangay Personnel', 1, '09987654321', '../../uploads/profiles/67ebdf0643e66.jpg'),
-(1004, 'John', 'Smith', 'Doe', '2000-01-02', 'M', 'Philippines', 'Atheist', 'Single', 'Sangguniang Barangay Member', 2, '09111111111', '../../uploads/default_profile.jpg'),
-(1008, 'Jane', 'Smith', 'Doe', '2000-01-02', 'F', 'Philippines', 'Atheist', 'Married', 'Barangay Secretary', 2, '09222222222', '../../uploads/profiles/680cb23623f39.jpg'),
-(1009, 'Jamie', 'Smith', 'Doe', '2000-01-03', 'I', 'Philippines', 'Roman Catholic', 'Single', 'Other Barangay Personnel', 1, '09333333333', '../../uploads/default_profile.jpg');
+(1002, 'Mark Simon', 'Zuilan', 'Bringas', '2005-02-16', 'M', 'Baguio City, Philippines', 'Roman Catholic', 'Single', 'Other Barangay Personnel', 1, '09123456789', '../../uploads/profiles/680e0acd0d07a.jpg'),
+(1004, 'John', 'Smith', 'Doe', '2000-01-02', 'M', 'Philippines', 'Atheist', 'Legally Separated', 'Sangguniang Barangay Member', 2, '09111111111', '../../uploads/default_profile.jpg'),
+(1008, 'Jane', 'Turner', 'Smith', '2000-01-02', 'F', 'Philippines', 'Atheist', 'Legally Separated', 'Barangay Secretary', 2, '09222222222', '../../uploads/profiles/680cb23623f39.jpg'),
+(1009, 'Jamie', 'Smith', 'Brown', '2000-01-03', 'F', 'Philippines', 'Roman Catholic', 'Married', 'Barangay Secretary', 2, '09333333333', '../../uploads/default_profile.jpg'),
+(1013, 'Tarou', 'Tanaka', 'Sakamoto', '1997-11-21', 'M', 'Japan', 'Atheist', 'Married', 'Other Barangay Personnel', 1, '09444444444', '../../uploads/profiles/680e3def12dc7.png'),
+(1014, 'Kento', 'Kokusen', 'Nanami', '1990-07-03', 'M', 'Japan', 'Shinto', 'Single', 'Barangay Secretary', 2, '09555555555', '../../uploads/profiles/680e412a573ca.jpg');
 
 -- --------------------------------------------------------
 
@@ -146,7 +148,52 @@ INSERT INTO `employee_registration` (`registration_emp_id`, `first_name`, `middl
 (216, 'a', 'a', 'a', '1111-11-11', 'F', 'a', 'a', 'Single', 'Other Barangay Personnel', 1, '09999999999', '../../uploads/default_profile.jpg'),
 (217, 'q', 'q', 'q', '1111-11-11', 'M', 'q', 'q', 'Married', 'Punong Barangay', 3, '09111111111', '../../uploads/default_profile.jpg'),
 (218, 's', 's', 's', '1111-11-11', 'M', 's', 's', 'Single', 'Sangguniang Barangay Member', 2, '09111111111', '../../uploads/temp/680cdb61e1987.jpg'),
-(219, 'Hitori', 'Bocchi', 'Gotou', '2009-02-21', 'F', 'Japan', 'Shinto', 'Single', 'Other Barangay Personnel', 1, '09000000000', '../../uploads/temp/680cf3482d20b.jpg');
+(219, 'Hitori', 'Bocchi', 'Gotou', '2009-02-21', 'F', 'Japan', 'Shinto', 'Single', 'Other Barangay Personnel', 1, '09000000000', '../../uploads/temp/680cf3482d20b.jpg'),
+(220, 'a', 'a', 'a', '1111-11-11', 'M', 'a', 'a', 'Single', 'Punong Barangay', 3, '09111111111', '../../uploads/default_profile.jpg'),
+(221, 'a', 'a', 'a', '1111-11-11', 'M', 'a', 'a', 'Single', 'Punong Barangay', 3, '09111111111', '../../uploads/default_profile.jpg'),
+(222, 'Tarou', 'Tanaka', 'Sakamoto', '1997-11-21', 'M', 'Japan', 'Atheist', 'Married', 'Other Barangay Personnel', 1, '09444444444', '../../uploads/temp/680e3def12dc7.png'),
+(223, 'Kento', 'Kokusen', 'Nanami', '1990-07-03', 'M', 'Japan', 'Shinto', 'Single', 'Barangay Secretary', 2, '09555555555', '../../uploads/temp/680e3f3d12fd1.jpg'),
+(224, 'Kento', 'Kokusen', 'Nanami', '1990-07-03', 'M', 'Japan', 'Shinto', 'Single', 'Barangay Secretary', 2, '09555555555', '../../uploads/temp/680e412a573ca.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `employee_update`
+--
+
+CREATE TABLE `employee_update` (
+  `update_id` int(11) NOT NULL,
+  `emp_id` int(11) NOT NULL,
+  `update_first_name` varchar(255) NOT NULL,
+  `update_middle_name` varchar(255) NOT NULL,
+  `update_last_name` varchar(255) NOT NULL,
+  `update_date_of_birth` date NOT NULL,
+  `update_sex` varchar(1) NOT NULL,
+  `update_address` text NOT NULL,
+  `update_religion` varchar(100) NOT NULL,
+  `update_civil_status` varchar(20) NOT NULL,
+  `update_legislature` varchar(100) NOT NULL,
+  `update_access_level` tinyint(4) NOT NULL,
+  `update_status` enum('Pending','Approved','Denied') NOT NULL DEFAULT 'Pending',
+  `update_request_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `update_reason` text DEFAULT 'N/A'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `employee_update`
+--
+
+INSERT INTO `employee_update` (`update_id`, `emp_id`, `update_first_name`, `update_middle_name`, `update_last_name`, `update_date_of_birth`, `update_sex`, `update_address`, `update_religion`, `update_civil_status`, `update_legislature`, `update_access_level`, `update_status`, `update_request_date`, `update_reason`) VALUES
+(401, 1009, 'Jamie', 'Smith', 'Doe', '2000-01-03', 'F', 'Philippines', 'Roman Catholic', 'Single', 'Sangguniang Barangay Member', 2, 'Denied', '2025-04-27 18:58:46', 'N/A'),
+(402, 1002, 'Wanderer', 'Scaramouche', 'Kabukimono', '1525-01-03', 'M', 'Inazuma City, Inazuma', 'Atheist', 'Single', 'Punong Barangay', 3, 'Denied', '2025-04-27 21:12:08', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed enim libero, dictum quis bibendum quis, luctus et ex. Nulla cursus dui id pharetra lacinia. Mauris ac sollicitudin elit. Sed efficitur at dolor eget malesuada. Morbi massa diam, auctor et condimentum nec, interdum non diam. Integer gravida, enim sed facilisis cursus, orci turpis aliquam urna, vitae egestas leo arcu vel nisi. Etiam egestas ligula a interdum cursus. Vestibulum ultricies sit amet diam eget pulvinar. Integer finibus nibh pellentesque orci fringilla feugiat. Vestibulum ut lorem nisi. Maecenas et risus semper, maximus mauris vitae, malesuada neque.'),
+(403, 1009, 'Jamie', 'Smith', 'Brown', '2000-01-03', 'F', 'Philippines', 'Roman Catholic', 'Married', 'Other Barangay Personnel', 1, 'Approved', '2025-04-27 21:46:50', 'Married on January 1, 2005.'),
+(404, 1002, 'Mark Simon', 'Zuilan', 'Bringas', '2005-02-16', 'M', 'Baguio City, Philippines', 'Roman Catholic', 'Single', 'Sangguniang Kabataan Member', 1, 'Denied', '2025-04-27 21:49:50', 'Elected as SK Member in 2023.'),
+(405, 1008, 'Jane', 'Turner', 'Smith', '2000-01-02', 'F', 'Philippines', 'Atheist', 'Legally Separated', 'Barangay Secretary', 2, 'Approved', '2025-04-27 22:01:27', 'Legally separated with John doe on 04/27/2025.'),
+(406, 1004, 'John', 'Smith', 'Doe', '2000-01-02', 'M', 'Philippines', 'Atheist', 'Legally Separated', 'Sangguniang Barangay Member', 2, 'Approved', '2025-04-27 22:02:37', 'Legally separated with Jane Doe on 04/27/2025.'),
+(407, 1009, 'Jamie', 'Smith', 'Brown', '2000-01-03', 'F', 'Philippines', 'Roman Catholic', 'Married', 'Barangay Secretary', 2, 'Approved', '2025-04-27 22:08:26', 'Promoted on 04/27/2025.'),
+(408, 1002, 'Wanderer', 'Scaramouche', 'Kabukimono', '2005-02-16', 'M', 'Baguio City, Philippines', 'Roman Catholic', 'Single', 'Other Barangay Personnel', 1, 'Denied', '2025-04-27 22:12:37', 'Bro I\'m literally Scaramouche.'),
+(409, 1013, 'Tarou', 'Tanaka', 'Sakamoto', '1997-11-21', 'M', 'Japan', 'Shinto', 'Married', 'Other Barangay Personnel', 1, 'Pending', '2025-04-27 22:39:21', 'Converted to Shintoism after marrying.'),
+(410, 1014, 'Kento', 'Kokusen', 'Nanami', '1990-07-03', 'M', 'Kuantan, Malaysia', 'Shinto', 'Single', 'Other Barangay Personnel', 1, 'Pending', '2025-04-27 22:41:12', 'Moved to retirement residence. Stepped down of Secretary position to settle in the new residence.');
 
 -- --------------------------------------------------------
 
@@ -167,11 +214,13 @@ CREATE TABLE `login_details` (
 --
 
 INSERT INTO `login_details` (`user_id`, `emp_id`, `username`, `email`, `password`) VALUES
-(1, 1001, 'admin', 'admin@email.com', '$2y$10$0iylyu1wZasjzL9CnMRLN.8yCdNHV7UITtmyUctM4VRdah17Rjm46'),
+(1, 1001, 'admin', 'admin@email.com', '1234'),
 (2, 1002, 'mbringas', 'mbringas@email.com', '$2y$10$GS81dsvvhFZwDUqRJ73OmOFZgKEzctb9Aod9sb7OOLcHdrZNPTXxi'),
 (4, 1004, 'jdoe', 'jdoe@email.com', '$2y$10$VCPFcQVgrnx1lzn4DxZWbedaopwO.0jAZWLzRMuMkqI7MMIfz5noq'),
 (8, 1008, 'janedoe', 'janedoe@email.com', '$2y$10$8suHYTzlraplsOOpfTltpe/mpQ3tWk4zxlGYB4Pl2vJmUx6wb/Uzu'),
-(9, 1009, 'jamiedoe', 'jamied@email.com', '$2y$10$uEcnXGaJyvI.wzT9iKlgF.PU4YwjgSyjn2q6UhFibszCwK0aPziZ6');
+(9, 1009, 'jamiedoe', 'jamied@email.com', '$2y$10$C0oC34M1ynaxxgdDXhHPxeWKHaVWUCcHB5wGfp6WTjz2VoA2kW4/C'),
+(13, 1013, 'sakamoto', 'sakamoto@tarou.com', '$2y$10$4iHzxPWm9Qmw9ebGUDK1FOE30fc80XjdVvEh0Nk/sHP0p6hPv8b5S'),
+(14, 1014, 'nanami', 'nanami@kento.com', '$2y$10$9CY88e9UqU7MBgVSkWJNY.i3WhhDPSmQnvaJKSmdnZQ2LCzYKRbGe');
 
 -- --------------------------------------------------------
 
@@ -208,7 +257,12 @@ INSERT INTO `login_registration` (`registration_login_id`, `username`, `email`, 
 (316, 'a', 'a@a', '$2y$10$fiy74fASccvgYl3OY3ZMz.2Yc.WPFMgW.9wNyW0IajX0ei47v1i9m'),
 (317, 'q', 'q@q', '$2y$10$FKZZpyn0Sjkth9uCwk9plemLZvlMfTUArGXn4Cx3yqJI20p14hjtO'),
 (318, 's', 's@s', '$2y$10$AV2UNkC32gTESbZddpLqZOI0CZ9JI03gVH/4vjtSbxmBjgP1cqEri'),
-(319, 'bocchi', 'bocchi@the.rock', '$2y$10$SEQTYjpR5QmwUxl.w5KuZuZwwvPKC96rnQaIZdZVO3sJL8L7WGC7C');
+(319, 'bocchi', 'bocchi@the.rock', '$2y$10$SEQTYjpR5QmwUxl.w5KuZuZwwvPKC96rnQaIZdZVO3sJL8L7WGC7C'),
+(320, 'a', 'a@a', '$2y$10$mkbStg9yYL1ODMSHHFf1eOyyB2z1ymPAAXu76HfWu/XNTHFQQu2UC'),
+(321, 'a', 'a@a', '$2y$10$dI/Fr1J/vBPHg/nQA/wYP.MRBfHR.s4K455dtxn4y4p...'),
+(322, 'sakamoto', 'sakamoto@tarou.com', '$2y$10$4iHzxPWm9Qmw9ebGUDK1FOE30fc80XjdVvEh0Nk/sHP0p6hPv8b5S'),
+(323, 'nanami', 'nanami@kento.jjk', '$2y$10$AVJgJ.vxrvQOz5kjdvM5QuGP7AG8ENBqLcPO4FjZprF0WlFlksXOe'),
+(324, 'nanami', 'nanami@kento.jjk', '$2y$10$9CY88e9UqU7MBgVSkWJNY.i3WhhDPSmQnvaJKSmdnZQ2LCzYKRbGe');
 
 -- --------------------------------------------------------
 
@@ -246,7 +300,12 @@ INSERT INTO `registration` (`registration_id`, `registration_emp_id`, `registrat
 (116, 216, 316, 'Approved', '2025-04-26 21:09:37'),
 (117, 217, 317, 'Approved', '2025-04-26 21:10:00'),
 (118, 218, 318, 'Approved', '2025-04-26 21:11:05'),
-(119, 219, 319, 'Pending', '2025-04-26 22:53:19');
+(119, 219, 319, 'Pending', '2025-04-26 22:53:19'),
+(120, 220, 320, 'Denied', '2025-04-27 16:41:17'),
+(121, 221, 321, 'Denied', '2025-04-27 18:56:15'),
+(122, 222, 322, 'Approved', '2025-04-27 22:24:31'),
+(123, 223, 323, 'Denied', '2025-04-27 22:35:59'),
+(124, 224, 324, 'Approved', '2025-04-27 22:38:16');
 
 --
 -- Indexes for dumped tables
@@ -277,6 +336,13 @@ ALTER TABLE `employee_details`
 --
 ALTER TABLE `employee_registration`
   ADD PRIMARY KEY (`registration_emp_id`);
+
+--
+-- Indexes for table `employee_update`
+--
+ALTER TABLE `employee_update`
+  ADD PRIMARY KEY (`update_id`),
+  ADD KEY `fk_emp_id` (`emp_id`);
 
 --
 -- Indexes for table `login_details`
@@ -319,31 +385,37 @@ ALTER TABLE `attachments`
 -- AUTO_INCREMENT for table `employee_details`
 --
 ALTER TABLE `employee_details`
-  MODIFY `emp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1013;
+  MODIFY `emp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1015;
 
 --
 -- AUTO_INCREMENT for table `employee_registration`
 --
 ALTER TABLE `employee_registration`
-  MODIFY `registration_emp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=220;
+  MODIFY `registration_emp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=225;
+
+--
+-- AUTO_INCREMENT for table `employee_update`
+--
+ALTER TABLE `employee_update`
+  MODIFY `update_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=411;
 
 --
 -- AUTO_INCREMENT for table `login_details`
 --
 ALTER TABLE `login_details`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `login_registration`
 --
 ALTER TABLE `login_registration`
-  MODIFY `registration_login_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=320;
+  MODIFY `registration_login_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=325;
 
 --
 -- AUTO_INCREMENT for table `registration`
 --
 ALTER TABLE `registration`
-  MODIFY `registration_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=120;
+  MODIFY `registration_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
 
 --
 -- Constraints for dumped tables
@@ -360,6 +432,12 @@ ALTER TABLE `announcements`
 --
 ALTER TABLE `attachments`
   ADD CONSTRAINT `attachments_ibfk_1` FOREIGN KEY (`announcement_id`) REFERENCES `announcements` (`announcement_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `employee_update`
+--
+ALTER TABLE `employee_update`
+  ADD CONSTRAINT `fk_emp_id` FOREIGN KEY (`emp_id`) REFERENCES `employee_details` (`emp_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `login_details`
