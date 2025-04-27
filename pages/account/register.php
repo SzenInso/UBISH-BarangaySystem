@@ -122,11 +122,6 @@
             }
         }
     }
-    
-    if (isset($_POST['cancel'])) {
-        header('location:../../index.php');
-        exit;
-    }
 ?>
 
 <!DOCTYPE html>
@@ -135,7 +130,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../assets/css/style.css">
-    <title>Register Page</title>
+    <title>UBISH Dashboard | Employee Registration</title>
 </head>
 <body>
     <header>
@@ -144,13 +139,21 @@
                 <img src="../../assets/img/greenwater-village-logo.jpg" alt="Greenwater Village Logo">
                 <h1>UBISH</h1>
             </div>
+            <nav>
+                <ul>
+                    <li>
+                        <a href="../account/login.php">Log In</a>
+                    </li>
+                </ul>
+            </nav>
         </div>
         <hr>
     </header>
     <main>
         <form method="POST" enctype="multipart/form-data">
             <div class="signup-form">
-                <h1>Register to UBISH</h1>
+                <h1>Register to UBISH</h1><br>
+                <a href="../../index.php">← Go Home</a>
                 <div class="signup-credentials">
                     <p>First Name</p>
                     <input type="text" name="fname" placeholder="Enter First Name">
@@ -226,7 +229,6 @@
                 </div>
                 <div class="signup-btns">
                     <button name="register">Register</button>
-                    <button id="cancel" name="cancel">Cancel</button>
                 </div>
             </div>
         </form>

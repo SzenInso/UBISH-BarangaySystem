@@ -67,6 +67,9 @@ form {
 .login-form button:hover {
     background-color: lightgray;
 }
+.login-form a, .signup-form a {
+    color: black;
+}
 .login-credentials {
     margin: 12px 0;
 }

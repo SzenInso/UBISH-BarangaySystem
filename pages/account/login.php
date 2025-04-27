@@ -27,11 +27,6 @@
             echo "<br><p><center>Invalid username or password.</center></p>";
         }
     }
-
-    if (isset($_POST['cancel'])) {
-        header('location:../../index.php');
-        exit;
-    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,7 +34,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../assets/css/style.css">
-    <title>Login Page</title>
+    <title>UBISH Dashboard | Login</title>
 </head>
 <body>
     <header>
@@ -61,7 +56,8 @@
     <main>
         <form method="POST">
             <div class="login-form">
-                <h1>Log In to UBISH</h1>
+                <h1>Log In to UBISH</h1><br>
+                <a href="../../index.php">← Go Home</a>
                 <div class="login-credentials">
                     <p>Username</p>
                     <input type="text" name="username" placeholder="Enter username">
@@ -72,7 +68,6 @@
                 </div>
                 <div class="login-btns">
                     <button name="login">Log In</button>
-                    <button name="cancel">Cancel</button>
                 </div>
             </div>
         </form>
