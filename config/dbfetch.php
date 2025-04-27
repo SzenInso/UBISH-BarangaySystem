@@ -28,9 +28,14 @@
     $passwordHash = $password->fetchColumn();
 
     // fetches single employee details
-    $empQuery = "SELECT * FROM employee_details WHERE emp_id = :emp_id";
+    $empQuery = "
+        SELECT EMP.*, LOG.username, LOG.email FROM employee_details AS EMP
+        JOIN login_details AS LOG ON EMP.emp_id = LOG.emp_id
+        WHERE EMP.emp_id = :emp_id
+    ";
     $empDetails = $pdo->prepare($empQuery);
     $empDetails->execute([":emp_id" => $_SESSION['emp_id']]);
+
 
     // fetches all employee details
     $empAllQuery = "SELECT * FROM employee_details";

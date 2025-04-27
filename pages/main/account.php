@@ -1,8 +1,13 @@
 <?php
     include '../../config/dbfetch.php';
 
+    if (isset($_POST['update'])) {
+        header('location:../main/account_update.php');
+        exit;
+    }
+
     if (isset($_POST['change-password'])) {
-        header('location: change_password.php');
+        header('location:../main/change_password.php');
         exit;
     }
 ?>
@@ -59,52 +64,99 @@
             <?php 
                 foreach ($empDetails as $row) {
             ?>
-                    <img id="employee-picture" src="<?php echo $row['picture']; ?>" alt="Employee Picture">
-                    <table>
-                        <tr>
-                            <td><strong>UBISH Employee ID: </strong></td>
-                            <td><?php echo $row['emp_id']; ?></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Full Name: </strong></td>
-                            <td><?php echo $row['first_name'] . ' ' . $row['middle_name'] . ' ' . $row['last_name']; ?></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Date of Birth: </strong></td>
-                            <td><?php echo date('F j, Y', strtotime($row['date_of_birth'])); ?></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Age: </strong></td>
-                            <td>
-                                <?php
-                                    $birthDate = new DateTime($row['date_of_birth']);
-                                    $today = new DateTime('today');
-                                    $age = $birthDate->diff($today)->y;
-                                    echo $age; 
-                                ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><strong>Address: </strong></td>
-                            <td><?php echo $row['address'] ?></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Religion: </strong></td>
-                            <td><?php echo $row['religion'] ?></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Civil Status: </strong></td>
-                            <td><?php echo $row['civil_status'] ?></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Phone Number: </strong></td>
-                            <td><?php echo $row['phone_no'] ?></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Legislature: </strong></td>
-                            <td><?php echo $row['legislature'] ?></td>
-                        </tr>
-                    </table>
+                    <img 
+                        id="employee-picture" 
+                        src="<?php echo $row['picture']; ?>" 
+                        alt="Employee Picture"
+                        title="<?php echo $row['first_name'] . ' ' . $row['middle_name'] . ' ' . $row['last_name']; ?>"
+                    >
+                    <style>
+                        .account-main {
+                            display: flex;
+                            justify-content: space-between;
+                        }
+                        .employee-details, .account-details {
+                            margin: 0 16px;
+                        }
+                    </style>
+                    <div class="account-main">
+                        <div class="employee-details">
+                            <table>
+                                <tr>
+                                    <td colspan="2"><h2>Employee Details</h2></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>UBISH Employee ID: </strong></td>
+                                    <td><?php echo $row['emp_id']; ?></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Full Name: </strong></td>
+                                    <td><?php echo $row['first_name'] . ' ' . $row['middle_name'] . ' ' . $row['last_name']; ?></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Date of Birth: </strong></td>
+                                    <td><?php echo date('F j, Y', strtotime($row['date_of_birth'])); ?></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Biological Sex: </strong></td>
+                                    <td>
+                                        <?php 
+                                            if ($row['sex'] === 'M')  echo "Male"; 
+                                            elseif ($row['sex'] === 'F')  echo "Female";
+                                            elseif ($row['sex'] === 'I') echo "Intersex";
+                                            else echo "Not Specified";
+                                        ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Age: </strong></td>
+                                    <td>
+                                        <?php
+                                            $birthDate = new DateTime($row['date_of_birth']);
+                                            $today = new DateTime('today');
+                                            $age = $birthDate->diff($today)->y;
+                                            echo $age; 
+                                        ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Address: </strong></td>
+                                    <td><?php echo $row['address'] ?></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Religion: </strong></td>
+                                    <td><?php echo $row['religion'] ?></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Civil Status: </strong></td>
+                                    <td><?php echo $row['civil_status'] ?></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Phone Number: </strong></td>
+                                    <td><?php echo $row['phone_no'] ?></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Legislature: </strong></td>
+                                    <td><?php echo $row['legislature'] ?></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="account-details">
+                            <table>
+                                <tr>
+                                    <td colspan="2"><h2>Account Details</h2></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Username: </strong></td>
+                                    <td><?php echo $row['username']; ?></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Email: </strong></td>
+                                    <td><?php echo $row['email']; ?></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
             <?php } ?>
                 <form method="POST">
                     <div class="account-actions">
