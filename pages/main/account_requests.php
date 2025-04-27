@@ -1,6 +1,7 @@
 <?php 
     include '../../config/dbfetch.php';
 
+    // approve individual registration request
     if (isset($_POST['approve'])) {
         $selected = $_POST['approve'];
 
@@ -101,16 +102,17 @@
             }
         } catch (Exception $e) {
             $pdo->rollBack();
+            error_log("Failed to approve request: " . $e->getMessage());
             echo "
                 <script>
-                    alert('Failed to approve request: " . $e->getMessage() . "');
+                    alert('Failed to approve request.');
                     window.location.href='../main/account_requests.php';
                 </script>
             ";
         }
-        
     }
 
+    // deny individual registration request
     if (isset($_POST['deny'])) {
         $selected = $_POST['deny'];
 
@@ -152,15 +154,17 @@
             }
         } catch (Exception $e) {
             $pdo->rollBack();
+            error_log("Failed to deny request: " . $e->getMessage());
             echo "
                 <script>
-                    alert('Failed to deny request: " . $e->getMessage() . "');
+                    alert('Failed to deny request.');
                     window.location.href='../main/account_requests.php';
                 </script>
             ";
         }
     }
 
+    // approve multiple registration requests
     if (isset($_POST['approve-selected']) && isset($_POST['selection'])) {
         $selectedIDs = $_POST['selection'];
 
@@ -260,16 +264,18 @@
             }
         } catch (Exception $e) {
             $pdo->rollBack();
+            error_log("Failed to approve requests: " . $e->getMessage());
             echo "
                 <script>
-                    alert('Failed to approve requests: " . $e->getMessage() . "');
+                    alert('Failed to approve requests.');
                     window.location.href='../main/account_requests.php';
                 </script>
             ";
         }
     }
 
-    if (isset($_POST['deny-selected'])) {
+    // deny multiple registration requests
+    if (isset($_POST['deny-selected']) && isset($_POST['selection'])) {
         $selectedIDs = $_POST['selection'];
 
         try {
@@ -312,9 +318,217 @@
             }
         } catch (Exception $e) {
             $pdo->rollBack();
+            error_log("Failed to deny requests: " . $e->getMessage());
             echo "
                 <script>
-                    alert('Failed to deny requests: " . $e->getMessage() . "');
+                    alert('Failed to deny requests.');
+                    window.location.href='../main/account_requests.php';
+                </script>
+            ";
+        }
+    }
+
+    // approve individual profile edit request
+    if (isset($_POST['approve-update'])) {
+        $selected = $_POST['approve-update'];
+
+        try {
+            $pdo->beginTransaction();
+
+            $updateQuery = "SELECT * FROM employee_update WHERE update_id = :update_id";
+            $update = $pdo->prepare($updateQuery);
+            $update->execute([":update_id" => $selected]);
+            $updateDetails = $update->fetch();
+
+            $approveUpdateQuery = "
+                UPDATE employee_details SET
+                    first_name = :fname, 
+                    middle_name = :mname, 
+                    last_name = :lname, 
+                    date_of_birth = :dob,
+                    sex = :sex,
+                    address = :address,
+                    religion = :religion,
+                    civil_status = :civilstatus,
+                    legislature = :legislature,
+                    access_level = :accesslvl
+                WHERE emp_id = :emp_id
+            ";
+            $approveUpdate = $pdo->prepare($approveUpdateQuery);
+            $approveUpdate->execute([
+                ":fname" => $updateDetails['update_first_name'],
+                ":mname" => $updateDetails['update_middle_name'],
+                ":lname" => $updateDetails['update_last_name'],
+                ":dob" => $updateDetails['update_date_of_birth'],
+                ":sex" => $updateDetails['update_sex'],
+                ":address" => $updateDetails['update_address'],
+                ":religion" => $updateDetails['update_religion'],
+                ":civilstatus" => $updateDetails['update_civil_status'],
+                ":legislature" => $updateDetails['update_legislature'],
+                ":accesslvl" => $updateDetails['update_access_level'],
+                ":emp_id" => $updateDetails['emp_id']
+            ]);
+
+            $updateStatusQuery = "UPDATE employee_update SET update_status = 'Approved' WHERE update_id = :update_id";
+            $updateStatus = $pdo->prepare($updateStatusQuery);
+            $updateStatus->execute([":update_id" => $selected]);
+
+            $approved = $pdo->commit();
+            if ($approved) {
+                echo "
+                    <script>
+                        alert('Update request approved successfully.');
+                        window.location.href='../main/account_requests.php';
+                    </script>
+                ";
+            } else {
+                throw new Exception("Failed to approve update request.");
+            }
+        } catch (Exception $e) {
+            $pdo->rollBack();
+            error_log("Failed to approve update request: " . $e->getMessage());
+            echo "
+                <script>
+                    alert('Failed to approve update request:');
+                </script>
+            ";
+        }
+    }
+
+    // deny individual profile edit request
+    if (isset($_POST['deny-update'])) {
+        $selected = $_POST['deny-update'];
+
+        try {
+            $pdo->beginTransaction();
+
+            $updateQuery = "UPDATE employee_update SET update_status = 'Denied' WHERE update_id = :update_id";
+            $update = $pdo->prepare($updateQuery);
+            $update->execute([":update_id" => $selected]);
+
+            $denied = $pdo->commit();
+            if ($denied) {
+                echo "
+                    <script>
+                        alert('Update request denied successfully.');
+                        window.location.href='../main/account_requests.php';
+                    </script>
+                ";
+            } else {
+                throw new Exception("Failed to deny update request.");
+            }
+        } catch (Exception $e) {
+            $pdo->rollBack();
+            error_log("Failed to deny update request: " . $e->getMessage());
+            echo "
+                <script>
+                    alert('Failed to deny update request.');
+                    window.location.href='../main/account_requests.php';
+                </script>
+            ";
+        }
+    }
+
+    // approve multiple profile edit requests
+    if (isset($_POST['approve-update-selected']) && isset($_POST['updates'])) {
+        $selectedIDs = $_POST['updates'];
+
+        try {
+            $pdo->beginTransaction();
+
+            foreach ($selectedIDs as $selected) {
+                $updateQuery = "SELECT * FROM employee_update WHERE update_id = :update_id";
+                $update = $pdo->prepare($updateQuery);
+                $update->execute([":update_id" => $selected]);
+                $updateDetails = $update->fetch();
+
+                $approveUpdateQuery = "
+                    UPDATE employee_details SET
+                        first_name = :fname, 
+                        middle_name = :mname, 
+                        last_name = :lname, 
+                        date_of_birth = :dob,
+                        sex = :sex,
+                        address = :address,
+                        religion = :religion,
+                        civil_status = :civilstatus,
+                        legislature = :legislature,
+                        access_level = :accesslvl
+                    WHERE emp_id = :emp_id
+                ";
+                $approveUpdate = $pdo->prepare($approveUpdateQuery);
+                $approveUpdate->execute([
+                    ":fname" => $updateDetails['update_first_name'],
+                    ":mname" => $updateDetails['update_middle_name'],
+                    ":lname" => $updateDetails['update_last_name'],
+                    ":dob" => $updateDetails['update_date_of_birth'],
+                    ":sex" => $updateDetails['update_sex'],
+                    ":address" => $updateDetails['update_address'],
+                    ":religion" => $updateDetails['update_religion'],
+                    ":civilstatus" => $updateDetails['update_civil_status'],
+                    ":legislature" => $updateDetails['update_legislature'],
+                    ":accesslvl" => $updateDetails['update_access_level'],
+                    ":emp_id" => $updateDetails['emp_id']
+                ]);
+
+                $updateStatusQuery = "UPDATE employee_update SET update_status = 'Approved' WHERE update_id = :update_id";
+                $updateStatus = $pdo->prepare($updateStatusQuery);
+                $updateStatus->execute([":update_id" => $selected]);
+
+                $approved = $pdo->commit();
+                if ($approved) {
+                    echo "
+                        <script>
+                            alert('Selected update requests approved successfully.');
+                            window.location.href='../main/account_requests.php';
+                        </script>
+                    ";
+                } else {
+                    throw new Exception("Failed to approve update request.");
+                }
+            }
+        } catch (Exception $e) {
+            $pdo->rollBack();
+            error_log("Failed to approve update requests: " . $e->getMessage());
+            echo "
+                <script>
+                    alert('Failed to approve update requests.');
+                    window.location.href='../main/account_requests.php';
+                </script>
+            ";
+        }
+    }
+
+    // deny multiple profile edit requests
+    if (isset($_POST['deny-update-selected']) && isset($_POST['updates'])) {
+        $selectedIDs = $_POST['updates'];
+
+        try {
+            $pdo->beginTransaction();
+
+            foreach ($selectedIDs as $selected) {
+                $updateQuery = "UPDATE employee_update SET update_status = 'Denied' WHERE update_id = :update_id";
+                $update = $pdo->prepare($updateQuery);
+                $update->execute([":update_id" => $selected]);
+            }
+
+            $denied = $pdo->commit();
+            if ($denied) {
+                echo "
+                    <script>
+                        alert('Selected update requests denied successfully.');
+                        window.location.href='../main/account_requests.php';
+                    </script>
+                ";
+            } else {
+                throw new Exception("Failed to deny update requests.");
+            }
+        } catch (Exception $e) {
+            $pdo->rollBack();
+            error_log("Failed to deny update requests: " . $e->getMessage());
+            echo "
+                <script>
+                    alert('Failed to deny update requests.');
                     window.location.href='../main/account_requests.php';
                 </script>
             ";
@@ -329,58 +543,16 @@
     <link rel="stylesheet" href="../../assets/css/style.css">
     <title>UBISH Dashboard | Account Requests</title>
     <style>
-        .registration-view {
-            display: none;
+        .update-reason {
+            max-width: 500px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
-        .registration-view.active {
-            display: block;
-        }
-        .registration-main button {
-            border: 2px solid gray;
-            background-color: white;
-            color: black;
-            padding: 8px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .registration-main button:hover {
-            background-color: lightgray;
-        }
-        .registration-main button:disabled {
-            opacity: 0.5;
-        }
-        .registration-main button:disabled:hover {
-            background-color: white;
-        }
-        .registration-actions-multiple {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 16px;
-        }
-        .registration-actions-multiple button {
-            margin: 0 8px;
-        }
-        .dashboard-content table#registration-requests {
-            width: 100%;
-            border-collapse: collapse;
-            border: 2px solid gray;
-        }
-        .dashboard-content table#registration-requests tr td,
-        .dashboard-content table#registration-requests tr th {
-            text-align: left;
-            padding: 4px 8px;
-        }
-        .action-btns button {
-            margin: 0 8px;
-        }
-        .dashboard-content table#registration-requests tr:nth-child(odd) td {
-            text-align: left;
-            background-color: rgb(245, 245, 245);
-        }
-        .dashboard-content table#registration-requests tr th {
-            text-align: center;
-            background-color: lightgray;
+        .profile-edit-requests-view p#update-reason {
+            max-width: 1000px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
     </style>
 </head>
@@ -428,10 +600,9 @@
                 <form method="POST">
                     <h1><center>Registration Requests</center></h1>
                     <div class="registration-main">
-                            <?php 
-                            if ($registration->rowCount() < 1) {
-                                echo "<p>No registration requests at the moment.</p>";
-                            } else {
+                        <?php 
+                            if ($registration->rowCount() < 1) { echo "<p>No registration requests at the moment.</p>"; } 
+                            else {
                         ?>
                                 <!-- Multiple selection actions -->
                                 <div class="registration-actions-multiple">
@@ -450,9 +621,7 @@
                                         <th>Status</th>
                                         <th colspan="3">Actions</th>
                                     </tr>
-                                    <?php 
-                                        foreach ($registration as $reg) {
-                                    ?>
+                                    <?php foreach ($registration as $reg) { ?>
                                             <tr>
                                                 <td>
                                                     <center>
@@ -499,9 +668,10 @@
                                                         <p><strong>Date of Birth:</strong> <?php echo date('F j, Y', strtotime($reg['date_of_birth'])); ?></p>
                                                         <p><strong>Sex:</strong> 
                                                             <?php 
-                                                                if ($reg['sex'] == 'M') { echo "Male"; }
-                                                                elseif ($reg['sex'] == 'F') { echo "Female"; }
-                                                                else { echo "Intersex"; }
+                                                                if ($reg['sex'] === 'M') echo "Male";
+                                                                elseif ($reg['sex'] === 'F') echo "Female";
+                                                                elseif ($reg['sex'] === 'I') echo "Intersex";
+                                                                else echo "Not Specified";
                                                             ?>
                                                         </p>
                                                         <p><strong>Address:</strong> <?php echo $reg['address']; ?></p>
@@ -535,16 +705,128 @@
                     <script src="../../assets/js/toggleRegistrationViews.js"></script>
                     <br>
 
-                    <h1><center>Profile Edit Requests</center></h1>
+                    <h1><center>Profile Update Requests</center></h1>
                     <div class="profile-edit-main">
-                        <p>No account edit requests at the moment.</p>
-                    </div>
-                    <br>
+                        <?php
+                            if ($empUpdate->rowCount() < 1) { echo "<p>No profile edit requests at the moment.</p>"; }
+                            else {
+                        ?>
+                                <!-- Multiple selection actions -->
+                                <div class="profile-edit-actions-multiple">
+                                    <button type="button" id="viewAllUpdatesBtn" onclick="toggleProfileEditsViewAll(this)">View All</button>
+                                    <button type="submit" id="approveUpdateSelectedBtn" name="approve-update-selected" class="approve-update-selected-btn" disabled>Approve Selected</button>
+                                    <button type="submit" id="denyUpdateSelectedBtn" name="deny-update-selected" class="deny-update-selected-btn" disabled>Deny Selected</button>
+                                </div>
+                                <table id="profile-edit-requests">
+                                    <tr>
+                                        <th>Selection</th>
+                                        <th>Profile</th>
+                                        <th>Full Name</th>
+                                        <th>Reason</th>
+                                        <th>Status</th>
+                                        <th colspan="3">Actions</th>
+                                    </tr>
+                                    <?php foreach ($empUpdate as $upd) { ?>
+                                        <tr>
+                                            <td>
+                                                <center>
+                                                    <input 
+                                                        type="checkbox" 
+                                                        class="updates-checkbox" 
+                                                        name="updates[]" 
+                                                        value="<?php echo $upd['update_id']; ?>"
+                                                        style="cursor: pointer;"
+                                                    >
+                                                </center>
+                                            </td>
+                                            <td>
+                                                <img 
+                                                    src="<?php echo $upd['picture']; ?>" 
+                                                    alt="<?php echo $upd['first_name'] . " " . $upd['middle_name'] . " " . $upd['last_name']; ?>"
+                                                    title="<?php echo $upd['first_name'] . " " . $upd['middle_name'] . " " . $upd['last_name']; ?>"
+                                                    class="profile-picture"
+                                                    style="width: 75px; height: 75px; border-radius: 50%; object-fit: cover;"
+                                                >
+                                            </td>
+                                            <td><?php echo $upd['first_name'] . " " . $upd['middle_name'] . " " . $upd['last_name']; ?></td>
+                                            <td class="update-reason"><?php echo $upd['update_reason']; ?></td>
+                                            <td><?php echo $upd['update_status']; ?></td>
+                                            <td class="action-btns">
+                                                <button 
+                                                    class="view-update-btn" 
+                                                    type="button" 
+                                                    onclick="toggleProfileEditsView('updatesView_<?php echo $upd['update_id']; ?>', this)"
+                                                >
+                                                    View More
+                                                </button>
+                                                <button name="approve-update" value="<?php echo $upd['update_id']; ?>">Approve</button>
+                                                <button name="deny-update" value="<?php echo $upd['update_id']; ?>">Deny</button>
+                                            </td>
+                                        </tr>
+                                        <tr colspan="8">
+                                            <td colspan="8">
+                                                <div class="profile-edit-requests-view" id="updatesView_<?php echo $upd['update_id']; ?>">
+                                                    <h3>Reason</h3>
+                                                    <p id="update-reason"><?php echo $upd['update_reason']; ?></p>
+                                                    <h3>Updates</h3>
+                                                    <?php
+                                                        $currentValQuery = "SELECT * FROM employee_details WHERE emp_id = :emp_id";
+                                                        $currentVal = $pdo->prepare($currentValQuery);
+                                                        $currentVal->execute([":emp_id" => $upd['emp_id']]);
+                                                        $currentValRow = $currentVal->fetch();
 
-                    <h1><center>Password Reset Requests</center></h1>
-                    <div class="password-reset-main">
-                        <p>No password reset requests at the moment.</p>
+                                                        if ($upd['update_first_name'] !== $currentValRow['first_name']) {
+                                                            echo '<p><strong>First Name:</strong> ' . $currentValRow['first_name'] . ' → ' . $upd['update_first_name'] . '</p>';
+                                                        }
+                                                        if ($upd['update_middle_name'] !== $currentValRow['middle_name']) {
+                                                            echo '<p><strong>Middle Name:</strong> ' . $currentValRow['middle_name'] . ' → ' . $upd['update_middle_name'] . '</p>';
+                                                        }
+                                                        if ($upd['update_last_name'] !== $currentValRow['last_name']) {
+                                                            echo '<p><strong>Last Name:</strong> ' . $currentValRow['last_name'] . ' → ' . $upd['update_last_name'] . '</p>';
+                                                        }
+                                                        if ($upd['update_date_of_birth'] !== $currentValRow['date_of_birth']) {
+                                                            echo '<p><strong>Date of Birth:</strong> ' . 
+                                                                date('F j, Y', strtotime($currentValRow['date_of_birth'])) . 
+                                                                ' → ' . 
+                                                                date('F j, Y', strtotime($upd['update_date_of_birth'])) . '</p>';
+                                                        }
+                                                        if ($upd['update_sex'] !== $currentValRow['sex']) {
+                                                            function formatSex($sex) {
+                                                                if ($sex == 'M') return "Male";
+                                                                elseif ($sex == 'F') return "Female";
+                                                                elseif ($sex == 'I') return "Intersex";
+                                                                else return "Not Specified";
+                                                            }
+                                                            echo '<p><strong>Sex:</strong> ' . formatSex($currentValRow['sex']) . ' → ' . formatSex($upd['update_sex']) . '</p>';
+                                                        }
+                                                        if ($upd['update_address'] !== $currentValRow['address']) {
+                                                            echo '<p><strong>Address:</strong> ' . $currentValRow['address'] . ' → ' . $upd['update_address'] . '</p>';
+                                                        }
+                                                        if ($upd['update_religion'] !== $currentValRow['religion']) {
+                                                            echo '<p><strong>Religion:</strong> ' . $currentValRow['religion'] . ' → ' . $upd['update_religion'] . '</p>';
+                                                        }
+                                                        if ($upd['update_civil_status'] !== $currentValRow['civil_status']) {
+                                                            echo '<p><strong>Civil Status:</strong> ' . $currentValRow['civil_status'] . ' → ' . $upd['update_civil_status'] . '</p>';
+                                                        }
+                                                        if ($upd['update_legislature'] !== $currentValRow['legislature']) {
+                                                            echo '<p><strong>Legislature:</strong> ' . $currentValRow['legislature'] . ' → ' . $upd['update_legislature'] . '</p>';
+                                                        }
+                                                        if ($upd['update_access_level'] !== $currentValRow['access_level']) {
+                                                            $accessLevel = array('Limited Access', 'Standard Access', 'Full Access', 'Administrator');
+                                                            echo '<p><strong>Access Level:</strong> ' . 
+                                                                $accessLevel[$currentValRow['access_level'] - 1] . 
+                                                                ' → ' . 
+                                                                $accessLevel[$upd['update_access_level'] - 1] . '</p>';
+                                                        }
+                                                    ?>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
+                                </table>
+                        <?php } ?>
                     </div>
+                    <script src="../../assets/js/toggleProfileEditsView.js"></script>
                     <br>
                 </form>
             </div>
@@ -554,27 +836,6 @@
         <hr>
         <p><?php echo "&copy; " . date('Y') . " | Unified Barangay Information Service Hub"; ?></p>
     </footer>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const checkboxes = document.querySelectorAll('.selection-checkbox');
-            const approveButton = document.getElementById('approveSelectedBtn');
-            const denyButton = document.getElementById('denySelectedBtn');
-
-            // Function to check if any checkbox is selected
-            function toggleButtons() {
-                const anyChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
-                approveButton.disabled = !anyChecked;
-                denyButton.disabled = !anyChecked;
-            }
-
-            // Add event listeners to all checkboxes
-            checkboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', toggleButtons);
-            });
-
-            // Initial check on page load
-            toggleButtons();
-        });
-    </script>
+    <script src="../../assets/js/checkboxes.js"></script>
 </body>
 </html>

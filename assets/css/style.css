@@ -53,6 +53,9 @@ form {
     align-items: center;
     justify-content: center;
 }
+h1#homepage {
+    margin-bottom: 32px;
+}
 .login-form {
     margin: auto;
 }
@@ -66,6 +69,9 @@ form {
 }
 .login-form button:hover {
     background-color: lightgray;
+}
+.login-form a, .signup-form a {
+    color: black;
 }
 .login-credentials {
     margin: 12px 0;
@@ -150,6 +156,7 @@ button.logout {
     padding: 4px;
     width: 256px;
 }
+.dashboard-content button#postAnnouncement,
 .dashboard-content button#updateBtn,
 .dashboard-content button#changePwdBtn {
     border: 2px solid gray;
@@ -160,6 +167,7 @@ button.logout {
     border-radius: 4px;
     cursor: pointer;
 }
+.dashboard-content button#postAnnouncement:hover,
 .dashboard-content button#updateBtn:hover,
 .dashboard-content button#changePwdBtn:hover {
     background-color: lightgray;
@@ -205,6 +213,92 @@ button.logout {
     margin: 0 auto;
     object-fit: cover;
 }
+/* ANNOUNCEMENTS */
+img#announcementThumbnail {
+    max-width: 500px;
+    max-height: 500px;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    margin: 0 auto;
+}
+.announcement-card p#badge {
+    display: inline-block;
+    padding: 0.25em 0.6em;
+    font-size: 0.75rem;
+    font-weight: bold;
+    background-color: lightgray;
+    border-radius: 999px;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+    margin: 8px 0;
+}
+.announcement-menu {
+    position: relative;
+    margin-right: 16px;
+}
+.announcement-menu button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.kebab-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: white;
+    border: 1px solid lightgray;
+    border-radius: 4px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    display: none;
+}
+.kebab-menu button {
+    display: block;
+    width: 100%;
+    padding: 8px 16px;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+}
+.kebab-menu button:hover {
+    background-color: lightgray;
+}
+.announcement-card {
+    border: 2px solid gray;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 8px 0;
+    padding: 16px;
+}
+.announcement-card-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+.announcement-attachment {
+    margin: 8px 0;
+}
+div#deleteAnnouncement {
+    width: 100%;   
+}
+.delete-announcement-actions {
+    margin: 8px 0 16px;
+}
+.delete-announcement-actions button {
+    border: 2px solid gray;
+    background-color: white;
+    color: black;
+    margin: 0 8px;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.delete-announcement-actions button:hover {
+    background-color: lightgray;
+}
+/* TABLES */
 div#employee-table-container {
     max-height: 750px;
     overflow-x: auto;
@@ -225,6 +319,72 @@ div#employee-table-container {
     background-color: rgb(245, 245, 245);
 }
 .dashboard-content table#employee-table tr th {
+    text-align: center;
+    background-color: lightgray;
+}
+.registration-view, 
+.profile-edit-requests-view {
+    display: none;
+}
+.registration-view.active, 
+.profile-edit-requests-view.active {
+    display: block;
+}
+.registration-main button, 
+.profile-edit-main button {
+    border: 2px solid gray;
+    background-color: white;
+    color: black;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.registration-main button:hover, 
+.profile-edit-main button:hover {
+    background-color: lightgray;
+}
+.registration-main button:disabled, 
+.profile-edit-main button:disabled {
+    opacity: 0.5;
+}
+.registration-main button:disabled:hover, 
+.profile-edit-main button:disabled:hover {
+    background-color: white;
+}
+.registration-actions-multiple, 
+.profile-edit-actions-multiple {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 16px;
+}
+.registration-actions-multiple button, 
+.profile-edit-actions-multiple button {
+    margin: 0 8px;
+}
+.dashboard-content table#registration-requests, 
+.dashboard-content table#profile-edit-requests {
+    width: 100%;
+    border-collapse: collapse;
+    border: 2px solid gray;
+}
+.dashboard-content table#registration-requests tr td,
+.dashboard-content table#profile-edit-requests tr td,
+.dashboard-content table#registration-requests tr th, 
+.dashboard-content table#profile-edit-requests tr th {
+    text-align: left;
+    padding: 4px 8px;
+}
+.action-btns button {
+    margin: 0 8px;
+}
+.dashboard-content table#registration-requests tr:nth-child(odd) td, 
+.dashboard-content table#profile-edit-requests tr:nth-child(odd) td {
+    text-align: left;
+    background-color: rgb(245, 245, 245);
+}
+.dashboard-content table#registration-requests tr th, 
+.dashboard-content table#profile-edit-requests tr th {
     text-align: center;
     background-color: lightgray;
 }

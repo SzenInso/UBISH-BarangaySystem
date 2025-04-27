@@ -156,7 +156,7 @@
                             </div>
                             <input type="file" name="attachments[]" multiple>
                         </div>
-                        <button name="post">Post Announcement</button>
+                        <button name="post" id="postAnnouncement">Post Announcement</button>
                     </form>
                     <!-- ACTUAL CODE -->
                     <?php

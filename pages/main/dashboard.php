@@ -65,69 +65,44 @@
                     ?>
                 </div>
                 <br>
-                <style>
-                    img#announcementThumbnail {
-                        max-width: 400px;
-                        max-height: 300px;
-                        object-fit: cover;
-                    }
-                    p#badge {
-                        display: inline-block;
-                        padding: 0.25em 0.6em;
-                        font-size: 0.75rem;
-                        font-weight: bold;
-                        background-color: lightgray;
-                        border-radius: 999px;
-                        text-align: center;
-                        vertical-align: middle;
-                        white-space: nowrap;
-                    }
-                    .announcement-menu {
-                        position: relative;
-                        margin-right: 16px;
-                    }
-                    .announcement-menu button {
-                        background: none;
-                        border: none;
-                        cursor: pointer;
-                    }
-                    .kebab-menu {
-                        position: absolute;
-                        top: 100%;
-                        right: 0;
-                        background-color: white;
-                        border: 1px solid lightgray;
-                        border-radius: 4px;
-                        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                        z-index: 10;
-                        display: none;
-                    }
-                    .kebab-menu button {
-                        display: block;
-                        width: 100%;
-                        padding: 8px 16px;
-                        background: none;
-                        border: none;
-                        text-align: left;
-                        cursor: pointer;
-                    }
-                    .kebab-menu button:hover {
-                        background-color: lightgray;
-                    }
-                </style>
                 <div class="dashboard-announcements">                  
                     <?php 
-                        if ($announcementDetails->rowCount() < 1) {
-                            echo "<p><center>No announcements.</center></p>";
-                        } else {
-                            foreach ($announcementDetails as $ann) {
+                        if ($announcementDetails->rowCount() < 1) { echo "<p><center>No announcements.</center></p>"; } else {
+                            $announcements = [];
+
+                            foreach ($announcementDetails as $row) {
+                                $announcement_id = $row['announcement_id'];
+
+                                if (!isset($announcements[$announcement_id])) {
+                                    $announcements[$announcement_id] = [
+                                        'announcement_id' => $row['announcement_id'],
+                                        'title' => $row['title'],
+                                        'body' => $row['body'],
+                                        'category' => $row['category'],
+                                        'thumbnail' => $row['thumbnail'],
+                                        'post_date' => $row['post_date'],
+                                        'first_name' => $row['first_name'],
+                                        'last_name' => $row['last_name'],
+                                        'username' => $row['username'],
+                                        'attachments' => []
+                                    ];
+                                }
+
+                                if (!empty($row['file_path'])) {
+                                    $announcements[$announcement_id]['attachments'][] = [
+                                        'file_name' => $row['file_name'],
+                                        'file_path' => $row['file_path']
+                                    ];
+                                }
+                            }
+
+                            foreach ($announcements as $ann) {
                     ?>
-                                <div class="announcement-card" style="border: 1px solid red;">
-                                    <div style="display: flex; justify-content: space-between;">
+                                <div class="announcement-card">
+                                    <!-- title and menu -->
+                                    <div class="announcement-card-wrapper">
                                         <h2><?php echo $ann['title']; ?></h2>
-                                        <?php 
-                                            if ($accessLevel >= 2) {
-                                        ?>
+                                        <?php if ($accessLevel >= 2) { ?>
                                                 <div class="announcement-menu">
                                                     <button class="kebab-btn"><p style="font-size: x-large;">⁝</p></button>
                                                     <div class="kebab-menu">
@@ -143,28 +118,34 @@
                                                 </div>
                                         <?php } ?>
                                     </div>
+                                    <!-- announcement author & announcement date -->
                                     <p>
                                         <strong>Issued By:</strong>&nbsp;<?php echo $ann['first_name'] . ' ' . $ann['last_name']; ?> 
-                                        <i>(<?php echo $ann['username']; ?>)</i>
+                                        <i>(<?php echo $ann['username']; ?>)</i> | 
+                                        <?php echo date("F j, Y g:i:s A", strtotime($ann['post_date'])); ?>
                                     </p>
-                                    <p><?php echo date("F j, Y g:i:s A", strtotime($ann['post_date'])); ?></p>
-                                    <p id="badge"><?php echo $ann['category'] ?></p><br>
-                                    <?php 
-                                        if (!empty($ann['thumbnail'])) {
-                                    ?>
-                                            <img src="<?php echo $ann['thumbnail']; ?>" alt="thumbnail_<?php echo $ann['announcement_id']; ?>" id="announcementThumbnail">
+                                    <!-- category badge -->
+                                    <p id="badge"><?php echo $ann['category'] ?></p><br>      
+                                    <!-- thumbnail -->                      
+                                    <?php if (!empty($ann['thumbnail'])) { ?>
+                                        <img src="<?php echo $ann['thumbnail']; ?>" alt="thumbnail_<?php echo $ann['announcement_id']; ?>" id="announcementThumbnail">
                                     <?php } ?>
+                                    <!-- announcement body -->
                                     <p><?php echo nl2br(htmlspecialchars($ann['body'])); ?></p>
-                                    <?php
-                                        if (!empty($ann['file_path'])) {
-                                            echo '<a href="'. $ann['file_path'] . '" target="_blank">' . $ann['file_name'] . '</a>';
-                                        }
-                                    ?>
+                                    <!-- announcement attachments -->
+                                    <?php if (!empty($ann['attachments'])) { ?>
+                                        <div class="announcement-attachment">
+                                            <h2>Attachments:</h2>
+                                            <?php foreach ($ann['attachments'] as $attachment) { ?>
+                                                <a href="<?php echo $attachment['file_path']; ?>" target="_blank"><?php echo $attachment['file_name']; ?></a><br>
+                                            <?php } ?>
+                                        </div>
+                                    <?php } ?>
                                     <input type="hidden" name="announcement_id" value="<?php echo $ann['announcement_id']; ?>">
                                 </div>
                     <?php
-                            }
-                    }
+                            }         
+                        }
                     ?>
                 </div>
             </div>
