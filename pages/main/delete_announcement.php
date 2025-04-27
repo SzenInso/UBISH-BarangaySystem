@@ -15,6 +15,13 @@
                 </script>
             ";
         }
+
+        // fetch attachments separately
+        $attachmentQuery = "SELECT * FROM attachments WHERE announcement_id = :announcement_id";
+        $attachmentsStmt = $pdo->prepare($attachmentQuery);
+        $attachmentsStmt->execute([":announcement_id" => $announcementID]);
+        $attachments = $attachmentsStmt->fetchAll();
+
     } else {
         echo "
             <script>
@@ -30,8 +37,11 @@
             $pdo->beginTransaction();
 
             // physically deletes attachments
-            if (!empty($announcement['file_path']) && file_exists($announcement['file_path'])) {
-                unlink('../../uploads/attachments/' . $announcement['file_path']);
+            foreach ($attachments as $attach) {
+                $filePath = '../../uploads/attachments/' . $attach['file_path'];
+                if (!empty($attach['file_path']) && file_exists($filePath)) {
+                    unlink($filePath);
+                }
             }
             if (!empty($announcement['thumbnail']) && file_exists($announcement['thumbnail'])) {
                 unlink('../../uploads/attachments/' . $announcement['thumbnail']);
@@ -126,42 +136,6 @@
                     ?>
                 </ul>
             </div>
-            <style>
-                img#announcementThumbnail {
-                    max-width: 400px;
-                    max-height: 300px;
-                    object-fit: cover;
-                }
-                p#badge {
-                    display: inline-block;
-                    padding: 0.25em 0.6em;
-                    font-size: 0.75rem;
-                    font-weight: bold;
-                    background-color: lightgray;
-                    border-radius: 999px;
-                    text-align: center;
-                    vertical-align: middle;
-                    white-space: nowrap;
-                }
-                div#deleteAnnouncement {
-                    width: 100%;   
-                }
-                .delete-announcement-actions {
-                    margin: 8px 0 16px;
-                }
-                .delete-announcement-actions button {
-                    border: 2px solid gray;
-                    background-color: white;
-                    color: black;
-                    margin: 0 8px;
-                    padding: 8px;
-                    border-radius: 4px;
-                    cursor: pointer;
-                }
-                .delete-announcement-actions button:hover {
-                    background-color: lightgray;
-                }
-            </style>
             <div class="dashboard-content">
                 <h1>Delete Announcement</h1>
                 <p>Are you sure you want to delete this announcement?</p>
@@ -171,7 +145,7 @@
                         <button name="cancel">Cancel</button>
                     </div>
                 </form>
-                <div class="announcement-card" id="deleteAnnouncement" style="border: 1px solid red;">
+                <div class="announcement-card" id="deleteAnnouncement">
                     <h2><?php echo htmlspecialchars($announcement['title']); ?></h2>
                     <p>
                         <strong>Issued By:</strong>&nbsp;
@@ -190,8 +164,17 @@
                         <img src="<?php echo htmlspecialchars($announcement['thumbnail']); ?>" alt="thumbnail_<?php echo htmlspecialchars($announcement['announcement_id']); ?>" id="announcementThumbnail">
                     <?php } ?>
                     <p><?php echo nl2br(htmlspecialchars($announcement['body'])); ?></p>
-                    <?php if (!empty($announcement['file_path'])) { ?>
-                        <a href="<?php echo htmlspecialchars($announcement['file_path']); ?>" target="_blank"><?php echo htmlspecialchars($announcement['file_name']); ?></a>
+                    <?php if (!empty($attachments)) { ?>
+                        <div class="announcement-attachment">
+                            <h2>Attachments:</h2>
+                            <?php foreach ($attachments as $attach) { ?>
+                                <div>
+                                    <a href="<?php echo htmlspecialchars($attach['file_path']); ?>" target="_blank">
+                                        <?php echo htmlspecialchars($attach['file_name']); ?>
+                                    </a>
+                                </div>
+                            <?php } ?>
+                        </div>
                     <?php } ?>
                 </div>
             </div>
