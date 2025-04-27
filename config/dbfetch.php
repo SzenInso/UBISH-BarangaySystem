@@ -21,6 +21,15 @@
     ";
     $registration = $pdo->query($registrationQuery);
 
+    // fetches profile edit requests
+    $empUpdateQuery = "
+        SELECT UPD.*, EMP.* FROM employee_update AS UPD
+        JOIN employee_details AS EMP ON UPD.emp_id = EMP.emp_id
+        WHERE UPD.update_status = 'Pending'
+        ORDER BY UPD.update_request_date DESC
+    ";
+    $empUpdate = $pdo->query($empUpdateQuery);
+
     // fetches password !! SENSITIVE !!
     $passwordQuery = "SELECT password FROM login_details WHERE emp_id = :emp_id";
     $password = $pdo->prepare($passwordQuery);
@@ -35,7 +44,6 @@
     ";
     $empDetails = $pdo->prepare($empQuery);
     $empDetails->execute([":emp_id" => $_SESSION['emp_id']]);
-
 
     // fetches all employee details
     $empAllQuery = "SELECT * FROM employee_details";
