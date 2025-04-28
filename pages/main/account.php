@@ -1,24 +1,26 @@
 <?php
-    include '../../config/dbfetch.php';
+include '../../config/dbfetch.php';
 
-    if (isset($_POST['update'])) {
-        header('location:../main/account_update.php');
-        exit;
-    }
+if (isset($_POST['update'])) {
+    header('location:../main/account_update.php');
+    exit;
+}
 
-    if (isset($_POST['change-password'])) {
-        header('location:../main/change_password.php');
-        exit;
-    }
+if (isset($_POST['change-password'])) {
+    header('location:../main/change_password.php');
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../assets/css/style.css">
     <title>UBISH Dashboard | Account</title>
 </head>
+
 <body>
     <header>
         <div class="navigation">
@@ -42,40 +44,41 @@
         <div class="dashboard-main">
             <div class="dashboard-sidebar">
                 <ul>
-                    <li><a href="../main/dashboard.php">Home</a></li>
-                    <li class="active"><a href="../main/account.php">Account</a></li>
+                    <li class="active"><a href="../main/dashboard.php">Home</a></li>
+                    <li><a href="../main/account.php">Account</a></li>
                     <?php
-                        // placeholder access control pages
-                        if ($accessLevel >= 1) {
-                            echo '<li><a href="#">Documents</a></li>';
-                            echo '<li><a href="../main/announcements.php">Post Announcement</a></li>';
-                        }
-                        if ($accessLevel >= 2) {
-                            echo '<li><a href="../main/employee_table.php">Employee Table</a></li>';
-                        }
-                        if ($accessLevel >= 3) {
-                            echo '<li><a href="../main/account_requests.php">Account Requests</a></li>';
-                        }
+                    // placeholder access control pages
+                    if ($accessLevel >= 1) {
+                        echo '<li><a href="../main/documents.php">Documents</a></li>';
+                        echo '<li><a href="../main/announcements.php">Post Announcement</a></li>';
+                    }
+                    if ($accessLevel >= 2) {
+                        echo '<li><a href="../main/employee_table.php">Employee Table</a></li>';
+                    }
+                    if ($accessLevel >= 3) {
+                        echo '<li><a href="../main/account_requests.php">Account Requests</a></li>';
+                    }
                     ?>
+                    <li><a href="../main/reports.php">Reports</a></li>
                 </ul>
             </div>
             <div class="dashboard-content">
-                <h1><center>Account Page</center></h1><br>
-            <?php 
+                <h1>
+                    <center>Account Page</center>
+                </h1><br>
+                <?php
                 foreach ($empDetails as $row) {
-            ?>
-                    <img 
-                        id="employee-picture" 
-                        src="<?php echo $row['picture']; ?>" 
-                        alt="Employee Picture"
-                        title="<?php echo $row['first_name'] . ' ' . $row['middle_name'] . ' ' . $row['last_name']; ?>"
-                    >
+                    ?>
+                    <img id="employee-picture" src="<?php echo $row['picture']; ?>" alt="Employee Picture"
+                        title="<?php echo $row['first_name'] . ' ' . $row['middle_name'] . ' ' . $row['last_name']; ?>">
                     <style>
                         .account-main {
                             display: flex;
                             justify-content: space-between;
                         }
-                        .employee-details, .account-details {
+
+                        .employee-details,
+                        .account-details {
                             margin: 0 16px;
                         }
                     </style>
@@ -83,7 +86,9 @@
                         <div class="employee-details">
                             <table>
                                 <tr>
-                                    <td colspan="2"><h2>Employee Details</h2></td>
+                                    <td colspan="2">
+                                        <h2>Employee Details</h2>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td><strong>UBISH Employee ID: </strong></td>
@@ -91,7 +96,8 @@
                                 </tr>
                                 <tr>
                                     <td><strong>Full Name: </strong></td>
-                                    <td><?php echo $row['first_name'] . ' ' . $row['middle_name'] . ' ' . $row['last_name']; ?></td>
+                                    <td><?php echo $row['first_name'] . ' ' . $row['middle_name'] . ' ' . $row['last_name']; ?>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td><strong>Date of Birth: </strong></td>
@@ -100,11 +106,15 @@
                                 <tr>
                                     <td><strong>Biological Sex: </strong></td>
                                     <td>
-                                        <?php 
-                                            if ($row['sex'] === 'M')  echo "Male"; 
-                                            elseif ($row['sex'] === 'F')  echo "Female";
-                                            elseif ($row['sex'] === 'I') echo "Intersex";
-                                            else echo "Not Specified";
+                                        <?php
+                                        if ($row['sex'] === 'M')
+                                            echo "Male";
+                                        elseif ($row['sex'] === 'F')
+                                            echo "Female";
+                                        elseif ($row['sex'] === 'I')
+                                            echo "Intersex";
+                                        else
+                                            echo "Not Specified";
                                         ?>
                                     </td>
                                 </tr>
@@ -112,10 +122,10 @@
                                     <td><strong>Age: </strong></td>
                                     <td>
                                         <?php
-                                            $birthDate = new DateTime($row['date_of_birth']);
-                                            $today = new DateTime('today');
-                                            $age = $birthDate->diff($today)->y;
-                                            echo $age; 
+                                        $birthDate = new DateTime($row['date_of_birth']);
+                                        $today = new DateTime('today');
+                                        $age = $birthDate->diff($today)->y;
+                                        echo $age;
                                         ?>
                                     </td>
                                 </tr>
@@ -144,7 +154,9 @@
                         <div class="account-details">
                             <table>
                                 <tr>
-                                    <td colspan="2"><h2>Account Details</h2></td>
+                                    <td colspan="2">
+                                        <h2>Account Details</h2>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td><strong>Username: </strong></td>
@@ -157,11 +169,12 @@
                             </table>
                         </div>
                     </div>
-            <?php } ?>
+                <?php } ?>
                 <form method="POST">
                     <div class="account-actions">
                         <button type="submit" name="update" class="update-btn" id="updateBtn">Update Account</button>
-                        <button type="submit" name="change-password" class="change-password" id="changePwdBtn">Change Password</button>
+                        <button type="submit" name="change-password" class="change-password" id="changePwdBtn">Change
+                            Password</button>
                     </div>
                 </form>
             </div>
@@ -172,4 +185,5 @@
         <p><?php echo "&copy; " . date('Y') . " | Unified Barangay Information Service Hub"; ?></p>
     </footer>
 </body>
+
 </html>
