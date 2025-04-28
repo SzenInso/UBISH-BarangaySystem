@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
             };
             reader.readAsDataURL(file);
         } else {
-            preview.src = '../uploads/default_profile.jpg'; // else, display default image
+            preview.src = '../../uploads/default_profile.jpg'; // else, display default image
         }
     });
 });
