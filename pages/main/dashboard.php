@@ -37,7 +37,7 @@
                     <?php
                         // placeholder access control pages
                         if ($accessLevel >= 1) {
-                            echo '<li><a href="../main/documents.php">Documents</a></li>';
+                            echo '<li><a href="#">Documents</a></li>';
                             echo '<li><a href="../main/announcements.php">Post Announcement</a></li>';
                         }
                         if ($accessLevel >= 2) {
@@ -47,7 +47,6 @@
                             echo '<li><a href="../main/account_requests.php">Account Requests</a></li>';
                         }
                     ?>
-                    <li><a href="../main/reports.php">Reports</a></li>
                 </ul>
             </div>
             <div class="dashboard-content">
@@ -85,7 +84,6 @@
                                         'first_name' => $row['first_name'],
                                         'last_name' => $row['last_name'],
                                         'username' => $row['username'],
-                                        'last_updated' => $row['last_updated'],
                                         'attachments' => []
                                     ];
                                 }
@@ -125,11 +123,7 @@
                                         <strong>Issued By:</strong>&nbsp;<?php echo $ann['first_name'] . ' ' . $ann['last_name']; ?> 
                                         <i>(<?php echo $ann['username']; ?>)</i> | 
                                         <?php echo date("F j, Y g:i:s A", strtotime($ann['post_date'])); ?>
-                                        <?php if (!empty($ann['last_updated'])): ?>
-                                            <span style="color: gray; font-style: italic;"> (edited: <?php echo date("F j, Y g:i:s A", strtotime($ann['last_updated'])); ?>)</span>
-                                        <?php endif; ?>
-                                    </p>    
-                                    
+                                    </p>
                                     <!-- category badge -->
                                     <p id="badge"><?php echo $ann['category'] ?></p><br>      
                                     <!-- thumbnail -->                      
