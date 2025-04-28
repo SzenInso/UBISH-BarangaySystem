@@ -94,8 +94,8 @@ if (isset($_POST['cancel'])) {
         <div class="dashboard-main">
             <div class="dashboard-sidebar">
                 <ul>
-                    <li class="active"><a href="../main/dashboard.php">Home</a></li>
-                    <li><a href="../main/account.php">Account</a></li>
+                    <li><a href="../main/dashboard.php">Home</a></li>
+                    <li class="active"><a href="../main/account.php">Account</a></li>
                     <?php
                     // placeholder access control pages
                     if ($accessLevel >= 1) {

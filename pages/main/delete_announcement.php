@@ -121,13 +121,13 @@ if (isset($_POST['cancel'])) {
         <div class="dashboard-main">
             <div class="dashboard-sidebar">
                 <ul>
-                    <li class="active"><a href="../main/dashboard.php">Home</a></li>
+                    <li><a href="../main/dashboard.php">Home</a></li>
                     <li><a href="../main/account.php">Account</a></li>
                     <?php
                     // placeholder access control pages
                     if ($accessLevel >= 1) {
                         echo '<li><a href="../main/documents.php">Documents</a></li>';
-                        echo '<li><a href="../main/announcements.php">Post Announcement</a></li>';
+                        echo '<li class="active"><a href="../main/announcements.php">Post Announcement</a></li>';
                     }
                     if ($accessLevel >= 2) {
                         echo '<li><a href="../main/employee_table.php">Employee Table</a></li>';
@@ -168,7 +168,7 @@ if (isset($_POST['cancel'])) {
                             alt="thumbnail_<?php echo htmlspecialchars($announcement['announcement_id']); ?>"
                             id="announcementThumbnail">
                     <?php } ?>
-                    <p><?php echo nl2br(htmlspecialchars($announcement['body'])); ?></p>
+                    <p id="announcementBody"><?php echo nl2br(htmlspecialchars($announcement['body'])); ?></p>
                     <?php if (!empty($attachments)) { ?>
                         <div class="announcement-attachment">
                             <h2>Attachments:</h2>

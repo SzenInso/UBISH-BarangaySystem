@@ -76,7 +76,7 @@ $documentTypeData = $stmt3->fetchAll(PDO::FETCH_ASSOC);
         <div class="dashboard-main">
             <div class="dashboard-sidebar">
                 <ul>
-                    <li class="active"><a href="../main/dashboard.php">Home</a></li>
+                    <li><a href="../main/dashboard.php">Home</a></li>
                     <li><a href="../main/account.php">Account</a></li>
                     <?php
                     // placeholder access control pages
@@ -91,7 +91,7 @@ $documentTypeData = $stmt3->fetchAll(PDO::FETCH_ASSOC);
                         echo '<li><a href="../main/account_requests.php">Account Requests</a></li>';
                     }
                     ?>
-                    <li><a href="../main/reports.php">Reports</a></li>
+                    <li class="active"><a href="../main/reports.php">Reports</a></li>
                 </ul>
             </div>
             <div class="dashboard-content">
