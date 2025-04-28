@@ -137,7 +137,7 @@
                                         <img src="<?php echo $ann['thumbnail']; ?>" alt="thumbnail_<?php echo $ann['announcement_id']; ?>" id="announcementThumbnail">
                                     <?php } ?>
                                     <!-- announcement body -->
-                                    <p><?php echo nl2br(htmlspecialchars($ann['body'])); ?></p>
+                                    <p id="announcementBody"><?php echo nl2br(htmlspecialchars($ann['body'])); ?></p>
                                     <!-- announcement attachments -->
                                     <?php if (!empty($ann['attachments'])) { ?>
                                         <div class="announcement-attachment">

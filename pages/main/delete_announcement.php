@@ -168,7 +168,7 @@ if (isset($_POST['cancel'])) {
                             alt="thumbnail_<?php echo htmlspecialchars($announcement['announcement_id']); ?>"
                             id="announcementThumbnail">
                     <?php } ?>
-                    <p><?php echo nl2br(htmlspecialchars($announcement['body'])); ?></p>
+                    <p id="announcementBody"><?php echo nl2br(htmlspecialchars($announcement['body'])); ?></p>
                     <?php if (!empty($attachments)) { ?>
                         <div class="announcement-attachment">
                             <h2>Attachments:</h2>

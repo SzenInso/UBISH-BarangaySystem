@@ -58,7 +58,7 @@
                             <?php if (!empty($ann['thumbnail'])) {?>
                                 <img src="<?php echo str_replace('../', '', $ann['thumbnail']); ?>" alt="thumbnail_<?php echo $ann['announcement_id']; ?>" id="announcementThumbnail">
                             <?php } ?>
-                            <p><?php echo nl2br(htmlspecialchars($ann['body'])); ?></p>
+                            <p id="announcementBody"><?php echo nl2br(htmlspecialchars($ann['body'])); ?></p>
                             <?php 
                                 $announcementAttachments = $attachmentsByAnnouncement[$ann['announcement_id']] ?? [];
                                 if (!empty($announcementAttachments)) {

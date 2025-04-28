@@ -234,6 +234,9 @@ img#announcementThumbnail {
     white-space: nowrap;
     margin: 8px 0;
 }
+.announcement-card p#announcementBody {
+    margin-top: 16px;
+}
 .announcement-menu {
     position: relative;
     margin-right: 16px;
