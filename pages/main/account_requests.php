@@ -582,7 +582,7 @@ if (isset($_POST['deny-update-selected']) && isset($_POST['updates'])) {
         <div class="dashboard-main">
             <div class="dashboard-sidebar">
                 <ul>
-                    <li class="active"><a href="../main/dashboard.php">Home</a></li>
+                    <li><a href="../main/dashboard.php">Home</a></li>
                     <li><a href="../main/account.php">Account</a></li>
                     <?php
                     // placeholder access control pages
@@ -594,7 +594,7 @@ if (isset($_POST['deny-update-selected']) && isset($_POST['updates'])) {
                         echo '<li><a href="../main/employee_table.php">Employee Table</a></li>';
                     }
                     if ($accessLevel >= 3) {
-                        echo '<li><a href="../main/account_requests.php">Account Requests</a></li>';
+                        echo '<li class="active"><a href="../main/account_requests.php">Account Requests</a></li>';
                     }
                     ?>
                     <li><a href="../main/reports.php">Reports</a></li>

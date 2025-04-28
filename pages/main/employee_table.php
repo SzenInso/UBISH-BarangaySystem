@@ -34,7 +34,7 @@ include '../../config/dbfetch.php';
         <div class="dashboard-main">
             <div class="dashboard-sidebar">
                 <ul>
-                    <li class="active"><a href="../main/dashboard.php">Home</a></li>
+                    <li><a href="../main/dashboard.php">Home</a></li>
                     <li><a href="../main/account.php">Account</a></li>
                     <?php
                     // placeholder access control pages
@@ -43,7 +43,7 @@ include '../../config/dbfetch.php';
                         echo '<li><a href="../main/announcements.php">Post Announcement</a></li>';
                     }
                     if ($accessLevel >= 2) {
-                        echo '<li><a href="../main/employee_table.php">Employee Table</a></li>';
+                        echo '<li class="active"><a href="../main/employee_table.php">Employee Table</a></li>';
                     }
                     if ($accessLevel >= 3) {
                         echo '<li><a href="../main/account_requests.php">Account Requests</a></li>';

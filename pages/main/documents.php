@@ -129,12 +129,12 @@ function getDocumentsTable($pdo)
         <div class="dashboard-main">
             <div class="dashboard-sidebar">
                 <ul>
-                    <li class="active"><a href="../main/dashboard.php">Home</a></li>
+                    <li><a href="../main/dashboard.php">Home</a></li>
                     <li><a href="../main/account.php">Account</a></li>
                     <?php
                         // placeholder access control pages
                         if ($accessLevel >= 1) {
-                            echo '<li><a href="../main/documents.php">Documents</a></li>';
+                            echo '<li class="active"><a href="../main/documents.php">Documents</a></li>';
                             echo '<li><a href="../main/announcements.php">Post Announcement</a></li>';
                         }
                         if ($accessLevel >= 2) {
