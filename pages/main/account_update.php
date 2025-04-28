@@ -45,7 +45,9 @@
                     $newFileName = uniqid() . '.' . $fileExtension;
                     $targetFilePath = "../../uploads/profiles/" . $newFileName;
                     if (move_uploaded_file($fileTmpPath, $targetFilePath)) {
-                        unlink($filePathDB); // delete old file
+                        if ($filePathDB !== "../../uploads/default_profile.jpg") { // doesn't delete default profile pic
+                            unlink($filePathDB); // delete old file
+                        }
                         $uploadedFilePath = $targetFilePath;
                     } else {
                         echo "
