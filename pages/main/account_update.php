@@ -40,15 +40,17 @@ if (isset($_POST['confirm'])) {
         $allowedFileExtensions = array('jpg', 'png', 'jpeg');
         $maxFileSize = 10 * 1024 * 1024; // 10MB
 
-        if (in_array($fileExtension, $allowedFileExtensions)) {
-            if ($fileSize <= $maxFileSize) {
-                $newFileName = uniqid() . '.' . $fileExtension;
-                $targetFilePath = "../../uploads/profiles/" . $newFileName;
-                if (move_uploaded_file($fileTmpPath, $targetFilePath)) {
-                    unlink($filePathDB); // delete old file
-                    $uploadedFilePath = $targetFilePath;
-                } else {
-                    echo "
+            if (in_array($fileExtension, $allowedFileExtensions)) {
+                if ($fileSize <= $maxFileSize) {
+                    $newFileName = uniqid() . '.' . $fileExtension;
+                    $targetFilePath = "../../uploads/profiles/" . $newFileName;
+                    if (move_uploaded_file($fileTmpPath, $targetFilePath)) {
+                        if ($filePathDB !== "../../uploads/default_profile.jpg") { // doesn't delete default profile pic
+                            unlink($filePathDB); // delete old file
+                        }
+                        $uploadedFilePath = $targetFilePath;
+                    } else {
+                        echo "
                             <script>
                                 alert('Failed to upload updated file.');
                                 window.location.href = '../main/account_update.php';

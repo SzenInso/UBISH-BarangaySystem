@@ -55,7 +55,7 @@
                         $login->execute([":username" => $username]);
                         $activeUser = $login->fetch();
                     
-                        if ($activeUser && (password_verify($password, $activeUser['password'])) || $activeUser['password'] == $password) {
+                        if ($activeUser && (password_verify($password, $activeUser['password']) || $activeUser['password'] == $password)) {
                             $_SESSION['user_id'] = $activeUser['user_id'];
                             $_SESSION['emp_id'] = $activeUser['emp_id'];
                             $_SESSION['username'] = $activeUser['username'];
