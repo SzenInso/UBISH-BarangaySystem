@@ -10,9 +10,18 @@
         session_unset();
         session_destroy();
         echo "
+            <link rel='stylesheet' href='../../assets/css/style.css'>
+            <script src='../../assets/js/sweetalert2.js'></script>
             <script>
-                alert('Failed to process registration. Please try again.');
-                window.location.href = '../account/register.php';
+                document.addEventListener('DOMContentLoaded', function () {
+                    Swal.fire({
+                        title: 'Failed to register.',
+                        text: 'Failed to process registration. Please try again.',
+                        icon: 'error'
+                    }).then(() => {
+                        window.location.href = '../account/register.php';
+                    });
+                });
             </script>
         ";
     }
@@ -30,9 +39,18 @@
         session_unset();
         session_write_close();
         echo "
+            <link rel='stylesheet' href='../../assets/css/style.css'>
+            <script src='../../assets/js/sweetalert2.js'></script>
             <script>
-                alert('Registration submitted for approval.');
-                window.location.href = '../account/login.php';
+                document.addEventListener('DOMContentLoaded', function () {
+                    Swal.fire({
+                        title: 'Account registration requested.',
+                        text: 'The registered account is now requested for approval. Please wait in logging in until your account is approved.',
+                        icon: 'info'
+                    }).then(() => {
+                        window.location.href = '../account/login.php';
+                    });
+                });
             </script>
         ";
     } else {
@@ -41,9 +59,18 @@
         session_unset();
         session_destroy();
         echo "
+            <link rel='stylesheet' href='../../assets/css/style.css'>
+            <script src='../../assets/js/sweetalert2.js'></script>
             <script>
-                alert('Failed to submit registration. Please try again.');
-                window.location.href = '../account/register.php';
+                document.addEventListener('DOMContentLoaded', function () {
+                    Swal.fire({
+                        title: 'Failed to register.',
+                        text: 'Failed to submit registration. Please try again.',
+                        icon: 'error'
+                    }).then(() => {
+                        window.location.href = '../account/register.php';
+                    });
+                });
             </script>
         ";
     }

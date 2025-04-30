@@ -12,6 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../assets/css/style.css">
     <title>UBISH Dashboard | Employee Registration</title>
+    <script src="../../assets/js/sweetalert2.js"></script>
 </head>
 <body>
     <header>
@@ -165,20 +166,30 @@
                             empty($dob) || empty($sex) || empty($address) || 
                             empty($religion) || empty($civilstatus) || empty($legislature) || 
                             empty($phonenum) || empty($accesslvl) || empty($uploadedFilePath)) {
-                            echo "
+                ?>
                                 <script>
-                                    alert('Please enter all required fields.');
-                                    window.location.href = '../account/register.php';
+                                    Swal.fire({
+                                        title: "Failed to register.",
+                                        text: "Please enter all required fields.",
+                                        icon: "error"
+                                    }).then((result) => {
+                                        window.location.href = '../account/register.php'
+                                    });
                                 </script>
-                            ";
+                <?php
                             exit;
                         } else if (!preg_match($phPhoneNumRegex, $phonenum)) {
-                            echo "
-                                <script>
-                                    alert('Please enter a valid phone number.');
-                                    window.location.href = '../account/register.php';
-                                </script>
-                            ";
+                ?>
+                            <script>
+                                Swal.fire({
+                                    title: "Failed to register.",
+                                    text: "Please enter a valid phone number.",
+                                    icon: "error"
+                                }).then((result) => {
+                                    window.location.href = '../account/register.php'
+                                });
+                            </script>
+                <?php
                             exit;
                         } else {
                             $registerQuery = "
@@ -215,12 +226,17 @@
                                 echo "<script>window.location.href = '../account/signup.php';</script>";
                                 exit;
                             } else {
-                                echo "
-                                    <script>
-                                        alert('Failed to register employee information. Please try again.');
-                                        window.location.href = '../account/register.php';
-                                    </script>
-                                ";
+                ?>
+                                <script>
+                                    Swal.fire({
+                                        title: "Failed to register.",
+                                        text: "An error occurred while registering employee information. Please try again.",
+                                        icon: "error"
+                                    }).then((result) => {
+                                        window.location.href = '../account/register.php'
+                                    });
+                                </script>
+                <?php
                             }
                         }
                     }
