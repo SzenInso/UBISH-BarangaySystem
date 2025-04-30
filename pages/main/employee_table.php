@@ -40,6 +40,100 @@
             ";
         }
     }
+
+    // sort and filter logic
+    if (isset($_POST['action']) && $_POST['action'] === 'fetch') {
+        $sort = $_POST['sort'];
+        $filterSex = $_POST['filterSex'];
+        $filterAccessLvl = $_POST['filterAccessLvl'];
+    
+        $query = "SELECT * FROM employee_details WHERE 1=1";
+    
+        // add filters
+        if (!empty($filterSex)) {
+            $query .= " AND sex = :sex";
+        }
+        if (!empty($filterAccessLvl)) {
+            $query .= " AND access_level = :access_level";
+        }
+    
+        // add sorting
+        if ($sort === "name_asc") {
+            $query .= " ORDER BY last_name ASC, first_name ASC, middle_name ASC";
+        } elseif ($sort === "name_desc") {
+            $query .= " ORDER BY last_name DESC, first_name DESC, middle_name DESC";
+        } elseif ($sort === "access_control_asc") {
+            $query .= " ORDER BY access_level ASC";
+        } elseif ($sort === "access_control_desc") {
+            $query .= " ORDER BY access_level DESC";
+        }
+    
+        $stmt = $pdo->prepare($query);
+        // bindParam is needed since some filters can be empty
+        if (!empty($filterSex)) { $stmt->bindParam(":sex", $filterSex); }
+        if (!empty($filterAccessLvl)) { $stmt->bindParam(":access_level", $filterAccessLvl); }
+        $stmt->execute();
+        $employees = $stmt->fetchAll();
+
+        // displays filtered table
+        echo '
+            <table id="employee-table">
+                <tr>
+                    <th>Selection</th>
+                    <th>Profile Picture</th>
+                    <th>Full Name</th>
+                    <th>Date of Birth</th>
+                    <th>Sex</th>
+                    <th>Address</th>
+                    <th>Religion</th>
+                    <th>Civil Status</th>
+                    <th>Legislature</th>
+                    <th>Access Level</th>
+                    <th>Phone Number</th>
+                    <th>Action</th>
+                </tr>
+        ';
+        foreach ($employees as $row) {
+            echo "<tr>";
+            if ($accessLevel >= 3) {
+                echo "<td><center><input type='checkbox' name='select_employee[]' value='{$row['emp_id']}' style='cursor: pointer;'></center></td>";
+            }
+            echo "
+                <td>
+                    <img 
+                        src='{$row['picture']}' 
+                        alt='{$row['first_name']} {$row['middle_name']} {$row['last_name']}' 
+                        style='width: 75px; height: 75px; border-radius: 50%; object-fit: cover;' 
+                        loading='lazy'
+                    >
+                </td>
+            ";
+            echo "<td>{$row['first_name']} {$row['middle_name']} {$row['last_name']}</td>";
+            echo "<td>{$row['date_of_birth']}</td>";
+            echo "<td>{$row['sex']}</td>";
+            echo "<td>{$row['address']}</td>";
+            echo "<td>{$row['religion']}</td>";
+            echo "<td>{$row['civil_status']}</td>";
+            echo "<td>{$row['legislature']}</td>";
+            if ($accessLevel >= 3) {
+                $accessLevels = ['Limited Access', 'Standard Access', 'Full Access', 'Administrator'];
+                echo "<td>{$accessLevels[$row['access_level'] - 1]}</td>";
+            }
+            echo "<td>{$row['phone_no']}</td>";
+            if ($accessLevel >= 3) {
+                echo "
+                    <td>
+                        <form method='POST'>
+                            <input type='hidden' name='emp_id' value='{$row['emp_id']}'>
+                            <button type='submit' id='deleteEmp' name='delete-employee' style='cursor: pointer;'>Delete</button>
+                        </form>
+                    </td>
+                ";
+            }
+            echo "</tr>";
+        }
+        exit;
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -99,11 +193,46 @@
                             <button type="submit" id="deleteEmp" name="delete-selected"
                                 style="justify-content: flex-start; cursor: pointer;">Delete Selected</button>
                         <?php } ?>
+                        <br>
+                        <div class="employee-filters">
+                            <div class="employee-filters-container">                                
+                                <label for="sort">Sort By: </label>
+                                <select name="sort" id="sort">
+                                    <option value="" selected>None</option>
+                                    <option value="name_asc">Name (Ascending)</option>
+                                    <option value="name_desc">Name (Descending)</option>
+                                    <option value="access_control_asc">Access Control (Ascending)</option>
+                                    <option value="access_control_desc">Access Control (Descending)</option>
+                                </select>
+                            </div>
+                            <div class="employee-filters-container">                                
+                                <label for="filter-sex">Filter by Biological Sex: </label>
+                                <select name="filter-sex" id="filter-sex">
+                                    <option value="" selected>All</option>
+                                    <option value="M">Male</option>
+                                    <option value="F">Female</option>
+                                    <option value="I">Intersex</option>
+                                </select>
+                            </div>
+                            <?php if ($accessLevel >= 3) { ?>
+                                <div class="employee-filters-container">
+                                    <label for="filter-access-level">Filter By Access Level: </label>
+                                    <select name="filter-access-level" id="filter-access-level">
+                                        <option value="" selected>All</option>
+                                        <option value="1">Limited Access</option>
+                                        <option value="2">Standard Access</option>
+                                        <option value="3">Full Access</option>
+                                    </select>
+                                </div>
+                            <?php } ?>
+                            <div class="employee-filters-container">
+                                <button name="reset-sort-filter" id="reset-sort-filter">Reset Sort and Filters</button>
+                            </div>
+                        </div>
+                        <script src="../../assets/js/sortAndFilter.js"></script>
                         <table id="employee-table">
                             <tr>
-                                <?php if ($accessLevel >= 3) {
-                                    echo "<th>Selection</th>";
-                                } ?>
+                                <?php if ($accessLevel >= 3) { echo "<th>Selection</th>"; } ?>
                                 <th>Profile Picture</th>
                                 <th>Full Name</th>
                                 <th>Date of Birth</th>
@@ -112,13 +241,9 @@
                                 <th>Religion</th>
                                 <th>Civil Status</th>
                                 <th>Legislature</th>
-                                <?php if ($accessLevel >= 3) {
-                                    echo "<th>Access Level</th>";
-                                } ?>
+                                <?php if ($accessLevel >= 3) { echo "<th>Access Level</th>"; } ?>
                                 <th>Phone Number</th>
-                                <?php if ($accessLevel >= 3) {
-                                    echo "<th>Action</th>";
-                                } ?>
+                                <?php if ($accessLevel >= 3) { echo "<th>Action</th>"; } ?>
                             </tr>
                             <?php foreach ($empAllDetails as $row) { ?>
                                 <tr>
