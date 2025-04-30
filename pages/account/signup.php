@@ -37,8 +37,13 @@
             } else {
                 echo "
                     <script>
-                        alert('Failed to create account. Please try again.');
-                        window.location.href = '../account/register.php';
+                        Swal.fire({
+                            title: 'Failed to sign up.',
+                            text: 'Failed to create account. Please try again.',
+                            icon: 'error'
+                        }).then((result) => {
+                            window.location.href = '../account/register.php'
+                        });
                     </script>
                 ";
             }
@@ -52,6 +57,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../assets/css/style.css">
     <title>UBISH Dashboard | Sign Up</title>
+    <script src="../../assets/js/sweetalert2.js"></script>
 </head>
 <body>
     <header>

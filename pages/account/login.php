@@ -11,6 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../assets/css/style.css">
     <title>UBISH Dashboard | Login</title>
+    <script src="../../assets/js/sweetalert2.js"></script>
 </head>
 <body>
     <header>
@@ -45,6 +46,7 @@
                 <div class="login-btns">
                     <button name="login">Log In</button>
                 </div>
+                <br><a href="">Forgot Password</a>
                 <?php 
                     if (isset($_POST['login'])) {
                         $username = $_POST['username'];
@@ -59,13 +61,16 @@
                             $_SESSION['user_id'] = $activeUser['user_id'];
                             $_SESSION['emp_id'] = $activeUser['emp_id'];
                             $_SESSION['username'] = $activeUser['username'];
-                            echo "
-                                <script>
-                                    alert('Logged in successfully!');
-                                    window.location.href = '../main/dashboard.php';
-                                </script>
-                            ";
-                        } else {
+                    ?>
+                            <script>
+                                Swal.fire({
+                                    title: "Logged in successfully",
+                                    icon: "success",
+                                }).then((result) => {
+                                    window.location.href = '../main/dashboard.php'
+                                });
+                            </script>
+                    <?php } else {
                             echo "<br><p><center>Invalid username or password.</center></p>";
                         }
                     }

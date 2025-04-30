@@ -264,22 +264,20 @@ if (isset($_POST['update-announcement'])) {
         <div class="dashboard-main">
             <div class="dashboard-sidebar">
                 <ul>
+                    <h3>Home</h3>
                     <li><a href="../main/dashboard.php">Home</a></li>
                     <li><a href="../main/account.php">Account</a></li>
-                    <?php
-                    // placeholder access control pages
-                    if ($accessLevel >= 1) {
-                        echo '<li><a href="../main/documents.php">Documents</a></li>';
-                        echo '<li class="active"><a href="../main/announcements.php">Post Announcement</a></li>';
-                    }
-                    if ($accessLevel >= 2) {
-                        echo '<li><a href="../main/employee_table.php">Employee Table</a></li>';
-                    }
-                    if ($accessLevel >= 3) {
-                        echo '<li><a href="../main/account_requests.php">Account Requests</a></li>';
-                    }
-                    ?>
-                    <li><a href="../main/reports.php">Reports</a></li>
+                    <h3>Documents & Disclosure</h3>
+                    <li><a href="../main/documents.php">Documents</a></li>
+                    <li class="active"><a href="../main/announcements.php">Post Announcement</a></li>
+                    <h3>Tables & Requests</h3>
+                    <?php if ($accessLevel >= 2) { echo '<li><a href="../main/employee_table.php">Employee Table</a></li>'; } ?>
+                    <?php if ($accessLevel >= 3) { echo '<li><a href="../main/account_requests.php">Account Requests</a></li>'; } ?>
+                    <?php if ($accessLevel >= 2) { echo '<li><a href="#">Certificate Requests</a></li>'; } ?>
+                    <?php if ($accessLevel >= 2) { echo '<li><a href="#">Permit Requests</a></li>'; } ?>
+                    <h3>Reports</h3>
+                    <li><a href="#">Incident Reports</a></li>
+                    <li><a href="../main/reports.php">Analytics</a></li>
                 </ul>
             </div>
             <div class="dashboard-content">
