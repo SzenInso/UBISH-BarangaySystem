@@ -46,6 +46,7 @@
                 <div class="login-btns">
                     <button name="login">Log In</button>
                 </div>
+                <br><a href="">Forgot Password</a>
                 <?php 
                     if (isset($_POST['login'])) {
                         $username = $_POST['username'];
@@ -60,14 +61,6 @@
                             $_SESSION['user_id'] = $activeUser['user_id'];
                             $_SESSION['emp_id'] = $activeUser['emp_id'];
                             $_SESSION['username'] = $activeUser['username'];
-                            /*
-                            echo "
-                                <script>
-                                    alert('Logged in successfully!');
-                                    window.location.href = '../main/dashboard.php';
-                                </script>
-                            ";
-                            */
                     ?>
                             <script>
                                 Swal.fire({
