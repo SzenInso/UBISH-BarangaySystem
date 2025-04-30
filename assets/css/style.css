@@ -325,6 +325,31 @@ div#employee-table-container {
     text-align: center;
     background-color: lightgray;
 }
+.employee-filters {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.employee-filters-container {
+    margin: 0 16px;
+}
+.employee-filters-container select {
+    margin-top: 4px;
+    padding: 4px;
+    width: auto;
+}
+.employee-filters-container button#reset-sort-filter {
+    border: 2px solid gray;
+    background-color: white;
+    color: black;
+    margin: 0 8px;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.employee-filters-container button#reset-sort-filter:hover {
+    background-color: lightgray;
+}
 .custom-cancel-button {
     border: 2px solid gray;
     background-color: white;
