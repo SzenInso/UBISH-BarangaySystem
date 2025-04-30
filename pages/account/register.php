@@ -124,8 +124,8 @@
                 
                         $accesslvl = 0; // no access level
                         $limitedAccess = array("Sangguniang Kabataan Member", "Other Barangay Personnel");
-                        $standardAccess = array("Sangguniang Barangay Member", "Sangguniang Kabataan Chairperson", "Barangay Secretary", "Barangay Treasurer");
-                        $fullAccess = array("Punong Barangay");
+                        $standardAccess = array("Sangguniang Barangay Member", "Sangguniang Kabataan Chairperson", "Barangay Treasurer");
+                        $fullAccess = array("Punong Barangay", "Barangay Secretary");
                         if (in_array($legislature, $limitedAccess)) {
                             $accesslvl = 1; // limited access
                         } elseif (in_array($legislature, $standardAccess)) {
