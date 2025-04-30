@@ -78,21 +78,24 @@
         // displays filtered table
         echo '
             <table id="employee-table">
-                <tr>
-                    <th>Selection</th>
-                    <th>Profile Picture</th>
-                    <th>Full Name</th>
-                    <th>Date of Birth</th>
-                    <th>Sex</th>
-                    <th>Address</th>
-                    <th>Religion</th>
-                    <th>Civil Status</th>
-                    <th>Legislature</th>
-                    <th>Access Level</th>
-                    <th>Phone Number</th>
-                    <th>Action</th>
-                </tr>
+            <tr>
         ';
+        if ($accessLevel >= 3) { echo "<th>Selection</th>"; }
+        echo '
+                <th>Profile Picture</th>
+                <th>Full Name</th>
+                <th>Date of Birth</th>
+                <th>Sex</th>
+                <th>Address</th>
+                <th>Religion</th>
+                <th>Civil Status</th>
+                <th>Legislature</th>
+        ';
+        if ($accessLevel >= 3) { echo "<th>Access Level</th>"; }
+        echo '<th>Phone Number</th>';
+        if ($accessLevel >= 3) { echo "<th>Action</th>"; }
+        echo '</tr>';
+        
         foreach ($employees as $row) {
             echo "<tr>";
             if ($accessLevel >= 3) {
@@ -107,14 +110,14 @@
                         loading='lazy'
                     >
                 </td>
+                <td>{$row['first_name']} {$row['middle_name']} {$row['last_name']}</td>
+                <td>{$row['date_of_birth']}</td>
+                <td>{$row['sex']}</td>
+                <td>{$row['address']}</td>
+                <td>{$row['religion']}</td>
+                <td>{$row['civil_status']}</td>
+                <td>{$row['legislature']}</td>
             ";
-            echo "<td>{$row['first_name']} {$row['middle_name']} {$row['last_name']}</td>";
-            echo "<td>{$row['date_of_birth']}</td>";
-            echo "<td>{$row['sex']}</td>";
-            echo "<td>{$row['address']}</td>";
-            echo "<td>{$row['religion']}</td>";
-            echo "<td>{$row['civil_status']}</td>";
-            echo "<td>{$row['legislature']}</td>";
             if ($accessLevel >= 3) {
                 $accessLevels = ['Limited Access', 'Standard Access', 'Full Access', 'Administrator'];
                 echo "<td>{$accessLevels[$row['access_level'] - 1]}</td>";
@@ -190,8 +193,7 @@
                 <div id="employee-table-container">
                     <form method="POST" action="../main/employee_table.php">
                         <?php if ($accessLevel >= 3) { ?>
-                            <button type="submit" id="deleteEmp" name="delete-selected"
-                                style="justify-content: flex-start; cursor: pointer;">Delete Selected</button>
+                            <button type="submit" id="deleteEmp" name="delete-selected" style="justify-content: flex-start; cursor: pointer;">Delete Selected</button>
                         <?php } ?>
                         <br>
                         <div class="employee-filters">

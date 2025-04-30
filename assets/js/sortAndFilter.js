@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function fetchFilteredData() {
         const sort = sortDropdown.value;
         const filterSex = filterSexDropdown.value;
-        const filterAccessLvl = filterAccessLvlDropdown.value;
+        const filterAccessLvl = filterAccessLvlDropdown ? filterAccessLvlDropdown.value : ""; // handle missing dropdown
         
         // AJAX to dynamically display sort and filters
         const xmlhttp = new XMLHttpRequest();
