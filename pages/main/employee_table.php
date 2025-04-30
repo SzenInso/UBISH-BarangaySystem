@@ -1,16 +1,55 @@
 <?php
-include '../../config/dbfetch.php';
+    include '../../config/dbfetch.php';
+
+    if (isset($_POST['delete-employee'])) {
+        $emp_id = $_POST['emp_id'];
+
+        $fetchEmployeeQuery = "SELECT * FROM employee_details WHERE emp_id = :emp_id";
+        $fetchEmployee = $pdo->prepare($fetchEmployeeQuery);
+        $fetchEmployee->execute([":emp_id" => $emp_id]);
+        $employee = $fetchEmployee->fetch();
+
+        if ($employee) {
+            $_SESSION['del_id'] = $emp_id;
+            $employeeName = $employee['first_name'] . ' ' . $employee['middle_name'] . ' ' . $employee['last_name'];
+            echo "
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        Swal.fire({
+                            title: 'Are you sure?',
+                            text: 'Are you sure you want to delete this employee: $employeeName?',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: 'crimson',
+                            cancelButtonColor: 'white',
+                            confirmButtonText: 'Yes, delete.',
+                            cancelButtonText: 'No, cancel',
+                            customClass: {
+                                cancelButton: 'custom-cancel-button'
+                            }
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // redirect to delete employee action
+                                window.location.href = '../main/delete_employee.php';
+                            } else {
+                                window.location.href = '../main/employee_table.php';
+                            }
+                        });
+                    });
+                </script>
+            ";
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../assets/css/style.css">
+    <script src="../../assets/js/sweetalert2.js"></script>
     <title>UBISH Dashboard | Account</title>
 </head>
-
 <body>
     <header>
         <div class="navigation">
@@ -92,10 +131,13 @@ include '../../config/dbfetch.php';
                                         </td>
                                     <?php } ?>
                                     <td>
-                                        <img src="<?php echo $row['picture']; ?>"
+                                        <img 
+                                            src="<?php echo $row['picture']; ?>"
                                             alt="<?php echo $row['first_name'] . " " . $row['middle_name'] . " " . $row['last_name']; ?>"
                                             title="<?php echo $row['first_name'] . " " . $row['middle_name'] . " " . $row['last_name']; ?>"
-                                            style="width: 75px; height: 75px; border-radius: 50%; object-fit: cover;">
+                                            style="width: 75px; height: 75px; border-radius: 50%; object-fit: cover;"
+                                            loading="lazy"
+                                        >
                                     </td>
                                     <td><?php echo $row['first_name'] . " " . $row['middle_name'] . " " . $row['last_name']; ?>
                                     </td>
@@ -114,10 +156,9 @@ include '../../config/dbfetch.php';
                                     <td><?php echo $row['phone_no']; ?></td>
                                     <?php if ($accessLevel >= 3) { ?>
                                         <td>
-                                            <form method="POST" action="../main/employee_table.php">
+                                            <form method="POST">
                                                 <input type="hidden" name="emp_id" value="<?php echo $row['emp_id']; ?>">
-                                                <button type="submit" id="deleteEmp" name="delete-employee"
-                                                    style="cursor: pointer;">Delete</button>
+                                                <button type="submit" id="deleteEmp" name="delete-employee" style="cursor: pointer;">Delete</button>
                                             </form>
                                         </td>
                                     <?php } ?>
@@ -134,5 +175,4 @@ include '../../config/dbfetch.php';
         <p><?php echo "&copy; " . date('Y') . " | Unified Barangay Information Service Hub"; ?></p>
     </footer>
 </body>
-
 </html>
