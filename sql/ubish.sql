@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 28, 2025 at 03:21 PM
+-- Generation Time: May 01, 2025 at 07:36 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ubish`
+-- Database: `ubish2.0`
 --
 
 -- --------------------------------------------------------
@@ -125,10 +125,10 @@ INSERT INTO `employee_details` (`emp_id`, `first_name`, `middle_name`, `last_nam
 (1001, 'Admin', 'Santos', 'Dela Cruz', '2000-01-01', 'F', 'Philippines', 'Atheist', 'Single', 'Punong Barangay', 3, '09123456789', '../../uploads/default_profile.jpg'),
 (1002, 'Mark Simon', 'Zuilan', 'Bringas', '2005-02-16', 'M', 'Baguio City, Philippines', 'Roman Catholic', 'Single', 'Other Barangay Personnel', 1, '09123456789', '../../uploads/profiles/680e0acd0d07a.jpg'),
 (1004, 'John', 'Smith', 'Doe', '2000-01-02', 'M', 'Philippines', 'Atheist', 'Legally Separated', 'Sangguniang Barangay Member', 2, '09111111111', '../../uploads/profiles/680f803160a28.jpg'),
-(1008, 'Jane', 'Turner', 'Smith', '2000-01-02', 'F', 'Philippines', 'Atheist', 'Legally Separated', 'Barangay Secretary', 2, '09222222222', '../../uploads/profiles/680cb23623f39.jpg'),
 (1009, 'Jamie', 'Smith', 'Brown', '2000-01-03', 'F', 'Philippines', 'Roman Catholic', 'Married', 'Barangay Secretary', 2, '09333333333', '../../uploads/default_profile.jpg'),
 (1013, 'Tarou', 'Tanaka', 'Sakamoto', '1997-11-21', 'M', 'Japan', 'Atheist', 'Married', 'Other Barangay Personnel', 1, '09444444444', '../../uploads/profiles/680e3def12dc7.png'),
-(1014, 'Kento', 'Kokusen', 'Nanami', '1990-07-03', 'M', 'Japan', 'Shinto', 'Single', 'Barangay Secretary', 2, '09555555555', '../../uploads/profiles/680e412a573ca.jpg');
+(1014, 'Kento', 'Kokusen', 'Nanami', '1990-07-03', 'M', 'Japan', 'Shinto', 'Single', 'Barangay Secretary', 2, '09555555555', '../../uploads/profiles/680e412a573ca.jpg'),
+(1020, 'Jane', 'Turner', 'Smith', '2000-01-01', 'F', 'Philippines', 'Atheist', 'Married', 'Barangay Secretary', 3, '09000000000', '../../uploads/profiles/6813a9c249b2a.jpg');
 
 -- --------------------------------------------------------
 
@@ -179,7 +179,17 @@ INSERT INTO `employee_registration` (`registration_emp_id`, `first_name`, `middl
 (221, 'a', 'a', 'a', '1111-11-11', 'M', 'a', 'a', 'Single', 'Punong Barangay', 3, '09111111111', '../../uploads/default_profile.jpg'),
 (222, 'Tarou', 'Tanaka', 'Sakamoto', '1997-11-21', 'M', 'Japan', 'Atheist', 'Married', 'Other Barangay Personnel', 1, '09444444444', '../../uploads/temp/680e3def12dc7.png'),
 (223, 'Kento', 'Kokusen', 'Nanami', '1990-07-03', 'M', 'Japan', 'Shinto', 'Single', 'Barangay Secretary', 2, '09555555555', '../../uploads/temp/680e3f3d12fd1.jpg'),
-(224, 'Kento', 'Kokusen', 'Nanami', '1990-07-03', 'M', 'Japan', 'Shinto', 'Single', 'Barangay Secretary', 2, '09555555555', '../../uploads/temp/680e412a573ca.jpg');
+(224, 'Kento', 'Kokusen', 'Nanami', '1990-07-03', 'M', 'Japan', 'Shinto', 'Single', 'Barangay Secretary', 2, '09555555555', '../../uploads/temp/680e412a573ca.jpg'),
+(225, 'a', 'a', 'a', '1111-11-11', 'M', 'a', 'a', 'Legally Separated', 'Other Barangay Personnel', 1, '09111111111', '../../uploads/default_profile.jpg'),
+(226, 'R J', 'Guerrero', 'Salcedo', '2004-04-01', 'F', 'Pangasinan', 'Roman Catholic', 'Divorced', 'Other Barangay Personnel', 1, '09504788697', '../../uploads/temp/68139752ef140.jpg'),
+(227, 'qwerty', 'qwerty', 'qwerty', '1111-11-11', 'M', 'qwerty', 'qwerty', 'Single', 'Other Barangay Personnel', 1, '09111111111', '../../uploads/default_profile.jpg'),
+(228, 'asdf', 'asdf', 'asdf', '1111-11-11', 'M', 'asdf', 'asdf', 'Single', 'Other Barangay Personnel', 1, '09111111111', '../../uploads/temp/6813a84816a15.jpg'),
+(229, 'zxcv', 'zxcv', 'zxcv', '1111-11-11', 'M', 'zxcv', 'zxcv', 'Single', 'Other Barangay Personnel', 1, '09111111111', '../../uploads/default_profile.jpg'),
+(230, 'Jane', 'Turner', 'Smith', '2000-01-01', 'F', 'Philippines', 'Atheist', 'Married', 'Barangay Secretary', 3, '09000000000', '../../uploads/temp/6813a9c249b2a.jpg'),
+(231, 'a', 'a', 'a', '1111-11-11', 'M', 'a', 'a', 'Single', 'Other Barangay Personnel', 1, '09222222222', '../../uploads/default_profile.jpg'),
+(232, 's', 's', 's', '1111-11-11', 'M', 's', 's', 'Single', 'Other Barangay Personnel', 1, '09222222222', '../../uploads/default_profile.jpg'),
+(233, 'q', 'q', 'q', '1111-11-11', 'M', 'q', 'q', 'Legally Separated', 'Other Barangay Personnel', 1, '09111111111', '../../uploads/temp/6813aae47a889.jpg'),
+(234, 'w', 'w', 'w', '1111-11-11', 'M', 'w', 'w', 'Legally Separated', 'Other Barangay Personnel', 1, '09111111111', '../../uploads/default_profile.jpg');
 
 -- --------------------------------------------------------
 
@@ -214,7 +224,6 @@ INSERT INTO `employee_update` (`update_id`, `emp_id`, `update_first_name`, `upda
 (402, 1002, 'Wanderer', 'Scaramouche', 'Kabukimono', '1525-01-03', 'M', 'Inazuma City, Inazuma', 'Atheist', 'Single', 'Punong Barangay', 3, 'Denied', '2025-04-27 21:12:08', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed enim libero, dictum quis bibendum quis, luctus et ex. Nulla cursus dui id pharetra lacinia. Mauris ac sollicitudin elit. Sed efficitur at dolor eget malesuada. Morbi massa diam, auctor et condimentum nec, interdum non diam. Integer gravida, enim sed facilisis cursus, orci turpis aliquam urna, vitae egestas leo arcu vel nisi. Etiam egestas ligula a interdum cursus. Vestibulum ultricies sit amet diam eget pulvinar. Integer finibus nibh pellentesque orci fringilla feugiat. Vestibulum ut lorem nisi. Maecenas et risus semper, maximus mauris vitae, malesuada neque.'),
 (403, 1009, 'Jamie', 'Smith', 'Brown', '2000-01-03', 'F', 'Philippines', 'Roman Catholic', 'Married', 'Other Barangay Personnel', 1, 'Approved', '2025-04-27 21:46:50', 'Married on January 1, 2005.'),
 (404, 1002, 'Mark Simon', 'Zuilan', 'Bringas', '2005-02-16', 'M', 'Baguio City, Philippines', 'Roman Catholic', 'Single', 'Sangguniang Kabataan Member', 1, 'Denied', '2025-04-27 21:49:50', 'Elected as SK Member in 2023.'),
-(405, 1008, 'Jane', 'Turner', 'Smith', '2000-01-02', 'F', 'Philippines', 'Atheist', 'Legally Separated', 'Barangay Secretary', 2, 'Approved', '2025-04-27 22:01:27', 'Legally separated with John doe on 04/27/2025.'),
 (406, 1004, 'John', 'Smith', 'Doe', '2000-01-02', 'M', 'Philippines', 'Atheist', 'Legally Separated', 'Sangguniang Barangay Member', 2, 'Approved', '2025-04-27 22:02:37', 'Legally separated with Jane Doe on 04/27/2025.'),
 (407, 1009, 'Jamie', 'Smith', 'Brown', '2000-01-03', 'F', 'Philippines', 'Roman Catholic', 'Married', 'Barangay Secretary', 2, 'Approved', '2025-04-27 22:08:26', 'Promoted on 04/27/2025.'),
 (408, 1002, 'Wanderer', 'Scaramouche', 'Kabukimono', '2005-02-16', 'M', 'Baguio City, Philippines', 'Roman Catholic', 'Single', 'Other Barangay Personnel', 1, 'Denied', '2025-04-27 22:12:37', 'Bro I\'m literally Scaramouche.'),
@@ -243,10 +252,10 @@ INSERT INTO `login_details` (`user_id`, `emp_id`, `username`, `email`, `password
 (1, 1001, 'admin', 'admin@email.com', '1234'),
 (2, 1002, 'mbringas', 'mbringas@email.com', '$2y$10$GS81dsvvhFZwDUqRJ73OmOFZgKEzctb9Aod9sb7OOLcHdrZNPTXxi'),
 (4, 1004, 'jdoe', 'jdoe@email.com', '$2y$10$VCPFcQVgrnx1lzn4DxZWbedaopwO.0jAZWLzRMuMkqI7MMIfz5noq'),
-(8, 1008, 'janedoe', 'janedoe@email.com', '$2y$10$8suHYTzlraplsOOpfTltpe/mpQ3tWk4zxlGYB4Pl2vJmUx6wb/Uzu'),
 (9, 1009, 'jamiedoe', 'jamied@email.com', '$2y$10$C0oC34M1ynaxxgdDXhHPxeWKHaVWUCcHB5wGfp6WTjz2VoA2kW4/C'),
 (13, 1013, 'sakamoto', 'sakamoto@tarou.com', '$2y$10$4iHzxPWm9Qmw9ebGUDK1FOE30fc80XjdVvEh0Nk/sHP0p6hPv8b5S'),
-(14, 1014, 'nanami', 'nanami@kento.com', '$2y$10$9CY88e9UqU7MBgVSkWJNY.i3WhhDPSmQnvaJKSmdnZQ2LCzYKRbGe');
+(14, 1014, 'nanami', 'nanami@kento.com', '$2y$10$9CY88e9UqU7MBgVSkWJNY.i3WhhDPSmQnvaJKSmdnZQ2LCzYKRbGe'),
+(20, 1020, 'janedoe', 'janedoe@email.com', '$2y$10$OFVHhJoT5/TzdPXg5BDpfOz2p/itz4/0zW1FkQ.kRva5KUzVdQ7ae');
 
 -- --------------------------------------------------------
 
@@ -288,7 +297,17 @@ INSERT INTO `login_registration` (`registration_login_id`, `username`, `email`, 
 (321, 'a', 'a@a', '$2y$10$dI/Fr1J/vBPHg/nQA/wYP.MRBfHR.s4K455dtxn4y4p...'),
 (322, 'sakamoto', 'sakamoto@tarou.com', '$2y$10$4iHzxPWm9Qmw9ebGUDK1FOE30fc80XjdVvEh0Nk/sHP0p6hPv8b5S'),
 (323, 'nanami', 'nanami@kento.jjk', '$2y$10$AVJgJ.vxrvQOz5kjdvM5QuGP7AG8ENBqLcPO4FjZprF0WlFlksXOe'),
-(324, 'nanami', 'nanami@kento.jjk', '$2y$10$9CY88e9UqU7MBgVSkWJNY.i3WhhDPSmQnvaJKSmdnZQ2LCzYKRbGe');
+(324, 'nanami', 'nanami@kento.jjk', '$2y$10$9CY88e9UqU7MBgVSkWJNY.i3WhhDPSmQnvaJKSmdnZQ2LCzYKRbGe'),
+(325, 'a', 'a@a', '$2y$10$BTF/nlhljK/z8Co.6.XW/ujeZFBGhlfhCSBiBQH.qQTbAnjAmynZW'),
+(326, 'rjsalcedo', 'rjsalcedo@email.com', '$2y$10$TW3uBHsft8ADAtFyhh844.eT2as0duRVazSGTRBqnb5iorHZtV5y2'),
+(327, 'qwerty', 'qwerty@email.com', '$2y$10$rus0Rh7DHNAFS7UzgdtXguhpz/m646OyJOCls9wkQFGH8g/L5LsBy'),
+(328, 'asdf', 'asdf@email.com', '$2y$10$Eftmr24eFicr6bMHz7.YSeWaqPYq4P6Fq8UyNOp5ZJQqePxu7muNC'),
+(329, 'zxcv', 'zxcv@email.com', '$2y$10$WqQ6Hel6LnpvoAYVf9rRJ.Sc1B.tDdfCwa4msJZA/g44onMkKpkHq'),
+(330, 'janedoe', 'janedoe@email.com', '$2y$10$OFVHhJoT5/TzdPXg5BDpfOz2p/itz4/0zW1FkQ.kRva5KUzVdQ7ae'),
+(331, 'a', 'a@a', '$2y$10$H8/lookA.hQzFQ493da8.uvtGNzekdk2rB1L0tEyIAoRZdtXx5xam'),
+(332, 's', 's@s', '$2y$10$OdDmziVlbCn7H3a8acq7bunWu/KzcwUDRVqXmx6tlRgTJHHjOgdq.'),
+(333, 'q', 'q@q', '$2y$10$/YSp68BK7JBcC/xqxO0Jk.nYVvpzUtwWniEqHWUKrhbQCv6mpzQeC'),
+(334, 'w', 'w@w', '$2y$10$J3lRg3ZPQVili9TSfVagYukaWV1B7wzZio67BYdP0bdskbcp/RpGC');
 
 -- --------------------------------------------------------
 
@@ -331,7 +350,17 @@ INSERT INTO `registration` (`registration_id`, `registration_emp_id`, `registrat
 (121, 221, 321, 'Denied', '2025-04-27 18:56:15'),
 (122, 222, 322, 'Approved', '2025-04-27 22:24:31'),
 (123, 223, 323, 'Denied', '2025-04-27 22:35:59'),
-(124, 224, 324, 'Approved', '2025-04-27 22:38:16');
+(124, 224, 324, 'Approved', '2025-04-27 22:38:16'),
+(125, 225, 325, 'Approved', '2025-05-01 23:36:30'),
+(126, 226, 326, 'Approved', '2025-05-01 23:46:39'),
+(127, 227, 327, 'Approved', '2025-05-02 00:58:07'),
+(128, 228, 328, 'Approved', '2025-05-02 00:58:55'),
+(129, 229, 329, 'Approved', '2025-05-02 01:00:40'),
+(130, 230, 330, 'Approved', '2025-05-02 01:05:18'),
+(131, 231, 331, 'Approved', '2025-05-02 01:07:01'),
+(132, 232, 332, 'Approved', '2025-05-02 01:08:10'),
+(133, 233, 333, 'Approved', '2025-05-02 01:10:03'),
+(134, 234, 334, 'Approved', '2025-05-02 01:10:26');
 
 --
 -- Indexes for dumped tables
@@ -406,49 +435,49 @@ ALTER TABLE `registration`
 -- AUTO_INCREMENT for table `announcements`
 --
 ALTER TABLE `announcements`
-  MODIFY `announcement_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2018;
+  MODIFY `announcement_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2021;
 
 --
 -- AUTO_INCREMENT for table `attachments`
 --
 ALTER TABLE `attachments`
-  MODIFY `attachment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3024;
+  MODIFY `attachment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3038;
 
 --
 -- AUTO_INCREMENT for table `employee_details`
 --
 ALTER TABLE `employee_details`
-  MODIFY `emp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1015;
+  MODIFY `emp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1025;
 
 --
 -- AUTO_INCREMENT for table `employee_registration`
 --
 ALTER TABLE `employee_registration`
-  MODIFY `registration_emp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=225;
+  MODIFY `registration_emp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=235;
 
 --
 -- AUTO_INCREMENT for table `employee_update`
 --
 ALTER TABLE `employee_update`
-  MODIFY `update_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=411;
+  MODIFY `update_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=412;
 
 --
 -- AUTO_INCREMENT for table `login_details`
 --
 ALTER TABLE `login_details`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `login_registration`
 --
 ALTER TABLE `login_registration`
-  MODIFY `registration_login_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=325;
+  MODIFY `registration_login_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=335;
 
 --
 -- AUTO_INCREMENT for table `registration`
 --
 ALTER TABLE `registration`
-  MODIFY `registration_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
+  MODIFY `registration_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=135;
 
 --
 -- Constraints for dumped tables
