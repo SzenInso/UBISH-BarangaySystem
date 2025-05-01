@@ -1,46 +1,6 @@
 <?php
     include '../../config/dbfetch.php';
 
-    if (isset($_POST['delete-employee'])) {
-        $emp_id = $_POST['emp_id'];
-
-        $fetchEmployeeQuery = "SELECT * FROM employee_details WHERE emp_id = :emp_id";
-        $fetchEmployee = $pdo->prepare($fetchEmployeeQuery);
-        $fetchEmployee->execute([":emp_id" => $emp_id]);
-        $employee = $fetchEmployee->fetch();
-
-        if ($employee) {
-            $_SESSION['del_id'] = $emp_id;
-            $employeeName = $employee['first_name'] . ' ' . $employee['middle_name'] . ' ' . $employee['last_name'];
-            echo "
-                <script>
-                    document.addEventListener('DOMContentLoaded', function () {
-                        Swal.fire({
-                            title: 'Are you sure?',
-                            text: 'Are you sure you want to delete this employee: $employeeName?',
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: 'crimson',
-                            cancelButtonColor: 'white',
-                            confirmButtonText: 'Yes, delete.',
-                            cancelButtonText: 'No, cancel',
-                            customClass: {
-                                cancelButton: 'custom-cancel-button'
-                            }
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                // redirect to delete employee action
-                                window.location.href = '../main/delete_employee.php';
-                            } else {
-                                window.location.href = '../main/employee_table.php';
-                            }
-                        });
-                    });
-                </script>
-            ";
-        }
-    }
-
     // sort and filter logic
     if (isset($_POST['action']) && $_POST['action'] === 'fetch') {
         $sort = $_POST['sort'];
@@ -136,6 +96,91 @@
             echo "</tr>";
         }
         exit;
+    }
+
+    // delete single employee
+    if (isset($_POST['delete-employee'])) {
+        $emp_id = $_POST['emp_id'];
+
+        $fetchEmployeeQuery = "SELECT * FROM employee_details WHERE emp_id = :emp_id";
+        $fetchEmployee = $pdo->prepare($fetchEmployeeQuery);
+        $fetchEmployee->execute([":emp_id" => $emp_id]);
+        $employee = $fetchEmployee->fetch();
+
+        if ($employee) {
+            $_SESSION['del_id'] = $emp_id;
+            $employeeName = $employee['first_name'] . ' ' . $employee['middle_name'] . ' ' . $employee['last_name'];
+            echo "
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        Swal.fire({
+                            title: 'Are you sure?',
+                            text: 'Are you sure you want to delete this employee: $employeeName?',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: 'crimson',
+                            cancelButtonColor: 'white',
+                            confirmButtonText: 'Yes, delete.',
+                            cancelButtonText: 'No, cancel',
+                            customClass: {
+                                cancelButton: 'custom-cancel-button'
+                            }
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // redirect to delete employee action
+                                window.location.href = '../main/delete_employee.php';
+                            } else {
+                                window.location.href = '../main/employee_table.php';
+                            }
+                        });
+                    });
+                </script>
+            ";
+        }
+    }
+
+    // delete multiple selected employees
+    if (isset($_POST['delete-selected'])) {
+        $selectedDelIDs = $_POST['select_employee'];
+        if (!empty($selectedDelIDs)) {
+            $placeholders = implode(',', array_fill(0, count($selectedDelIDs), '?'));
+            $fetchNamesQuery = "SELECT CONCAT(first_name, ' ', middle_name, ' ', last_name) AS full_name FROM employee_details WHERE emp_id IN ($placeholders)";
+            $fetchNames = $pdo->prepare($fetchNamesQuery);
+            $fetchNames->execute($selectedDelIDs);
+            $employees = $fetchNames->fetchAll();
+
+            if ($employees) {
+                $_SESSION['del_ids'] = $selectedDelIDs;
+                $employeeNames = array_column($employees, 'full_name');
+                $employeeList = implode('<br>', $employeeNames);
+                echo "
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            Swal.fire({
+                                title: 'Are you sure?',
+                                html: 'Are you sure you want to delete these employees:<br><br>$employeeList',
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: 'crimson',
+                                cancelButtonColor: 'white',
+                                confirmButtonText: 'Yes, delete.',
+                                cancelButtonText: 'No, cancel',
+                                customClass: {
+                                    cancelButton: 'custom-cancel-button'
+                                }
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    // Rrdirect to delete selected employees action
+                                    window.location.href = '../main/delete_employee.php';
+                                } else {
+                                    window.location.href = '../main/employee_table.php';
+                                }
+                            });
+                        });
+                    </script>
+                ";
+            }
+        }
     }
 ?>
 <!DOCTYPE html>
