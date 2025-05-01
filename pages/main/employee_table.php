@@ -190,6 +190,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../assets/css/style.css">
     <script src="../../assets/js/sweetalert2.js"></script>
+    <script src="../../assets/js/checkboxes.js"></script>
     <title>UBISH Dashboard | Account</title>
 </head>
 <body>
@@ -238,7 +239,7 @@
                 <div id="employee-table-container">
                     <form method="POST" action="../main/employee_table.php">
                         <?php if ($accessLevel >= 3) { ?>
-                            <button type="submit" id="deleteEmp" name="delete-selected" style="justify-content: flex-start; cursor: pointer;">Delete Selected</button>
+                            <button type="submit" id="deleteSelectedEmp" name="delete-selected" style="justify-content: flex-start; cursor: pointer;">Delete Selected</button>
                         <?php } ?>
                         <br>
                         <div class="employee-filters">
@@ -297,8 +298,13 @@
                                     <?php if ($accessLevel >= 3) { ?>
                                         <td>
                                             <center>
-                                                <input type="checkbox" name="select_employee[]"
-                                                    value="<?php echo $row['emp_id']; ?>" style="cursor: pointer;">
+                                                <input 
+                                                    type="checkbox"
+                                                    class="deletion-checkbox" 
+                                                    name="select_employee[]" 
+                                                    value="<?php echo $row['emp_id']; ?>" 
+                                                    style="cursor: pointer;"
+                                                >
                                             </center>
                                         </td>
                                     <?php } ?>
