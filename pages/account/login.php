@@ -10,8 +10,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../assets/css/style.css">
-    <title>UBISH Dashboard | Login</title>
     <script src="../../assets/js/sweetalert2.js"></script>
+    <title>UBISH Dashboard | Login</title>
 </head>
 <body>
     <header>
@@ -46,7 +46,7 @@
                 <div class="login-btns">
                     <button name="login">Log In</button>
                 </div>
-                <br><a href="">Forgot Password</a>
+                <br><a href="../account/forgot_password.php">Forgot Password?</a>
                 <?php 
                     if (isset($_POST['login'])) {
                         $username = $_POST['username'];
