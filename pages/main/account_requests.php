@@ -705,7 +705,7 @@ if (isset($_POST['deny-update-selected']) && isset($_POST['updates'])) {
                                                     <?php echo $reg['registration_emp_id']; ?></p>
                                                 <p><strong>Registration Login ID:</strong>
                                                     <?php echo $reg['registration_login_id']; ?></p>
-                                                <p><strong>Registration Date:</strong> <?php echo $reg['request_date']; ?></p>
+                                                <p><strong>Registration Date:</strong> <?php echo date("M j, Y h:i:s A", strtotime($reg['request_date'])); ?></p>
                                             </div>
                                         </td>
                                     </tr>
@@ -723,8 +723,8 @@ if (isset($_POST['deny-update-selected']) && isset($_POST['updates'])) {
                         <?php
                         if ($empUpdate->rowCount() < 1) {
                             echo "<p>No profile edit requests at the moment.</p>";
-                        } else {
-                            ?>
+                        } else { 
+                        ?>
                             <!-- Multiple selection actions -->
                             <div class="profile-edit-actions-multiple">
                                 <button type="button" id="viewAllUpdatesBtn" onclick="toggleProfileEditsViewAll(this)">View
@@ -758,8 +758,7 @@ if (isset($_POST['deny-update-selected']) && isset($_POST['updates'])) {
                                                 class="profile-picture"
                                                 style="width: 75px; height: 75px; border-radius: 50%; object-fit: cover;">
                                         </td>
-                                        <td><?php echo $upd['first_name'] . " " . $upd['middle_name'] . " " . $upd['last_name']; ?>
-                                        </td>
+                                        <td><?php echo $upd['first_name'] . " " . $upd['middle_name'] . " " . $upd['last_name']; ?></td>
                                         <td class="update-reason"><?php echo $upd['update_reason']; ?></td>
                                         <td><?php echo $upd['update_status']; ?></td>
                                         <td class="action-btns">
@@ -778,6 +777,8 @@ if (isset($_POST['deny-update-selected']) && isset($_POST['updates'])) {
                                                 id="updatesView_<?php echo $upd['update_id']; ?>">
                                                 <h3>Reason</h3>
                                                 <p id="update-reason"><?php echo $upd['update_reason']; ?></p>
+
+                                                <br>
                                                 <h3>Updates</h3>
                                                 <?php
                                                 $currentValQuery = "SELECT * FROM employee_details WHERE emp_id = :emp_id";
@@ -834,6 +835,10 @@ if (isset($_POST['deny-update-selected']) && isset($_POST['updates'])) {
                                                         $accessLevel[$upd['update_access_level'] - 1] . '</p>';
                                                 }
                                                 ?>
+
+                                                <br>
+                                                <h3>Request Details</h3>
+                                                <p><strong>Request Date:</strong> <?php echo date("M j, Y h:i:s A", strtotime($upd['update_request_date'])); ?></p>
                                             </div>
                                         </td>
                                     </tr>
@@ -843,6 +848,59 @@ if (isset($_POST['deny-update-selected']) && isset($_POST['updates'])) {
                     </div>
                     <script src="../../assets/js/toggleProfileEditsView.js"></script>
                     <br>
+
+                    <h1>
+                        <center>Password Reset Requests</center>
+                    </h1>
+                    <div class="password-reset-main">
+                        <?php
+                            if ($updatePwd->rowCount() < 1) {
+                                echo "<p>No password reset requests at the moment.</p>";
+                            } else {
+                        ?>
+                                <!-- Multiple selection actions -->
+                                <div class="password-reset-actions-multiple">
+                                    <button type="submit" id="approveResetSelectedBtn" name="approve-reset-selected"
+                                        class="approve-reset-selected-btn" disabled>Approve Selected</button>
+                                    <button type="submit" id="denyResetSelectedBtn" name="deny-reset-selected"
+                                        class="deny-reset-selected-btn" disabled>Deny Selected</button>
+                                </div>
+                                <table id="password-reset-requests">
+                                    <tr>
+                                        <th>Selection</td>
+                                        <th>Profile</td>
+                                        <th>Full Name</td>
+                                        <th>Request Date</td>
+                                        <th>Status</td>
+                                        <th colspan="2">Actions</td>
+                                    </tr>
+                                    <?php foreach ($updatePwd as $pwd) { ?>
+                                        <tr>
+                                            <td>
+                                                <center>
+                                                    <input type="checkbox" class="reset-checkbox" name="reset[]"
+                                                        value="<?php echo $pwd['reset_id']; ?>" style="cursor: pointer;">
+                                                </center>
+                                            </td>
+                                            <td>
+                                                <img src="<?php echo $pwd['picture']; ?>"
+                                                    alt="<?php echo $pwd['first_name'] . " " . $pwd['middle_name'] . " " . $pwd['last_name']; ?>"
+                                                    title="<?php echo $pwd['first_name'] . " " . $pwd['middle_name'] . " " . $pwd['last_name']; ?>"
+                                                    class="profile-picture"
+                                                    style="width: 75px; height: 75px; border-radius: 50%; object-fit: cover;">
+                                            </td>
+                                            <td><?php echo $pwd['first_name'] . " " . $pwd['middle_name'] . " " . $pwd['last_name']; ?></td>
+                                            <td><?php echo date("M j, Y h:i:s A", strtotime($pwd['request_date'])); ?></td>
+                                            <td><?php echo $pwd['reset_status']; ?></td>
+                                            <td class="action-btns">
+                                                <button name="approve-reset" value="<?php echo $pwd['reset_id']; ?>">Approve</button>
+                                                <button name="deny-reset" value="<?php echo $pwd['reset_id']; ?>">Deny</button>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
+                                </table>
+                        <?php } ?>
+                    </div>
                 </form>
             </div>
         </div>
