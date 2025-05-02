@@ -307,6 +307,23 @@ div#employee-table-container {
     overflow-x: auto;
     overflow-y: auto;
 }
+div#employee-table-container button#deleteSelectedEmp {
+    border: 2px solid gray;
+    background-color: white;
+    color: black;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+div#employee-table-container button#deleteSelectedEmp:hover {
+    background-color: lightgray;
+}
+div#employee-table-container button#deleteSelectedEmp:disabled {
+    opacity: 0.5;
+}
+div#employee-table-container button#deleteSelectedEmp:disabled:hover {
+    background-color: white;
+}
 .dashboard-content table#employee-table {
     width: 100%;
     border-collapse: collapse;
@@ -382,7 +399,7 @@ div#employee-table-container {
 .registration-main button:hover, 
 .profile-edit-main button:hover {
     background-color: lightgray;
-}
+} 
 .registration-main button:disabled, 
 .profile-edit-main button:disabled {
     opacity: 0.5;

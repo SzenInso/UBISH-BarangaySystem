@@ -1,46 +1,6 @@
 <?php
     include '../../config/dbfetch.php';
 
-    if (isset($_POST['delete-employee'])) {
-        $emp_id = $_POST['emp_id'];
-
-        $fetchEmployeeQuery = "SELECT * FROM employee_details WHERE emp_id = :emp_id";
-        $fetchEmployee = $pdo->prepare($fetchEmployeeQuery);
-        $fetchEmployee->execute([":emp_id" => $emp_id]);
-        $employee = $fetchEmployee->fetch();
-
-        if ($employee) {
-            $_SESSION['del_id'] = $emp_id;
-            $employeeName = $employee['first_name'] . ' ' . $employee['middle_name'] . ' ' . $employee['last_name'];
-            echo "
-                <script>
-                    document.addEventListener('DOMContentLoaded', function () {
-                        Swal.fire({
-                            title: 'Are you sure?',
-                            text: 'Are you sure you want to delete this employee: $employeeName?',
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: 'crimson',
-                            cancelButtonColor: 'white',
-                            confirmButtonText: 'Yes, delete.',
-                            cancelButtonText: 'No, cancel',
-                            customClass: {
-                                cancelButton: 'custom-cancel-button'
-                            }
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                // redirect to delete employee action
-                                window.location.href = '../main/delete_employee.php';
-                            } else {
-                                window.location.href = '../main/employee_table.php';
-                            }
-                        });
-                    });
-                </script>
-            ";
-        }
-    }
-
     // sort and filter logic
     if (isset($_POST['action']) && $_POST['action'] === 'fetch') {
         $sort = $_POST['sort'];
@@ -137,6 +97,91 @@
         }
         exit;
     }
+
+    // delete single employee
+    if (isset($_POST['delete-employee'])) {
+        $emp_id = $_POST['emp_id'];
+
+        $fetchEmployeeQuery = "SELECT * FROM employee_details WHERE emp_id = :emp_id";
+        $fetchEmployee = $pdo->prepare($fetchEmployeeQuery);
+        $fetchEmployee->execute([":emp_id" => $emp_id]);
+        $employee = $fetchEmployee->fetch();
+
+        if ($employee) {
+            $_SESSION['del_id'] = $emp_id;
+            $employeeName = $employee['first_name'] . ' ' . $employee['middle_name'] . ' ' . $employee['last_name'];
+            echo "
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        Swal.fire({
+                            title: 'Are you sure?',
+                            text: 'Are you sure you want to delete this employee: $employeeName?',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: 'crimson',
+                            cancelButtonColor: 'white',
+                            confirmButtonText: 'Yes, delete.',
+                            cancelButtonText: 'No, cancel',
+                            customClass: {
+                                cancelButton: 'custom-cancel-button'
+                            }
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // redirect to delete employee action
+                                window.location.href = '../main/delete_employee.php';
+                            } else {
+                                window.location.href = '../main/employee_table.php';
+                            }
+                        });
+                    });
+                </script>
+            ";
+        }
+    }
+
+    // delete multiple selected employees
+    if (isset($_POST['delete-selected'])) {
+        $selectedDelIDs = $_POST['select_employee'];
+        if (!empty($selectedDelIDs)) {
+            $placeholders = implode(',', array_fill(0, count($selectedDelIDs), '?'));
+            $fetchNamesQuery = "SELECT CONCAT(first_name, ' ', middle_name, ' ', last_name) AS full_name FROM employee_details WHERE emp_id IN ($placeholders)";
+            $fetchNames = $pdo->prepare($fetchNamesQuery);
+            $fetchNames->execute($selectedDelIDs);
+            $employees = $fetchNames->fetchAll();
+
+            if ($employees) {
+                $_SESSION['del_ids'] = $selectedDelIDs;
+                $employeeNames = array_column($employees, 'full_name');
+                $employeeList = implode('<br>', $employeeNames);
+                echo "
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            Swal.fire({
+                                title: 'Are you sure?',
+                                html: 'Are you sure you want to delete these employees:<br><br>$employeeList',
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: 'crimson',
+                                cancelButtonColor: 'white',
+                                confirmButtonText: 'Yes, delete.',
+                                cancelButtonText: 'No, cancel',
+                                customClass: {
+                                    cancelButton: 'custom-cancel-button'
+                                }
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    // Rrdirect to delete selected employees action
+                                    window.location.href = '../main/delete_employee.php';
+                                } else {
+                                    window.location.href = '../main/employee_table.php';
+                                }
+                            });
+                        });
+                    </script>
+                ";
+            }
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -145,6 +190,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../assets/css/style.css">
     <script src="../../assets/js/sweetalert2.js"></script>
+    <script src="../../assets/js/checkboxes.js"></script>
     <title>UBISH Dashboard | Account</title>
 </head>
 <body>
@@ -193,7 +239,7 @@
                 <div id="employee-table-container">
                     <form method="POST" action="../main/employee_table.php">
                         <?php if ($accessLevel >= 3) { ?>
-                            <button type="submit" id="deleteEmp" name="delete-selected" style="justify-content: flex-start; cursor: pointer;">Delete Selected</button>
+                            <button type="submit" id="deleteSelectedEmp" name="delete-selected" style="justify-content: flex-start; cursor: pointer;">Delete Selected</button>
                         <?php } ?>
                         <br>
                         <div class="employee-filters">
@@ -252,8 +298,13 @@
                                     <?php if ($accessLevel >= 3) { ?>
                                         <td>
                                             <center>
-                                                <input type="checkbox" name="select_employee[]"
-                                                    value="<?php echo $row['emp_id']; ?>" style="cursor: pointer;">
+                                                <input 
+                                                    type="checkbox"
+                                                    class="deletion-checkbox" 
+                                                    name="select_employee[]" 
+                                                    value="<?php echo $row['emp_id']; ?>" 
+                                                    style="cursor: pointer;"
+                                                >
                                             </center>
                                         </td>
                                     <?php } ?>
