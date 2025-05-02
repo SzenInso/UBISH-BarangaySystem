@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 01, 2025 at 07:44 PM
+-- Generation Time: May 02, 2025 at 05:51 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -250,7 +250,7 @@ CREATE TABLE `login_details` (
 
 INSERT INTO `login_details` (`user_id`, `emp_id`, `username`, `email`, `password`) VALUES
 (1, 1001, 'admin', 'admin@email.com', '1234'),
-(2, 1002, 'mbringas', 'mbringas@email.com', '$2y$10$GS81dsvvhFZwDUqRJ73OmOFZgKEzctb9Aod9sb7OOLcHdrZNPTXxi'),
+(2, 1002, 'mbringas', 'msimonbringas05v2@gmail.com', '$2y$10$GS81dsvvhFZwDUqRJ73OmOFZgKEzctb9Aod9sb7OOLcHdrZNPTXxi'),
 (4, 1004, 'jdoe', 'jdoe@email.com', '$2y$10$VCPFcQVgrnx1lzn4DxZWbedaopwO.0jAZWLzRMuMkqI7MMIfz5noq'),
 (9, 1009, 'jamiedoe', 'jamied@email.com', '$2y$10$C0oC34M1ynaxxgdDXhHPxeWKHaVWUCcHB5wGfp6WTjz2VoA2kW4/C'),
 (13, 1013, 'sakamoto', 'sakamoto@tarou.com', '$2y$10$4iHzxPWm9Qmw9ebGUDK1FOE30fc80XjdVvEh0Nk/sHP0p6hPv8b5S'),
@@ -308,6 +308,29 @@ INSERT INTO `login_registration` (`registration_login_id`, `username`, `email`, 
 (332, 's', 's@s', '$2y$10$OdDmziVlbCn7H3a8acq7bunWu/KzcwUDRVqXmx6tlRgTJHHjOgdq.'),
 (333, 'q', 'q@q', '$2y$10$/YSp68BK7JBcC/xqxO0Jk.nYVvpzUtwWniEqHWUKrhbQCv6mpzQeC'),
 (334, 'w', 'w@w', '$2y$10$J3lRg3ZPQVili9TSfVagYukaWV1B7wzZio67BYdP0bdskbcp/RpGC');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `password_resets`
+--
+
+CREATE TABLE `password_resets` (
+  `reset_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `token` varchar(255) NOT NULL,
+  `expiry_date` datetime NOT NULL,
+  `request_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `reset_status` enum('Pending','Approved','Denied') NOT NULL DEFAULT 'Pending'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `password_resets`
+--
+
+INSERT INTO `password_resets` (`reset_id`, `user_id`, `email`, `token`, `expiry_date`, `request_date`, `reset_status`) VALUES
+(401, 2, 'msimonbringas05v2@gmail.com', '41aa05182dfc30614c3ecb08081a262304da97b426418c9b2eda65537101fdd8', '2025-05-03 17:07:22', '2025-05-02 15:07:22', 'Pending');
 
 -- --------------------------------------------------------
 
@@ -420,6 +443,13 @@ ALTER TABLE `login_registration`
   ADD PRIMARY KEY (`registration_login_id`);
 
 --
+-- Indexes for table `password_resets`
+--
+ALTER TABLE `password_resets`
+  ADD PRIMARY KEY (`reset_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
 -- Indexes for table `registration`
 --
 ALTER TABLE `registration`
@@ -474,6 +504,12 @@ ALTER TABLE `login_registration`
   MODIFY `registration_login_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=335;
 
 --
+-- AUTO_INCREMENT for table `password_resets`
+--
+ALTER TABLE `password_resets`
+  MODIFY `reset_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=402;
+
+--
 -- AUTO_INCREMENT for table `registration`
 --
 ALTER TABLE `registration`
@@ -512,6 +548,12 @@ ALTER TABLE `employee_update`
 --
 ALTER TABLE `login_details`
   ADD CONSTRAINT `fk_user_emp` FOREIGN KEY (`emp_id`) REFERENCES `employee_details` (`emp_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `password_resets`
+--
+ALTER TABLE `password_resets`
+  ADD CONSTRAINT `password_resets_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `login_details` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `registration`
