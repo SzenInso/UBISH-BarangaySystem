@@ -38,6 +38,26 @@ document.addEventListener('DOMContentLoaded', function () {
     toggleButtons();
 });
 
+/* checkboxes for password reset requests */
+document.addEventListener('DOMContentLoaded', function () {
+    const checkboxes = document.querySelectorAll('.reset-checkbox');
+    const approveButton = document.getElementById('approveResetSelectedBtn');
+    const denyButton = document.getElementById('denyResetSelectedBtn');
+
+    // check if any checkbox is selected
+    function toggleButtons() {
+        const anyChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+        approveButton.disabled = !anyChecked;
+        denyButton.disabled = !anyChecked;
+    }
+
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', toggleButtons);
+    });
+
+    toggleButtons();
+});
+
 /* checkboxes for multiple employee deletion */
 document.addEventListener('DOMContentLoaded', function () {
     const checkboxes = document.querySelectorAll('.deletion-checkbox');
