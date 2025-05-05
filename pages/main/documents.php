@@ -2,46 +2,45 @@
 session_start();
 include '../../config/dbfetch.php';
 
-// fetch documents
-$documentsFetch = "SELECT * FROM documents";
+// file fetch
+$documentsFetch = "SELECT * FROM files";
 $stmt = $pdo->query($documentsFetch);
 $documents = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// upload handler
 if (isset($_POST['upload'])) {
     $title = $_POST['title'];
     $uploadedBy = $_SESSION['user_id'];
     $uploadDate = date('Y-m-d H:i:s');
+    $privacy = 'Public'; // public default
 
     $uploadDir = '../../uploads/documents/';
     $maxSize = 10 * 1024 * 1024;
     $errors = [];
 
-    // file upload
     if (isset($_FILES['document']) && $_FILES['document']['error'] === UPLOAD_ERR_OK) {
         $fileTmpName = $_FILES['document']['tmp_name'];
-        $fileName = uniqid() . '-' . basename($_FILES['document']['name']); // unique name for duplicates
+        $fileName = uniqid() . '-' . basename($_FILES['document']['name']);
         $fileSize = $_FILES['document']['size'];
-        $fileType = $_FILES['document']['type'];
+        $fileType = $_FILES['document']['type']; // MIME type
 
-        // file size validation
         if ($fileSize > $maxSize) {
             $errors[] = "File exceeds 10MB size limit.";
         }
 
-        // move file
         if (empty($errors)) {
             $filePath = $uploadDir . $fileName;
             if (move_uploaded_file($fileTmpName, $filePath)) {
-                $insert = "INSERT INTO documents (document_name, document_path, uploaded_by, upload_date, title) 
-                    VALUES (:document_name, :document_path, :uploaded_by, :upload_date, :title)";
+                $insert = "INSERT INTO files (file_name, file_path, uploaded_by, upload_date, title, privacy, file_type) 
+                    VALUES (:file_name, :file_path, :uploaded_by, :upload_date, :title, :privacy, :file_type)";
                 $stmt = $pdo->prepare($insert);
                 $stmt->execute([
-                    ':document_name' => htmlspecialchars($title),
-                    ':document_path' => htmlspecialchars($filePath),
+                    ':file_name' => htmlspecialchars($title),
+                    ':file_path' => htmlspecialchars($filePath),
                     ':uploaded_by' => $uploadedBy,
                     ':upload_date' => $uploadDate,
                     ':title' => htmlspecialchars($title),
+                    ':privacy' => $privacy,
+                    ':file_type' => $fileType
                 ]);
 
                 header("Location: " . $_SERVER['PHP_SELF']);
@@ -54,7 +53,6 @@ if (isset($_POST['upload'])) {
         $errors[] = "No file selected or an error occurred during file upload.";
     }
 
-    // error display
     if (!empty($errors)) {
         foreach ($errors as $error) {
             echo "<p style='color: red;'>$error</p>";
@@ -65,15 +63,16 @@ if (isset($_POST['upload'])) {
 // generate documents table
 function getDocumentsTable($pdo)
 {
-    $documentsFetch = "SELECT * FROM documents";
+    $documentsFetch = "SELECT * FROM files";
     $stmt = $pdo->query($documentsFetch);
     $documents = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     $output = "";
     foreach ($documents as $document) {
-        $documentId = $document['document_id'];
-        $title = htmlspecialchars($document['document_name']);
-        $filePath = htmlspecialchars($document['document_path']);
+        $documentId = $document['file_id'];
+        $title = htmlspecialchars($document['file_name']);
+        $filePath = htmlspecialchars($document['file_path']);
+        $fileType = htmlspecialchars($document['file_type'] ?? 'Unknown'); // File type
         $uploadedBy = $document['uploaded_by'];
         $uploadDate = $document['upload_date'];
 
@@ -86,9 +85,10 @@ function getDocumentsTable($pdo)
         $output .= "<tr>
                         <td>$title</td>
                         <td><a href='$filePath' download>Download</a></td>
+                        <td>$fileType</td>
                         <td>$username</td>
                         <td>$uploadDate</td>
-                        <td><a href='#' onclick='confirmDelete($documentId)'>Delete</a></td>
+                        <td><button onclick='confirmDelete($documentId)'>Delete</button></td>
                     </tr>";
     }
     return $output;
@@ -104,6 +104,41 @@ function getDocumentsTable($pdo)
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../assets/css/style.css">
     <title>UBISH Dashboard | Documents</title>
+    <style>
+        /* CSS override as I try to get it to work */
+        button {
+            border: 2px solid gray;
+            background-color: white;
+            color: black;
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: lightgray;
+        }
+        button.logout {
+            border: none;
+            background-color: white;
+            font-size: 16px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+        }
+        table th,
+        table td {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        table th {
+            background-color: lightgray;
+        }
+    </style>
+</head>
 </head>
 
 <body>
@@ -116,9 +151,7 @@ function getDocumentsTable($pdo)
             <form method="POST">
                 <nav>
                     <ul>
-                        <li>
-                            <button class="logout" style="cursor: pointer;" name="logout">Log Out</button>
-                        </li>
+                        <li><button class="logout" style="cursor: pointer;" name="logout">Log Out</button></li>
                     </ul>
                 </nav>
             </form>
@@ -136,12 +169,20 @@ function getDocumentsTable($pdo)
                     <li class="active"><a href="../main/documents.php">Documents</a></li>
                     <li><a href="../main/announcements.php">Post Announcement</a></li>
                     <h3>Tables & Requests</h3>
-                    <?php if ($accessLevel >= 2) { echo '<li><a href="../main/employee_table.php">Employee Table</a></li>'; } ?>
-                    <?php if ($accessLevel >= 3) { echo '<li><a href="../main/account_requests.php">Account Requests</a></li>'; } ?>
-                    <?php if ($accessLevel >= 2) { echo '<li><a href="#">Certificate Requests</a></li>'; } ?>
-                    <?php if ($accessLevel >= 2) { echo '<li><a href="#">Permit Requests</a></li>'; } ?>
+                    <?php if ($accessLevel >= 2) {
+                        echo '<li><a href="../main/employee_table.php">Employee Table</a></li>';
+                    } ?>
+                    <?php if ($accessLevel >= 3) {
+                        echo '<li><a href="../main/account_requests.php">Account Requests</a></li>';
+                    } ?>
+                    <?php if ($accessLevel >= 2) {
+                        echo '<li><a href="#">Certificate Requests</a></li>';
+                    } ?>
+                    <?php if ($accessLevel >= 2) {
+                        echo '<li><a href="#">Permit Requests</a></li>';
+                    } ?>
                     <h3>Reports</h3>
-                    <li><a href="#">Incident Reports</a></li>
+                    <li><a href="../main/incidents.php">Incident Reports</a></li>
                     <li><a href="../main/reports.php">Analytics</a></li>
                 </ul>
             </div>
@@ -156,7 +197,9 @@ function getDocumentsTable($pdo)
                             <input type="text" name="title" placeholder="Enter document title" required>
                         </div>
                         <div class="document-credentials">
-                            <center><h3>Upload Document</h3></center>
+                            <center>
+                                <h3>Upload Document</h3>
+                            </center>
                             <input type="file" name="document" accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.jpg,.png"
                                 required>
                             <button name="upload" id="uploadDocument">Upload</button>
@@ -172,15 +215,14 @@ function getDocumentsTable($pdo)
                         <tr>
                             <th>Title</th>
                             <th>File</th>
+                            <th>Type</th>
                             <th>Uploaded By</th>
                             <th>Upload Date</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
-                        echo getDocumentsTable($pdo);
-                        ?>
+                        <?php echo getDocumentsTable($pdo); ?>
                     </tbody>
                 </table>
             </div>
@@ -192,7 +234,6 @@ function getDocumentsTable($pdo)
     </footer>
 
     <script>
-        // delete confirmation
         function confirmDelete(documentId) {
             const confirmation = confirm("Are you sure you want to delete this document?");
             if (confirmation) {
