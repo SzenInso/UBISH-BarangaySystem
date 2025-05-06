@@ -183,5 +183,4 @@ if (isset($_POST['change-password'])) {
         <p><?php echo "&copy; " . date('Y') . " | Unified Barangay Information Service Hub"; ?></p>
     </footer>
 </body>
-
 </html>

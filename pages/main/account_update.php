@@ -477,5 +477,4 @@ if (isset($_POST['cancel'])) {
         <p><?php echo "&copy; " . date('Y') . " | Unified Barangay Information Service Hub"; ?></p>
     </footer>
 </body>
-
 </html>

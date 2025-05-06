@@ -141,7 +141,7 @@ $incidentTypeData = $stmt4->fetchAll(PDO::FETCH_ASSOC);
             </div>
             <div class="dashboard-content">
                 <h1>Generated Reports</h1>
-
+                <br>
                 <!-- primary tabs -->
                 <div class="tabs">
                     <button class="tab-btn active" id="announcementTabBtn"
@@ -149,7 +149,7 @@ $incidentTypeData = $stmt4->fetchAll(PDO::FETCH_ASSOC);
                     <button class="tab-btn" id="documentTabBtn" onclick="showPrimaryTab('documents')">Documents</button>
                     <button class="tab-btn" id="incidentTabBtn" onclick="showPrimaryTab('incidents')">Incidents</button>
                 </div>
-
+                <br>
                 <!-- secondary tabs: announcements -->
                 <div class="tabs" id="announcementTabs" style="display: block;">
                     <button class="tab-btn active" onclick="showSecondaryTab('categoryTab')">By Category</button>

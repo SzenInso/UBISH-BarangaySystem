@@ -146,34 +146,100 @@ if (isset($_POST['submit_incident'])) {
                 }
                 ?>
 
+                <style>
+                    .incident-form {
+                        max-width: 800px;
+                        width: 100%;
+                        background-color: #f8f9fa;
+                        padding: 20px;
+                        border-radius: 8px;
+                        margin: 0 auto;
+                    }
+
+                    .incident-form label {
+                        display: block;
+                        font-size: 16px;
+                        margin-bottom: 8px;
+                        font-weight: 600;
+                        color: #333;
+                        text-align: left;
+                    }
+
+                    .incident-form input,
+                    .incident-form textarea {
+                        width: 100%;
+                        padding: 10px;
+                        margin-bottom: 20px;
+                        border: 2px solid gray;
+                        border-radius: 5px;
+                        font-size: 14px;
+                        color: #333;
+                        background-color: #fff;
+                        text-align: left;
+                    }
+
+                    .incident-form input:focus,
+                    .incident-form textarea:focus {
+                        outline: none;
+                        border-color: #007bff;
+                    }
+
+                    .incident-form textarea {
+                        resize: vertical;
+                        min-height: 100px;
+                    }
+
+                    .incident-form button:focus {
+                        outline: none;
+                    }
+
+                    .incident-form-container {
+                        display: flex;
+                        justify-content: space-between;
+                        gap: 20px;
+                    }
+
+                    .incident-form-container label,
+                    .incident-form-container input {
+                        width: 48%;
+                    }
+
+                    .incident-form-container input[name="incident_type"] {
+                        width: 100%;
+                    }
+
+                    .incident-form-container input[name="incident_date"] {
+                        width: 100%;
+                    }
+
+
+                </style>
+
                 <form method="POST" class="incident-form">
-                    <label>Incident Type:
+
+                    <div class="incident-form-container">
+                        <label>Incident Type</label>
                         <input type="text" name="incident_type" required>
-                    </label><br><br>
-
-                    <label>Incident Date:
+    
+                        <label>Incident Date:</label>
                         <input type="date" name="incident_date" required>
-                    </label><br><br>
+                    </div>
+                    
 
-                    <label>Place of Incident:
-                        <input type="text" name="place_of_incident" required>
-                    </label><br><br>
+                    <label>Place of Incident:</label>
+                    <input type="text" name="place_of_incident" required>
 
-                    <label>Reporting Person:
-                        <input type="text" name="reporting_person" required>
-                    </label><br><br>
+                    <label>Reporting Person:</label>
+                    <input type="text" name="reporting_person" required>
 
-                    <label>Home Address:
-                        <textarea name="home_address" required></textarea>
-                    </label><br><br>
+                    <label>Home Address:</label>
+                    <textarea name="home_address" required></textarea>
 
-                    <label>Narrative of Incident:
-                        <textarea name="narrative" required></textarea>
-                    </label><br><br>
+                    <label>Narrative of Incident:</label>
+                    <textarea name="narrative" required></textarea>
 
-                    <label>Involved Parties:
-                        <textarea name="involved_parties" required></textarea>
-                    </label><br><br>
+                    <label>Involved Parties:</label>
+                    <textarea name="involved_parties" required></textarea>
 
                     <button type="submit" name="submit_incident">Submit Incident</button>
                 </form>
