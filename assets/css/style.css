@@ -375,7 +375,6 @@ div#employee-table-container button#deleteSelectedEmp:disabled:hover {
     border-radius: 4px;
     cursor: pointer;
 }
-
 .custom-cancel-button:hover {
     background-color: lightgray;
 }
@@ -388,7 +387,8 @@ div#employee-table-container button#deleteSelectedEmp:disabled:hover {
     display: block;
 }
 .registration-main button, 
-.profile-edit-main button {
+.profile-edit-main button,
+.password-reset-main button {
     border: 2px solid gray;
     background-color: white;
     color: black;
@@ -397,38 +397,46 @@ div#employee-table-container button#deleteSelectedEmp:disabled:hover {
     cursor: pointer;
 }
 .registration-main button:hover, 
-.profile-edit-main button:hover {
+.profile-edit-main button:hover,
+.password-reset-main button:hover {
     background-color: lightgray;
 } 
 .registration-main button:disabled, 
-.profile-edit-main button:disabled {
+.profile-edit-main button:disabled,
+.password-reset-main button:disabled {
     opacity: 0.5;
 }
 .registration-main button:disabled:hover, 
-.profile-edit-main button:disabled:hover {
+.profile-edit-main button:disabled:hover,
+.password-reset-main button:disabled:hover {
     background-color: white;
 }
 .registration-actions-multiple, 
-.profile-edit-actions-multiple {
+.profile-edit-actions-multiple, 
+.password-reset-actions-multiple {
     display: flex;
     align-items: center;
     justify-content: center;
     margin-top: 16px;
 }
 .registration-actions-multiple button, 
-.profile-edit-actions-multiple button {
+.profile-edit-actions-multiple button, 
+.password-reset-actions-multiple button {
     margin: 0 8px;
 }
 .dashboard-content table#registration-requests, 
-.dashboard-content table#profile-edit-requests {
+.dashboard-content table#profile-edit-requests, 
+.dashboard-content table#password-reset-requests {
     width: 100%;
     border-collapse: collapse;
     border: 2px solid gray;
 }
 .dashboard-content table#registration-requests tr td,
 .dashboard-content table#profile-edit-requests tr td,
+.dashboard-content table#password-reset-requests tr td,
 .dashboard-content table#registration-requests tr th, 
-.dashboard-content table#profile-edit-requests tr th {
+.dashboard-content table#profile-edit-requests tr th,
+.dashboard-content table#password-reset-requests tr th {
     text-align: left;
     padding: 4px 8px;
 }
@@ -436,12 +444,14 @@ div#employee-table-container button#deleteSelectedEmp:disabled:hover {
     margin: 0 8px;
 }
 .dashboard-content table#registration-requests tr:nth-child(odd) td, 
-.dashboard-content table#profile-edit-requests tr:nth-child(odd) td {
+.dashboard-content table#profile-edit-requests tr:nth-child(odd) td,
+.dashboard-content table#password-reset-requests tr:nth-child(odd) td {
     text-align: left;
     background-color: rgb(245, 245, 245);
 }
 .dashboard-content table#registration-requests tr th, 
-.dashboard-content table#profile-edit-requests tr th {
+.dashboard-content table#profile-edit-requests tr th,
+.dashboard-content table#password-reset-requests tr th {
     text-align: center;
     background-color: lightgray;
 }
