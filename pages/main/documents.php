@@ -106,6 +106,12 @@ function getDocumentsTable($pdo)
     <title>UBISH Dashboard | Documents</title>
     <style>
         /* CSS override as I try to get it to work */
+        .document-upload-form {
+            text-align: left;
+            margin: 0;
+            width: 100%;
+        }
+
         button {
             border: 2px solid gray;
             background-color: white;
@@ -115,27 +121,46 @@ function getDocumentsTable($pdo)
             cursor: pointer;
             transition: background-color 0.3s;
         }
+
         button:hover {
             background-color: lightgray;
         }
+
         button.logout {
             border: none;
             background-color: white;
             font-size: 16px;
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
             margin: 24px 0;
         }
+
         table th,
         table td {
             padding: 8px 12px;
             border: 1px solid #ddd;
             text-align: center;
         }
+
         table th {
             background-color: lightgray;
+        }
+
+        .document-credentials {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .document-credentials input,
+        .document-credentials textarea {
+            margin-bottom: 16px;
+            width: 100%;
+            padding: 8px;
+            padding-left: 0px;
+            box-sizing: border-box;
         }
     </style>
 </head>
@@ -197,9 +222,7 @@ function getDocumentsTable($pdo)
                             <input type="text" name="title" placeholder="Enter document title" required>
                         </div>
                         <div class="document-credentials">
-                            <center>
-                                <h3>Upload Document</h3>
-                            </center>
+                            <h3>Upload Document</h3>
                             <input type="file" name="document" accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.jpg,.png"
                                 required>
                             <button name="upload" id="uploadDocument">Upload</button>
