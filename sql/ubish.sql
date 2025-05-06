@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ubish2.0`
+-- Database: `ubish`
 --
 
 -- --------------------------------------------------------
@@ -71,29 +71,6 @@ CREATE TABLE `attachments` (
 INSERT INTO `attachments` (`attachment_id`, `announcement_id`, `file_path`, `file_name`, `upload_date`) VALUES
 (3010, 2009, '../../uploads/attachments/attachment_1744880786_attachmenttest01.pdf', 'attachment_1744880786_attachmenttest01.pdf', '2025-04-17 11:06:26'),
 (3037, 2020, '../../uploads/attachments/attachment_1745815302_test_pdf.pdf', 'attachment_1745815302_test_pdf.pdf', '2025-04-28 12:41:42');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `documents`
---
-
-CREATE TABLE `documents` (
-  `document_id` int(11) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `document_name` varchar(255) NOT NULL,
-  `document_path` varchar(255) NOT NULL,
-  `uploaded_by` int(11) DEFAULT NULL,
-  `upload_date` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `documents`
---
-
-INSERT INTO `documents` (`document_id`, `title`, `document_name`, `document_path`, `uploaded_by`, `upload_date`) VALUES
-(20, 'Upload Test (PDF)', 'Upload Test (PDF)', '../../uploads/documents/680efec219838-test_pdf.pdf', 1, '2025-04-27 22:06:26'),
-(21, 'Test Document', 'Test Document', '../../uploads/documents/680f0043ccdf3-test_document.docx', 1, '2025-04-27 22:12:51');
 
 -- --------------------------------------------------------
 
@@ -229,6 +206,59 @@ INSERT INTO `employee_update` (`update_id`, `emp_id`, `update_first_name`, `upda
 (408, 1002, 'Wanderer', 'Scaramouche', 'Kabukimono', '2005-02-16', 'M', 'Baguio City, Philippines', 'Roman Catholic', 'Single', 'Other Barangay Personnel', 1, 'Denied', '2025-04-27 22:12:37', 'Bro I\'m literally Scaramouche.'),
 (409, 1013, 'Tarou', 'Tanaka', 'Sakamoto', '1997-11-21', 'M', 'Japan', 'Shinto', 'Married', 'Other Barangay Personnel', 1, 'Pending', '2025-04-27 22:39:21', 'Converted to Shintoism after marrying.'),
 (410, 1014, 'Kento', 'Kokusen', 'Nanami', '1990-07-03', 'M', 'Kuantan, Malaysia', 'Shinto', 'Single', 'Other Barangay Personnel', 1, 'Pending', '2025-04-27 22:41:12', 'Moved to retirement residence. Stepped down of Secretary position to settle in the new residence.');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `files`
+--
+
+CREATE TABLE `files` (
+  `file_id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `file_name` varchar(255) NOT NULL,
+  `file_path` varchar(255) NOT NULL,
+  `uploaded_by` int(11) DEFAULT NULL,
+  `upload_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `privacy` enum('Public','Private') NOT NULL DEFAULT 'Public',
+  `file_type` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `files`
+--
+
+INSERT INTO `files` (`file_id`, `title`, `file_name`, `file_path`, `uploaded_by`, `upload_date`, `privacy`, `file_type`) VALUES
+(20, 'Upload Test (PDF)', 'Upload Test (PDF)', '../../uploads/documents/680efec219838-test_pdf.pdf', 1, '2025-04-27 14:06:26', 'Public', NULL),
+(21, 'Test Document', 'Test Document', '../../uploads/documents/680f0043ccdf3-test_document.docx', 1, '2025-04-27 14:12:51', 'Public', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `incidents`
+--
+
+CREATE TABLE `incidents` (
+  `incident_id` int(11) NOT NULL,
+  `incident_type` varchar(255) NOT NULL,
+  `incident_date` date NOT NULL,
+  `place_of_incident` varchar(255) NOT NULL,
+  `reporting_person` varchar(255) NOT NULL,
+  `home_address` text NOT NULL,
+  `narrative` text NOT NULL,
+  `involved_parties` text NOT NULL,
+  `submitted_by` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `incidents`
+--
+
+INSERT INTO `incidents` (`incident_id`, `incident_type`, `incident_date`, `place_of_incident`, `reporting_person`, `home_address`, `narrative`, `involved_parties`, `submitted_by`, `created_at`) VALUES
+(1, 'category1', '2025-05-04', 'test', 'test', 'test', 'test', 'test', 1, '2025-05-05 11:44:27'),
+(2, 'category2', '2025-05-13', 'test', 'test', 'test', 'test', 'test', 1, '2025-05-05 11:44:36'),
+(3, 'category3', '2025-05-21', 'test', 'test', 'test', 'test', 'test', 1, '2025-05-05 11:44:47');
 
 -- --------------------------------------------------------
 
@@ -404,13 +434,6 @@ ALTER TABLE `attachments`
   ADD KEY `announcement_id` (`announcement_id`);
 
 --
--- Indexes for table `documents`
---
-ALTER TABLE `documents`
-  ADD PRIMARY KEY (`document_id`),
-  ADD KEY `uploaded_by` (`uploaded_by`);
-
---
 -- Indexes for table `employee_details`
 --
 ALTER TABLE `employee_details`
@@ -428,6 +451,20 @@ ALTER TABLE `employee_registration`
 ALTER TABLE `employee_update`
   ADD PRIMARY KEY (`update_id`),
   ADD KEY `fk_emp_id` (`emp_id`);
+
+--
+-- Indexes for table `files`
+--
+ALTER TABLE `files`
+  ADD PRIMARY KEY (`file_id`),
+  ADD KEY `uploaded_by` (`uploaded_by`);
+
+--
+-- Indexes for table `incidents`
+--
+ALTER TABLE `incidents`
+  ADD PRIMARY KEY (`incident_id`),
+  ADD KEY `submitted_by` (`submitted_by`);
 
 --
 -- Indexes for table `login_details`
@@ -492,6 +529,12 @@ ALTER TABLE `employee_update`
   MODIFY `update_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=412;
 
 --
+-- AUTO_INCREMENT for table `incidents`
+--
+ALTER TABLE `incidents`
+  MODIFY `incident_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `login_details`
 --
 ALTER TABLE `login_details`
@@ -532,16 +575,22 @@ ALTER TABLE `attachments`
   ADD CONSTRAINT `attachments_ibfk_1` FOREIGN KEY (`announcement_id`) REFERENCES `announcements` (`announcement_id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `documents`
---
-ALTER TABLE `documents`
-  ADD CONSTRAINT `documents_ibfk_1` FOREIGN KEY (`uploaded_by`) REFERENCES `login_details` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
 -- Constraints for table `employee_update`
 --
 ALTER TABLE `employee_update`
   ADD CONSTRAINT `fk_emp_id` FOREIGN KEY (`emp_id`) REFERENCES `employee_details` (`emp_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `files`
+--
+ALTER TABLE `files`
+  ADD CONSTRAINT `files_ibfk_1` FOREIGN KEY (`uploaded_by`) REFERENCES `login_details` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `incidents`
+--
+ALTER TABLE `incidents`
+  ADD CONSTRAINT `incidents_ibfk_1` FOREIGN KEY (`submitted_by`) REFERENCES `login_details` (`user_id`);
 
 --
 -- Constraints for table `login_details`
