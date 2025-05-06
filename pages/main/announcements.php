@@ -334,5 +334,4 @@ include '../../config/dbfetch.php';
         <p><?php echo "&copy; " . date('Y') . " | Unified Barangay Information Service Hub"; ?></p>
     </footer>
 </body>
-
 </html>

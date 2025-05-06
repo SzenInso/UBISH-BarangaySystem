@@ -853,5 +853,4 @@ if (isset($_POST['deny-update-selected']) && isset($_POST['updates'])) {
     </footer>
     <script src="../../assets/js/checkboxes.js"></script>
 </body>
-
 </html>
