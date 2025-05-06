@@ -141,7 +141,7 @@ $incidentTypeData = $stmt4->fetchAll(PDO::FETCH_ASSOC);
             </div>
             <div class="dashboard-content">
                 <h1>Generated Reports</h1>
-
+                <br>
                 <!-- primary tabs -->
                 <div class="tabs">
                     <button class="tab-btn active" id="announcementTabBtn"
@@ -149,7 +149,7 @@ $incidentTypeData = $stmt4->fetchAll(PDO::FETCH_ASSOC);
                     <button class="tab-btn" id="documentTabBtn" onclick="showPrimaryTab('documents')">Documents</button>
                     <button class="tab-btn" id="incidentTabBtn" onclick="showPrimaryTab('incidents')">Incidents</button>
                 </div>
-
+                <br>
                 <!-- secondary tabs: announcements -->
                 <div class="tabs" id="announcementTabs" style="display: block;">
                     <button class="tab-btn active" onclick="showSecondaryTab('categoryTab')">By Category</button>
@@ -201,7 +201,6 @@ $incidentTypeData = $stmt4->fetchAll(PDO::FETCH_ASSOC);
     <!-- JAVASCRIPT BLOCK STARTS HERE -->
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
-    <script src="https://code.highcharts.com/modules/offline-exporting.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script>
         // primary tab switching
@@ -284,7 +283,7 @@ $incidentTypeData = $stmt4->fetchAll(PDO::FETCH_ASSOC);
                 color: 'rgba(54, 162, 235, 0.6)'
             }],
             exporting: {
-                enabled: true,
+                enabled: true, // Enable exporting
                 buttons: {
                     contextButton: {
                         menuItems: [
@@ -317,7 +316,7 @@ $incidentTypeData = $stmt4->fetchAll(PDO::FETCH_ASSOC);
                 colors: ['rgba(75, 192, 192, 0.6)', 'rgba(255, 99, 132, 0.6)']
             }],
             exporting: {
-                enabled: true,
+                enabled: true, // Enable exporting
                 buttons: {
                     contextButton: {
                         menuItems: [

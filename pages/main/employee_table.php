@@ -228,7 +228,7 @@
                     <?php if ($accessLevel >= 2) { echo '<li><a href="#">Certificate Requests</a></li>'; } ?>
                     <?php if ($accessLevel >= 2) { echo '<li><a href="#">Permit Requests</a></li>'; } ?>
                     <h3>Reports</h3>
-                    <li><a href="#">Incident Reports</a></li>
+                    <li><a href="../main/incidents.php">Incident Reports</a></li>
                     <li><a href="../main/reports.php">Analytics</a></li>
                 </ul>
             </div>

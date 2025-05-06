@@ -4,18 +4,18 @@ include '../../config/dbfetch.php';
 if (isset($_GET['id'])) {
     $documentId = $_GET['id'];
 
-    $fetch = "SELECT document_path FROM documents WHERE document_id = :document_id";
+    $fetch = "SELECT file_path FROM files WHERE file_id = :file_id";
     $stmt = $pdo->prepare($fetch);
-    $stmt->execute([':document_id' => $documentId]);
+    $stmt->execute([':file_id' => $documentId]);
     $document = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($document) {
-        $filePath = $document['document_path'];
+        $filePath = $document['file_path'];
 
         // database delete
-        $delete = "DELETE FROM documents WHERE document_id = :document_id";
+        $delete = "DELETE FROM files WHERE file_id = :file_id";
         $stmtDelete = $pdo->prepare($delete);
-        $stmtDelete->execute([':document_id' => $documentId]);
+        $stmtDelete->execute([':file_id' => $documentId]);
 
         // server delete
         if (file_exists($filePath)) {
