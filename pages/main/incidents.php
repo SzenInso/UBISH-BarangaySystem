@@ -1,6 +1,7 @@
 <?php
 session_start();
 include '../../config/dbfetch.php';
+require '../../assets/libs/fpdf186/fpdf.php';
 
 $errors = [];
 $success = "";
@@ -41,7 +42,68 @@ if (isset($_POST['submit_incident'])) {
             ':submitted_by' => $userId
         ]);
 
+        $issuedByQuery = "SELECT CONCAT(first_name, ' ', last_name) AS full_name, legislature FROM employee_details WHERE emp_id = :emp_id";
+        $issuedByStmt = $pdo->prepare($issuedByQuery);
+        $issuedByStmt->execute([":emp_id" => $_SESSION['emp_id']]);
+        $issuedBy = $issuedByStmt->fetch();
+        $fullName = $issuedBy['full_name'] ?? "N/A";
+        $legislature = $issuedBy['legislature'] ?? "N/A";
+
         $success = "Incident successfully submitted.";
+
+        // NOTE: This is a sample .pdf document. Official barangay document for the Incident Report is yet to be acquired.
+        // generates pdf of incident report
+        $pdf = new FPDF();
+        $pdf->AddPage();
+        
+        // brgy
+        $pdf->SetFont('Arial', 'B', 20);
+        $pdf->Cell(0, 10, 'Barangay Greenwater Village', 0, 1, 'C');
+        $pdf->Ln(10);
+
+        // title
+        $pdf->SetFont('Arial', 'B', 16);
+        $pdf->Cell(0, 10, 'Incident Report', 0, 1, 'C');
+        $pdf->Ln(10);
+
+        // details
+        $pdf->SetFont('Arial', '', 12);
+        $pdf->Cell(50, 10, 'Incident Type:', 0, 0);
+        $pdf->Cell(0, 10, $incidentType, 0, 1);
+
+        $pdf->Cell(50, 10, 'Incident Date:', 0, 0);
+        $pdf->Cell(0, 10, date('F j, Y', strtotime($incidentDate)), 0, 1);
+
+        $pdf->Cell(50, 10, 'Place of Incident:', 0, 0);
+        $pdf->Cell(0, 10, $place, 0, 1);
+
+        $pdf->Cell(50, 10, 'Reporting Person:', 0, 0);
+        $pdf->Cell(0, 10, $reporter, 0, 1);
+
+        $pdf->Cell(50, 10, 'Home Address:', 0, 0);
+        $pdf->MultiCell(0, 10, $address);
+
+        $pdf->Cell(50, 10, 'Narrative of Incident:', 0, 0);
+        $pdf->MultiCell(0, 10, $narrative);
+
+        $pdf->Cell(50, 10, 'Involved Parties:', 0, 0);
+        $pdf->MultiCell(0, 10, $involved);
+
+        // issued by
+        $pdf->Ln(20);
+        $pdf->SetFont('Arial', 'B', 12);
+        $pdf->Cell(50, 10, 'Issued by:', 0, 1);
+
+        $pdf->Ln(10);
+        $pdf->Cell(0, 1, "     " . $fullName, 0, 1);
+        $pdf->Cell(0, 3, '_________________________', 0, 1);
+
+        $pdf->SetFont('Arial', 'I', 12);
+        $pdf->Cell(0, 8, "     " . $legislature, 0, 1);
+
+        $pdfFileName = 'Incident_Report_' . time() . '.pdf';
+        $pdf->Output('D', $pdfFileName);
+        exit;
     }
 }
 ?>
