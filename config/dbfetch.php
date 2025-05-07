@@ -46,6 +46,15 @@
     ";
     $updatePwd = $pdo->query($updatePwdQuery);
 
+    // fetches security question
+    $securityQuestionQuery = "
+        SELECT question FROM security_questions AS SEC
+        JOIN employee_details AS EMP ON SEC.emp_id = EMP.emp_id
+        WHERE SEC.emp_id = :emp_id
+    ";
+    $securityQuestion = $pdo->prepare($securityQuestionQuery);
+    $securityQuestion->execute([":emp_id" => $_SESSION['emp_id']]);
+
     // fetches single employee details
     $empQuery = "
         SELECT EMP.*, LOG.username, LOG.email FROM employee_details AS EMP
