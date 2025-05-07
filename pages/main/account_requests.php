@@ -847,60 +847,6 @@ if (isset($_POST['deny-update-selected']) && isset($_POST['updates'])) {
                         <?php } ?>
                     </div>
                     <script src="../../assets/js/toggleProfileEditsView.js"></script>
-                    <br>
-
-                    <h1>
-                        <center>Password Reset Requests</center>
-                    </h1>
-                    <div class="password-reset-main">
-                        <?php
-                            if ($updatePwd->rowCount() < 1) {
-                                echo "<p>No password reset requests at the moment.</p>";
-                            } else {
-                        ?>
-                                <!-- Multiple selection actions -->
-                                <div class="password-reset-actions-multiple">
-                                    <button type="submit" id="approveResetSelectedBtn" name="approve-reset-selected"
-                                        class="approve-reset-selected-btn" disabled>Approve Selected</button>
-                                    <button type="submit" id="denyResetSelectedBtn" name="deny-reset-selected"
-                                        class="deny-reset-selected-btn" disabled>Deny Selected</button>
-                                </div>
-                                <table id="password-reset-requests">
-                                    <tr>
-                                        <th>Selection</td>
-                                        <th>Profile</td>
-                                        <th>Full Name</td>
-                                        <th>Request Date</td>
-                                        <th>Status</td>
-                                        <th colspan="2">Actions</td>
-                                    </tr>
-                                    <?php foreach ($updatePwd as $pwd) { ?>
-                                        <tr>
-                                            <td>
-                                                <center>
-                                                    <input type="checkbox" class="reset-checkbox" name="reset[]"
-                                                        value="<?php echo $pwd['reset_id']; ?>" style="cursor: pointer;">
-                                                </center>
-                                            </td>
-                                            <td>
-                                                <img src="<?php echo $pwd['picture']; ?>"
-                                                    alt="<?php echo $pwd['first_name'] . " " . $pwd['middle_name'] . " " . $pwd['last_name']; ?>"
-                                                    title="<?php echo $pwd['first_name'] . " " . $pwd['middle_name'] . " " . $pwd['last_name']; ?>"
-                                                    class="profile-picture"
-                                                    style="width: 75px; height: 75px; border-radius: 50%; object-fit: cover;">
-                                            </td>
-                                            <td><?php echo $pwd['first_name'] . " " . $pwd['middle_name'] . " " . $pwd['last_name']; ?></td>
-                                            <td><?php echo date("M j, Y h:i:s A", strtotime($pwd['request_date'])); ?></td>
-                                            <td><?php echo $pwd['reset_status']; ?></td>
-                                            <td class="action-btns">
-                                                <button name="approve-reset" value="<?php echo $pwd['reset_id']; ?>">Approve</button>
-                                                <button name="deny-reset" value="<?php echo $pwd['reset_id']; ?>">Deny</button>
-                                            </td>
-                                        </tr>
-                                    <?php } ?>
-                                </table>
-                        <?php } ?>
-                    </div>
                 </form>
             </div>
         </div>
