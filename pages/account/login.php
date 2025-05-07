@@ -70,9 +70,14 @@
                                     window.location.href = '../main/dashboard.php'
                                 });
                             </script>
-                    <?php } else {
-                            echo "<br><p><center>Invalid username or password.</center></p>";
-                        }
+                    <?php } else { ?>
+                            <script>
+                                Swal.fire({
+                                    title: "Invalid username or password.",
+                                    icon: "error",
+                                });
+                            </script>
+                    <?php }
                     }
                 ?>
             </div>
