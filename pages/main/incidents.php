@@ -1,111 +1,17 @@
 <?php
 session_start();
 include '../../config/dbfetch.php';
-require '../../assets/libs/fpdf186/fpdf.php';
 
 $errors = [];
 $success = "";
 
-// data based off of barangaye-blotter
-if (isset($_POST['submit_incident'])) {
-    $incidentType = $_POST['incident_type'];
-    $incidentDate = $_POST['incident_date'];
-    $place = $_POST['place_of_incident'];
-    $reporter = $_POST['reporting_person'];
-    $address = $_POST['home_address'];
-    $narrative = $_POST['narrative'];
-    $involved = $_POST['involved_parties'];
-    $userId = $_SESSION['user_id'] ?? null;
+// Sample access level (optional — same pattern as your file)
+$accessLevel = $_SESSION['access_level'] ?? 0;
 
-    if (empty($incidentType) || empty($incidentDate) || empty($place) || empty($reporter) || empty($address) || empty($narrative) || empty($involved)) {
-        $errors[] = "Please fill in all required fields.";
-    }
-
-    if (empty($errors)) {
-        $sql = "INSERT INTO incidents (
-                    incident_type, incident_date, place_of_incident, reporting_person,
-                    home_address, narrative, involved_parties, submitted_by
-                ) VALUES (
-                    :incident_type, :incident_date, :place, :reporter,
-                    :address, :narrative, :involved, :submitted_by
-                )";
-
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([
-            ':incident_type' => $incidentType,
-            ':incident_date' => $incidentDate,
-            ':place' => $place,
-            ':reporter' => $reporter,
-            ':address' => $address,
-            ':narrative' => $narrative,
-            ':involved' => $involved,
-            ':submitted_by' => $userId
-        ]);
-
-        $issuedByQuery = "SELECT CONCAT(first_name, ' ', last_name) AS full_name, legislature FROM employee_details WHERE emp_id = :emp_id";
-        $issuedByStmt = $pdo->prepare($issuedByQuery);
-        $issuedByStmt->execute([":emp_id" => $_SESSION['emp_id']]);
-        $issuedBy = $issuedByStmt->fetch();
-        $fullName = $issuedBy['full_name'] ?? "N/A";
-        $legislature = $issuedBy['legislature'] ?? "N/A";
-
-        $success = "Incident successfully submitted.";
-
-        // NOTE: This is a sample .pdf document. Official barangay document for the Incident Report is yet to be acquired.
-        // generates pdf of incident report
-        $pdf = new FPDF();
-        $pdf->AddPage();
-        
-        // brgy
-        $pdf->SetFont('Arial', 'B', 20);
-        $pdf->Cell(0, 10, 'Barangay Greenwater Village', 0, 1, 'C');
-        $pdf->Ln(10);
-
-        // title
-        $pdf->SetFont('Arial', 'B', 16);
-        $pdf->Cell(0, 10, 'Incident Report', 0, 1, 'C');
-        $pdf->Ln(10);
-
-        // details
-        $pdf->SetFont('Arial', '', 12);
-        $pdf->Cell(50, 10, 'Incident Type:', 0, 0);
-        $pdf->Cell(0, 10, $incidentType, 0, 1);
-
-        $pdf->Cell(50, 10, 'Incident Date:', 0, 0);
-        $pdf->Cell(0, 10, date('F j, Y', strtotime($incidentDate)), 0, 1);
-
-        $pdf->Cell(50, 10, 'Place of Incident:', 0, 0);
-        $pdf->Cell(0, 10, $place, 0, 1);
-
-        $pdf->Cell(50, 10, 'Reporting Person:', 0, 0);
-        $pdf->Cell(0, 10, $reporter, 0, 1);
-
-        $pdf->Cell(50, 10, 'Home Address:', 0, 0);
-        $pdf->MultiCell(0, 10, $address);
-
-        $pdf->Cell(50, 10, 'Narrative of Incident:', 0, 0);
-        $pdf->MultiCell(0, 10, $narrative);
-
-        $pdf->Cell(50, 10, 'Involved Parties:', 0, 0);
-        $pdf->MultiCell(0, 10, $involved);
-
-        // issued by
-        $pdf->Ln(20);
-        $pdf->SetFont('Arial', 'B', 12);
-        $pdf->Cell(50, 10, 'Issued by:', 0, 1);
-
-        $pdf->Ln(10);
-        $pdf->Cell(0, 1, "     " . $fullName, 0, 1);
-        $pdf->Cell(0, 3, '_________________________', 0, 1);
-
-        $pdf->SetFont('Arial', 'I', 12);
-        $pdf->Cell(0, 8, "     " . $legislature, 0, 1);
-
-        $pdfFileName = 'Incident_Report_' . time() . '.pdf';
-        $pdf->Output('D', $pdfFileName);
-        exit;
-    }
-}
+// Fetch pending certificate requests
+$query = "SELECT * FROM residency_requests WHERE status = 'Pending'";
+$stmt = $pdo->prepare($query);
+$stmt->execute();
 ?>
 
 <!DOCTYPE html>
@@ -113,7 +19,7 @@ if (isset($_POST['submit_incident'])) {
 
 <head>
     <meta charset="UTF-8">
-    <title>UBISH Dashboard | Incident Report</title>
+    <title>UBISH Dashboard | Certificate Requests</title>
     <link rel="stylesheet" href="../../assets/css/style.css">
     <style>
         button {
@@ -140,8 +46,43 @@ if (isset($_POST['submit_incident'])) {
             background-color: white;
             font-size: 16px;
         }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 2px solid gray;
+        }
+
+        th, td {
+            padding: 8px 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f0f0f0;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            color: white;
+            font-size: 12px;
+        }
+
+        .badge-warning {
+            background-color: orange;
+        }
     </style>
 </head>
+
 <body>
     <header>
         <div class="navigation">
@@ -165,7 +106,7 @@ if (isset($_POST['submit_incident'])) {
     <main>
         <div class="dashboard-main">
             <div class="dashboard-sidebar">
-            <ul>
+                <ul>
                     <h3>Home</h3>
                     <li><a href="../main/dashboard.php">Home</a></li>
                     <li><a href="../main/account.php">Account</a></li>
@@ -180,131 +121,66 @@ if (isset($_POST['submit_incident'])) {
                         echo '<li><a href="../main/account_requests.php">Account Requests</a></li>';
                     } ?>
                     <?php if ($accessLevel >= 2) {
-                        echo '<li><a href="../main/certificates.php">Certificate Requests</a></li>';
+                        echo '<li class="active"><a href="../main/admin_certificate_requests.php">Certificate Requests</a></li>';
                     } ?>
                     <?php if ($accessLevel >= 2) {
-                        echo '<li><a href="../main/permits.php">Permit Requests</a></li>';
+                        echo '<li><a href="#">Permit Requests</a></li>';
                     } ?>
                     <h3>Reports</h3>
-                    <li class="active"><a href="#">Incident Reports</a></li>
+                    <li><a href="#">Incident Reports</a></li>
                     <li><a href="../main/reports.php">Analytics</a></li>
                 </ul>
             </div>
 
             <div class="dashboard-content">
                 <h1>
-                    <center>Incident Report Form</center>
+                    <center>Pending Residency Certificate Requests</center>
                 </h1><br>
 
                 <?php
-                if (!empty($errors)) {
-                    foreach ($errors as $error) {
-                        echo "<p style='color: red;'>$error</p>";
-                    }
-                }
+                if ($stmt->rowCount() > 0) {
+                    echo "<table>";
+                    echo "<thead>";
+                    echo "<tr>";
+                    echo "<th>ID</th>";
+                    echo "<th>Resident Name</th>";
+                    echo "<th>Address</th>";
+                    echo "<th>Age</th>";
+                    echo "<th>Civil Status</th>";
+                    echo "<th>Citizenship</th>";
+                    echo "<th>Email</th>";
+                    echo "<th>Contact #</th>";
+                    echo "<th>Purpose</th>";
+                    echo "<th>Date Submitted</th>";
+                    echo "<th>Status</th>";
+                    echo "</tr>";
+                    echo "</thead>";
+                    echo "<tbody>";
 
-                if (!empty($success)) {
-                    echo "<p style='color: green;'>$success</p>";
+                    foreach ($stmt as $row) {
+                        $full_name = htmlspecialchars($row['first_name']) . ' ' . htmlspecialchars($row['middle_name']) . ' ' . htmlspecialchars($row['last_name']);
+                        $address = htmlspecialchars($row['street']) . ', ' . htmlspecialchars($row['barangay']) . ', ' . htmlspecialchars($row['city']) . ', ' . htmlspecialchars($row['province']) . ' ' . htmlspecialchars($row['zipcode']);
+                        echo "<tr>";
+                        echo "<td>" . htmlspecialchars($row['id']) . "</td>";
+                        echo "<td>" . $full_name . "</td>";
+                        echo "<td>" . $address . "</td>";
+                        echo "<td>" . htmlspecialchars($row['age']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['civil_status']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['citizenship']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['email']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['contact_number']) . "</td>";
+                        echo "<td>" . nl2br(htmlspecialchars($row['purpose'])) . "</td>";
+                        echo "<td>" . date("F j, Y g:i A", strtotime($row['date_submitted'])) . "</td>";
+                        echo "<td><span class='badge badge-warning'>Pending</span></td>";
+                        echo "</tr>";
+                    }
+
+                    echo "</tbody>";
+                    echo "</table>";
+                } else {
+                    echo "<p style='color: gray; text-align: center;'>No pending residency certificate requests.</p>";
                 }
                 ?>
-
-                <style>
-                    .incident-form {
-                        max-width: 800px;
-                        width: 100%;
-                        background-color: #f8f9fa;
-                        padding: 20px;
-                        border-radius: 8px;
-                        margin: 0 auto;
-                    }
-
-                    .incident-form label {
-                        display: block;
-                        font-size: 16px;
-                        margin-bottom: 8px;
-                        font-weight: 600;
-                        color: #333;
-                        text-align: left;
-                    }
-
-                    .incident-form input,
-                    .incident-form textarea {
-                        width: 100%;
-                        padding: 10px;
-                        margin-bottom: 20px;
-                        border: 2px solid gray;
-                        border-radius: 5px;
-                        font-size: 14px;
-                        color: #333;
-                        background-color: #fff;
-                        text-align: left;
-                    }
-
-                    .incident-form input:focus,
-                    .incident-form textarea:focus {
-                        outline: none;
-                        border-color: #007bff;
-                    }
-
-                    .incident-form textarea {
-                        resize: vertical;
-                        min-height: 100px;
-                    }
-
-                    .incident-form button:focus {
-                        outline: none;
-                    }
-
-                    .incident-form-container {
-                        display: flex;
-                        justify-content: space-between;
-                        gap: 20px;
-                    }
-
-                    .incident-form-container label,
-                    .incident-form-container input {
-                        width: 48%;
-                    }
-
-                    .incident-form-container input[name="incident_type"] {
-                        width: 100%;
-                    }
-
-                    .incident-form-container input[name="incident_date"] {
-                        width: 100%;
-                    }
-
-
-                </style>
-
-                <form method="POST" class="incident-form">
-
-                    <div class="incident-form-container">
-                        <label>Incident Type</label>
-                        <input type="text" name="incident_type" required>
-    
-                        <label>Incident Date:</label>
-                        <input type="date" name="incident_date" required>
-                    </div>
-                    
-
-                    <label>Place of Incident:</label>
-                    <input type="text" name="place_of_incident" required>
-
-                    <label>Reporting Person:</label>
-                    <input type="text" name="reporting_person" required>
-
-                    <label>Home Address:</label>
-                    <textarea name="home_address" required></textarea>
-
-                    <label>Narrative of Incident:</label>
-                    <textarea name="narrative" required></textarea>
-
-                    <label>Involved Parties:</label>
-                    <textarea name="involved_parties" required></textarea>
-
-                    <button type="submit" name="submit_incident">Submit Incident</button>
-                </form>
             </div>
         </div>
     </main>

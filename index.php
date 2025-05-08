@@ -30,6 +30,9 @@
             <nav>
                 <ul>
                     <li>
+                        <a href="pages/services/index.php">Services Offered</a>
+                    </li>
+                    <li>
                         <a href="pages/account/login.php">Log In</a>
                     </li>
                     <li>

@@ -26,21 +26,7 @@ if (isset($_GET['announcement_id'])) {
     $announcement = $stmt->fetch();
 
     if (!$announcement) {
-        echo "
-            <link rel='stylesheet' href='../../assets/css/style.css'>
-            <script src='../../assets/js/sweetalert2.js'></script>
-            <script>
-                document.addEventListener('DOMContentLoaded', function () {
-                    Swal.fire({
-                        title: 'Announcement not found.',
-                        icon: 'info',
-                        confirmButtonText: 'OK'
-                    }).then(() => {
-                        window.location.href='../main/dashboard.php';
-                    });
-                });
-            </script>
-        ";
+        echo "<script>alert('Announcement not found.'); window.location.href = '../main/dashboard.php';</script>";
         exit;
     }
 
@@ -49,21 +35,7 @@ if (isset($_GET['announcement_id'])) {
     $stmt->execute([":announcement_id" => $announcementID]);
     $attachments = $stmt->fetchAll();
 } else {
-    echo "
-        <link rel='stylesheet' href='../../assets/css/style.css'>
-        <script src='../../assets/js/sweetalert2.js'></script>
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                Swal.fire({
-                    title: 'Invalid announcement ID.',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                }).then(() => {
-                    window.location.href='../main/dashboard.php';
-                });
-            });
-        </script>
-    ";
+    echo "<script>alert('Invalid announcement ID.'); window.location.href = '../main/dashboard.php';</script>";
     exit;
 }
 
@@ -196,19 +168,7 @@ if (isset($_POST['update-announcement'])) {
                 $stmt = $pdo->prepare($deleteAttachment);
                 $stmt->execute([":attachment_id" => $attachmentId]);
             } else {
-                echo "
-                    <link rel='stylesheet' href='../../assets/css/style.css'>
-                    <script src='../../assets/js/sweetalert2.js'></script>
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function () {
-                            Swal.fire({
-                                title: 'Attachment not found.',
-                                text: 'Attachment not found in the database.',
-                                icon: 'error',
-                                confirmButtonText: 'OK'
-                            });
-                    </script>
-                ";
+                echo "<script>alert('Attachment not found in database.');</script>";
             }
         }
     }
@@ -258,41 +218,10 @@ if (isset($_POST['update-announcement'])) {
             }
 
             $pdo->commit();
-            echo "
-                <link rel='stylesheet' href='../../assets/css/style.css'>
-                <script src='../../assets/js/sweetalert2.js'></script>
-                <script>
-                    document.addEventListener('DOMContentLoaded', function () {
-                        Swal.fire({
-                            title: 'Announcement updated.',
-                            text: 'Announcement has been updated sucessfully.',
-                            icon: 'success',
-                            confirmButtonText: 'OK'
-                        }).then(() => {
-                            window.location.href='../main/dashboard.php';
-                        });
-                    });
-                </script>
-            ";
+            echo "<script>alert('Announcement updated successfully.'); window.location.href = '../main/dashboard.php';</script>";
         } catch (Exception $e) {
             $pdo->rollBack();
-            error_log("Error: " . $e->getMessage());
-            echo "
-                <link rel='stylesheet' href='../../assets/css/style.css'>
-                <script src='../../assets/js/sweetalert2.js'></script>
-                <script>
-                    document.addEventListener('DOMContentLoaded', function () {
-                        Swal.fire({
-                            title: 'Error occurred.',
-                            text: 'An error occurred while editing announcement.',
-                            icon: 'error',
-                            confirmButtonText: 'OK'
-                        }).then(() => {
-                            window.location.href='../main/dashboard.php';
-                        });
-                    });
-                </script>
-            ";
+            echo "<script>alert('Error: " . $e->getMessage() . "'); window.location.href = '../main/dashboard.php';</script>";
         }
     } else {
         foreach ($errors as $err) {
@@ -311,7 +240,6 @@ if (isset($_POST['update-announcement'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../assets/css/style.css">
-    <script src="../../assets/js/sweetalert2.js"></script>
     <title>UBISH Dashboard | Edit Announcement</title>
 </head>
 
@@ -345,8 +273,8 @@ if (isset($_POST['update-announcement'])) {
                     <h3>Tables & Requests</h3>
                     <?php if ($accessLevel >= 2) { echo '<li><a href="../main/employee_table.php">Employee Table</a></li>'; } ?>
                     <?php if ($accessLevel >= 3) { echo '<li><a href="../main/account_requests.php">Account Requests</a></li>'; } ?>
-                    <?php if ($accessLevel >= 2) { echo '<li><a href="../main/certificates.php">Certificate Requests</a></li>'; } ?>
-                    <?php if ($accessLevel >= 2) { echo '<li><a href="../main/permits.php">Permit Requests</a></li>'; } ?>
+                    <?php if ($accessLevel >= 2) { echo '<li><a href="#">Certificate Requests</a></li>'; } ?>
+                    <?php if ($accessLevel >= 2) { echo '<li><a href="#">Permit Requests</a></li>'; } ?>
                     <h3>Reports</h3>
                     <li><a href="../main/incidents.php">Incident Reports</a></li>
                     <li><a href="../main/reports.php">Analytics</a></li>

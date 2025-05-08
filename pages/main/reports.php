@@ -51,6 +51,7 @@ $incidentTypeData = $stmt4->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <title>UBISH Dashboard | Reports</title>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
     <link rel="stylesheet" href="../../assets/css/style.css">
     <style>
         .chart-container {
@@ -128,10 +129,10 @@ $incidentTypeData = $stmt4->fetchAll(PDO::FETCH_ASSOC);
                         echo '<li><a href="../main/account_requests.php">Account Requests</a></li>';
                     } ?>
                     <?php if ($accessLevel >= 2) {
-                        echo '<li><a href="../main/certificates.php">Certificate Requests</a></li>';
+                        echo '<li><a href="#">Certificate Requests</a></li>';
                     } ?>
                     <?php if ($accessLevel >= 2) {
-                        echo '<li><a href="../main/permits.php">Permit Requests</a></li>';
+                        echo '<li><a href="#">Permit Requests</a></li>';
                     } ?>
                     <h3>Reports</h3>
                     <li><a href="../main/incidents.php">Incident Reports</a></li>
@@ -198,11 +199,10 @@ $incidentTypeData = $stmt4->fetchAll(PDO::FETCH_ASSOC);
     </footer>
 
     <!-- JAVASCRIPT BLOCK STARTS HERE -->
-    <script src="../../assets/js/highcharts.js"></script>
-    <script src="../../assets/js/exporting.js"></script>
-    <script src="../../assets/js/export-data.js"></script>
-    <script src="../../assets/js/offline-exporting.js"></script>
-    <script src="../../assets/js/accessibility.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/offline-exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script>
         // primary tab switching
         function showPrimaryTab(tab) {

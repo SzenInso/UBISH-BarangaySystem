@@ -1,0 +1,97 @@
+/* Table Styling */
+.dashboard-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.dashboard-content th,
+.dashboard-content td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.dashboard-content th {
+    background-color: #686869;
+    color: white;
+    font-size: 16px;
+}
+
+.dashboard-content td {
+    color: #555;
+    font-size: 14px;
+}
+
+.dashboard-content tr:hover {
+    background-color: #f1f1f1;
+}
+
+.dashboard-content tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.dashboard-content td span.badge {
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.dashboard-content td .badge-warning {
+    background-color: #ffc107;
+    color: #fff;
+}
+/* Container for the buttons */
+.action-buttons {
+    display: flex;
+    gap: 15px; /* Adds space between the buttons */
+}
+
+/* Style for the Approve button */
+button.btn-approve {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50; /* Green */
+    color: white;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button.btn-approve:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+button.btn-approve:focus {
+    outline: none;
+}
+
+/* Style for the Reject button */
+button.btn-reject {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #f44336; /* Red */
+    color: white;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button.btn-reject:hover {
+    background-color: #d32f2f;
+    transform: scale(1.05);
+}
+
+button.btn-reject:focus {
+    outline: none;
+}
+

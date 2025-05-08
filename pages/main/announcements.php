@@ -8,7 +8,6 @@ include '../../config/dbfetch.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../assets/css/style.css">
-    <script src="../../assets/js/sweetalert2.js"></script>
     <title>UBISH Dashboard | Create Announcement</title>
 </head>
 
@@ -44,8 +43,8 @@ include '../../config/dbfetch.php';
                     <h3>Tables & Requests</h3>
                     <?php if ($accessLevel >= 2) { echo '<li><a href="../main/employee_table.php">Employee Table</a></li>'; } ?>
                     <?php if ($accessLevel >= 3) { echo '<li><a href="../main/account_requests.php">Account Requests</a></li>'; } ?>
-                    <?php if ($accessLevel >= 2) { echo '<li><a href="../main/certificates.php">Certificate Requests</a></li>'; } ?>
-                    <?php if ($accessLevel >= 2) { echo '<li><a href="../main/permits.php">Permit Requests</a></li>'; } ?>
+                    <?php if ($accessLevel >= 2) { echo '<li><a href="../main/admin_certificate_requests.php">Certificate Requests</a></li>'; } ?>
+                    <?php if ($accessLevel >= 2) { echo '<li><a href="#">Permit Requests</a></li>'; } ?>
                     <h3>Reports</h3>
                     <li><a href="../main/incidents.php">Incident Reports</a></li>
                     <li><a href="../main/reports.php">Analytics</a></li>
@@ -315,20 +314,8 @@ include '../../config/dbfetch.php';
                                 ]);
                             }
 
-                            echo "
-                                <script>
-                                    document.addEventListener('DOMContentLoaded', function () {
-                                        Swal.fire({
-                                            title: 'Post successful.',
-                                            text: 'Announcement has been posted successfully.',
-                                            icon: 'success',
-                                            confirmButtonText: 'OK'
-                                        }).then(() => {
-                                            window.location.href='../main/dashboard.php';
-                                        });
-                                    });
-                                </script>
-                            ";
+                            //echo "<br><p style='color:green;'>Announcement posted successfully!</p>";
+                            echo "<script>alert('Announcement posted successfully!'); window.location.href = '../main/dashboard.php';</script>";
                         } else {
                             foreach ($errors as $err) {
                                 echo "<p style='color:red;'>$err</p><br>";
