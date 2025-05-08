@@ -719,12 +719,20 @@ if (isset($_POST['deny-update-selected']) && isset($_POST['updates'])) {
                     <li><a href="../main/documents.php">Documents</a></li>
                     <li><a href="../main/announcements.php">Post Announcement</a></li>
                     <h3>Tables & Requests</h3>
-                    <?php if ($accessLevel >= 2) { echo '<li><a href="../main/employee_table.php">Employee Table</a></li>'; } ?>
-                    <?php if ($accessLevel >= 3) { echo '<li class="active"><a href="../main/account_requests.php">Account Requests</a></li>'; } ?>
-                    <?php if ($accessLevel >= 2) { echo '<li><a href="#">Certificate Requests</a></li>'; } ?>
-                    <?php if ($accessLevel >= 2) { echo '<li><a href="#">Permit Requests</a></li>'; } ?>
+                    <?php if ($accessLevel >= 2) {
+                        echo '<li><a href="../main/employee_table.php">Employee Table</a></li>';
+                    } ?>
+                    <?php if ($accessLevel >= 3) {
+                        echo '<li class="active"><a href="../main/account_requests.php">Account Requests</a></li>';
+                    } ?>
+                    <?php if ($accessLevel >= 2) {
+                        echo '<li><a href="../main/certificates.php">Certificate Requests</a></li>';
+                    } ?>
+                    <?php if ($accessLevel >= 2) {
+                        echo '<li><a href="../main/permits.php">Permit Requests</a></li>';
+                    } ?>
                     <h3>Reports</h3>
-                    <li><a href="../main/incidents.php">Incident Reports</a></li>
+                    <li><a href="#">Incident Reports</a></li>
                     <li><a href="../main/reports.php">Analytics</a></li>
                 </ul>
             </div>
@@ -835,7 +843,8 @@ if (isset($_POST['deny-update-selected']) && isset($_POST['updates'])) {
                                                     <?php echo $reg['registration_emp_id']; ?></p>
                                                 <p><strong>Registration Login ID:</strong>
                                                     <?php echo $reg['registration_login_id']; ?></p>
-                                                <p><strong>Registration Date:</strong> <?php echo date("M j, Y h:i:s A", strtotime($reg['request_date'])); ?></p>
+                                                <p><strong>Registration Date:</strong>
+                                                    <?php echo date("M j, Y h:i:s A", strtotime($reg['request_date'])); ?></p>
                                             </div>
                                         </td>
                                     </tr>
@@ -853,8 +862,8 @@ if (isset($_POST['deny-update-selected']) && isset($_POST['updates'])) {
                         <?php
                         if ($empUpdate->rowCount() < 1) {
                             echo "<p>No profile edit requests at the moment.</p>";
-                        } else { 
-                        ?>
+                        } else {
+                            ?>
                             <!-- Multiple selection actions -->
                             <div class="profile-edit-actions-multiple">
                                 <button type="button" id="viewAllUpdatesBtn" onclick="toggleProfileEditsViewAll(this)">View
@@ -888,7 +897,8 @@ if (isset($_POST['deny-update-selected']) && isset($_POST['updates'])) {
                                                 class="profile-picture"
                                                 style="width: 75px; height: 75px; border-radius: 50%; object-fit: cover;">
                                         </td>
-                                        <td><?php echo $upd['first_name'] . " " . $upd['middle_name'] . " " . $upd['last_name']; ?></td>
+                                        <td><?php echo $upd['first_name'] . " " . $upd['middle_name'] . " " . $upd['last_name']; ?>
+                                        </td>
                                         <td class="update-reason"><?php echo $upd['update_reason']; ?></td>
                                         <td><?php echo $upd['update_status']; ?></td>
                                         <td class="action-btns">
@@ -968,7 +978,9 @@ if (isset($_POST['deny-update-selected']) && isset($_POST['updates'])) {
 
                                                 <br>
                                                 <h3>Request Details</h3>
-                                                <p><strong>Request Date:</strong> <?php echo date("M j, Y h:i:s A", strtotime($upd['update_request_date'])); ?></p>
+                                                <p><strong>Request Date:</strong>
+                                                    <?php echo date("M j, Y h:i:s A", strtotime($upd['update_request_date'])); ?>
+                                                </p>
                                             </div>
                                         </td>
                                     </tr>
@@ -987,4 +999,5 @@ if (isset($_POST['deny-update-selected']) && isset($_POST['updates'])) {
     </footer>
     <script src="../../assets/js/checkboxes.js"></script>
 </body>
+
 </html>
