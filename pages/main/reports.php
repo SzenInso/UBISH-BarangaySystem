@@ -135,6 +135,7 @@ $incidentTypeData = $stmt4->fetchAll(PDO::FETCH_ASSOC);
                     } ?>
                     <h3>Reports</h3>
                     <li><a href="../main/incidents.php">Incident Reports</a></li>
+                    <li><a href="../main/incident_table.php">Incident History</a></li>
                     <li class="active"><a href="#">Analytics</a></li>
                 </ul>
             </div>
