@@ -126,6 +126,10 @@ if (isset($_POST['submit_permit'])) {
             padding-left: 0px;
             box-sizing: border-box;
         }
+        .dashboard-content {
+            width: 48%;
+            background-color: #f8f9fa
+        }
     </style>
 </head>
 
@@ -178,6 +182,7 @@ if (isset($_POST['submit_permit'])) {
                 </ul>
             </div>
 
+            <center>
             <div class="dashboard-content">
                 <h1>
                     <center>Barangay Permit Form</center>
@@ -214,6 +219,7 @@ if (isset($_POST['submit_permit'])) {
                 </form>
             </div>
         </div>
+        </center>
     </main>
 
     <footer>
