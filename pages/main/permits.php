@@ -178,6 +178,7 @@ if (isset($_POST['submit_permit'])) {
                     } ?>
                     <h3>Reports</h3>
                     <li><a href="../main/incidents.php">Incident Reports</a></li>
+                    <li><a href="../main/incident_table.php">Incident History</a></li>
                     <li><a href="../main/reports.php">Analytics</a></li>
                 </ul>
             </div>

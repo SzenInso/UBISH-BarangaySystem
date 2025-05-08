@@ -187,6 +187,7 @@ if (isset($_POST['submit_incident'])) {
                     } ?>
                     <h3>Reports</h3>
                     <li class="active"><a href="#">Incident Reports</a></li>
+                    <li><a href="../main/incident_table.php">Incident History</a></li>
                     <li><a href="../main/reports.php">Analytics</a></li>
                 </ul>
             </div>
