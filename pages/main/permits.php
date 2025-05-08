@@ -170,10 +170,10 @@ if (isset($_POST['submit_permit'])) {
                         echo '<li><a href="../main/certificates.php">Certificate Requests</a></li>';
                     } ?>
                     <?php if ($accessLevel >= 2) {
-                        echo '<li><a href="../main/permits.php">Permit Requests</a></li>';
+                        echo '<li class="active"><a href="../main/permits.php">Permit Requests</a></li>';
                     } ?>
                     <h3>Reports</h3>
-                    <li class="active"><a href="#">Incident Reports</a></li>
+                    <li><a href="../main/incidents.php">Incident Reports</a></li>
                     <li><a href="../main/reports.php">Analytics</a></li>
                 </ul>
             </div>
