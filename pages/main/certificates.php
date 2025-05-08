@@ -123,6 +123,10 @@ if (isset($_POST['submit_certificate'])) {
             padding-left: 0px;
             box-sizing: border-box;
         }
+        .dashboard-content {
+            width: 48%;
+            background-color: #f8f9fa
+        }
     </style>
 </head>
 
@@ -175,6 +179,7 @@ if (isset($_POST['submit_certificate'])) {
                 </ul>
             </div>
 
+            <center>
             <div class="dashboard-content">
                 <h1>
                     <center>Certificate of Residency Form</center>
@@ -206,6 +211,7 @@ if (isset($_POST['submit_certificate'])) {
                 </form>
             </div>
         </div>
+        </center>
     </main>
 
     <footer>
