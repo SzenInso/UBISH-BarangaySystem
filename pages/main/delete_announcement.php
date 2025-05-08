@@ -9,11 +9,19 @@ if (isset($_GET['announcement_id'])) {
     $announcement = toBeDeletedAnnouncement($pdo, $announcementID);
     if (!$announcement) {
         echo "
-                <script>
-                    alert('No announcement found.');
-                    window.location.href = '../main/dashboard.php';
-                </script>
-            ";
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    Swal.fire({
+                        title: 'No announcement found.',
+                        icon: 'info',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        window.location.href='../main/dashboard.php';
+                    });
+                });
+            </script>
+        ";
+        
     }
 
     // fetch attachments separately
@@ -24,11 +32,18 @@ if (isset($_GET['announcement_id'])) {
 
 } else {
     echo "
-            <script>
-                alert('Invalid announcement ID.');
-                window.location.href = '../main/dashboard.php';
-            </script>
-        ";
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                Swal.fire({
+                    title: 'Invalid announcement ID.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    window.location.href='../main/dashboard.php';
+                });
+            });
+        </script>
+    ";
 }
 
 if (isset($_POST['delete-announcement'])) {
@@ -57,28 +72,51 @@ if (isset($_POST['delete-announcement'])) {
 
         if ($pdo->commit()) {
             echo "
-                    <script>
-                        alert('Announcement deleted successfully.');
-                        window.location.href = '../main/dashboard.php';
-                    </script>
-                ";
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        Swal.fire({
+                            title: 'Announcement deleted successfully.',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            window.location.href='../main/dashboard.php';
+                        });
+                    });
+                </script>
+            ";
         } else {
             $pdo->rollBack();
             echo "
-                    <script>
-                        alert('Failed to delete announcement.');
-                        window.location.href = '../main/dashboard.php';
-                    </script>
-                ";
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        Swal.fire({
+                            title: 'Failed to delete announcement.',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            window.location.href='../main/dashboard.php';
+                        });
+                    });
+                </script>
+            ";
         }
     } catch (Exception $e) {
         $pdo->rollBack();
+        error_log('Error: ' . $e->getMessage());
         echo "
-                <script>
-                    alert('Error: " . $e->getMessage() . "');
-                    window.location.href = '../main/dashboard.php';
-                </script>
-            ";
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    Swal.fire({
+                        title: 'Error occurred.',
+                        text: 'An error occurred while deleting announcement.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        window.location.href='../main/dashboard.php';
+                    });
+                });
+            </script>
+        ";
     }
 
 }
@@ -95,6 +133,7 @@ if (isset($_POST['cancel'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../assets/css/style.css">
+    <script src="../../assets/js/sweetalert2.js"></script>
     <title>UBISH Dashboard | Delete Announcement</title>
 </head>
 

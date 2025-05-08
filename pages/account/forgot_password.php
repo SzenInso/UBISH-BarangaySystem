@@ -3,6 +3,75 @@
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
     }
+
+    // unsets session every refresh
+    if (!isset($_POST['search']) && !isset($_POST['submit-answer'])) {
+        unset($_SESSION['security_question']);
+        unset($_SESSION['security_answer']);
+        unset($_SESSION['username']);
+    }
+
+    if (isset($_POST['search'])) {
+        $username = $_POST['username'];
+
+        if (empty($username)) {
+            echo "<script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Please enter a username.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                });
+            </script>";
+        } else {
+            try {
+                $forgotPwdQuery = "
+                    SELECT SEC.question, SEC.answer FROM security_questions AS SEC
+                    JOIN employee_details AS EMP ON SEC.emp_id = EMP.emp_id
+                    JOIN login_details AS LOG ON EMP.emp_id = LOG.emp_id
+                    WHERE LOG.username = :username
+                ";
+                $forgotPwdStmt = $pdo->prepare($forgotPwdQuery);
+                $forgotPwdStmt->execute([':username' => $username]);
+                $forgotPwd = $forgotPwdStmt->fetch();
+
+                if ($forgotPwd) {
+                    $_SESSION['security_question'] = $forgotPwd['question'];
+                    $_SESSION['security_answer'] = $forgotPwd['answer'];
+                    $_SESSION['username'] = $username;
+                } else {
+                    echo "<script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            Swal.fire({
+                                title: 'No security question.',
+                                html: `
+                                    No security question found for the entered username. <br>
+                                    Please contact the administrator to reset password.
+                                `,
+                                icon: 'info',
+                                confirmButtonText: 'OK'
+                            }).then((result) => {
+                                window.location.href = '../account/login.php'
+                            });
+                        });
+                    </script>";
+                }
+            } catch (Exception $e) {
+                echo "<script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        Swal.fire({
+                            title: 'Error.',
+                            text: 'An error occurred while fetching the security question. Please try again.',
+                            icon: 'info',
+                            confirmButtonText: 'OK'
+                        });
+                    });
+                </script>";
+            }
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +80,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../assets/css/style.css">
     <script src="../../assets/js/sweetalert2.js"></script>
-    <title>UBISH Dashboard | Forgot Account</title>
+    <title>UBISH Dashboard | Forgot Password</title>
 </head>
 <body>
     <header>
@@ -37,81 +106,91 @@
         <form method="POST">
             <div class="login-form">
                 <h1>Forgot Password?</h1><br>
-                <p>You can request a password reset by placing your</p>
-                <p>registered <b>username</b> or <b>email</b>.</p><br>
+                <p>You can reset your password by placing</p>
+                <p>your registered username and answering the</p>
+                <p>security question you had set.</p><br>
                 <a href="../account/login.php">← Go Back to Log In</a>
                 <div class="login-credentials">
-                    <p>Username or Email</p>
-                    <input type="text" name="user-email" placeholder="Enter username or email">
+                    <p>Username</p>
+                    <input type="text" name="username" value="<?php echo (!empty($_SESSION['username'])) ? $_SESSION['username'] : ''; ?>" placeholder="Enter username">
                 </div>
                 <div class="login-btns">
-                    <button name="request-reset">Request Password Reset</button>
+                    <button name="search">Search Account</button>
                 </div>
-                <?php 
-                    if (isset($_POST['request-reset'])) {
-                        $user_email = $_POST['user-email'];
+                <br>
+                <style>
+                    .security-question h3,
+                    .security-question p,
+                    .security-question input {
+                        margin-bottom: 8px;
+                    }
+                    .security-question button {
+                        margin-top: 8px;
+                    }
+                    .security-question input {
+                        padding: 4px;
+                        width: 256px;
+                    }
+                </style>
+                <div class="security-question">
+                    <?php if (isset($_SESSION['security_question'])) { ?>
+                        <h3>Answer the Security Question</h3>
+                        <p><?php echo htmlspecialchars($_SESSION['security_question']); ?></p>
+                        <input type="text" name="answer" placeholder="Enter your answer" autocomplete="off"><br>
+                        <button name="submit-answer">Submit Answer</button>
+                    <?php } ?>
+                </div>
+            </div>
+            <?php 
+                if (isset($_POST['submit-answer'])) {
+                    $answer = $_POST['answer'];
 
-                        $fetchEmpQuery = "SELECT * FROM login_details WHERE username = :username OR email = :email";
-                        $fetchEmpStmt = $pdo->prepare($fetchEmpQuery);
-                        $fetchEmpStmt->execute([
-                            ":username" => $user_email,
-                            ":email" => $user_email
-                        ]);
-
-                        if ($fetchEmpStmt->rowCount() < 1) {
-                            echo "<br><p><center>Username or email is invalid or not registered.</center></p>";
-                        } else {
-                            $fetchEmp = $fetchEmpStmt->fetch(); 
-                            
-                            $user_id = $fetchEmp['user_id'];
-                            $email = $fetchEmp['email'];
-                            $token = bin2hex(random_bytes(32));
-                            $expiry_date = date("Y-m-d H:i:s", strtotime("+24 hours"));
-
-                            $pwdResetQuery = "
-                                INSERT INTO password_resets (user_id, email, token, expiry_date, reset_status)
-                                VALUES (:user_id, :email, :token, :expiry_date, 'Pending')
-                            ";
-                            $pwdReset = $pdo->prepare($pwdResetQuery);
-                            $pwdReset->execute([
-                                ":user_id" => $user_id,
-                                ":email" => $email,
-                                ":token" => $token,
-                                ":expiry_date" => $expiry_date
-                            ]);
-
-                            if ($pwdReset) {
-                                echo "
-                                    <script>
-                                        Swal.fire({
-                                            title: 'Request successful.',
-                                            html: `
-                                                Your password reset has been requested. Please wait for your <b>reset approval</b>.<br>
-                                                If your request has been approved, a password reset link will be sent to your registered email.
-                                            `,
-                                            icon: 'info'
-                                        }).then((result) => {
-                                            window.location.href = '../account/login.php'
-                                        });
-                                    </script>
-                                ";
+                    if (empty($answer)) {
+                        echo "<script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                Swal.fire({
+                                    title: 'Missing Answer',
+                                    text: 'Please enter an answer to the security question.',
+                                    icon: 'error',
+                                    confirmButtonText: 'OK'
+                                });
+                            });
+                        </script>";
+                    } else {
+                        // Check if the session variable for the hashed answer is set
+                        if (isset($_SESSION['security_answer'])) {
+                            // Verify the answer
+                            if (password_verify($answer, $_SESSION['security_answer'])) {
+                                // Redirect to reset_password.php
+                                header('Location: reset_password.php');
+                                exit;
                             } else {
-                                echo "
-                                    <script>
+                                echo "<script>
+                                    document.addEventListener('DOMContentLoaded', function () {
                                         Swal.fire({
-                                            title: 'Cannon request.',
-                                            text: 'Your password reset request cannot process properly. Please try again.',
-                                            icon: 'error'
-                                        }).then((result) => {
-                                            window.location.href = '../account/logins.php'
+                                            title: 'Incorrect Answer',
+                                            text: 'The answer you provided is incorrect.',
+                                            icon: 'error',
+                                            confirmButtonText: 'OK'
                                         });
-                                    </script>
-                                ";
+                                    });
+                                </script>";
                             }
+                        } else {
+                            echo "<script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    Swal.fire({
+                                        title: 'Error!',
+                                        text: 'Please search for your account first.',
+                                        icon: 'error',
+                                        confirmButtonText: 'OK'
+                                    });
+                                });
+                            </script>";
                         }
                     }
-                ?>
-            </div>
+                }
+            ?>
         </form>
     </main>
     <footer>

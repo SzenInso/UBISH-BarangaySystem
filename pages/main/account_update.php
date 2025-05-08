@@ -40,40 +40,65 @@ if (isset($_POST['confirm'])) {
         $allowedFileExtensions = array('jpg', 'png', 'jpeg');
         $maxFileSize = 10 * 1024 * 1024; // 10MB
 
-            if (in_array($fileExtension, $allowedFileExtensions)) {
-                if ($fileSize <= $maxFileSize) {
-                    $newFileName = uniqid() . '.' . $fileExtension;
-                    $targetFilePath = "../../uploads/profiles/" . $newFileName;
-                    if (move_uploaded_file($fileTmpPath, $targetFilePath)) {
-                        if ($filePathDB !== "../../uploads/default_profile.jpg") { // doesn't delete default profile pic
-                            unlink($filePathDB); // delete old file
-                        }
-                        $uploadedFilePath = $targetFilePath;
-                    } else {
-                        echo "
-                            <script>
-                                alert('Failed to upload updated file.');
-                                window.location.href = '../main/account_update.php';
-                            </script>
-                        ";
-                    exit;
-                }
-            } else {
-                echo "
+        if (in_array($fileExtension, $allowedFileExtensions)) {
+            if ($fileSize <= $maxFileSize) {
+                $newFileName = uniqid() . '.' . $fileExtension;
+                $targetFilePath = "../../uploads/profiles/" . $newFileName;
+                if (move_uploaded_file($fileTmpPath, $targetFilePath)) {
+                    if ($filePathDB !== "../../uploads/default_profile.jpg") { // doesn't delete default profile pic
+                        unlink($filePathDB); // delete old file
+                    }
+                    $uploadedFilePath = $targetFilePath;
+                } else {
+                    echo "
                         <script>
-                            alert('File size exceeds the maximum limit of 10MB.');
-                            window.location.href = '../main/account_update.php';
+                            document.addEventListener('DOMContentLoaded', function () {
+                                Swal.fire({
+                                    title: 'File upload failed.',
+                                    text: 'Failed to upload updated file.',
+                                    icon: 'error',
+                                    confirmButtonText: 'OK'
+                                }).then(() => {
+                                    window.location.href='../main/account_update.php';
+                                });
+                            });
                         </script>
                     ";
+                    exit;
+                }
+            
+            } else {
+                echo "
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            Swal.fire({
+                                title: 'File size limit exceeded.',
+                                text: 'File size exceeds the maximum limit of 10MB.',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            }).then(() => {
+                                window.location.href='../main/account_update.php';
+                            });
+                        });
+                    </script>
+                ";
                 exit;
             }
         } else {
             echo "
-                    <script>
-                        alert('Invalid file type. Only PNG, JPG, and JPEG are allowed');
-                        window.location.href = '../main/account_update.php';
-                    </script>
-                ";
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        Swal.fire({
+                            title: 'File type invalid.',
+                            text: 'Invalid file type. Only PNG, JPG, and JPEG are allowed.',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            window.location.href='../main/account_update.php';
+                        });
+                    });
+                </script>
+            ";
             exit;
         }
     }
@@ -84,11 +109,19 @@ if (isset($_POST['confirm'])) {
 
     if (!preg_match($phPhoneNumRegex, $phonenum)) {
         echo "
-                <script>
-                    alert('Please enter a valid phone number.');
-                    window.location.href = '../main/account_update.php';
-                </script>
-            ";
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    Swal.fire({
+                        title: 'Invalid value.',
+                        text: 'Please enter a valid phone number.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        window.location.href='../main/account_update.php';
+                    });
+                });
+            </script>
+        ";
         exit;
     } else {
         try {
@@ -167,29 +200,53 @@ if (isset($_POST['confirm'])) {
             if ($confirmUpdate) {
                 if ($updateRequest) {
                     echo "
-                            <script>
-                                alert('Account updated successfully. Update request is under review.');
-                                window.location.href = '../main/account.php';
-                            </script>
-                        ";
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                Swal.fire({
+                                    title: 'Account update under review.',
+                                    text: 'Account has been updated successfully. An update request is under review.',
+                                    icon: 'info',
+                                    confirmButtonText: 'OK'
+                                }).then(() => {
+                                    window.location.href='../main/account.php';
+                                });
+                            });
+                        </script>
+                    ";
                 } else {
                     echo "
-                            <script>
-                                alert('Account updated successfully.');
-                                window.location.href = '../main/account.php';
-                            </script>
-                        ";
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                Swal.fire({
+                                    title: 'Account update successful.',
+                                    text: 'Account has been updated successfully.',
+                                    icon: 'success',
+                                    confirmButtonText: 'OK'
+                                }).then(() => {
+                                    window.location.href='../main/account.php';
+                                });
+                            });
+                        </script>
+                    ";
                 }
             }
         } catch (Exception $e) {
             $pdo->rollBack();
             error_log("Error updating account: " . $e->getMessage());
             echo "
-                    <script>
-                        alert('Failed to update account. Please try again.');
-                        window.location.href = '../main/account_update.php';
-                    </script>
-                ";
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        Swal.fire({
+                            title: 'Account update failed.',
+                            text: 'Failed to update account. Please try again.',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            window.location.href='../main/account_update.php';
+                        });
+                    });
+                </script>
+            ";
             exit;
         }
     }
@@ -208,6 +265,7 @@ if (isset($_POST['cancel'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../assets/css/style.css">
+    <script src="../../assets/js/sweetalert2.js"></script>
     <title>UBISH Dashboard | Update Account</title>
     <style>
         .dashboard-content p#warning {

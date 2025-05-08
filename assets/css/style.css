@@ -158,7 +158,8 @@ button.logout {
 }
 .dashboard-content button#postAnnouncement,
 .dashboard-content button#updateBtn,
-.dashboard-content button#changePwdBtn {
+.dashboard-content button#changePwdBtn,
+.dashboard-content button#resetQuestion {
     border: 2px solid gray;
     background-color: white;
     color: black;
@@ -169,8 +170,21 @@ button.logout {
 }
 .dashboard-content button#postAnnouncement:hover,
 .dashboard-content button#updateBtn:hover,
-.dashboard-content button#changePwdBtn:hover {
+.dashboard-content button#changePwdBtn:hover,
+.dashboard-content button#resetQuestion:hover {
     background-color: lightgray;
+}
+.dashboard-content button#confirmBtn {
+    border: 2px solid gray;
+    background-color: white;
+    color: black;
+    margin: 0 8px;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.dashboard-content button#confirmBtn:disabled {
+    opacity: 0.5;
 }
 .dashboard-sidebar ul {
     list-style-type: none;

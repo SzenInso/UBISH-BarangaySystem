@@ -10,6 +10,11 @@ if (isset($_POST['change-password'])) {
     header('location:../main/change_password.php');
     exit;
 }
+
+if (isset($_POST['reset-question'])) {
+    header('location:../main/security_question.php');
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -164,6 +169,21 @@ if (isset($_POST['change-password'])) {
                                     <td><strong>Email: </strong></td>
                                     <td><?php echo $row['email']; ?></td>
                                 </tr>
+                                <tr>
+                                    <td colspan="2"><strong>Security Question: </strong></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <?php
+                                            $secQuestion = $securityQuestion->fetchColumn();
+                                            if (empty($secQuestion)) {
+                                                echo "None";
+                                            } else {
+                                                echo htmlspecialchars($secQuestion);
+                                            }
+                                        ?>
+                                    </td>
+                                </tr>
                             </table>
                         </div>
                     </div>
@@ -171,8 +191,10 @@ if (isset($_POST['change-password'])) {
                 <form method="POST">
                     <div class="account-actions">
                         <button type="submit" name="update" class="update-btn" id="updateBtn">Update Account</button>
-                        <button type="submit" name="change-password" class="change-password" id="changePwdBtn">Change
-                            Password</button>
+                        <button type="submit" name="change-password" class="change-password" id="changePwdBtn">
+                            Change Password</button>
+                        <button type="submit" name="reset-question" class="reset-question" id="resetQuestion">
+                            Security Question Settings</button>
                     </div>
                 </form>
             </div>

@@ -36,15 +36,14 @@
     $password->execute([":emp_id" => $_SESSION['emp_id']]);
     $passwordHash = $password->fetchColumn();
 
-    // fetches password reset requests
-    $updatePwdQuery = "
-        SELECT PWD.*, EMP.first_name, EMP.middle_name, EMP.last_name, EMP.picture FROM password_resets AS PWD
-        JOIN login_details AS LOG ON PWD.user_id = LOG.user_id
-        JOIN employee_details AS EMP ON LOG.emp_id = EMP.emp_id
-        WHERE PWD.reset_status = 'Pending'
-        ORDER BY PWD.request_date DESC
+    // fetches security question
+    $securityQuestionQuery = "
+        SELECT question FROM security_questions AS SEC
+        JOIN employee_details AS EMP ON SEC.emp_id = EMP.emp_id
+        WHERE SEC.emp_id = :emp_id
     ";
-    $updatePwd = $pdo->query($updatePwdQuery);
+    $securityQuestion = $pdo->prepare($securityQuestionQuery);
+    $securityQuestion->execute([":emp_id" => $_SESSION['emp_id']]);
 
     // fetches single employee details
     $empQuery = "

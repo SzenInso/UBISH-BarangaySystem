@@ -8,6 +8,7 @@ include '../../config/dbfetch.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../assets/css/style.css">
+    <script src="../../assets/js/sweetalert2.js"></script>
     <title>UBISH Dashboard | Create Announcement</title>
 </head>
 
@@ -314,8 +315,20 @@ include '../../config/dbfetch.php';
                                 ]);
                             }
 
-                            //echo "<br><p style='color:green;'>Announcement posted successfully!</p>";
-                            echo "<script>alert('Announcement posted successfully!'); window.location.href = '../main/dashboard.php';</script>";
+                            echo "
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        Swal.fire({
+                                            title: 'Post successful.',
+                                            text: 'Announcement has been posted successfully.',
+                                            icon: 'success',
+                                            confirmButtonText: 'OK'
+                                        }).then(() => {
+                                            window.location.href='../main/dashboard.php';
+                                        });
+                                    });
+                                </script>
+                            ";
                         } else {
                             foreach ($errors as $err) {
                                 echo "<p style='color:red;'>$err</p><br>";

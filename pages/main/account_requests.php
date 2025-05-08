@@ -92,11 +92,19 @@ if (isset($_POST['approve'])) {
         $approved = $pdo->commit();
         if ($approved) {
             echo "
-                    <script>
-                        alert('Request approved successfully.');
-                        window.location.href='../main/account_requests.php';
-                    </script>
-                ";
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        Swal.fire({
+                            title: 'Request approved.',
+                            text: 'Registration request has been approved successfully.',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            window.location.href='../main/account_requests.php';
+                        });
+                    });
+                </script>
+            ";
         } else {
             throw new Exception("Failed to approve request.");
         }
@@ -104,11 +112,19 @@ if (isset($_POST['approve'])) {
         $pdo->rollBack();
         error_log("Failed to approve request: " . $e->getMessage());
         echo "
-                <script>
-                    alert('Failed to approve request.');
-                    window.location.href='../main/account_requests.php';
-                </script>
-            ";
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    Swal.fire({
+                        title: 'Request failed.',
+                        text: 'Failed to approve registration request.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        window.location.href='../main/account_requests.php';
+                    });
+                });
+            </script>
+        ";
     }
 }
 
@@ -144,11 +160,19 @@ if (isset($_POST['deny'])) {
         $denied = $pdo->commit();
         if ($denied) {
             echo "
-                    <script>
-                        alert('Request denied successfully.');
-                        window.location.href='../main/account_requests.php';
-                    </script>
-                ";
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        Swal.fire({
+                            title: 'Request denied.',
+                            text: 'Registration request has been denied successfully.',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            window.location.href='../main/account_requests.php';
+                        });
+                    });
+                </script>
+            ";
         } else {
             throw new Exception("Failed to deny request.");
         }
@@ -156,11 +180,19 @@ if (isset($_POST['deny'])) {
         $pdo->rollBack();
         error_log("Failed to deny request: " . $e->getMessage());
         echo "
-                <script>
-                    alert('Failed to deny request.');
-                    window.location.href='../main/account_requests.php';
-                </script>
-            ";
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    Swal.fire({
+                        title: 'Request failed.',
+                        text: 'Failed to deny registration request.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        window.location.href='../main/account_requests.php';
+                    });
+                });
+            </script>
+        ";
     }
 }
 
@@ -254,11 +286,19 @@ if (isset($_POST['approve-selected']) && isset($_POST['selection'])) {
         $approved = $pdo->commit();
         if ($approved) {
             echo "
-                    <script>
-                        alert('Selected requests approved successfully.');
-                        window.location.href='../main/account_requests.php';
-                    </script>
-                ";
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        Swal.fire({
+                            title: 'Selected requests approved.',
+                            text: 'Selected registration requests have been approved successfully.',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            window.location.href='../main/account_requests.php';
+                        });
+                    });
+                </script>
+            ";
         } else {
             throw new Exception("Failed to approve requests.");
         }
@@ -266,11 +306,19 @@ if (isset($_POST['approve-selected']) && isset($_POST['selection'])) {
         $pdo->rollBack();
         error_log("Failed to approve requests: " . $e->getMessage());
         echo "
-                <script>
-                    alert('Failed to approve requests.');
-                    window.location.href='../main/account_requests.php';
-                </script>
-            ";
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    Swal.fire({
+                        title: 'Selected requests failed.',
+                        text: 'Failed to approve selected registration requests.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        window.location.href='../main/account_requests.php';
+                    });
+                });
+            </script>
+        ";
     }
 }
 
@@ -308,11 +356,19 @@ if (isset($_POST['deny-selected']) && isset($_POST['selection'])) {
         $denied = $pdo->commit();
         if ($denied) {
             echo "
-                    <script>
-                        alert('Selected requests denied successfully.');
-                        window.location.href='../main/account_requests.php';
-                    </script>
-                ";
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        Swal.fire({
+                            title: 'Selected requests denied.',
+                            text: 'Selected registration requests have been denied successfully.',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            window.location.href='../main/account_requests.php';
+                        });
+                    });
+                </script>
+            ";
         } else {
             throw new Exception("Failed to deny requests.");
         }
@@ -320,11 +376,19 @@ if (isset($_POST['deny-selected']) && isset($_POST['selection'])) {
         $pdo->rollBack();
         error_log("Failed to deny requests: " . $e->getMessage());
         echo "
-                <script>
-                    alert('Failed to deny requests.');
-                    window.location.href='../main/account_requests.php';
-                </script>
-            ";
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    Swal.fire({
+                        title: 'Selected requests failed.',
+                        text: 'Failed to deny selected registration requests.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        window.location.href='../main/account_requests.php';
+                    });
+                });
+            </script>
+        ";
     }
 }
 
@@ -376,11 +440,19 @@ if (isset($_POST['approve-update'])) {
         $approved = $pdo->commit();
         if ($approved) {
             echo "
-                    <script>
-                        alert('Update request approved successfully.');
-                        window.location.href='../main/account_requests.php';
-                    </script>
-                ";
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        Swal.fire({
+                            title: 'Update request approved.',
+                            text: 'Update request has been approved successfully.',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            window.location.href='../main/account_requests.php';
+                        });
+                    });
+                </script>
+            ";
         } else {
             throw new Exception("Failed to approve update request.");
         }
@@ -388,10 +460,19 @@ if (isset($_POST['approve-update'])) {
         $pdo->rollBack();
         error_log("Failed to approve update request: " . $e->getMessage());
         echo "
-                <script>
-                    alert('Failed to approve update request:');
-                </script>
-            ";
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    Swal.fire({
+                        title: 'Update request failed.',
+                        text: 'Failed to approve update request.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        window.location.href='../main/account_requests.php';
+                    });
+                });
+            </script>
+        ";
     }
 }
 
@@ -409,11 +490,19 @@ if (isset($_POST['deny-update'])) {
         $denied = $pdo->commit();
         if ($denied) {
             echo "
-                    <script>
-                        alert('Update request denied successfully.');
-                        window.location.href='../main/account_requests.php';
-                    </script>
-                ";
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        Swal.fire({
+                            title: 'Update request denied.',
+                            text: 'Update request has been denied successfully.',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            window.location.href='../main/account_requests.php';
+                        });
+                    });
+                </script>
+            ";
         } else {
             throw new Exception("Failed to deny update request.");
         }
@@ -421,11 +510,19 @@ if (isset($_POST['deny-update'])) {
         $pdo->rollBack();
         error_log("Failed to deny update request: " . $e->getMessage());
         echo "
-                <script>
-                    alert('Failed to deny update request.');
-                    window.location.href='../main/account_requests.php';
-                </script>
-            ";
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    Swal.fire({
+                        title: 'Update request failed.',
+                        text: 'Failed to deny update request.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        window.location.href='../main/account_requests.php';
+                    });
+                });
+            </script>
+        ";
     }
 }
 
@@ -478,11 +575,19 @@ if (isset($_POST['approve-update-selected']) && isset($_POST['updates'])) {
             $approved = $pdo->commit();
             if ($approved) {
                 echo "
-                        <script>
-                            alert('Selected update requests approved successfully.');
-                            window.location.href='../main/account_requests.php';
-                        </script>
-                    ";
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            Swal.fire({
+                                title: 'Selected update requests approved.',
+                                text: 'Selected update requests have been approved successfully.',
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            }).then(() => {
+                                window.location.href='../main/account_requests.php';
+                            });
+                        });
+                    </script>
+                ";
             } else {
                 throw new Exception("Failed to approve update request.");
             }
@@ -491,11 +596,19 @@ if (isset($_POST['approve-update-selected']) && isset($_POST['updates'])) {
         $pdo->rollBack();
         error_log("Failed to approve update requests: " . $e->getMessage());
         echo "
-                <script>
-                    alert('Failed to approve update requests.');
-                    window.location.href='../main/account_requests.php';
-                </script>
-            ";
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    Swal.fire({
+                        title: 'Selected update requests failed.',
+                        text: 'Failed to approve selected update requests.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        window.location.href='../main/account_requests.php';
+                    });
+                });
+            </script>
+        ";
     }
 }
 
@@ -515,11 +628,19 @@ if (isset($_POST['deny-update-selected']) && isset($_POST['updates'])) {
         $denied = $pdo->commit();
         if ($denied) {
             echo "
-                    <script>
-                        alert('Selected update requests denied successfully.');
-                        window.location.href='../main/account_requests.php';
-                    </script>
-                ";
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        Swal.fire({
+                            title: 'Selected update requests denied.',
+                            text: 'Selected update requests have been denied successfully.',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            window.location.href='../main/account_requests.php';
+                        });
+                    });
+                </script>
+            ";
         } else {
             throw new Exception("Failed to deny update requests.");
         }
@@ -527,11 +648,19 @@ if (isset($_POST['deny-update-selected']) && isset($_POST['updates'])) {
         $pdo->rollBack();
         error_log("Failed to deny update requests: " . $e->getMessage());
         echo "
-                <script>
-                    alert('Failed to deny update requests.');
-                    window.location.href='../main/account_requests.php';
-                </script>
-            ";
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    Swal.fire({
+                        title: 'Selected update requests failed.',
+                        text: 'Failed to deny selected update requests.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        window.location.href='../main/account_requests.php';
+                    });
+                });
+            </script>
+        ";
     }
 }
 ?>
@@ -542,6 +671,7 @@ if (isset($_POST['deny-update-selected']) && isset($_POST['updates'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../assets/css/style.css">
+    <script src="../../assets/js/sweetalert2.js"></script>
     <title>UBISH Dashboard | Account Requests</title>
     <style>
         .update-reason {
@@ -847,60 +977,6 @@ if (isset($_POST['deny-update-selected']) && isset($_POST['updates'])) {
                         <?php } ?>
                     </div>
                     <script src="../../assets/js/toggleProfileEditsView.js"></script>
-                    <br>
-
-                    <h1>
-                        <center>Password Reset Requests</center>
-                    </h1>
-                    <div class="password-reset-main">
-                        <?php
-                            if ($updatePwd->rowCount() < 1) {
-                                echo "<p>No password reset requests at the moment.</p>";
-                            } else {
-                        ?>
-                                <!-- Multiple selection actions -->
-                                <div class="password-reset-actions-multiple">
-                                    <button type="submit" id="approveResetSelectedBtn" name="approve-reset-selected"
-                                        class="approve-reset-selected-btn" disabled>Approve Selected</button>
-                                    <button type="submit" id="denyResetSelectedBtn" name="deny-reset-selected"
-                                        class="deny-reset-selected-btn" disabled>Deny Selected</button>
-                                </div>
-                                <table id="password-reset-requests">
-                                    <tr>
-                                        <th>Selection</td>
-                                        <th>Profile</td>
-                                        <th>Full Name</td>
-                                        <th>Request Date</td>
-                                        <th>Status</td>
-                                        <th colspan="2">Actions</td>
-                                    </tr>
-                                    <?php foreach ($updatePwd as $pwd) { ?>
-                                        <tr>
-                                            <td>
-                                                <center>
-                                                    <input type="checkbox" class="reset-checkbox" name="reset[]"
-                                                        value="<?php echo $pwd['reset_id']; ?>" style="cursor: pointer;">
-                                                </center>
-                                            </td>
-                                            <td>
-                                                <img src="<?php echo $pwd['picture']; ?>"
-                                                    alt="<?php echo $pwd['first_name'] . " " . $pwd['middle_name'] . " " . $pwd['last_name']; ?>"
-                                                    title="<?php echo $pwd['first_name'] . " " . $pwd['middle_name'] . " " . $pwd['last_name']; ?>"
-                                                    class="profile-picture"
-                                                    style="width: 75px; height: 75px; border-radius: 50%; object-fit: cover;">
-                                            </td>
-                                            <td><?php echo $pwd['first_name'] . " " . $pwd['middle_name'] . " " . $pwd['last_name']; ?></td>
-                                            <td><?php echo date("M j, Y h:i:s A", strtotime($pwd['request_date'])); ?></td>
-                                            <td><?php echo $pwd['reset_status']; ?></td>
-                                            <td class="action-btns">
-                                                <button name="approve-reset" value="<?php echo $pwd['reset_id']; ?>">Approve</button>
-                                                <button name="deny-reset" value="<?php echo $pwd['reset_id']; ?>">Deny</button>
-                                            </td>
-                                        </tr>
-                                    <?php } ?>
-                                </table>
-                        <?php } ?>
-                    </div>
                 </form>
             </div>
         </div>
