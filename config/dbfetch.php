@@ -60,8 +60,7 @@
 
     // fetches announcements (debug)
     $announcementQuery = "
-        SELECT  A.announcement_id, A.title, A.body, A.privacy, A.category, A.author_id, A.post_date, A.last_updated, 
-                A.thumbnail, ATT.file_path, ATT.file_name, L.username, E.first_name, E.middle_name, E.last_name
+        SELECT  A.*, ATT.file_path, ATT.file_name, L.username, E.first_name, E.middle_name, E.last_name
         FROM announcements AS A
         JOIN login_details AS L ON A.author_id = L.user_id
         JOIN employee_details AS E ON L.emp_id = E.emp_id
@@ -73,8 +72,7 @@
     // function that fetches single announcement to be deleted
     function toBeDeletedAnnouncement($pdo, $announcementID) {
         $toBeDeletedQuery = "
-            SELECT  A.announcement_id, A.title, A.body, A.privacy, A.category, A.author_id, A.post_date, 
-                    A.thumbnail, ATT.file_path, ATT.file_name, L.username, E.first_name, E.middle_name, E.last_name
+            SELECT  A.*, ATT.file_path, ATT.file_name, L.username, E.first_name, E.middle_name, E.last_name
             FROM announcements AS A
             JOIN login_details AS L ON A.author_id = L.user_id
             JOIN employee_details AS E ON L.emp_id = E.emp_id
