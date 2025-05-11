@@ -176,8 +176,8 @@ if (isset($_POST['submit_incident'])) {
                     <h3>Tables & Requests</h3>
                     <li><a href="../main/employee_table.php">Employee Table</a></li>
                     <li><a href="../main/account_requests.php">Account Requests</a></li>
-                    <li><a href="#">Certificate Requests</a></li>
-                    <li><a href="#">Permit Requests</a></li>
+                    <li><a href="../main/certificates.php">Certificate of Residency</a></li>
+                    <li><a href="../main/permits.php">Barangay Permit</a></li>
                     <h3>Reports</h3>
                     <li class="active"><a href="#">Incident Reports</a></li>
                     <li><a href="../main/reports.php">Analytics</a></li>
