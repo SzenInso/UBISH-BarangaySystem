@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 07, 2025 at 07:20 PM
+-- Generation Time: May 08, 2025 at 11:08 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ubish4.0`
+-- Database: `ubish`
 --
 
 -- --------------------------------------------------------
@@ -71,6 +71,21 @@ CREATE TABLE `attachments` (
 INSERT INTO `attachments` (`attachment_id`, `announcement_id`, `file_path`, `file_name`, `upload_date`) VALUES
 (3010, 2009, '../../uploads/attachments/attachment_1744880786_attachmenttest01.pdf', 'attachment_1744880786_attachmenttest01.pdf', '2025-04-17 11:06:26'),
 (3037, 2020, '../../uploads/attachments/attachment_1745815302_test_pdf.pdf', 'attachment_1745815302_test_pdf.pdf', '2025-04-28 12:41:42');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `certificates`
+--
+
+CREATE TABLE `certificates` (
+  `id` int(11) NOT NULL,
+  `applicant_name` varchar(255) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `property_owner` varchar(255) NOT NULL,
+  `issued_by` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -244,8 +259,8 @@ CREATE TABLE `files` (
 --
 
 INSERT INTO `files` (`file_id`, `title`, `file_name`, `file_path`, `uploaded_by`, `upload_date`, `privacy`, `file_type`) VALUES
-(20, 'Upload Test (PDF)', 'Upload Test (PDF)', '../../uploads/documents/680efec219838-test_pdf.pdf', 1, '2025-04-27 14:06:26', 'Public', NULL),
-(21, 'Test Document', 'Test Document', '../../uploads/documents/680f0043ccdf3-test_document.docx', 1, '2025-04-27 14:12:51', 'Public', NULL);
+(20, 'Upload Test (PDF)', 'Upload Test (PDF)', '../../uploads/documents/680efec219838-test_pdf.pdf', 1, '2025-04-27 14:06:26', 'Public', 'application/pdf'),
+(21, 'Test Document', 'Test Document', '../../uploads/documents/680f0043ccdf3-test_document.docx', 1, '2025-04-27 14:12:51', 'Public', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
 
 -- --------------------------------------------------------
 
@@ -274,7 +289,8 @@ INSERT INTO `incidents` (`incident_id`, `incident_type`, `incident_date`, `place
 (1, 'category1', '2025-05-04', 'test', 'test', 'test', 'test', 'test', 1, '2025-05-05 11:44:27'),
 (2, 'category2', '2025-05-13', 'test', 'test', 'test', 'test', 'test', 1, '2025-05-05 11:44:36'),
 (3, 'category3', '2025-05-21', 'test', 'test', 'test', 'test', 'test', 1, '2025-05-05 11:44:47'),
-(13, 'category1', '2025-05-08', 'Greenwater Village', 'Juan Dela Cruz', 'Greenwater Village, Baguio City', 'This is a test narrative for the incident report form.', 'Juana Dela Cruz', 1, '2025-05-07 17:19:15');
+(13, 'category1', '2025-05-08', 'Greenwater Village', 'Juan Dela Cruz', 'Greenwater Village, Baguio City', 'This is a test narrative for the incident report form.', 'Juana Dela Cruz', 1, '2025-05-07 17:19:15'),
+(14, 'test', '0011-11-11', 'test', 'test', 'test', 'test', 'test', 1, '2025-05-08 03:53:59');
 
 -- --------------------------------------------------------
 
@@ -364,6 +380,23 @@ INSERT INTO `login_registration` (`registration_login_id`, `username`, `email`, 
 (340, 's', 's@s', '$2y$10$LBT4TV6uRpFvcOzWYJqUyOQbF90mrriIO5kLtENHAKHZ17HaX84KO'),
 (341, 'allangarcia', 'allangarcia@email.com', '$2y$10$aXtdoCiQmftQIOX4pw3LNerF61IMpGYTuk8cx0fJ.eSbzriKGdCCe'),
 (342, 'sarahmarquez', 'sarahmarquez@gmail.com', '$2y$10$AAauWi/6TyEDfZkgmFSYt.U2wPk0vezsGqpMdubXTzIda871L3/9S');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `permits`
+--
+
+CREATE TABLE `permits` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `event` varchar(255) NOT NULL,
+  `event_date` date NOT NULL,
+  `event_time` varchar(50) NOT NULL,
+  `venue` varchar(255) NOT NULL,
+  `issued_by` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -472,6 +505,12 @@ ALTER TABLE `attachments`
   ADD KEY `announcement_id` (`announcement_id`);
 
 --
+-- Indexes for table `certificates`
+--
+ALTER TABLE `certificates`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `employee_details`
 --
 ALTER TABLE `employee_details`
@@ -518,6 +557,12 @@ ALTER TABLE `login_registration`
   ADD PRIMARY KEY (`registration_login_id`);
 
 --
+-- Indexes for table `permits`
+--
+ALTER TABLE `permits`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `registration`
 --
 ALTER TABLE `registration`
@@ -549,6 +594,12 @@ ALTER TABLE `attachments`
   MODIFY `attachment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3038;
 
 --
+-- AUTO_INCREMENT for table `certificates`
+--
+ALTER TABLE `certificates`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
 -- AUTO_INCREMENT for table `employee_details`
 --
 ALTER TABLE `employee_details`
@@ -567,10 +618,16 @@ ALTER TABLE `employee_update`
   MODIFY `update_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=417;
 
 --
+-- AUTO_INCREMENT for table `files`
+--
+ALTER TABLE `files`
+  MODIFY `file_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
 -- AUTO_INCREMENT for table `incidents`
 --
 ALTER TABLE `incidents`
-  MODIFY `incident_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `incident_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `login_details`
@@ -583,6 +640,12 @@ ALTER TABLE `login_details`
 --
 ALTER TABLE `login_registration`
   MODIFY `registration_login_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=343;
+
+--
+-- AUTO_INCREMENT for table `permits`
+--
+ALTER TABLE `permits`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `registration`

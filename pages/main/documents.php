@@ -68,14 +68,31 @@ function getDocumentsTable($pdo)
     $documents = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     $output = "";
+
+    // fix for wordy file type displays
+    $mimeMap = [
+        'application/pdf' => 'PDF',
+        'application/msword' => 'Word',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'Word',
+        'application/vnd.ms-excel' => 'Excel',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'Excel',
+        'image/jpeg' => 'JPEG',
+        'image/png' => 'PNG',
+        'text/plain' => 'Text'
+    ];
+
     foreach ($documents as $document) {
         $documentId = $document['file_id'];
         $title = htmlspecialchars($document['file_name']);
         $filePath = htmlspecialchars($document['file_path']);
-        $fileType = htmlspecialchars($document['file_type'] ?? 'Unknown'); // File type
+
+        $rawType = $document['file_type'] ?? 'unknown/unknown';
+        $fileType = $mimeMap[$rawType] ?? strtoupper(explode('/', $rawType)[1] ?? 'Unknown');
+
         $uploadedBy = $document['uploaded_by'];
         $uploadDate = $document['upload_date'];
 
+        // username fetch
         $userFetch = "SELECT username FROM login_details WHERE user_id = :uploaded_by";
         $stmtUser = $pdo->prepare($userFetch);
         $stmtUser->execute([':uploaded_by' => $uploadedBy]);
@@ -91,6 +108,7 @@ function getDocumentsTable($pdo)
                         <td><button onclick='confirmDelete($documentId)'>Delete</button></td>
                     </tr>";
     }
+
     return $output;
 }
 ?>
@@ -154,6 +172,7 @@ function getDocumentsTable($pdo)
             padding: 8px;
             box-sizing: border-box;
         }
+
         .document-credentials input,
         .document-credentials textarea {
             margin-bottom: 16px;
@@ -201,13 +220,14 @@ function getDocumentsTable($pdo)
                         echo '<li><a href="../main/account_requests.php">Account Requests</a></li>';
                     } ?>
                     <?php if ($accessLevel >= 2) {
-                        echo '<li><a href="#">Certificate Requests</a></li>';
+                        echo '<li><a href="../main/certificates.php">Certificate Requests</a></li>';
                     } ?>
                     <?php if ($accessLevel >= 2) {
-                        echo '<li><a href="#">Permit Requests</a></li>';
+                        echo '<li><a href="../main/permits.php">Permit Requests</a></li>';
                     } ?>
                     <h3>Reports</h3>
                     <li><a href="../main/incidents.php">Incident Reports</a></li>
+                    <li><a href="../main/incident_table.php">Incident History</a></li>
                     <li><a href="../main/reports.php">Analytics</a></li>
                 </ul>
             </div>
