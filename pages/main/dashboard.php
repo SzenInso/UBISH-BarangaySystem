@@ -78,6 +78,7 @@
                                         'title' => $row['title'],
                                         'body' => $row['body'],
                                         'category' => $row['category'],
+                                        'author_id' => $row['author_id'],
                                         'thumbnail' => $row['thumbnail'],
                                         'post_date' => $row['post_date'],
                                         'first_name' => $row['first_name'],
@@ -102,21 +103,21 @@
                                     <!-- title and menu -->
                                     <div class="announcement-card-wrapper">
                                         <h2><?php echo $ann['title']; ?></h2>
-                                        <?php if ($accessLevel >= 2) { ?>
-                                                <div class="announcement-menu">
-                                                    <button class="kebab-btn"><p style="font-size: x-large;">⁝</p></button>
-                                                    <div class="kebab-menu">
-                                                        <form method="GET" action="edit_announcement.php">
-                                                            <input type="hidden" name="announcement_id" value="<?php echo $ann['announcement_id']; ?>">
-                                                            <button type="submit">Edit Announcement</button>
-                                                        </form>
-                                                        <form method="GET" action="delete_announcement.php">
-                                                            <input type="hidden" name="announcement_id" value="<?php echo $ann['announcement_id']; ?>">
-                                                            <button type="submit" style="color: crimson;">Delete Announcement</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                        <?php } ?>
+                                        <div class="announcement-menu">
+                                            <?php if ((int)$_SESSION['user_id'] === (int)$ann['author_id']) { ?>
+                                                <button class="kebab-btn" title="Announcement Options"><p style="font-size: x-large;">⁝</p></button>
+                                            <?php } ?>
+                                            <div class="kebab-menu">
+                                                <form method="POST" action="edit_announcement.php">
+                                                    <input type="hidden" name="announcement_id" value="<?php echo $ann['announcement_id']; ?>">
+                                                    <button type="submit">Edit Announcement</button>
+                                                </form>
+                                                <form method="POST" action="delete_announcement.php">
+                                                    <input type="hidden" name="announcement_id" value="<?php echo $ann['announcement_id']; ?>">
+                                                    <button type="submit" style="color: crimson;">Delete Announcement</button>
+                                                </form>
+                                            </div>
+                                        </div>
                                     </div>
                                     <!-- announcement author & announcement date -->
                                     <p>
