@@ -61,16 +61,38 @@
                             $_SESSION['user_id'] = $activeUser['user_id'];
                             $_SESSION['emp_id'] = $activeUser['emp_id'];
                             $_SESSION['username'] = $activeUser['username'];
-                    ?>
-                            <script>
-                                Swal.fire({
-                                    title: "Logged in successfully",
-                                    icon: "success",
-                                }).then((result) => {
-                                    window.location.href = '../main/dashboard.php'
-                                });
-                            </script>
-                    <?php } else { ?>
+
+                            $adminQuery = "SELECT access_level, legislature FROM employee_details WHERE emp_id = :emp_id";
+                            $adminStmt = $pdo->prepare($adminQuery);
+                            $adminStmt->execute([":emp_id" => $_SESSION['emp_id']]);
+                            $admin = $adminStmt->fetch();
+                            $isAdmin = ($admin['access_level'] == 4 && $admin['legislature'] === "Administrator");
+
+                            if ($isAdmin) {
+                                echo "
+                                    <script>
+                                        Swal.fire({
+                                            title: 'Logged in successfully.',
+                                            text: 'Logged in as administrator.',
+                                            icon: 'success',
+                                        }).then((result) => {
+                                            window.location.href = '../../admin/main/dashboard.php'
+                                        });
+                                    </script>
+                                ";
+                            } else {
+                                echo "
+                                    <script>
+                                        Swal.fire({
+                                            title: 'Logged in successfully.',
+                                            icon: 'success',
+                                        }).then((result) => {
+                                            window.location.href = '../main/dashboard.php'
+                                        });
+                                    </script>
+                                ";
+                            }
+                        } else { ?>
                             <script>
                                 Swal.fire({
                                     title: "Invalid username or password.",
@@ -78,8 +100,7 @@
                                 });
                             </script>
                     <?php }
-                    }
-                ?>
+                    } ?>
             </div>
         </form>
     </main>
