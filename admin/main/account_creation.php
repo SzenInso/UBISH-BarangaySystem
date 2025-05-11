@@ -244,28 +244,49 @@
                 </ul>
             </div>
             <div class="dashboard-content">
+                <style>
+                    .account-creation-main {
+                        display: flex;
+                        justify-content: center;
+                        margin: 0 auto;
+                    }
+                    .account-creation-main input, 
+                    .account-creation-main select {
+                        margin-top: 4px;
+                        padding: 4px;
+                        width: 256px;
+                    }
+                    .account-creation-register button {
+                        border: 2px solid gray;
+                        background-color: white;
+                        color: black;
+                        padding: 8px;
+                        border-radius: 4px;
+                        cursor: pointer;
+                    }
+                    .account-creation-register button:hover {
+                        background-color: lightgray;
+                    }
+                </style>
                 <h1>
                     <center>Create an Account</center>
                 </h1><br>
                 <form method="POST" enctype="multipart/form-data">
                     <div class="account-creation-profile">
-                        <img 
-                            id="profile-preview"
-                            src="../../uploads/default_profile.jpg" 
-                            alt="Profile Preview"
-                            style="width: 200px; height: 200px; object-fit: cover; border-radius: 50%;"
-                        >
-                        <br><input type="file" id="picture" name="picture" placeholder="Upload Photo">
+                        <center>
+                            <img 
+                                id="profile-preview"
+                                src="../../uploads/default_profile.jpg" 
+                                alt="Profile Preview"
+                                style="width: 200px; height: 200px; object-fit: cover; border-radius: 50%;"
+                            >
+                        </center>
+                        <br>
+                        <strong>Upload Profile Picture:&nbsp;</strong><input type="file" id="picture" name="picture" placeholder="Upload Photo">
                         <script src="../../assets/js/profilePreview.js"></script>
                     </div>
+                    <br>
                     <div class="account-creation-main">
-                        <style>
-                            .account-creation-main {
-                                display: flex;
-                                justify-content: center;
-                                margin: 0 auto;
-                            }
-                        </style>
                         <!-- Employee Registration -->
                         <div class="account-creation-container">
                             <h3>Employee Details</h3>
