@@ -1,23 +1,26 @@
 <?php
 include '../../config/dbfetch.php';
 
-/*
-if (isset($_GET['announcement_id'])) {
-    $announcementID = $_GET['announcement_id'];
-    echo "Editing announcement with ID: " . htmlspecialchars($announcementID);
-} else {
-    echo "No announcement ID provided.";
-}
-*/
-
 // access level verification
 if (!isset($_SESSION['user_id']) || $accessLevel < 1) {
     header("Location: ../main/dashboard.php");
     exit;
 }
 
-if (isset($_GET['announcement_id'])) {
-    $announcementID = $_GET['announcement_id'];
+// request verification
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header('Location: ../main/dashboard.php');
+    exit;
+}
+
+// announcement id verification
+if (!isset($_POST['announcement_id'])) {
+    header('Location: ../main/dashboard.php');
+    exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $announcementID = $_POST['announcement_id'];
 
     // fetch announcements and attachments
     $announcementFetch = "SELECT * FROM announcements WHERE announcement_id = :announcement_id";

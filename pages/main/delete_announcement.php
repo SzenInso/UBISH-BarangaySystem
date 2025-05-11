@@ -1,9 +1,27 @@
 <?php
 include '../../config/dbfetch.php';
 
+// access level verification
+if (!isset($_SESSION['user_id']) || $accessLevel < 1) {
+    header("Location: ../main/dashboard.php");
+    exit;
+}
+
+// request verification
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header('Location: ../main/dashboard.php');
+    exit;
+}
+
+// announcement id verification
+if (!isset($_POST['announcement_id'])) {
+    header('Location: ../main/dashboard.php');
+    exit;
+}
+
 // handles querying for the announcement to delete
-if (isset($_GET['announcement_id'])) {
-    $announcementID = $_GET['announcement_id'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $announcementID = $_POST['announcement_id'];
 
     // fetches single row of certain announcement for deletion
     $announcement = toBeDeletedAnnouncement($pdo, $announcementID);
