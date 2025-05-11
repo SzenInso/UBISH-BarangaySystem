@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 08, 2025 at 11:08 AM
+-- Generation Time: May 11, 2025 at 06:52 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ubish`
+-- Database: `ubish4.0`
 --
 
 -- --------------------------------------------------------
@@ -75,28 +75,13 @@ INSERT INTO `attachments` (`attachment_id`, `announcement_id`, `file_path`, `fil
 -- --------------------------------------------------------
 
 --
--- Table structure for table `certificates`
---
-
-CREATE TABLE `certificates` (
-  `id` int(11) NOT NULL,
-  `applicant_name` varchar(255) NOT NULL,
-  `address` varchar(255) NOT NULL,
-  `property_owner` varchar(255) NOT NULL,
-  `issued_by` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `employee_details`
 --
 
 CREATE TABLE `employee_details` (
   `emp_id` int(11) NOT NULL,
   `first_name` varchar(255) NOT NULL,
-  `middle_name` varchar(255) NOT NULL,
+  `middle_name` varchar(255) DEFAULT NULL,
   `last_name` varchar(255) NOT NULL,
   `date_of_birth` date NOT NULL,
   `sex` varchar(1) NOT NULL,
@@ -106,23 +91,25 @@ CREATE TABLE `employee_details` (
   `legislature` varchar(100) NOT NULL,
   `access_level` tinyint(4) NOT NULL,
   `phone_no` varchar(11) NOT NULL,
-  `picture` varchar(255) NOT NULL
+  `picture` varchar(255) NOT NULL,
+  `committee` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `employee_details`
 --
 
-INSERT INTO `employee_details` (`emp_id`, `first_name`, `middle_name`, `last_name`, `date_of_birth`, `sex`, `address`, `religion`, `civil_status`, `legislature`, `access_level`, `phone_no`, `picture`) VALUES
-(1001, 'Admin', 'Santos', 'Dela Cruz', '2000-01-01', 'M', 'Philippines', 'Atheist', 'Single', 'Punong Barangay', 3, '09123456789', '../../uploads/default_profile.jpg'),
-(1002, 'Mark Simon', 'Zuilan', 'Bringas', '2005-02-16', 'M', 'Baguio City, Philippines', 'Roman Catholic', 'Single', 'Other Barangay Personnel', 1, '09123456789', '../../uploads/profiles/680e0acd0d07a.jpg'),
-(1004, 'John', 'Smith', 'Doe', '2000-01-02', 'M', 'Philippines', 'Atheist', 'Legally Separated', 'Sangguniang Barangay Member', 2, '09111111111', '../../uploads/profiles/680f803160a28.jpg'),
-(1009, 'Jamie', 'Smith', 'Brown', '2000-01-03', 'F', 'Philippines', 'Roman Catholic', 'Married', 'Barangay Secretary', 2, '09333333333', '../../uploads/profiles/680f94f412a96.jpg'),
-(1013, 'Tarou', 'Tanaka', 'Sakamoto', '1997-11-21', 'M', 'Japan', 'Atheist', 'Married', 'Other Barangay Personnel', 1, '09444444444', '../../uploads/profiles/680e3def12dc7.png'),
-(1014, 'Kento', 'Kokusen', 'Nanami', '1990-07-03', 'M', 'Japan', 'Shinto', 'Single', 'Barangay Secretary', 2, '09555555555', '../../uploads/profiles/680e412a573ca.jpg'),
-(1020, 'Jane', 'Turner', 'Smith', '2000-01-01', 'F', 'Philippines', 'Atheist', 'Married', 'Barangay Secretary', 3, '09000000000', '../../uploads/profiles/6813a9c249b2a.jpg'),
-(1028, 'Sarah Mae', 'Marquez', 'Capis', '2000-01-04', 'F', 'Manila', 'Roman Catholic', 'Married', 'Other Barangay Personnel', 1, '09111111111', '../../uploads/default_profile.jpg'),
-(1029, 'Allan', 'Manuel', 'Garcia', '2000-01-03', 'M', 'Manila', 'Roman Catholic', 'Married', 'Other Barangay Personnel', 1, '09111111111', '../../uploads/default_profile.jpg');
+INSERT INTO `employee_details` (`emp_id`, `first_name`, `middle_name`, `last_name`, `date_of_birth`, `sex`, `address`, `religion`, `civil_status`, `legislature`, `access_level`, `phone_no`, `picture`, `committee`) VALUES
+(1001, 'Admin', 'Admin', 'Admin', '2000-01-01', 'M', 'Philippines', 'Admin', 'Admin', 'Administrator', 4, '09123456789', '../../uploads/default_profile.jpg', NULL),
+(1002, 'Mark Simon', 'Zuilan', 'Bringas', '2005-02-16', 'M', 'Baguio City, Philippines', 'Roman Catholic', 'Single', 'Other Barangay Personnel', 1, '09123456789', '../../uploads/profiles/680e0acd0d07a.jpg', NULL),
+(1004, 'John', 'Smith', 'Doe', '2000-01-02', 'M', 'Philippines', 'Atheist', 'Legally Separated', 'Sangguniang Barangay Member', 2, '09111111111', '../../uploads/profiles/680f803160a28.jpg', NULL),
+(1009, 'Jamie', 'Smith', 'Brown', '2000-01-03', 'F', 'Philippines', 'Roman Catholic', 'Married', 'Barangay Secretary', 2, '09333333333', '../../uploads/profiles/680f94f412a96.jpg', NULL),
+(1013, 'Tarou', 'Tanaka', 'Sakamoto', '1997-11-21', 'M', 'Japan', 'Atheist', 'Married', 'Other Barangay Personnel', 1, '09444444444', '../../uploads/profiles/680e3def12dc7.png', NULL),
+(1014, 'Kento', 'Kokusen', 'Nanami', '1990-07-03', 'M', 'Japan', 'Shinto', 'Single', 'Barangay Secretary', 2, '09555555555', '../../uploads/profiles/680e412a573ca.jpg', NULL),
+(1020, 'Jane', 'Turner', 'Smith', '2000-01-01', 'F', 'Philippines', 'Atheist', 'Married', 'Barangay Secretary', 3, '09000000000', '../../uploads/profiles/6813a9c249b2a.jpg', NULL),
+(1028, 'Sarah Mae', 'Marquez', 'Capis', '2000-01-04', 'F', 'Manila', 'Roman Catholic', 'Married', 'Other Barangay Personnel', 1, '09111111111', '../../uploads/default_profile.jpg', NULL),
+(1029, 'Allan', 'Manuel', 'Garcia', '2000-01-03', 'M', 'Manila', 'Roman Catholic', 'Married', 'Other Barangay Personnel', 1, '09111111111', '../../uploads/default_profile.jpg', NULL),
+(1031, 'Kevin', 'Kaslana', 'Sanchez', '2000-05-12', 'M', 'Philippines', 'Roman Catholic', 'Single', 'Sangguniang Kabataan Treasurer', 2, '09111111111', '../../uploads/default_profile.jpg', 'Finance');
 
 -- --------------------------------------------------------
 
@@ -259,8 +246,8 @@ CREATE TABLE `files` (
 --
 
 INSERT INTO `files` (`file_id`, `title`, `file_name`, `file_path`, `uploaded_by`, `upload_date`, `privacy`, `file_type`) VALUES
-(20, 'Upload Test (PDF)', 'Upload Test (PDF)', '../../uploads/documents/680efec219838-test_pdf.pdf', 1, '2025-04-27 14:06:26', 'Public', 'application/pdf'),
-(21, 'Test Document', 'Test Document', '../../uploads/documents/680f0043ccdf3-test_document.docx', 1, '2025-04-27 14:12:51', 'Public', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+(20, 'Upload Test (PDF)', 'Upload Test (PDF)', '../../uploads/documents/680efec219838-test_pdf.pdf', 1, '2025-04-27 14:06:26', 'Public', NULL),
+(21, 'Test Document', 'Test Document', '../../uploads/documents/680f0043ccdf3-test_document.docx', 1, '2025-04-27 14:12:51', 'Public', NULL);
 
 -- --------------------------------------------------------
 
@@ -289,8 +276,7 @@ INSERT INTO `incidents` (`incident_id`, `incident_type`, `incident_date`, `place
 (1, 'category1', '2025-05-04', 'test', 'test', 'test', 'test', 'test', 1, '2025-05-05 11:44:27'),
 (2, 'category2', '2025-05-13', 'test', 'test', 'test', 'test', 'test', 1, '2025-05-05 11:44:36'),
 (3, 'category3', '2025-05-21', 'test', 'test', 'test', 'test', 'test', 1, '2025-05-05 11:44:47'),
-(13, 'category1', '2025-05-08', 'Greenwater Village', 'Juan Dela Cruz', 'Greenwater Village, Baguio City', 'This is a test narrative for the incident report form.', 'Juana Dela Cruz', 1, '2025-05-07 17:19:15'),
-(14, 'test', '0011-11-11', 'test', 'test', 'test', 'test', 'test', 1, '2025-05-08 03:53:59');
+(13, 'category1', '2025-05-08', 'Greenwater Village', 'Juan Dela Cruz', 'Greenwater Village, Baguio City', 'This is a test narrative for the incident report form.', 'Juana Dela Cruz', 1, '2025-05-07 17:19:15');
 
 -- --------------------------------------------------------
 
@@ -302,7 +288,7 @@ CREATE TABLE `login_details` (
   `user_id` int(11) NOT NULL,
   `emp_id` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
-  `email` varchar(255) NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
   `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -311,7 +297,7 @@ CREATE TABLE `login_details` (
 --
 
 INSERT INTO `login_details` (`user_id`, `emp_id`, `username`, `email`, `password`) VALUES
-(1, 1001, 'admin', 'admin@gmail.com', '1234'),
+(1, 1001, 'admin', 'admin@email.com', 'admin@greenwater2025'),
 (2, 1002, 'mbringas', 'msimonbringas05v2@gmail.com', '$2y$10$uhb50SXESN/O6VzZd2V9h.lCwlpiRxZweMtR0W5qxH7xjpoFG43/e'),
 (4, 1004, 'jdoe', 'jdoe@email.com', '$2y$10$VCPFcQVgrnx1lzn4DxZWbedaopwO.0jAZWLzRMuMkqI7MMIfz5noq'),
 (9, 1009, 'jamiedoe', 'jamied@email.com', '$2y$10$C0oC34M1ynaxxgdDXhHPxeWKHaVWUCcHB5wGfp6WTjz2VoA2kW4/C'),
@@ -319,7 +305,8 @@ INSERT INTO `login_details` (`user_id`, `emp_id`, `username`, `email`, `password
 (14, 1014, 'nanami', 'nanami@kento.com', '$2y$10$9CY88e9UqU7MBgVSkWJNY.i3WhhDPSmQnvaJKSmdnZQ2LCzYKRbGe'),
 (20, 1020, 'janedoe', 'janedoe@email.com', '$2y$10$OFVHhJoT5/TzdPXg5BDpfOz2p/itz4/0zW1FkQ.kRva5KUzVdQ7ae'),
 (28, 1028, 'sarahcapis', 'sarahcapis@gmail.com', '$2y$10$AAauWi/6TyEDfZkgmFSYt.U2wPk0vezsGqpMdubXTzIda871L3/9S'),
-(29, 1029, 'allangarcia', 'allangarcia@email.com', '$2y$10$aXtdoCiQmftQIOX4pw3LNerF61IMpGYTuk8cx0fJ.eSbzriKGdCCe');
+(29, 1029, 'allangarcia', 'allangarcia@email.com', '$2y$10$aXtdoCiQmftQIOX4pw3LNerF61IMpGYTuk8cx0fJ.eSbzriKGdCCe'),
+(31, 1031, 'kevinsanchez', 'kevinsanchez@gmail.com', '$2y$10$rqH3Daiux8xjtV2riK/cy.HVpbMZ4Lm/esDkZn4A6ZpCGNIxTQcLi');
 
 -- --------------------------------------------------------
 
@@ -380,23 +367,6 @@ INSERT INTO `login_registration` (`registration_login_id`, `username`, `email`, 
 (340, 's', 's@s', '$2y$10$LBT4TV6uRpFvcOzWYJqUyOQbF90mrriIO5kLtENHAKHZ17HaX84KO'),
 (341, 'allangarcia', 'allangarcia@email.com', '$2y$10$aXtdoCiQmftQIOX4pw3LNerF61IMpGYTuk8cx0fJ.eSbzriKGdCCe'),
 (342, 'sarahmarquez', 'sarahmarquez@gmail.com', '$2y$10$AAauWi/6TyEDfZkgmFSYt.U2wPk0vezsGqpMdubXTzIda871L3/9S');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `permits`
---
-
-CREATE TABLE `permits` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `event` varchar(255) NOT NULL,
-  `event_date` date NOT NULL,
-  `event_time` varchar(50) NOT NULL,
-  `venue` varchar(255) NOT NULL,
-  `issued_by` int(11) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -478,7 +448,7 @@ CREATE TABLE `security_questions` (
 
 INSERT INTO `security_questions` (`security_id`, `emp_id`, `question`, `answer`) VALUES
 (501, 1002, 'What city were you born in?', '$2y$10$D7InK94EwJKqdIOHWRVNz.WEvS6YPwhVXJBXqWZhgb14TbDyJTSy2'),
-(502, 1001, 'What was your childhood best friend’s nickname?', '$2y$10$jfzVccY7R1BVuPH/.JYAwuhC2E6MLXoqjl7Cp8BotqfIL.3.Wb86y'),
+(502, 1001, 'What is your mother\'s maiden name?', '$2y$10$gHUtjp6VlkLbCZlqoAXkEuHqZxmz1JDcpb4qNJWK36mAK/QXAWbxm'),
 (503, 1004, 'What was your childhood best friend’s nickname?', '$2y$10$Jzo7j62nxGkrSQj1n407F.wCijRv5NerEnZFWT/gh6eLyovog.YGS'),
 (504, 1009, 'What was your childhood best friend’s nickname?', '$2y$10$.9wJWF9.AHtxa3mH2xVlFu1D1ZvPKdO/canCU1W7w9UTzC/gmvC6S'),
 (505, 1020, 'What was your childhood best friend’s nickname?', '$2y$10$bPoErhkvQFElWxQsCtID3OzNO.DLROWUHGT5qFWIUXtOm4BUYbaga'),
@@ -503,12 +473,6 @@ ALTER TABLE `announcements`
 ALTER TABLE `attachments`
   ADD PRIMARY KEY (`attachment_id`),
   ADD KEY `announcement_id` (`announcement_id`);
-
---
--- Indexes for table `certificates`
---
-ALTER TABLE `certificates`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `employee_details`
@@ -557,12 +521,6 @@ ALTER TABLE `login_registration`
   ADD PRIMARY KEY (`registration_login_id`);
 
 --
--- Indexes for table `permits`
---
-ALTER TABLE `permits`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `registration`
 --
 ALTER TABLE `registration`
@@ -594,16 +552,10 @@ ALTER TABLE `attachments`
   MODIFY `attachment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3038;
 
 --
--- AUTO_INCREMENT for table `certificates`
---
-ALTER TABLE `certificates`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
---
 -- AUTO_INCREMENT for table `employee_details`
 --
 ALTER TABLE `employee_details`
-  MODIFY `emp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1030;
+  MODIFY `emp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1032;
 
 --
 -- AUTO_INCREMENT for table `employee_registration`
@@ -618,34 +570,22 @@ ALTER TABLE `employee_update`
   MODIFY `update_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=417;
 
 --
--- AUTO_INCREMENT for table `files`
---
-ALTER TABLE `files`
-  MODIFY `file_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
-
---
 -- AUTO_INCREMENT for table `incidents`
 --
 ALTER TABLE `incidents`
-  MODIFY `incident_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `incident_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `login_details`
 --
 ALTER TABLE `login_details`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `login_registration`
 --
 ALTER TABLE `login_registration`
   MODIFY `registration_login_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=343;
-
---
--- AUTO_INCREMENT for table `permits`
---
-ALTER TABLE `permits`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `registration`
