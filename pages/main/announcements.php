@@ -176,7 +176,6 @@ include '../../config/dbfetch.php';
                         </div>
                         <button name="post" id="postAnnouncement">Post Announcement</button>
                     </form>
-                    <!-- ACTUAL CODE -->
                     <?php
                     if (isset($_POST['post'])) {
                         $title = $_POST['title'];
@@ -349,8 +348,6 @@ include '../../config/dbfetch.php';
                         }
                     }
                     ?>
-                    <!-- DEBUG CODE -->
-                    <?php include '../../config/debug/announcements_debug.php'; ?>
                 </div>
             </div>
         </div>
