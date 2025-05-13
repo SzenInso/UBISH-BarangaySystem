@@ -153,6 +153,12 @@ if (isset($_POST['reset-question'])) {
                                     <td><strong>Legislature: </strong></td>
                                     <td><?php echo $row['legislature'] ?></td>
                                 </tr>
+                                <?php if (!empty($row['committee'])) { ?>
+                                    <tr>
+                                        <td><strong>Committee: </strong></td>
+                                        <td><?php echo $row['committee']; ?></td>
+                                    </tr>
+                                <?php } ?>
                             </table>
                         </div>
                         <div class="account-details">
