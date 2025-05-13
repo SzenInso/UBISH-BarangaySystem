@@ -30,10 +30,7 @@
             <nav>
                 <ul>
                     <li>
-                        <a href="pages/account/login.php">Log In</a>
-                    </li>
-                    <li>
-                        <a href="pages/account/register.php">Sign Up</a>
+                        <a href="pages/account/login.php">Employee Portal</a>
                     </li>
                 </ul>
             </nav>
