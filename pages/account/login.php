@@ -20,13 +20,6 @@
                 <img src="../../assets/img/greenwater-village-logo.jpg" alt="Greenwater Village Logo">
                 <h1>UBISH</h1>
             </div>
-            <nav>
-                <ul>
-                    <li>
-                        <a href="../account/register.php">Sign Up</a>
-                    </li>
-                </ul>
-            </nav>
         </div>
         <hr>
     </header>

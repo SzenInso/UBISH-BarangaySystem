@@ -94,9 +94,6 @@
                     <li>
                         <a href="../account/login.php">Log In</a>
                     </li>
-                    <li>
-                        <a href="../account/register.php">Sign Up</a>
-                    </li>
                 </ul>
             </nav>
         </div>
