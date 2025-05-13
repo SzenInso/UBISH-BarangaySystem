@@ -352,9 +352,10 @@ if (isset($_POST['deny-update-selected']) && isset($_POST['updates'])) {
             </div>
             <div class="dashboard-content">
                 <form method="POST">
-                    <h1>
-                        <center>Profile Update Requests</center>
-                    </h1>
+                    <center>
+                        <h1>Profile Update Requests</h1>
+                        <p>Manage the requests of updates on vital details from employees.</p>
+                    </center>
                     <div class="profile-edit-main">
                         <?php
                         if ($empUpdate->rowCount() < 1) {
