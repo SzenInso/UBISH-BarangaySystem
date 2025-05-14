@@ -11,7 +11,7 @@ if (isset($_POST['upload'])) {
     $title = $_POST['title'];
     $uploadedBy = $_SESSION['user_id'];
     $uploadDate = date('Y-m-d H:i:s');
-    $privacy = 'Public'; // public default
+    $privacy = 'Public'; // default
 
     $uploadDir = '../../uploads/documents/';
     $maxSize = 10 * 1024 * 1024;
@@ -61,7 +61,7 @@ if (isset($_POST['upload'])) {
 }
 
 // generate documents table
-function getDocumentsTable($pdo)
+function getDocumentsTable($pdo, $currentUserId)
 {
     $documentsFetch = "SELECT * FROM files";
     $stmt = $pdo->query($documentsFetch);
@@ -69,7 +69,6 @@ function getDocumentsTable($pdo)
 
     $output = "";
 
-    // fix for wordy file type displays
     $mimeMap = [
         'application/pdf' => 'PDF',
         'application/msword' => 'Word',
@@ -99,13 +98,17 @@ function getDocumentsTable($pdo)
         $user = $stmtUser->fetch(PDO::FETCH_ASSOC);
         $username = $user ? $user['username'] : 'Unknown';
 
+        $actionBtn = $uploadedBy == $currentUserId
+            ? "<button onclick='confirmDelete($documentId)'>Delete</button>"
+            : "<em style='color:gray;'>N/A</em>";
+
         $output .= "<tr>
                         <td>$title</td>
                         <td><a href='$filePath' download>Download</a></td>
                         <td>$fileType</td>
                         <td>$username</td>
                         <td>$uploadDate</td>
-                        <td><button onclick='confirmDelete($documentId)'>Delete</button></td>
+                        <td>$actionBtn</td>
                     </tr>";
     }
 
@@ -123,7 +126,6 @@ function getDocumentsTable($pdo)
     <link rel="stylesheet" href="../../assets/css/style.css">
     <title>UBISH Dashboard | Documents</title>
     <style>
-        /* CSS override as I try to get it to work */
         .document-upload-form {
             text-align: left;
             margin: 0;
@@ -183,7 +185,6 @@ function getDocumentsTable($pdo)
         }
     </style>
 </head>
-</head>
 
 <body>
     <header>
@@ -217,28 +218,20 @@ function getDocumentsTable($pdo)
                     <h3>Tables & Requests</h3>
                     <li><a href="../main/employee_table.php">Employee Table</a></li>
 
-                    <!-- STANDARD -->
                     <?php if ($accessLevel >= 2) { echo '<li><a href="../main/certificates.php">Certificate Requests</a></li>'; } ?>
                     <?php if ($accessLevel >= 2) { echo '<li><a href="../main/permits.php">Permit Requests</a></li>'; } ?>
-                    <!-- STANDARD -->
                     
-                    <!-- FULL -->
                     <?php if ($accessLevel >= 3) { echo '<li><a href="../main/account_requests.php">Account Requests</a></li>'; } ?>
-                    <!-- FULL -->
                     
                     <h3>Reports</h3>
-                    <!-- STANDARD -->
-                    <?php if ($accessLevel >= 2) { echo '<li><a href="../main/incidents.php">Incident Reports</a></li>'; }  ?>
-                    <!-- STANDARD -->
+                    <?php if ($accessLevel >= 2) { echo '<li><a href="../main/incidents.php">Incident Reports</a></li>'; } ?>
                     
                     <li><a href="../main/incident_table.php">Incident History</a></li>
                     <li><a href="../main/reports.php">Analytics</a></li>
                 </ul>
             </div>
             <div class="dashboard-content">
-                <h1>
-                    <center>Documents</center>
-                </h1><br>
+                <h1><center>Documents</center></h1><br>
                 <div class="document-upload-form">
                     <form method="POST" enctype="multipart/form-data">
                         <div class="document-credentials">
@@ -247,16 +240,13 @@ function getDocumentsTable($pdo)
                         </div>
                         <div class="document-credentials">
                             <h3>Upload Document</h3>
-                            <input type="file" name="document" accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.jpg,.png"
-                                required>
+                            <input type="file" name="document" accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.jpg,.png" required>
                             <button name="upload" id="uploadDocument">Upload</button>
                         </div>
                     </form>
                 </div>
 
-                <h2>
-                    <center>Uploaded Documents</center>
-                </h2>
+                <h2><center>Uploaded Documents</center></h2>
                 <table class="documents-table">
                     <thead>
                         <tr>
@@ -269,7 +259,7 @@ function getDocumentsTable($pdo)
                         </tr>
                     </thead>
                     <tbody>
-                        <?php echo getDocumentsTable($pdo); ?>
+                        <?php echo getDocumentsTable($pdo, $_SESSION['user_id']); ?>
                     </tbody>
                 </table>
             </div>
