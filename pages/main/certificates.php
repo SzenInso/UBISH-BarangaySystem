@@ -57,19 +57,36 @@ if (isset($_POST['submit_certificate'])) {
 
         $currentDate = date('jS \of F, Y');
 
-        $pdf->SetFont('Arial', '', 12);
-        $pdf->MultiCell(0, 10, "This is to certify that " . strtoupper($applicantName) . ",\n
-        of legal age, Filipino citizen, is the present occupant of the address: " . strtoupper($address) . ", Greenwater Village, Baguio City, \n
-        which property is owned by " . strtoupper($propertyOwner) . ".\n\n
-        Based on records of this office, the above-named individual has no derogatory or criminal records filed in this barangay.\n\n
-        This certification is being issued upon the request of the above-named person\n
-        intended for compliance with the requirements of the issuing barangay.\n
-        Issued this $currentDate, by Barangay Greenwater Village, Baguio City.\n
-        ______________________________\n
-        Punong Barangay\n");
+        $pdf->SetFont('Arial', 'BU', 14);
+        $pdf->Cell(0, 10, 'CERTIFICATE OF RESIDENCY', 0, 1, 'C');
 
+        $pdf->Ln(5);
+        $pdf->SetFont('Arial', '', 12);
+        $pdf->Cell(0, 10, 'TO WHOM IT MAY CONCERN', 0, 1, 'L');
+
+        $pdf->Ln(5);
+        $pdf->SetFont('Arial', '', 12); // Regular font for body text
+
+        $pdf->MultiCell(
+            0,
+            10,
+            "\tThis is to certify that " . strtoupper($applicantName) .
+            ", a Filipino Citizen, is a bona fide resident of " . strtoupper($address) .
+            " Greenwater Village, Baguio City, owned by " . strtoupper($propertyOwner) .
+            " and that they have been a resident of the barangay for multiple years.\n\n" .
+
+            "\tThis certification is issued upon the verbal request of the above named person for the purposes of verification and validation.\n\n" .
+
+            "\tIssued this $currentDate at Greenwater Village, Baguio City, Philippines.\n\n" .
+
+            "______________________________\n" .
+            "Punong Barangay"
+        );
+
+        $pdf->Ln(10);
         $pdf->SetFont('Arial', 'I', 12);
         $pdf->Cell(0, 10, "Issued by: " . $fullName, 0, 1, 'C');
+
 
         // pdf save
         $pdfFileName = 'Certificate_of_Residency_' . time() . '.pdf';
@@ -123,6 +140,7 @@ if (isset($_POST['submit_certificate'])) {
             padding-left: 0px;
             box-sizing: border-box;
         }
+
         .dashboard-content {
             width: 48%;
             background-color: #f8f9fa
@@ -157,64 +175,78 @@ if (isset($_POST['submit_certificate'])) {
                     <h3>Home</h3>
                     <li><a href="../main/dashboard.php">Home</a></li>
                     <li><a href="../main/account.php">Account</a></li>
-                    
+
                     <h3>Documents & Disclosure</h3>
                     <li><a href="../main/documents.php">Documents</a></li>
                     <li><a href="../main/announcements.php">Post Announcement</a></li>
-                    
+
                     <h3>Tables & Requests</h3>
                     <li><a href="../main/employee_table.php">Employee Table</a></li>
 
                     <!-- STANDARD -->
-                    <?php if ($accessLevel >= 2) { echo '<li class="active"><a href="../main/certificates.php">Certificate Requests</a></li>'; } ?>
-                    <?php if ($accessLevel >= 2) { echo '<li><a href="../main/permits.php">Permit Requests</a></li>'; } ?>
+                    <?php if ($accessLevel >= 2) {
+                        echo '<li class="active"><a href="../main/certificates.php">Certificate Requests</a></li>';
+                    } ?>
+                    <?php if ($accessLevel >= 2) {
+                        echo '<li><a href="../main/permits.php">Permit Requests</a></li>';
+                    } ?>
                     <!-- STANDARD -->
-                    
+
                     <!-- FULL -->
-                    <?php if ($accessLevel >= 3) { echo '<li><a href="../main/account_requests.php">Account Requests</a></li>'; } ?>
+                    <?php if ($accessLevel >= 3) {
+                        echo '<li><a href="../main/account_requests.php">Account Requests</a></li>';
+                    } ?>
                     <!-- FULL -->
-                    
+
                     <h3>Reports</h3>
                     <!-- STANDARD -->
-                    <?php if ($accessLevel >= 2) { echo '<li><a href="../main/incidents.php">Incident Reports</a></li>'; }  ?>
+                    <?php if ($accessLevel >= 2) {
+                        echo '<li><a href="../main/incidents.php">Incident Reports</a></li>';
+                    } ?>
                     <!-- STANDARD -->
-                    
+
                     <li><a href="../main/incident_table.php">Incident History</a></li>
                     <li><a href="../main/reports.php">Analytics</a></li>
                 </ul>
             </div>
 
             <center>
-            <div class="dashboard-content">
-                <h1>
-                    <center>Certificate of Residency Form</center>
-                </h1><br>
+                <div class="dashboard-content">
+                    <h1>
+                        <center>Certificate of Residency Form</center>
+                    </h1><br>
 
-                <?php
-                if (!empty($errors)) {
-                    foreach ($errors as $error) {
-                        echo "<p style='color: red;'>$error</p>";
+                    <?php
+                    if (!empty($errors)) {
+                        foreach ($errors as $error) {
+                            echo "<p style='color: red;'>$error</p>";
+                        }
                     }
-                }
 
-                if (!empty($success)) {
-                    echo "<p style='color: green;'>$success</p>";
-                }
-                ?>
+                    if (!empty($success)) {
+                        echo "<p style='color: green;'>$success</p>";
+                    }
+                    ?>
 
-                <form method="POST" class="certificate-form">
-                    <label><h4>Applicant Name</h4></label>
-                    <input type="text" name="applicant_name" required>
+                    <form method="POST" class="certificate-form">
+                        <label>
+                            <h4>Applicant Name</h4>
+                        </label>
+                        <input type="text" name="applicant_name" required>
 
-                    <label><h4>Address</h4></label>
-                    <input type="text" name="address" required>
+                        <label>
+                            <h4>Address</h4>
+                        </label>
+                        <input type="text" name="address" required>
 
-                    <label><h4>Property Owner</h4></label>
-                    <input type="text" name="property_owner" required><br />
+                        <label>
+                            <h4>Property Owner</h4>
+                        </label>
+                        <input type="text" name="property_owner" required><br />
 
-                    <button type="submit" name="submit_certificate">Submit Certificate</button>
-                </form>
-            </div>
+                        <button type="submit" name="submit_certificate">Submit Certificate</button>
+                    </form>
+                </div>
         </div>
         </center>
     </main>
