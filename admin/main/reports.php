@@ -196,6 +196,7 @@ $incidentTypeData = $stmt4->fetchAll(PDO::FETCH_ASSOC);
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script>
         // primary tab switching
+        // primary tab switching
         function showPrimaryTab(tab) {
             const announcementTabs = document.getElementById('announcementTabs');
             const documentTabs = document.getElementById('documentTabs');
@@ -211,6 +212,7 @@ $incidentTypeData = $stmt4->fetchAll(PDO::FETCH_ASSOC);
                 announcementTabBtn.classList.add('active');
                 documentTabBtn.classList.remove('active');
                 incidentTabBtn.classList.remove('active');
+                showSecondaryTab('categoryTab'); // Automatically switch to the first secondary tab (By Category)
             } else if (tab === 'documents') {
                 announcementTabs.style.display = 'none';
                 documentTabs.style.display = 'block';
@@ -218,6 +220,7 @@ $incidentTypeData = $stmt4->fetchAll(PDO::FETCH_ASSOC);
                 announcementTabBtn.classList.remove('active');
                 documentTabBtn.classList.add('active');
                 incidentTabBtn.classList.remove('active');
+                showSecondaryTab('documentTab'); // Automatically switch to the first secondary tab (By File Type)
             } else {
                 announcementTabs.style.display = 'none';
                 documentTabs.style.display = 'none';
@@ -225,9 +228,8 @@ $incidentTypeData = $stmt4->fetchAll(PDO::FETCH_ASSOC);
                 announcementTabBtn.classList.remove('active');
                 documentTabBtn.classList.remove('active');
                 incidentTabBtn.classList.add('active');
+                showSecondaryTab('incidentTypeTab'); // Automatically switch to the first secondary tab (By Incident Type)
             }
-
-            showSecondaryTab('categoryTab');
         }
 
         // secondary tab switching
