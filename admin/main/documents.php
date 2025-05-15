@@ -208,24 +208,16 @@ function getDocumentsTable($pdo, $currentUserId)
             <div class="dashboard-sidebar">
                 <ul>
                     <h3>Home</h3>
-                    <li><a href="../main/dashboard.php">Home</a></li>
+                    <li class="active"><a href="../main/dashboard.php">Home</a></li>
                     <li><a href="../main/account.php">Account</a></li>
-                    
+                    <li><a href="../main/account_creation.php">Account Creation</a></li>
                     <h3>Documents & Disclosure</h3>
-                    <li class="active"><a href="../main/documents.php">Documents</a></li>
+                    <li><a href="../main/documents.php">Documents</a></li>
                     <li><a href="../main/announcements.php">Post Announcement</a></li>
-                    
                     <h3>Tables & Requests</h3>
                     <li><a href="../main/employee_table.php">Employee Table</a></li>
-
-                    <?php if ($accessLevel >= 2) { echo '<li><a href="../main/certificates.php">Certificate Requests</a></li>'; } ?>
-                    <?php if ($accessLevel >= 2) { echo '<li><a href="../main/permits.php">Permit Requests</a></li>'; } ?>
-                    
-                    <?php if ($accessLevel >= 3) { echo '<li><a href="../main/account_requests.php">Account Requests</a></li>'; } ?>
-                    
+                    <li><a href="../main/account_requests.php">Account Requests</a></li>
                     <h3>Reports</h3>
-                    <?php if ($accessLevel >= 2) { echo '<li><a href="../main/incidents.php">Incident Reports</a></li>'; } ?>
-                    
                     <li><a href="../main/incident_table.php">Incident History</a></li>
                     <li><a href="../main/reports.php">Analytics</a></li>
                 </ul>
