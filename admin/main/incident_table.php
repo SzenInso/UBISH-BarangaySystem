@@ -74,6 +74,7 @@ $incidents = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <h3>Home</h3>
                     <li><a href="../main/dashboard.php">Home</a></li>
                     <li><a href="../main/account.php">Account</a></li>
+                    <li><a href="../main/account_creation.php">Account Creation</a></li>
                     <h3>Documents & Disclosure</h3>
                     <li><a href="../main/documents.php">Documents</a></li>
                     <li><a href="../main/announcements.php">Post Announcement</a></li>
