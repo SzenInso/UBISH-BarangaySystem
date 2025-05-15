@@ -100,7 +100,7 @@ function getDocumentsTable($pdo, $currentUserId)
 
         $actionBtn = $uploadedBy == $currentUserId
             ? "<button onclick='confirmDelete($documentId)'>Delete</button>"
-            : "<em style='color:gray;'>N/A</em>";
+            : "<button onclick='confirmDelete($documentId)'>Delete</button>"; // delete override for admin
 
         $output .= "<tr>
                         <td>$title</td>
