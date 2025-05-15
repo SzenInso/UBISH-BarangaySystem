@@ -51,6 +51,7 @@ $incidentTypeData = $stmt4->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <title>UBISH Dashboard | Reports</title>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
     <link rel="stylesheet" href="../../assets/css/style.css">
     <style>
         .chart-container {
@@ -117,30 +118,16 @@ $incidentTypeData = $stmt4->fetchAll(PDO::FETCH_ASSOC);
                     <h3>Home</h3>
                     <li><a href="../main/dashboard.php">Home</a></li>
                     <li><a href="../main/account.php">Account</a></li>
-                    
+                    <li><a href="../main/account_creation.php">Account Creation</a></li>
                     <h3>Documents & Disclosure</h3>
                     <li><a href="../main/documents.php">Documents</a></li>
                     <li><a href="../main/announcements.php">Post Announcement</a></li>
-                    
                     <h3>Tables & Requests</h3>
                     <li><a href="../main/employee_table.php">Employee Table</a></li>
-
-                    <!-- STANDARD -->
-                    <?php if ($accessLevel >= 2) { echo '<li><a href="../main/certificates.php">Certificate Requests</a></li>'; } ?>
-                    <?php if ($accessLevel >= 2) { echo '<li><a href="../main/permits.php">Permit Requests</a></li>'; } ?>
-                    <!-- STANDARD -->
-                    
-                    <!-- FULL -->
-                    <?php if ($accessLevel >= 3) { echo '<li><a href="../main/account_requests.php">Account Requests</a></li>'; } ?>
-                    <!-- FULL -->
-                    
+                    <li><a href="../main/account_requests.php">Account Requests</a></li>
                     <h3>Reports</h3>
-                    <!-- STANDARD -->
-                    <?php if ($accessLevel >= 2) { echo '<li><a href="../main/incidents.php">Incident Reports</a></li>'; }  ?>
-                    <!-- STANDARD -->
-                    
                     <li><a href="../main/incident_table.php">Incident History</a></li>
-                    <li class="active"><a href="../main/reports.php">Analytics</a></li>
+                    <li class="active"><a href="#">Analytics</a></li>
                 </ul>
             </div>
             <div class="dashboard-content">
@@ -203,12 +190,12 @@ $incidentTypeData = $stmt4->fetchAll(PDO::FETCH_ASSOC);
     </footer>
 
     <!-- JAVASCRIPT BLOCK STARTS HERE -->
-    <script src="../../assets/js/highcharts.js"></script>
-    <script src="../../assets/js/exporting.js"></script>
-    <script src="../../assets/js/export-data.js"></script>
-    <script src="../../assets/js/offline-exporting.js"></script>
-    <script src="../../assets/js/accessibility.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/offline-exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script>
+        // primary tab switching
         // primary tab switching
         function showPrimaryTab(tab) {
             const announcementTabs = document.getElementById('announcementTabs');
@@ -225,6 +212,7 @@ $incidentTypeData = $stmt4->fetchAll(PDO::FETCH_ASSOC);
                 announcementTabBtn.classList.add('active');
                 documentTabBtn.classList.remove('active');
                 incidentTabBtn.classList.remove('active');
+                showSecondaryTab('categoryTab'); // Automatically switch to the first secondary tab (By Category)
             } else if (tab === 'documents') {
                 announcementTabs.style.display = 'none';
                 documentTabs.style.display = 'block';
@@ -232,6 +220,7 @@ $incidentTypeData = $stmt4->fetchAll(PDO::FETCH_ASSOC);
                 announcementTabBtn.classList.remove('active');
                 documentTabBtn.classList.add('active');
                 incidentTabBtn.classList.remove('active');
+                showSecondaryTab('documentTab'); // Automatically switch to the first secondary tab (By File Type)
             } else {
                 announcementTabs.style.display = 'none';
                 documentTabs.style.display = 'none';
@@ -239,9 +228,8 @@ $incidentTypeData = $stmt4->fetchAll(PDO::FETCH_ASSOC);
                 announcementTabBtn.classList.remove('active');
                 documentTabBtn.classList.remove('active');
                 incidentTabBtn.classList.add('active');
+                showSecondaryTab('incidentTypeTab'); // Automatically switch to the first secondary tab (By Incident Type)
             }
-
-            showSecondaryTab('categoryTab');
         }
 
         // secondary tab switching
