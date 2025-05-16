@@ -1,0 +1,100 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7f6;
+    color: #333;
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-content {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px;
+    flex: 1;
+}
+
+.homepage-title {
+    font-size: 2.5rem;
+    text-align: center;
+    color: #356859;
+    margin-bottom: 30px;
+}
+
+.dashboard-announcements {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.announcement-card {
+    background-color: #ffffff;
+    border-left: 5px solid #356859;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.announcement-card h2 {
+    color: #356859;
+}
+
+.badge {
+    font-weight: bold;
+    color: #2b3d2f;
+    margin-top: 5px;
+    display: inline-block;
+    background-color: #a8d5ba;
+    padding: 4px 8px;
+    border-radius: 5px;
+}
+
+.announcement-thumbnail {
+    max-width: 100%;
+    border-radius: 10px;
+    margin: 10px 0;
+}
+
+.announcement-body {
+    margin: 15px 0;
+    line-height: 1.6;
+}
+
+.announcement-attachment a {
+    color: #356859;
+    text-decoration: underline;
+}
+
+.no-announcement {
+    text-align: center;
+    color: #888;
+    font-style: italic;
+    margin-top: 50px;
+}
+
+.welcome-section {
+    background-color: #e8f5e9;
+    border-radius: 15px;
+    padding: 25px 30px;
+    margin-bottom: 40px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+    border: 5px solid #356859;
+}
+
+.welcome-heading {
+    font-size: 1.75rem;
+    color: #2b3d2f;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.welcome-text {
+    text-align: center;
+}
