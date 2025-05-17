@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 14, 2025 at 12:26 PM
+-- Generation Time: May 16, 2025 at 07:43 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -109,7 +109,8 @@ INSERT INTO `employee_details` (`emp_id`, `first_name`, `middle_name`, `last_nam
 (1020, 'Jane', 'Turner', 'Smith', '2000-01-01', 'F', 'Philippines', 'Atheist', 'Married', 'Barangay Secretary', 3, '09000000000', '../../uploads/profiles/6813a9c249b2a.jpg', NULL),
 (1028, 'Sarah Mae', 'Marquez', 'Capis', '2000-01-04', 'F', 'Manila', 'Roman Catholic', 'Married', 'Other Barangay Personnel', 1, '09111111111', '../../uploads/default_profile.jpg', NULL),
 (1029, 'Allan', 'Manuel', 'Garcia', '2000-01-03', 'M', 'Manila', 'Roman Catholic', 'Married', 'Other Barangay Personnel', 1, '09111111111', '../../uploads/default_profile.jpg', NULL),
-(1031, 'Kevin', 'Kaslana', 'Sanchez', '2000-05-12', 'M', 'Philippines', 'Roman Catholic', 'Single', 'Sangguniang Kabataan Treasurer', 2, '09111111111', '../../uploads/default_profile.jpg', 'Finance');
+(1031, 'Kevin', 'Kaslana', 'Sanchez', '2000-05-12', 'M', 'Philippines', 'Roman Catholic', 'Single', 'Sangguniang Kabataan Treasurer', 2, '09111111111', '../../uploads/default_profile.jpg', 'Finance'),
+(1032, 'Rogelio', 'M', 'Tayoan', '2025-04-28', 'M', 'Greenwater Village', 'toUpdate', 'Married', 'Punong Barangay', 3, '09898767654', '../../uploads/default_profile.jpg', 'toUpdate');
 
 -- --------------------------------------------------------
 
@@ -282,7 +283,8 @@ INSERT INTO `login_details` (`user_id`, `emp_id`, `username`, `email`, `password
 (20, 1020, 'janedoe', 'janedoe@email.com', '$2y$10$OFVHhJoT5/TzdPXg5BDpfOz2p/itz4/0zW1FkQ.kRva5KUzVdQ7ae'),
 (28, 1028, 'sarahcapis', 'sarahcapis@gmail.com', '$2y$10$AAauWi/6TyEDfZkgmFSYt.U2wPk0vezsGqpMdubXTzIda871L3/9S'),
 (29, 1029, 'allangarcia', 'allangarcia@email.com', '$2y$10$aXtdoCiQmftQIOX4pw3LNerF61IMpGYTuk8cx0fJ.eSbzriKGdCCe'),
-(31, 1031, 'kevinsanchez', 'kevinsanchez@gmail.com', '$2y$10$rqH3Daiux8xjtV2riK/cy.HVpbMZ4Lm/esDkZn4A6ZpCGNIxTQcLi');
+(31, 1031, 'kevinsanchez', 'kevinsanchez@gmail.com', '$2y$10$rqH3Daiux8xjtV2riK/cy.HVpbMZ4Lm/esDkZn4A6ZpCGNIxTQcLi'),
+(32, 1032, 'tayoan', 'tayoan@123', '$2y$10$fJ35QhzV5JsAcKWXkOBeQezbrdC/HyXRokh0Hw1VcjO5KEZ1UKMcK');
 
 -- --------------------------------------------------------
 
@@ -356,6 +358,44 @@ INSERT INTO `registration` (`registration_id`, `registration_emp_id`, `registrat
 (130, 230, 330, 'Approved', '2025-05-02 01:05:18'),
 (141, 241, 341, 'Approved', '2025-05-07 23:43:57'),
 (142, 242, 342, 'Approved', '2025-05-07 23:45:04');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `residencycertreq`
+--
+
+CREATE TABLE `residencycertreq` (
+  `id` int(11) NOT NULL,
+  `firstname` varchar(50) NOT NULL,
+  `middle_initial` varchar(5) DEFAULT NULL,
+  `lastname` varchar(50) NOT NULL,
+  `suffix` varchar(10) DEFAULT NULL,
+  `age` int(11) NOT NULL,
+  `street` varchar(100) NOT NULL,
+  `barangay` varchar(100) NOT NULL,
+  `gender` enum('Male','Female') NOT NULL,
+  `years_residency` int(11) DEFAULT NULL,
+  `months_residency` int(11) DEFAULT NULL,
+  `purpose` text NOT NULL,
+  `status` enum('pending','approved','rejected') DEFAULT 'pending',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `residencycertreq`
+--
+
+INSERT INTO `residencycertreq` (`id`, `firstname`, `middle_initial`, `lastname`, `suffix`, `age`, `street`, `barangay`, `gender`, `years_residency`, `months_residency`, `purpose`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'test', 't', 'test', '', 23, 'test', 'test', 'Male', 3, NULL, 'test', 'pending', '2025-05-16 03:16:16', NULL),
+(2, 'test', 't', 'test', NULL, 4, 'test', 'test', 'Male', 4, NULL, 'test', 'pending', '2025-05-15 21:22:41', NULL),
+(3, 'test', 't', 'test', '', 4, 'test', 'test', 'Male', 4, NULL, 'test', 'pending', '2025-05-16 03:23:02', NULL),
+(4, 'Mark', 'D', 'De Leon', '', 45, 'No 43', 'Greenwater Village', 'Male', 5, NULL, 'Test', 'approved', '2025-05-16 03:26:17', '2025-05-16 15:13:02'),
+(5, 'test', 'e', 'test', '', 43, 'test', 'test', 'Male', 3, NULL, 'test', 'pending', '2025-05-16 10:34:28', NULL),
+(6, 'Zhaina', 'M', 'Tamangen', '', 23, 'No 32', 'Greenwater Village', 'Female', NULL, 9, 'Medical Assistance', 'approved', '2025-05-16 10:35:58', '2025-05-16 15:47:43'),
+(7, 'Ruth', 'D', 'Pugong', '', 23, 'Bahag', 'Asipulo', 'Female', 21, NULL, 'secret', 'rejected', '2025-05-16 10:38:01', '2025-05-16 15:11:41'),
+(8, 'test', '3', 'ts', 're', 34, 'There', 'Greenwater Village', 'Male', 4, NULL, 'hello', 'approved', '2025-05-16 10:39:18', '2025-05-16 15:10:30');
 
 -- --------------------------------------------------------
 
@@ -457,6 +497,12 @@ ALTER TABLE `registration`
   ADD KEY `fk_registration_login` (`registration_login_id`);
 
 --
+-- Indexes for table `residencycertreq`
+--
+ALTER TABLE `residencycertreq`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `security_questions`
 --
 ALTER TABLE `security_questions`
@@ -483,7 +529,7 @@ ALTER TABLE `attachments`
 -- AUTO_INCREMENT for table `employee_details`
 --
 ALTER TABLE `employee_details`
-  MODIFY `emp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1032;
+  MODIFY `emp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1033;
 
 --
 -- AUTO_INCREMENT for table `employee_registration`
@@ -507,7 +553,7 @@ ALTER TABLE `incidents`
 -- AUTO_INCREMENT for table `login_details`
 --
 ALTER TABLE `login_details`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `login_registration`
@@ -520,6 +566,12 @@ ALTER TABLE `login_registration`
 --
 ALTER TABLE `registration`
   MODIFY `registration_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=143;
+
+--
+-- AUTO_INCREMENT for table `residencycertreq`
+--
+ALTER TABLE `residencycertreq`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `security_questions`

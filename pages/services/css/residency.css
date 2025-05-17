@@ -1,0 +1,223 @@
+.residency-wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+}
+
+.residency-info {
+    flex: 1 1 70%;
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 64, 0, 0.1);
+    border: 5px solid #356859;
+    color: #2c2c2c;
+    line-height: 1.6;
+}
+
+.residency-info h2 {
+    color: #0f5132;
+    margin-bottom: 1rem;
+}
+
+.residency-info h3 {
+    margin-top: 1.5rem;
+    color: #14532d;
+}
+
+.residency-info ol {
+    padding-left: 1.5rem;
+    margin-top: 0.5rem;
+}
+
+.request-box {
+    flex: 1 1 25%;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    margin-top: 1rem;
+}
+
+.request-btn {
+    display: inline-block;
+    background-color: #198754;
+    color: white;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    width: 100%;
+    text-align: center;
+}
+
+.request-btn:hover {
+    background-color: #145c36;
+}
+
+/* modal css */
+.modal {
+  display: none !important;
+  position: fixed;
+  z-index: 1000;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0 !important;
+  pointer-events: none !important;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto;
+  padding: 1rem;
+  transition: opacity 0.3s ease;
+}
+
+.modal.show {
+  display: flex !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+.modal-content {
+  background-color: #fff;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 2.5rem 3rem;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  width: 90%;
+  max-width: 580px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  animation: slideIn 0.4s ease forwards;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.modal-close {
+  position: absolute;
+  top: 50px;
+  right: 250px;
+  background: #fff;
+  border: none;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #555;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  line-height: 38px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  z-index: 1010;
+}
+
+.modal-close:hover {
+  background-color: #2a7a35;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+label {
+  display: block;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+input[type="text"],
+input[type="number"],
+textarea {
+  width: 100%;
+  padding: 0.4rem 0.6rem;
+  margin-top: 0.3rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+textarea {
+  resize: vertical;
+}
+
+fieldset {
+  margin-bottom: 1rem;
+  border: none;
+  padding: 0;
+  font-weight: 600;
+}
+
+fieldset label {
+  font-weight: normal;
+  margin-right: 1rem;
+}
+
+button[type="submit"],
+#back-edit,
+#final-submit,
+.request-btn {
+  background-color: #2a7a35;
+  color: white;
+  padding: 0.6rem 1.4rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  margin-right: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-weight: 600;
+}
+
+button[type="submit"]:hover,
+#back-edit:hover,
+#final-submit:hover,
+.request-btn:hover {
+  background-color: #1e5a25;
+}
+
+.request-btn {
+  margin: 1rem 0;
+  font-weight: 600;
+}
+
+#review-info {
+  white-space: pre-wrap;
+  margin-bottom: 2rem;
+  font-family: monospace;
+  font-size: 1.1rem;
+  line-height: 1.4;
+  max-height: 55vh;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  padding: 1rem 1.3rem;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  box-sizing: border-box;
+}
+
+.confirm-buttons {
+  text-align: right;
+}
+
+#review-info::-webkit-scrollbar {
+  width: 8px;
+}
+#review-info::-webkit-scrollbar-thumb {
+  background-color: #2a7a35;
+  border-radius: 4px;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-25px); }
+  to { opacity: 1; transform: translateY(0); }
+}

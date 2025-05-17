@@ -28,6 +28,7 @@
         </div>
         <hr>
     </header>
+    
     <main>
         <div class="dashboard-main">
             <div class="dashboard-sidebar">
@@ -42,6 +43,7 @@
                     <h3>Tables & Requests</h3>
                     <li><a href="../main/employee_table.php">Employee Table</a></li>
                     <li><a href="../main/account_requests.php">Account Requests</a></li>
+                    <li><a href="certificates/certificates.php">Certificate Requests</a></li>
                     <h3>Reports</h3>
                     <li><a href="../main/incident_table.php">Incident History</a></li>
                     <li><a href="../main/reports.php">Analytics</a></li>
