@@ -13,6 +13,26 @@ include '../../config/dbfetch.php';
 </head>
 
 <body>
+    <style>
+    header {
+        background-color: #e1f3e2 !important;
+        border-bottom: 5px solid #356859 !important;
+    }
+    .logout {
+        background-color: #e1f3e2 !important;
+        color: #356859 !important;
+        font-weight: bold !important;
+        font-size: 1.1rem !important;
+    }
+    footer {
+        background-color: #d0e9d2 !important;
+        text-align: center !important;
+        padding: 20px !important;
+        color: #2b3d2f !important;
+        border-top: 5px solid #356859 !important;
+        margin-top: 60px !important;
+    }
+    </style>
     <header>
         <div class="navigation">
             <div class="logo">
