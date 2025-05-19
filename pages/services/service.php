@@ -46,7 +46,27 @@
             </div>
         </div>
     </main>
-
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .services-container {
+            text-align: center;
+        }
+    </style>
     <?php include '../../partials/footer.php';?>
 
 </body>
