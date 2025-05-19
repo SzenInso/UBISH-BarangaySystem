@@ -3,7 +3,8 @@
 
     <h3>Pending Requests</h3> </br>
 
-    <input type="text" id="search-input" placeholder="Search pending requests..." class="search-bar">
+    <!-- hidden for now -->
+    <input type="hidden" id="search-input" placeholder="Search pending requests..." class="search-bar">
     <div class="table-wrapper">
         <table class="cert-table" id="pending-table">
             <thead>
