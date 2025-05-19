@@ -1,5 +1,6 @@
 <?php
 session_start();
+include '../../../config/dbfetch.php';
 include '../../../baseURL.php';
 ?>
 <!DOCTYPE html>
