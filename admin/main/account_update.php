@@ -11,8 +11,8 @@ if (isset($_POST['confirm'])) {
     $religion = !empty($_POST['religion']) ? trim($_POST['religion']) : null;
     $civilstatus = !empty($_POST['civilstatus']) ? $_POST['civilstatus'] : null;
     $legislature = !empty($_POST['legislature']) ? $_POST['legislature'] : null;
-    $phonenum = !empty($_POST['phonenum']) ? trim($_POST['phonenum']) : null;
-    $phPhoneNumRegex = '/^09\d{9}$/'; // regex for Philippine phone numbers
+    $phonenum = !empty($_POST['phonenum']) ? "+63" . trim($_POST['phonenum']) : null;
+    $phPhoneNumRegex = '/^\+639\d{9}$/'; // regex for Philippine phone numbers
 
     $accesslvl = 0; // no access level
     $limitedAccess = array("Sangguniang Kabataan Member", "Other Barangay Personnel");
@@ -443,9 +443,27 @@ if (isset($_POST['cancel'])) {
                                     </tr>
                                     <tr>
                                         <td><strong>Phone Number: </strong></td>
-                                        <td><input type="text" name="phonenum" placeholder="Update phone number"
-                                                value="<?php echo $row['phone_no'] ?>"></td>
+                                        <td>+63&nbsp;<input type="text" id="phonenum" name="phonenum" placeholder="Update phone number"
+                                                value="<?php echo substr($row['phone_no'], 3); ?>"></td>
                                     </tr>
+                                    <style>
+                                        #phonenum {
+                                            width: 223px;
+                                        }
+                                    </style>
+                                    <script>
+                                        document.addEventListener('DOMContentLoaded', function () {
+                                            const phoneInput = document.getElementById('phonenum');
+                                            if (!phoneInput) return;    // if no input return none
+
+                                            phoneInput.addEventListener('input', function () {
+                                                // only remove the first character if it's '0' and there's at least one more digit
+                                                if (this.value.length > 1 && this.value.charAt(0) === '0') {
+                                                    this.value = this.value.slice(1);
+                                                }
+                                            });
+                                        });
+                                    </script>
                                     <tr>
                                         <td><span style="color: crimson">* </span><strong>Legislature: </strong></td>
                                         <td>
