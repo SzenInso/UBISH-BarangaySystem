@@ -4,67 +4,62 @@
         session_start();
     }
 
-    // unsets session every refresh
-    if (!isset($_POST['search']) && !isset($_POST['submit-answer'])) {
-        unset($_SESSION['security_question']);
-        unset($_SESSION['security_answer']);
+    // unset session on refresh
+    if (!isset($_POST['submit-answer'])) {
         unset($_SESSION['username']);
     }
 
-    if (isset($_POST['search'])) {
-        $username = $_POST['username'];
+    $questions = [
+        "What is your mother's maiden name?",
+        "In what city or town did your parents meet?",
+        "What city were you born in?",
+        "What was your childhood best friend’s nickname?",
+        "What was the name of your first pet?"
+    ];
 
-        if (empty($username)) {
+    if (isset($_POST['submit-answer'])) {
+        $username = $_POST['username'] ?? '';
+        $question = $_POST['security-question'] ?? '';
+        $answer = $_POST['answer'] ?? '';
+        
+        // empty fields
+        if (empty($username) || empty($question) || empty($answer)) {
             echo "<script>
                 document.addEventListener('DOMContentLoaded', function () {
                     Swal.fire({
-                        title: 'Error!',
-                        text: 'Please enter a username.',
+                        title: 'Error.',
+                        text: 'Please fill in all fields.',
                         icon: 'error',
                         confirmButtonText: 'OK'
                     });
                 });
             </script>";
         } else {
-            try {
-                $forgotPwdQuery = "
-                    SELECT SEC.question, SEC.answer FROM security_questions AS SEC
-                    JOIN employee_details AS EMP ON SEC.emp_id = EMP.emp_id
-                    JOIN login_details AS LOG ON EMP.emp_id = LOG.emp_id
-                    WHERE LOG.username = :username
-                ";
-                $forgotPwdStmt = $pdo->prepare($forgotPwdQuery);
-                $forgotPwdStmt->execute([':username' => $username]);
-                $forgotPwd = $forgotPwdStmt->fetch();
+            // fetch correct answer hash for the selected question and username
+            $query = "
+                SELECT SEC.answer FROM security_questions AS SEC
+                JOIN employee_details AS EMP ON SEC.emp_id = EMP.emp_id
+                JOIN login_details AS LOG ON EMP.emp_id = LOG.emp_id
+                WHERE LOG.username = :username AND SEC.question = :question
+            ";
+            $stmt = $pdo->prepare($query);
+            $stmt->execute([
+                ":username" => $username, 
+                ":question" => $question
+            ]);
+            $row = $stmt->fetch();
 
-                if ($forgotPwd) {
-                    $_SESSION['security_question'] = $forgotPwd['question'];
-                    $_SESSION['security_answer'] = $forgotPwd['answer'];
-                    $_SESSION['username'] = $username;
-                } else {
-                    echo "<script>
-                        document.addEventListener('DOMContentLoaded', function () {
-                            Swal.fire({
-                                title: 'No security question.',
-                                html: `
-                                    No security question found for the entered username. <br>
-                                    Please contact the administrator to reset password.
-                                `,
-                                icon: 'info',
-                                confirmButtonText: 'OK'
-                            }).then((result) => {
-                                window.location.href = '../account/login.php'
-                            });
-                        });
-                    </script>";
-                }
-            } catch (Exception $e) {
+            if ($row && password_verify($answer, $row['answer'])) {
+                $_SESSION['username'] = $username;
+                header('Location: reset_password.php');
+                exit;
+            } else {
                 echo "<script>
                     document.addEventListener('DOMContentLoaded', function () {
                         Swal.fire({
-                            title: 'Error.',
-                            text: 'An error occurred while fetching the security question. Please try again.',
-                            icon: 'info',
+                            title: 'Incorrect.',
+                            text: 'The question or answer is incorrect.',
+                            icon: 'error',
                             confirmButtonText: 'OK'
                         });
                     });
@@ -103,91 +98,41 @@
         <form method="POST">
             <div class="login-form">
                 <h1>Forgot Password?</h1><br>
-                <p>You can reset your password by placing</p>
-                <p>your registered username and answering the</p>
-                <p>security question you had set.</p><br>
+                <p>You can reset your password by entering</p>
+                <p>your username, selecting your security question,</p>
+                <p>and providing the correct answer.</p>
                 <a href="../account/login.php">← Go Back to Log In</a>
                 <div class="login-credentials">
                     <p>Username</p>
-                    <input type="text" name="username" value="<?php echo (!empty($_SESSION['username'])) ? $_SESSION['username'] : ''; ?>" placeholder="Enter username">
+                    <input type="text" name="username" value="<?php echo htmlspecialchars($_POST['username'] ?? ''); ?>" placeholder="Enter username">
                 </div>
-                <div class="login-btns">
-                    <button name="search">Search Account</button>
-                </div>
-                <br>
                 <style>
-                    .security-question h3,
-                    .security-question p,
-                    .security-question input {
-                        margin-bottom: 8px;
-                    }
-                    .security-question button {
-                        margin-top: 8px;
-                    }
-                    .security-question input {
-                        padding: 4px;
+                    .security-question select,
+                    .security-question input[type="text"] {
+                        margin: 4px 0 8px;
+                        padding: 6px;
                         width: 256px;
+                        border: 1px solid #aaa;
+                        border-radius: 4px;
+                        box-sizing: border-box;
+                        background: #fff;
                     }
                 </style>
                 <div class="security-question">
-                    <?php if (isset($_SESSION['security_question'])) { ?>
-                        <h3>Answer the Security Question</h3>
-                        <p><?php echo htmlspecialchars($_SESSION['security_question']); ?></p>
-                        <input type="text" name="answer" placeholder="Enter your answer" autocomplete="off"><br>
-                        <button name="submit-answer">Submit Answer</button>
-                    <?php } ?>
+                    <p>Security Question</p>
+                    <select name="security-question">
+                        <option value="" disabled selected>Select your security question</option>
+                        <?php foreach ($questions as $q): ?>
+                            <option value="<?php echo htmlspecialchars($q); ?>" <?php if (isset($_POST['security-question']) && $_POST['security-question'] === $q) echo 'selected'; ?>>
+                                <?php echo htmlspecialchars($q); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                    <br>
+                    <input type="text" name="answer" placeholder="Enter your answer" autocomplete="off" value="<?php echo htmlspecialchars($_POST['answer'] ?? ''); ?>"><br>
+                    <button name="submit-answer">Submit Answer</button>
                 </div>
             </div>
-            <?php 
-                if (isset($_POST['submit-answer'])) {
-                    $answer = $_POST['answer'];
-
-                    if (empty($answer)) {
-                        echo "<script>
-                            document.addEventListener('DOMContentLoaded', function () {
-                                Swal.fire({
-                                    title: 'Missing Answer',
-                                    text: 'Please enter an answer to the security question.',
-                                    icon: 'error',
-                                    confirmButtonText: 'OK'
-                                });
-                            });
-                        </script>";
-                    } else {
-                        // Check if the session variable for the hashed answer is set
-                        if (isset($_SESSION['security_answer'])) {
-                            // Verify the answer
-                            if (password_verify($answer, $_SESSION['security_answer'])) {
-                                // Redirect to reset_password.php
-                                header('Location: reset_password.php');
-                                exit;
-                            } else {
-                                echo "<script>
-                                    document.addEventListener('DOMContentLoaded', function () {
-                                        Swal.fire({
-                                            title: 'Incorrect Answer',
-                                            text: 'The answer you provided is incorrect.',
-                                            icon: 'error',
-                                            confirmButtonText: 'OK'
-                                        });
-                                    });
-                                </script>";
-                            }
-                        } else {
-                            echo "<script>
-                                document.addEventListener('DOMContentLoaded', function () {
-                                    Swal.fire({
-                                        title: 'Error!',
-                                        text: 'Please search for your account first.',
-                                        icon: 'error',
-                                        confirmButtonText: 'OK'
-                                    });
-                                });
-                            </script>";
-                        }
-                    }
-                }
-            ?>
         </form>
     </main>
     <footer>
