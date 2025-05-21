@@ -24,7 +24,7 @@
                 <a href="residencyCert.php" class="service-box">
                     <h3>Certificate of Residency</h3>
                 </a>
-                <a href="#" class="service-box">
+                <a href="clearanceCert.php" class="service-box">
                     <h3>Barangay Clearance</h3>
                 </a>
                 <a href="#" class="service-box">
