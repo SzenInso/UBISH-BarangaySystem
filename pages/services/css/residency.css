@@ -9,37 +9,29 @@
 }
 
 .residency-info {
-  background: #f9f9f9;
-  padding: 2rem;
-  border-radius: 10px;
-  border: 1px solid #ddd;
-  line-height: 1.6;
+    flex: 1 1 70%;
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 64, 0, 0.1);
+    border: 5px solid #356859;
+    color: #2c2c2c;
+    line-height: 1.6;
 }
 
-.residency-info h2,
+.residency-info h2 {
+    color: #0f5132;
+    margin-bottom: 1rem;
+}
+
 .residency-info h3 {
-  margin-top: 1.5rem;
-  color: #2b4d3a;
-}
-
-.residency-info hr {
-  margin: 1.5rem 0;
-  border: none;
-  border-top: 2px solid #ccc;
+    margin-top: 1.5rem;
+    color: #14532d;
 }
 
 .residency-info ol {
-  margin-left: 1.5rem;
-  padding-left: 0.5rem;
-}
-
-.residency-info .note {
-  margin-top: 0.5rem;
-  font-style: italic;
-  color: #444;
-  background: #eef7ee;
-  padding: 0.75rem;
-  border-left: 4px solid #4caf50;
+    padding-left: 1.5rem;
+    margin-top: 0.5rem;
 }
 
 .request-box {

@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-include '../dbcon.php';
+include '../../../config/dbfetch.php';
 
 $input = json_decode(file_get_contents('php://input'), true);
 $search = isset($input['search']) ? trim($input['search']) : '';
@@ -9,7 +9,7 @@ $searchSql = '';
 $searchParam = [];
 
 if ($search !== '') {
-    $searchSql = " AND (firstname LIKE :search OR lastname LIKE :search OR contactNumber LIKE :search OR street LIKE :search OR barangay LIKE :search OR purpose LIKE :search)";
+    $searchSql = " AND (firstname LIKE :search OR lastname LIKE :search OR street LIKE :search OR barangay LIKE :search OR purpose LIKE :search)";
     $searchParam[':search'] = "%$search%";
 }
 

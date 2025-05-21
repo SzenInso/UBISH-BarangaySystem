@@ -80,7 +80,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const lastname = form.lastname.value.trim();
     const suffix = form.suffix.value.trim();
     const age = form.age.value.trim();
-    const contact = form.contactNumber.value.trim();
     const street = form.street.value.trim();
     const barangay = form.barangay.value.trim();
     const gender = form.gender.value;
@@ -94,7 +93,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const reviewHTML = `
       <p><strong>Full Name:</strong> ${fullName}</p>
       <p><strong>Age:</strong> ${age}</p>
-      <p><strong>Contact Number:</strong> ${contact}</p>
       <p><strong>Address:</strong> ${street}, ${barangay}</p>
       <p><strong>Gender:</strong> ${gender}</p>
       <p><strong>Residency Duration:</strong> ${residencyDisplay}</p>
