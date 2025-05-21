@@ -78,6 +78,7 @@ include '../../../baseURL.php';
     </div>
     
 </main>
+<?php include 'residency/residencyEditModal.php';?>
 <?php include '../partials/footer.php'; ?>
 </body>
 </html>

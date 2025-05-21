@@ -20,10 +20,12 @@ try {
         echo json_encode(['success' => true, 'message' => 'Request deleted successfully.']);
     } elseif ($action === 'edit') {
         $purpose = trim($data['purpose'] ?? '');
-        $years = (int)($data['years'] ?? 0);
-        $months = (int)($data['months'] ?? 0);
+        $years = (isset($data['years']) && is_numeric($data['years']) && $data['years'] > 0) ? (int)$data['years'] : null;
+        $months = (isset($data['months']) && is_numeric($data['months']) && $data['months'] > 0) ? (int)$data['months'] : null;
 
-        $stmt = $pdo->prepare("UPDATE residencycertreq SET purpose = ?, years_residency = ?, months_residency = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?");
+        $stmt = $pdo->prepare("UPDATE residencycertreq 
+        SET purpose = ?, years_residency = ?, months_residency = ?, updated_at = CURRENT_TIMESTAMP 
+        WHERE id = ?");
         $stmt->execute([$purpose, $years, $months, $request_id]);
 
         echo json_encode(['success' => true, 'message' => 'Request updated successfully.']);

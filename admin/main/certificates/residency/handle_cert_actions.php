@@ -2,12 +2,10 @@
 header('Content-Type: application/json');
 include '../../../../config/dbconfig.php';
 
-// Get POST data
 $data = json_decode(file_get_contents('php://input'), true);
 $request_id = isset($data['id']) ? (int)$data['id'] : 0;
 $action = isset($data['action']) ? $data['action'] : '';
 
-// Validate basic input
 if ($request_id <= 0 || !in_array($action, ['approve', 'reject', 'edit', 'delete'])) {
     echo json_encode([
         'success' => false,
@@ -29,43 +27,20 @@ try {
         echo json_encode([
             'success' => true,
             'message' => 'Request has been ' . $status . '.',
-            'contactNumber' => $contactNumber ?: ''
+            'contactNumber' => $contactNumber ?: '',
+            'id' => $request_id
         ]);
         exit;
     }
 
-    if ($action === 'edit') {
-        $purpose = trim($data['purpose'] ?? '');
-        $years = is_numeric($data['years']) ? (int)$data['years'] : null;
-        $months = is_numeric($data['months']) ? (int)$data['months'] : null;
-
-        if ($purpose === '') {
-            echo json_encode([
-                'success' => false,
-                'message' => 'Purpose is required.'
-            ]);
-            exit;
-        }
-
-        $stmt = $pdo->prepare("UPDATE residencycertreq 
-            SET purpose = ?, years_residency = ?, months_residency = ?, updated_at = CURRENT_TIMESTAMP 
-            WHERE id = ?");
-        $stmt->execute([$purpose, $years, $months, $request_id]);
-
-        echo json_encode([
-            'success' => true,
-            'message' => 'Request successfully updated.'
-        ]);
-        exit;
-    }
-
+    // DELETE action must be separate
     if ($action === 'delete') {
         $stmt = $pdo->prepare("DELETE FROM residencycertreq WHERE id = ?");
         $stmt->execute([$request_id]);
 
         echo json_encode([
             'success' => true,
-            'message' => 'Request successfully deleted.'
+            'message' => 'Request has been removed from the database.'
         ]);
         exit;
     }
@@ -77,3 +52,4 @@ try {
     ]);
     exit;
 }
+
