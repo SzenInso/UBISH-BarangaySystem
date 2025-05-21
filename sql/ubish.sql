@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 16, 2025 at 07:43 PM
+-- Generation Time: May 20, 2025 at 05:15 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ubish`
+-- Database: `ubish5.0`
 --
 
 -- --------------------------------------------------------
@@ -90,7 +90,7 @@ CREATE TABLE `employee_details` (
   `civil_status` varchar(20) NOT NULL,
   `legislature` varchar(100) NOT NULL,
   `access_level` tinyint(4) NOT NULL,
-  `phone_no` varchar(11) NOT NULL,
+  `phone_no` varchar(13) NOT NULL,
   `picture` varchar(255) NOT NULL,
   `committee` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -100,17 +100,17 @@ CREATE TABLE `employee_details` (
 --
 
 INSERT INTO `employee_details` (`emp_id`, `first_name`, `middle_name`, `last_name`, `date_of_birth`, `sex`, `address`, `religion`, `civil_status`, `legislature`, `access_level`, `phone_no`, `picture`, `committee`) VALUES
-(1001, 'Admin', 'Admin', 'Admin', '2000-01-01', 'M', 'Philippines', 'Admin', 'Admin', 'Administrator', 4, '09123456789', '../../uploads/default_profile.jpg', NULL),
-(1002, 'Mark Simon', 'Zuilan', 'Bringas', '2005-02-16', 'M', 'Baguio City, Philippines', 'Roman Catholic', 'Single', 'Other Barangay Personnel', 1, '09123456789', '../../uploads/profiles/680e0acd0d07a.jpg', NULL),
-(1004, 'John', 'Smith', 'Doe', '2000-01-02', 'M', 'Philippines', 'Atheist', 'Legally Separated', 'Sangguniang Barangay Member', 2, '09111111111', '../../uploads/profiles/680f803160a28.jpg', NULL),
-(1009, 'Jamie', 'Smith', 'Brown', '2000-01-03', 'F', 'Philippines', 'Roman Catholic', 'Married', 'Barangay Secretary', 2, '09333333333', '../../uploads/profiles/680f94f412a96.jpg', NULL),
-(1013, 'Tarou', 'Tanaka', 'Sakamoto', '1997-11-21', 'M', 'Japan', 'Atheist', 'Married', 'Other Barangay Personnel', 1, '09444444444', '../../uploads/profiles/680e3def12dc7.png', NULL),
-(1014, 'Kento', 'Kokusen', 'Nanami', '1990-07-03', 'M', 'Japan', 'Shinto', 'Single', 'Barangay Secretary', 2, '09555555555', '../../uploads/profiles/680e412a573ca.jpg', NULL),
-(1020, 'Jane', 'Turner', 'Smith', '2000-01-01', 'F', 'Philippines', 'Atheist', 'Married', 'Barangay Secretary', 3, '09000000000', '../../uploads/profiles/6813a9c249b2a.jpg', NULL),
-(1028, 'Sarah Mae', 'Marquez', 'Capis', '2000-01-04', 'F', 'Manila', 'Roman Catholic', 'Married', 'Other Barangay Personnel', 1, '09111111111', '../../uploads/default_profile.jpg', NULL),
-(1029, 'Allan', 'Manuel', 'Garcia', '2000-01-03', 'M', 'Manila', 'Roman Catholic', 'Married', 'Other Barangay Personnel', 1, '09111111111', '../../uploads/default_profile.jpg', NULL),
-(1031, 'Kevin', 'Kaslana', 'Sanchez', '2000-05-12', 'M', 'Philippines', 'Roman Catholic', 'Single', 'Sangguniang Kabataan Treasurer', 2, '09111111111', '../../uploads/default_profile.jpg', 'Finance'),
-(1032, 'Rogelio', 'M', 'Tayoan', '2025-04-28', 'M', 'Greenwater Village', 'toUpdate', 'Married', 'Punong Barangay', 3, '09898767654', '../../uploads/default_profile.jpg', 'toUpdate');
+(1001, 'Admin', 'Admin', 'Admin', '2000-01-01', 'M', 'Philippines', 'Admin', 'Admin', 'Administrator', 4, '+639123456789', '../../uploads/default_profile.jpg', NULL),
+(1002, 'Mark Simon', 'Zuilan', 'Bringas', '2005-02-16', 'M', 'Baguio City, Philippines', 'Roman Catholic', 'Single', 'Other Barangay Personnel', 1, '+639123456789', '../../uploads/profiles/680e0acd0d07a.jpg', NULL),
+(1004, 'John', 'Smith', 'Doe', '2000-01-02', 'M', 'Philippines', 'Atheist', 'Legally Separated', 'Sangguniang Barangay Member', 2, '+639111111111', '../../uploads/profiles/680f803160a28.jpg', NULL),
+(1009, 'Jamie', 'Smith', 'Brown', '2000-01-03', 'F', 'Philippines', 'Roman Catholic', 'Married', 'Barangay Secretary', 2, '+639151515151', '../../uploads/profiles/680f94f412a96.jpg', NULL),
+(1013, 'Tarou', 'Tanaka', 'Sakamoto', '1997-11-21', 'M', 'Japan', 'Atheist', 'Married', 'Other Barangay Personnel', 1, '+639444444444', '../../uploads/profiles/680e3def12dc7.png', NULL),
+(1014, 'Kento', 'Kokusen', 'Nanami', '1990-07-03', 'M', 'Japan', 'Shinto', 'Single', 'Barangay Secretary', 2, '+639555555555', '../../uploads/profiles/680e412a573ca.jpg', NULL),
+(1020, 'Jane', 'Turner', 'Smith', '2000-01-01', 'F', 'Philippines', 'Atheist', 'Married', 'Barangay Secretary', 3, '+639000000000', '../../uploads/profiles/6813a9c249b2a.jpg', NULL),
+(1028, 'Sarah Mae', 'Marquez', 'Capis', '2000-01-04', 'F', 'Manila', 'Roman Catholic', 'Married', 'Other Barangay Personnel', 1, '+639111111111', '../../uploads/default_profile.jpg', NULL),
+(1029, 'Allan', 'Manuel', 'Garcia', '2000-01-03', 'M', 'Manila', 'Roman Catholic', 'Married', 'Other Barangay Personnel', 1, '+639111111111', '../../uploads/default_profile.jpg', NULL),
+(1031, 'Kevin', 'Kaslana', 'Sanchez', '2000-05-12', 'M', 'Philippines', 'Roman Catholic', 'Single', 'Sangguniang Kabataan Treasurer', 2, '+639111111111', '../../uploads/default_profile.jpg', 'Finance'),
+(1032, 'Rogelio', 'M', 'Tayoan', '2025-04-28', 'M', 'Greenwater Village', 'toUpdate', 'Married', 'Punong Barangay', 3, '+639898767654', '../../uploads/default_profile.jpg', 'toUpdate');
 
 -- --------------------------------------------------------
 
@@ -275,7 +275,7 @@ CREATE TABLE `login_details` (
 
 INSERT INTO `login_details` (`user_id`, `emp_id`, `username`, `email`, `password`) VALUES
 (1, 1001, 'admin', 'admin@email.com', 'admin@greenwater2025'),
-(2, 1002, 'mbringas', 'msimonbringas05v2@gmail.com', '$2y$10$uhb50SXESN/O6VzZd2V9h.lCwlpiRxZweMtR0W5qxH7xjpoFG43/e'),
+(2, 1002, 'mbringas', 'msimonbringas05v2@gmail.com', '$2y$10$wF97rR4rkSy9/ERCr1PZjeS0SQqh5I1xQFaNxkMitUxLx2zPXbtSe'),
 (4, 1004, 'jdoe', 'jdoe@email.com', 'test123'),
 (9, 1009, 'jamiedoe', 'jamied@email.com', '$2y$10$C0oC34M1ynaxxgdDXhHPxeWKHaVWUCcHB5wGfp6WTjz2VoA2kW4/C'),
 (13, 1013, 'sakamoto', 'sakamoto@tarou.com', '$2y$10$4iHzxPWm9Qmw9ebGUDK1FOE30fc80XjdVvEh0Nk/sHP0p6hPv8b5S'),
@@ -395,7 +395,8 @@ INSERT INTO `residencycertreq` (`id`, `firstname`, `middle_initial`, `lastname`,
 (5, 'test', 'e', 'test', '', 43, 'test', 'test', 'Male', 3, NULL, 'test', 'pending', '2025-05-16 10:34:28', NULL),
 (6, 'Zhaina', 'M', 'Tamangen', '', 23, 'No 32', 'Greenwater Village', 'Female', NULL, 9, 'Medical Assistance', 'approved', '2025-05-16 10:35:58', '2025-05-16 15:47:43'),
 (7, 'Ruth', 'D', 'Pugong', '', 23, 'Bahag', 'Asipulo', 'Female', 21, NULL, 'secret', 'rejected', '2025-05-16 10:38:01', '2025-05-16 15:11:41'),
-(8, 'test', '3', 'ts', 're', 34, 'There', 'Greenwater Village', 'Male', 4, NULL, 'hello', 'approved', '2025-05-16 10:39:18', '2025-05-16 15:10:30');
+(8, 'test', '3', 'ts', 're', 34, 'There', 'Greenwater Village', 'Male', 4, NULL, 'hello', 'approved', '2025-05-16 10:39:18', '2025-05-16 15:10:30'),
+(9, 'Mark', 'Z', 'Simon', '', 20, 'Greenwater Village', 'Greenwater', 'Male', 20, NULL, 'Scholarship', 'approved', '2025-05-19 00:41:57', '2025-05-19 00:42:14');
 
 -- --------------------------------------------------------
 
@@ -529,7 +530,7 @@ ALTER TABLE `attachments`
 -- AUTO_INCREMENT for table `employee_details`
 --
 ALTER TABLE `employee_details`
-  MODIFY `emp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1033;
+  MODIFY `emp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1034;
 
 --
 -- AUTO_INCREMENT for table `employee_registration`
@@ -553,7 +554,7 @@ ALTER TABLE `incidents`
 -- AUTO_INCREMENT for table `login_details`
 --
 ALTER TABLE `login_details`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `login_registration`
@@ -571,7 +572,7 @@ ALTER TABLE `registration`
 -- AUTO_INCREMENT for table `residencycertreq`
 --
 ALTER TABLE `residencycertreq`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `security_questions`

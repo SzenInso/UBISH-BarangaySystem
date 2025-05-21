@@ -21,10 +21,10 @@
         $religion = trim($_POST['religion'] ?? '');
         $civilstatus = trim($_POST['civilstatus'] ?? '');
         
-        $phonenum = trim($_POST['phonenum'] ?? '');
-        $phPhoneNumRegex = '/^09\d{9}$/'; // regex for Philippine phone numbers
+        $phonenum = "+63" . trim($_POST['phonenum'] ?? '');
+        $phPhoneNumRegex = '/^\+639\d{9}$/'; // regex for Philippine phone numbers
         
-        $legislature = trim($_POST['legislature'] ?? '');
+        $legislature = trim($_POST['legislature'] ?? '');   // append 0 to the beginning of the phone number
         $committee = trim($_POST['committee'] ?? '');
         $accesslvl = 0; // no access level
         $limitedAccess = array(
@@ -204,6 +204,26 @@
     <title>UBISH Dashboard | Account Creation</title>
 </head>
 <body>
+    <style>
+    header {
+        background-color: #e1f3e2 !important;
+        border-bottom: 5px solid #356859 !important;
+    }
+    .logout {
+        background-color: #e1f3e2 !important;
+        color: #356859 !important;
+        font-weight: bold !important;
+        font-size: 1.1rem !important;
+    }
+    footer {
+        background-color: #d0e9d2 !important;
+        text-align: center !important;
+        padding: 20px !important;
+        color: #2b3d2f !important;
+        border-top: 5px solid #356859 !important;
+        margin-top: 60px !important;
+    }
+    </style>
     <header>
         <div class="navigation">
             <div class="logo">
@@ -264,6 +284,9 @@
                     }
                     .account-creation-register button:hover {
                         background-color: lightgray;
+                    }
+                    #phonenum {
+                        width: 223px;
                     }
                 </style>
                 <h1>
@@ -360,8 +383,21 @@
                                 </tr>
                                 <tr>
                                     <td>Phone Number<span title="Required" style="color: crimson; cursor: pointer;">&nbsp;*</span></td>
-                                    <td><input type="text" name="phonenum" placeholder="Enter Valid Phone Number"></td>
+                                    <td>+63&nbsp;<input type="text" id="phonenum" name="phonenum" placeholder="Enter Valid Phone Number"></td>
                                 </tr>
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        const phoneInput = document.getElementById('phonenum');
+                                        if (!phoneInput) return;    // if no input return none
+
+                                        phoneInput.addEventListener('input', function () {
+                                            // only remove the first character if it's '0' and there's at least one more digit
+                                            if (this.value.length > 1 && this.value.charAt(0) === '0') {
+                                                this.value = this.value.slice(1);
+                                            }
+                                        });
+                                    });
+                                </script>
                             </table>
                         </div>
                         <!-- Login Credentials Registration -->

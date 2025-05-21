@@ -125,3 +125,88 @@ main {
     box-shadow: 0 12px 30px rgba(46, 139, 87, 0.25);
 }
 
+/* Security Question Section */
+.security-question {
+    text-align: left;
+    margin-top: 20px;
+}
+
+.security-question p {
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #333;
+    font-size: 14px;
+}
+
+.security-question select,
+.security-question input[type="text"] {
+    width: 100%;
+    padding: 12px 14px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+    margin-bottom: 16px;
+    background: #fff;
+    transition: border-color 0.3s ease;
+}
+
+.security-question select:focus,
+.security-question input[type="text"]:focus {
+    border-color: #2E8B57;
+    outline: none;
+}
+
+/* Submit button */
+.security-question button {
+    background-color: #2E8B57;
+    color: white;
+    border: none;
+    padding: 14px 0;
+    width: 100%;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.security-question button:hover {
+    background-color: #276946;
+}
+
+/* Responsive behavior */
+@media (max-width: 768px) {
+    .login-form {
+        padding: 30px 20px;
+    }
+
+    .login-form h1 {
+        font-size: 22px;
+    }
+
+    .login-credentials input,
+    .security-question input,
+    .security-question select {
+        font-size: 14px;
+    }
+
+    .security-question button {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-form {
+        padding: 25px 16px;
+        border-width: 3px;
+    }
+
+    .login-form h1 {
+        font-size: 20px;
+    }
+
+    .login-form > a {
+        font-size: 13px;
+    }
+}

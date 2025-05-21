@@ -1,4 +1,3 @@
-<?php include '../../baseURL.php';?>
 
 <form id="residency-form" method="POST" action="<?= BASE_URL ?>pages/services/submit_residency_request.php">
   <div id="modal-step1" class="modal" hidden aria-hidden="true" role="dialog" aria-labelledby="modalTitle1" tabindex="-1">
@@ -21,6 +20,9 @@
       </label>
       <label>Age
         <input type="number" name="age" required min="0" />
+      </label>
+      <label>Contact Number (11-Digit Number)
+        <input type="text" name="contactNumber" pattern="^09\d{9}$" maxlength="11" minlength="11" required placeholder="e.g. 09xxxxxxxxx">
       </label>
       <label>Street
         <input type="text" name="street" required autocomplete="address-line1" />

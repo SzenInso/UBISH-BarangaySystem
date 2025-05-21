@@ -1,70 +1,66 @@
 <?php
     include '../../config/dbconfig.php';
+    include '../../baseURL.php';
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
     }
 
-    // unsets session every refresh
-    if (!isset($_POST['search']) && !isset($_POST['submit-answer'])) {
-        unset($_SESSION['security_question']);
-        unset($_SESSION['security_answer']);
+    // unset session on refresh
+    if (!isset($_POST['submit-answer'])) {
         unset($_SESSION['username']);
     }
 
-    if (isset($_POST['search'])) {
-        $username = $_POST['username'];
+    $questions = [
+        "What is your mother's maiden name?",
+        "In what city or town did your parents meet?",
+        "What city were you born in?",
+        "What was your childhood best friend’s nickname?",
+        "What was the name of your first pet?"
+    ];
 
-        if (empty($username)) {
+    if (isset($_POST['submit-answer'])) {
+        $username = $_POST['username'] ?? '';
+        $question = $_POST['security-question'] ?? '';
+        $answer = $_POST['answer'] ?? '';
+        
+        // empty fields
+        if (empty($username) || empty($question) || empty($answer)) {
             echo "<script>
                 document.addEventListener('DOMContentLoaded', function () {
                     Swal.fire({
-                        title: 'Error!',
-                        text: 'Please enter a username.',
+                        title: 'Error.',
+                        text: 'Please fill in all fields.',
                         icon: 'error',
                         confirmButtonText: 'OK'
                     });
                 });
             </script>";
         } else {
-            try {
-                $forgotPwdQuery = "
-                    SELECT SEC.question, SEC.answer FROM security_questions AS SEC
-                    JOIN employee_details AS EMP ON SEC.emp_id = EMP.emp_id
-                    JOIN login_details AS LOG ON EMP.emp_id = LOG.emp_id
-                    WHERE LOG.username = :username
-                ";
-                $forgotPwdStmt = $pdo->prepare($forgotPwdQuery);
-                $forgotPwdStmt->execute([':username' => $username]);
-                $forgotPwd = $forgotPwdStmt->fetch();
+            // fetch correct answer hash for the selected question and username
+            $query = "
+                SELECT SEC.answer FROM security_questions AS SEC
+                JOIN employee_details AS EMP ON SEC.emp_id = EMP.emp_id
+                JOIN login_details AS LOG ON EMP.emp_id = LOG.emp_id
+                WHERE LOG.username = :username AND SEC.question = :question
+            ";
+            $stmt = $pdo->prepare($query);
+            $stmt->execute([
+                ":username" => $username, 
+                ":question" => $question
+            ]);
+            $row = $stmt->fetch();
 
-                if ($forgotPwd) {
-                    $_SESSION['security_question'] = $forgotPwd['question'];
-                    $_SESSION['security_answer'] = $forgotPwd['answer'];
-                    $_SESSION['username'] = $username;
-                } else {
-                    echo "<script>
-                        document.addEventListener('DOMContentLoaded', function () {
-                            Swal.fire({
-                                title: 'No security question.',
-                                html: `
-                                    No security question found for the entered username. <br>
-                                    Please contact the administrator to reset password.
-                                `,
-                                icon: 'info',
-                                confirmButtonText: 'OK'
-                            }).then((result) => {
-                                window.location.href = '../account/login.php'
-                            });
-                        });
-                    </script>";
-                }
-            } catch (Exception $e) {
+            if ($row && password_verify($answer, $row['answer'])) {
+                $_SESSION['username'] = $username;
+                header('Location: reset_password.php');
+                exit;
+            } else {
                 echo "<script>
                     document.addEventListener('DOMContentLoaded', function () {
                         Swal.fire({
-                            title: 'Error.',
-                            text: 'An error occurred while fetching the security question. Please try again.',
-                            icon: 'info',
+                            title: 'Incorrect.',
+                            text: 'The question or answer is incorrect.',
+                            icon: 'error',
                             confirmButtonText: 'OK'
                         });
                     });
@@ -72,127 +68,193 @@
             }
         }
     }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../assets/css/style.css">
-    <script src="../../assets/js/sweetalert2.js"></script>
     <title>UBISH Dashboard | Forgot Password</title>
+    <link rel="stylesheet" href="<?= BASE_URL ?>css/index.css">
+
+    <script src="../../assets/js/sweetalert2.js"></script>
 </head>
 <body>
-    <header>
-        <div class="navigation">
-            <div class="logo">
-                <img src="../../assets/img/greenwater-village-logo.jpg" alt="Greenwater Village Logo">
-                <h1>UBISH</h1>
-            </div>
-            <nav>
-                <ul>
-                    <li>
-                        <a href="../account/login.php">Log In</a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-        <hr>
-    </header>
-    <main>
-        <form method="POST">
-            <div class="login-form">
-                <h1>Forgot Password?</h1><br>
-                <p>You can reset your password by placing</p>
-                <p>your registered username and answering the</p>
-                <p>security question you had set.</p><br>
-                <a href="../account/login.php">← Go Back to Log In</a>
-                <div class="login-credentials">
-                    <p>Username</p>
-                    <input type="text" name="username" value="<?php echo (!empty($_SESSION['username'])) ? $_SESSION['username'] : ''; ?>" placeholder="Enter username">
-                </div>
-                <div class="login-btns">
-                    <button name="search">Search Account</button>
-                </div>
-                <br>
-                <style>
-                    .security-question h3,
-                    .security-question p,
-                    .security-question input {
-                        margin-bottom: 8px;
-                    }
-                    .security-question button {
-                        margin-top: 8px;
-                    }
-                    .security-question input {
-                        padding: 4px;
-                        width: 256px;
-                    }
-                </style>
-                <div class="security-question">
-                    <?php if (isset($_SESSION['security_question'])) { ?>
-                        <h3>Answer the Security Question</h3>
-                        <p><?php echo htmlspecialchars($_SESSION['security_question']); ?></p>
-                        <input type="text" name="answer" placeholder="Enter your answer" autocomplete="off"><br>
-                        <button name="submit-answer">Submit Answer</button>
-                    <?php } ?>
-                </div>
-            </div>
-            <?php 
-                if (isset($_POST['submit-answer'])) {
-                    $answer = $_POST['answer'];
+    <?php include '../../partials/header.php'; ?>
 
-                    if (empty($answer)) {
-                        echo "<script>
-                            document.addEventListener('DOMContentLoaded', function () {
-                                Swal.fire({
-                                    title: 'Missing Answer',
-                                    text: 'Please enter an answer to the security question.',
-                                    icon: 'error',
-                                    confirmButtonText: 'OK'
-                                });
-                            });
-                        </script>";
-                    } else {
-                        // Check if the session variable for the hashed answer is set
-                        if (isset($_SESSION['security_answer'])) {
-                            // Verify the answer
-                            if (password_verify($answer, $_SESSION['security_answer'])) {
-                                // Redirect to reset_password.php
-                                header('Location: reset_password.php');
-                                exit;
-                            } else {
-                                echo "<script>
-                                    document.addEventListener('DOMContentLoaded', function () {
-                                        Swal.fire({
-                                            title: 'Incorrect Answer',
-                                            text: 'The answer you provided is incorrect.',
-                                            icon: 'error',
-                                            confirmButtonText: 'OK'
-                                        });
-                                    });
-                                </script>";
-                            }
-                        } else {
-                            echo "<script>
-                                document.addEventListener('DOMContentLoaded', function () {
-                                    Swal.fire({
-                                        title: 'Error!',
-                                        text: 'Please search for your account first.',
-                                        icon: 'error',
-                                        confirmButtonText: 'OK'
-                                    });
-                                });
-                            </script>";
-                        }
-                    }
-                }
-            ?>
-        </form>
+    <main>
+        <div class="forgot-password-container">
+            <form method="POST" class="forgot-password-form">
+                <h1>Forgot Password?</h1>
+                <p>You can reset your password by entering your username, selecting your security question, and providing the correct answer.</p>
+
+                <div class="login-credentials">
+                    <label for="username">Username</label>
+                    <input
+                        id="username"
+                        type="text"
+                        name="username"
+                        placeholder="Enter username"
+                        value="<?php echo htmlspecialchars($_POST['username'] ?? ''); ?>"
+                        required
+                    >
+                </div>
+
+                <div class="security-question">
+                    <label for="security-question">Security Question</label>
+                    <select id="security-question" name="security-question" required>
+                        <option value="" disabled <?php if(!isset($_POST['security-question'])) echo 'selected'; ?>>Select your security question</option>
+                        <?php foreach ($questions as $q): ?>
+                            <option
+                                value="<?php echo htmlspecialchars($q); ?>"
+                                <?php if (isset($_POST['security-question']) && $_POST['security-question'] === $q) echo 'selected'; ?>
+                            >
+                                <?php echo htmlspecialchars($q); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
+                <div class="login-credentials">
+                    <label for="answer">Answer</label>
+                    <input
+                        id="answer"
+                        type="text"
+                        name="answer"
+                        placeholder="Enter your answer"
+                        autocomplete="off"
+                        required
+                        value="<?php echo htmlspecialchars($_POST['answer'] ?? ''); ?>"
+                    >
+                </div>
+
+                <button type="submit" name="submit-answer" class="submit-btn">Submit Answer</button>
+            </form><br>
+            <a href="../account/login.php" class="back-link">← Go Back to Log In</a>
+        </div>
     </main>
-    <footer>
-        <hr>
-        <p><?php echo "&copy; " . date('Y') . " | Unified Barangay Information Service Hub"; ?></p>
-    </footer>
+
+    <?php include '../../partials/footer.php'; ?>
 </body>
+<style>
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+    /* Center the container vertically and horizontally */
+main {
+    flex: 1;
+    min-height: 80vh; /* Adjust if you have header/footer */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: #f0f5f2;
+}
+
+/* Container box */
+.forgot-password-container {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(46, 139, 87, 0.15);
+    padding: 40px 30px;
+    max-width: 500px;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    transition: box-shadow 0.3s ease;
+    border: 5px solid #2E8B57; 
+}
+
+/* Form heading and text */
+.forgot-password-form h1 {
+    color: #2E8B57;
+    font-weight: 700;
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+.forgot-password-form p {
+    font-size: 16px;
+    margin-bottom: 25px;
+    color: #333;
+    line-height: 1.4;
+}
+
+/* Back to login link */
+.back-link {
+    display: inline-block;
+    margin-bottom: 25px;
+    color: #2E8B57;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+/* Labels */
+.forgot-password-form label {
+    display: block;
+    font-weight: 600;
+    color: #333;
+    text-align: left;
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+/* Inputs and select */
+.forgot-password-form input[type="text"],
+.forgot-password-form select {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.forgot-password-form input[type="text"]:focus,
+.forgot-password-form select:focus {
+    border-color: #2E8B57;
+    outline: none;
+}
+
+/* Submit button */
+.submit-btn {
+    background-color: #2E8B57;
+    border: none;
+    color: white;
+    font-weight: 700;
+    font-size: 16px;
+    padding: 14px 0;
+    width: 100%;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #276946;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .forgot-password-container {
+        padding: 30px 20px;
+    }
+}
+
+</style>
 </html>

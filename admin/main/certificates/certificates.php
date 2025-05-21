@@ -1,5 +1,6 @@
 <?php
 session_start();
+include '../../../config/dbfetch.php';
 include '../../../baseURL.php';
 ?>
 <!DOCTYPE html>
@@ -10,8 +11,8 @@ include '../../../baseURL.php';
     <title>UBISH Dashboard | Certificate Requests</title>
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/style.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>admin/main/certificates/certificates.css">
-    <link rel="stylesheet" href="<?= BASE_URL ?>admin/main/certificates/residency_modal.css">
-    <link rel="stylesheet" href="<?= BASE_URL ?>admin/main/certificates/residency_table.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>admin/main/certificates/residency/residency_modal.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>admin/main/certificates/residency/residency_table.css">
 </head>
 <body>
 <?php include '../partials/header.php'; ?>
@@ -29,7 +30,7 @@ include '../../../baseURL.php';
                 <h3>Tables & Requests</h3>
                 <li><a href="<?= BASE_URL ?>admin/main/employee_table.php">Employee Table</a></li>
                 <li><a href="<?= BASE_URL ?>admin/main/account_requests.php">Account Requests</a></li>
-                <li><a href="certificates/certificates.php">Certificate Requests</a></li>
+                <li><a href="<?= BASE_URL ?>admin/main/certificates/certificates.php">Certificate Requests</a></li>
                 <h3>Reports</h3>
                 <li><a href="<?= BASE_URL ?>admin/main/incident_table.php">Incident History</a></li>
                 <li><a href="<?= BASE_URL ?>admin/main/reports.php">Analytics</a></li>
@@ -65,7 +66,7 @@ include '../../../baseURL.php';
             if (isset($_GET['view'])) {
                 $view = $_GET['view'];
                 if ($view === 'residency') {
-                    include 'residency_table.php';
+                    include 'residency/residency_table.php';
                 } elseif ($view === 'clearance') {
                     include 'clearance_table.php';
                 } elseif ($view === 'goodmoral') {
@@ -77,6 +78,7 @@ include '../../../baseURL.php';
     </div>
     
 </main>
+<?php include 'residency/residencyEditModal.php';?>
 <?php include '../partials/footer.php'; ?>
 </body>
 </html>

@@ -1,3 +1,4 @@
+/* Basic Reset */
 * {
     margin: 0;
     padding: 0;
@@ -5,96 +6,133 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f7f6;
-    color: #333;
-    height: 100%;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f9;
+    color: #222;
+    line-height: 1.6;
 }
 
+/* Layout */
 .main-content {
-    max-width: 1000px;
-    margin: 40px auto;
-    padding: 0 20px;
-    flex: 1;
+    width: 100%;
+    padding: 20px;
+    background-color: #fff;
 }
 
-.homepage-title {
-    font-size: 2.5rem;
-    text-align: center;
-    color: #356859;
-    margin-bottom: 30px;
+/* Hero / Welcome Section */
+.hero-section {
+    background: #e0f0e9;
+    padding: 40px 20px;
+    border-left: 5px solid #2e7d32;
+    margin-bottom: 40px;
 }
 
-.dashboard-announcements {
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
+.hero-text h1 {
+    font-size: 2.2rem;
+    color: #1b5e20;
+    margin-bottom: 10px;
+}
+
+.hero-text p {
+    font-size: 1.1rem;
+    margin-top: 10px;
+}
+
+/* Announcements Section */
+.announcements-section {
+    padding: 20px;
+    background-color: #f8f9fa;
+}
+
+.section-title {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 5px;
+}
+
+.announcement-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
 }
 
 .announcement-card {
     background-color: #ffffff;
-    border-left: 5px solid #356859;
-    border-radius: 15px;
-    padding: 25px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    border: 1px solid #ccc;
+    padding: 15px 20px;
+    border-left: 4px solid #2e7d32;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    transition: 0.3s ease;
 }
 
-.announcement-card h2 {
-    color: #356859;
+.announcement-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.announcement-card h3 {
+    color: #2e7d32;
+    font-size: 1.4rem;
+}
+
+.meta {
+    font-size: 0.9rem;
+    color: #555;
+    margin: 5px 0 10px;
 }
 
 .badge {
-    font-weight: bold;
-    color: #2b3d2f;
-    margin-top: 5px;
     display: inline-block;
-    background-color: #a8d5ba;
-    padding: 4px 8px;
-    border-radius: 5px;
+    background-color: #81c784;
+    color: #fff;
+    font-size: 0.75rem;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-bottom: 10px;
 }
 
 .announcement-thumbnail {
     max-width: 100%;
-    border-radius: 10px;
+    height: auto;
     margin: 10px 0;
+    border: 1px solid #ccc;
 }
 
 .announcement-body {
-    margin: 15px 0;
-    line-height: 1.6;
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 10px;
 }
 
 .announcement-attachment a {
-    color: #356859;
+    color: #1565c0;
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+.announcement-attachment a:hover {
     text-decoration: underline;
 }
 
+/* No announcements message */
 .no-announcement {
     text-align: center;
+    font-size: 1.2rem;
     color: #888;
-    font-style: italic;
-    margin-top: 50px;
+    padding: 20px 0;
 }
 
-.welcome-section {
-    background-color: #e8f5e9;
-    border-radius: 15px;
-    padding: 25px 30px;
-    margin-bottom: 40px;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.05);
-    border: 5px solid #356859;
-}
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .hero-text h1 {
+        font-size: 1.6rem;
+    }
 
-.welcome-heading {
-    font-size: 1.75rem;
-    color: #2b3d2f;
-    margin-bottom: 15px;
-    text-align: center;
-}
+    .section-title {
+        font-size: 1.4rem;
+    }
 
-.welcome-text {
-    text-align: center;
+    .announcement-card h3 {
+        font-size: 1.2rem;
+    }
 }

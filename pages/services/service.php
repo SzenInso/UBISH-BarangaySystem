@@ -5,8 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/index.css">
-    <link rel="stylesheet" href="<?= BASE_URL ?>partials/partials.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>css/index.css">
     <link rel="stylesheet" href="css/service.css">
 
     <title>UBISH | Services</title>
@@ -24,7 +23,7 @@
                 <a href="residencyCert.php" class="service-box">
                     <h3>Certificate of Residency</h3>
                 </a>
-                <a href="#" class="service-box">
+                <a href="clearanceCert.php" class="service-box">
                     <h3>Barangay Clearance</h3>
                 </a>
                 <a href="#" class="service-box">
@@ -46,7 +45,27 @@
             </div>
         </div>
     </main>
-
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .services-container {
+            text-align: center;
+        }
+    </style>
     <?php include '../../partials/footer.php';?>
 
 </body>
