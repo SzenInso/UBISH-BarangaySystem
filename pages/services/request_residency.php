@@ -22,6 +22,9 @@
       <label>Age
         <input type="number" name="age" required min="0" />
       </label>
+      <label>Contact Number (11-Digit Number)
+        <input type="text" name="contactNumber" pattern="^09\d{9}$" maxlength="11" minlength="11" required placeholder="e.g. 09xxxxxxxxx">
+      </label>
       <label>Street
         <input type="text" name="street" required autocomplete="address-line1" />
       </label>

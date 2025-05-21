@@ -58,10 +58,6 @@
     <?php include 'request_residency.php';?>
 </main>
 
-<?php if (isset($_GET['success']) && $_GET['success'] === 'request_submitted'): ?>
-<?php endif; ?>
-
-<script src="js/residency.js"></script>
 <script src="<?= BASE_URL ?>assets/js/sweetalert2.js"></script>
 
 <?php include '../../partials/footer.php';?>
