@@ -1,4 +1,3 @@
-<?php include '../../baseURL.php';?>
 
 <form id="residency-form" method="POST" action="<?= BASE_URL ?>pages/services/submit_residency_request.php">
   <div id="modal-step1" class="modal" hidden aria-hidden="true" role="dialog" aria-labelledby="modalTitle1" tabindex="-1">
