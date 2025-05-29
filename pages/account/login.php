@@ -81,7 +81,7 @@ if (session_status() == PHP_SESSION_NONE) {
                                     title: 'Logged in successfully.',
                                     icon: 'success',
                                 }).then(() => {
-                                    window.location.href = '../../admin/main/dashboard.php';
+                                    window.location.href = '../../pages/main/dashboard.php';
                                 });
                             </script>
                         ";
