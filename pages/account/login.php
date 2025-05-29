@@ -1,11 +1,10 @@
 <?php
+include '../../baseURL.php';
 include '../../config/dbconfig.php';
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 ?>
-
-<?php include '../../baseURL.php';?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +13,6 @@ if (session_status() == PHP_SESSION_NONE) {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/index.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/login.css">
-    <link rel="stylesheet" href="<?= BASE_URL ?>partials/partials.css">
     <script src="../../assets/js/sweetalert2.js"></script>
     <title>UBISH Dashboard | Login</title>
 </head>
@@ -83,7 +81,7 @@ if (session_status() == PHP_SESSION_NONE) {
                                     title: 'Logged in successfully.',
                                     icon: 'success',
                                 }).then(() => {
-                                    window.location.href = '../main/dashboard.php';
+                                    window.location.href = '../../admin/main/dashboard.php';
                                 });
                             </script>
                         ";

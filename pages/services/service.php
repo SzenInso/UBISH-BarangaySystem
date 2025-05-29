@@ -5,8 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/index.css">
-    <link rel="stylesheet" href="<?= BASE_URL ?>partials/partials.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>css/index.css">
     <link rel="stylesheet" href="css/service.css">
 
     <title>UBISH | Services</title>
@@ -18,18 +17,18 @@
     <main class="main-content services-content">
         <div class="services-container">
             <h2>SERVICES WE CURRENTLY OFFER:</h2>
-            <p>To start transaction, tap or click a service below:</p>
+            <p style="color: #333;">To start transaction, tap or click a service below:</p>
 
             <div class="service-boxes">
                 <a href="residencyCert.php" class="service-box">
                     <h3>Certificate of Residency</h3>
                 </a>
-                <a href="clearanceCert.php" class="service-box">
+                <!-- <a href="clearanceCert.php" class="service-box">
                     <h3>Barangay Clearance</h3>
                 </a>
                 <a href="#" class="service-box">
                     <h3>Good Moral</h3>
-                </a>
+                </a> -->
                 <!-- Future services -->
 <!--                 
                 <a href="#" class="service-box">
@@ -56,12 +55,6 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-        }
-        .main-content {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
         .services-container {
             text-align: center;
