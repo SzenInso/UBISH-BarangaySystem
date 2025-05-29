@@ -1,5 +1,6 @@
 <?php
     include '../../config/dbconfig.php';
+    include '../../baseURL.php';
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
     }
@@ -67,77 +68,194 @@
             }
         }
     }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../assets/css/style.css">
-    <script src="../../assets/js/sweetalert2.js"></script>
     <title>UBISH Dashboard | Forgot Password</title>
+    <link rel="stylesheet" href="<?= BASE_URL ?>css/index.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/login.css">
+
+    <script src="../../assets/js/sweetalert2.js"></script>
 </head>
 <body>
-    <header>
-        <div class="navigation">
-            <div class="logo">
-                <img src="../../assets/img/greenwater-village-logo.jpg" alt="Greenwater Village Logo">
-                <h1>UBISH</h1>
-            </div>
-            <nav>
-                <ul>
-                    <li>
-                        <a href="../account/login.php">Log In</a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-        <hr>
-    </header>
+    <?php include '../../partials/header.php'; ?>
+
     <main>
-        <form method="POST">
-            <div class="login-form">
-                <h1>Forgot Password?</h1><br>
-                <p>You can reset your password by entering</p>
-                <p>your username, selecting your security question,</p>
-                <p>and providing the correct answer.</p>
-                <a href="../account/login.php">← Go Back to Log In</a>
+        <div class="forgot-password-container login-form">
+            <form method="POST" class="forgot-password-form">
+                <h1>Forgot Password?</h1>
+                <p>You can reset your password by entering your username, selecting your security question, and providing the correct answer.</p>
+
                 <div class="login-credentials">
-                    <p>Username</p>
-                    <input type="text" name="username" value="<?php echo htmlspecialchars($_POST['username'] ?? ''); ?>" placeholder="Enter username">
+                    <label for="username">Username</label>
+                    <input
+                        id="username"
+                        type="text"
+                        name="username"
+                        placeholder="Enter username"
+                        value="<?php echo htmlspecialchars($_POST['username'] ?? ''); ?>"
+                        required
+                    >
                 </div>
-                <style>
-                    .security-question select,
-                    .security-question input[type="text"] {
-                        margin: 4px 0 8px;
-                        padding: 6px;
-                        width: 256px;
-                        border: 1px solid #aaa;
-                        border-radius: 4px;
-                        box-sizing: border-box;
-                        background: #fff;
-                    }
-                </style>
+
                 <div class="security-question">
-                    <p>Security Question</p>
-                    <select name="security-question">
-                        <option value="" disabled selected>Select your security question</option>
+                    <label for="security-question">Security Question</label>
+                    <select id="security-question" name="security-question" required>
+                        <option value="" disabled <?php if(!isset($_POST['security-question'])) echo 'selected'; ?>>Select your security question</option>
                         <?php foreach ($questions as $q): ?>
-                            <option value="<?php echo htmlspecialchars($q); ?>" <?php if (isset($_POST['security-question']) && $_POST['security-question'] === $q) echo 'selected'; ?>>
+                            <option
+                                value="<?php echo htmlspecialchars($q); ?>"
+                                <?php if (isset($_POST['security-question']) && $_POST['security-question'] === $q) echo 'selected'; ?>
+                            >
                                 <?php echo htmlspecialchars($q); ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
-                    <br>
-                    <input type="text" name="answer" placeholder="Enter your answer" autocomplete="off" value="<?php echo htmlspecialchars($_POST['answer'] ?? ''); ?>"><br>
-                    <button name="submit-answer">Submit Answer</button>
                 </div>
-            </div>
-        </form>
+
+                <div class="login-credentials">
+                    <label for="answer">Answer</label>
+                    <input
+                        id="answer"
+                        type="text"
+                        name="answer"
+                        placeholder="Enter your answer"
+                        autocomplete="off"
+                        required
+                        value="<?php echo htmlspecialchars($_POST['answer'] ?? ''); ?>"
+                    >
+                </div>
+
+                <button type="submit" name="submit-answer" class="submit-btn">Submit Answer</button>
+            </form><br>
+            <a href="../account/login.php" class="back-link">← Go Back to Log In</a>
+        </div>
     </main>
-    <footer>
-        <hr>
-        <p><?php echo "&copy; " . date('Y') . " | Unified Barangay Information Service Hub"; ?></p>
-    </footer>
+
+    <?php include '../../partials/footer.php'; ?>
 </body>
+<style>
+/* html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+    /* Center the container vertically and horizontally */
+/* main {
+    flex: 1;
+    min-height: 110vh; /* adjust if you have header or footer */ /*
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: #f0f5f2;
+}  */
+
+/* Container box */
+.forgot-password-container {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(46, 139, 87, 0.15);
+    padding: 40px 30px;
+    max-width: 400px;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    transition: box-shadow 0.3s ease;
+    border: 5px solid #2E8B57;
+}
+
+/* Form heading and text */
+.forgot-password-form h1 {
+    color: #2E8B57;
+    font-weight: 700;
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+.forgot-password-form p {
+    font-size: 16px;
+    margin-bottom: 25px;
+    color: #333;
+    line-height: 1.4;
+}
+
+/* Back to login link */
+.back-link {
+    display: inline-block;
+    margin-bottom: 25px;
+    color: #2E8B57;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+/* Labels */
+.forgot-password-form label {
+    display: block;
+    font-weight: 600;
+    color: #333;
+    text-align: left;
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+/* Inputs and select */
+.forgot-password-form input[type="text"],
+.forgot-password-form select {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.forgot-password-form input[type="text"]:focus,
+.forgot-password-form select:focus {
+    border-color: #2E8B57;
+    outline: none;
+}
+
+/* Submit button */
+.submit-btn {
+    background-color: #2E8B57;
+    border: none;
+    color: white;
+    font-weight: 700;
+    font-size: 16px;
+    padding: 14px 0;
+    width: 100%;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #276946;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .forgot-password-container {
+        padding: 30px 20px;
+    }
+}
+
+</style>
 </html>

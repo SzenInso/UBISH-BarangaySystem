@@ -6,15 +6,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UBISH | Certificate of Residency</title>
-    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/index.css">
-    <link rel="stylesheet" href="<?= BASE_URL ?>partials/partials.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>css/index.css">
     <link rel="stylesheet" href="css/residency.css">
 </head>
 <body>
 
 <?php include '../../partials/header.php';?>
 
-<main class="main-content residency-wrapper">
+<main class="main-content ">
     <section class="residency-info">
     <h2>Requirements for Certificate of Residency</h2>
     <hr>
@@ -67,4 +66,23 @@
 <?php include '../../partials/footer.php';?>
 
 </body>
+<!-- <style>
+    <style>
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    body {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+    .main-content {
+        flex: 1;
+        display: column;
+        justify-content: center;
+        align-items: center;
+    }
+</style> -->
 </html>
