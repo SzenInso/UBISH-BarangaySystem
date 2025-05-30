@@ -9,7 +9,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../assets/css/style.css">
-    <title>UBISH Dashboard | Home</title>
+    <title>UBISH Dashboard | Confirm Household</title>
 </head>
 <body>
     <style>
@@ -106,50 +106,103 @@
                         <p>Review the household information below. If everything is correct, click the "<b>Confirm</b>" button to finalize the submission.</p>
                         <p>Otherwise, click the "<b>Go Back</b>" button to return to the previous page.</p>
                     </div>
-                    <form method="POST">
+                    <form method="POST" action="finalize_household.php">
                         <?php 
                             if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save-household'])) {
                         ?>
                                 <div class="household" style="border:1px solid #ccc; margin-bottom:24px; border-radius:8px; padding:16px;">
                                     <h3>Household Information</h3>
+
+                                    <input type="hidden" name="household_first_name" value="<?php echo htmlspecialchars($_POST['household_first_name'] ?? ''); ?>">
+                                    <input type="hidden" name="household_middle_initial" value="<?php echo htmlspecialchars($_POST['household_middle_initial'] ?? ''); ?>">
+                                    <input type="hidden" name="household_last_name" value="<?php echo htmlspecialchars($_POST['household_last_name'] ?? ''); ?>">
+                                    <input type="hidden" name="household_suffix" value="<?php echo htmlspecialchars($_POST['household_suffix'] ?? ''); ?>">
+                                    <input type="hidden" name="household_number" value="<?php echo htmlspecialchars($_POST['household_number'] ?? ''); ?>">
+                                    <input type="hidden" name="household_purok" value="<?php echo htmlspecialchars($_POST['household_purok'] ?? ''); ?>">
+                                    <input type="hidden" name="household_street" value="<?php echo htmlspecialchars($_POST['household_street'] ?? ''); ?>">
+                                    <input type="hidden" name="household_district" value="<?php echo htmlspecialchars($_POST['household_district'] ?? ''); ?>">
+                                    <input type="hidden" name="household_barangay" value="<?php echo htmlspecialchars($_POST['household_barangay'] ?? ''); ?>">
+
                                     <table border="1" cellspacing="0" style="width:100%; table-layout:fixed;">
                                         <tr>
                                             <th>Household Head</th>
                                             <td>
                                                 <?php 
                                                     echo isset($_POST['household_first_name']) && isset($_POST['household_last_name']) ? 
-                                                    htmlspecialchars($_POST['household_first_name']) . " " . htmlspecialchars($_POST['household_last_name']) 
+                                                    htmlspecialchars($_POST['household_first_name']) . " " . htmlspecialchars(strtoupper($_POST['household_middle_initial'])) . " " .
+                                                    htmlspecialchars($_POST['household_last_name']) . " " . htmlspecialchars($_POST['household_suffix'])
                                                     : ''; 
                                                 ?>
                                             </td>
                                         <tr>
                                             <th>House Number/Code</th>
-                                            <td></td>
+                                            <td><?php echo isset($_POST['household_number']) ? htmlspecialchars($_POST['household_number']) : ''; ?></td>
                                         </tr>
                                         <tr>
                                             <th>Purok</th>
-                                            <td></td>
+                                            <td><?php echo isset($_POST['household_purok']) ? htmlspecialchars($_POST['household_purok']) : ''; ?></td>
                                         </tr>
                                         <tr>
                                             <th>Street</th>
-                                            <td></td>
+                                            <td><?php echo isset($_POST['household_street']) ? htmlspecialchars($_POST['household_street']) : ''; ?></td>
                                         </tr>
                                         <tr>
                                             <th>District</th>
-                                            <td></td>
+                                            <td><?php echo isset($_POST['household_district']) ? htmlspecialchars($_POST['household_district']) : ''; ?></td>
                                         </tr>
                                         <tr>
                                             <th>Barangay</th>
-                                            <td></td>
+                                            <td><?php echo isset($_POST['household_barangay']) ? htmlspecialchars($_POST['household_barangay']) : ''; ?></td>
                                         </tr>
                                     </table>
                                 </div>
                         <?php
                                 $num_members = isset($_POST['fname']) ? count($_POST['fname']) : 0;
                                 for ($i = 0; $i < $num_members; $i++) {
+                                    
                         ?>
                                     <div class="family-member" style="border:1px solid #ccc; margin-bottom:24px; border-radius:8px; padding:16px;">
                                         <h3>Family Member <?php echo $i+1; ?> </h3>
+
+                                        <input type="hidden" readonly name="member_index[]" value="<?php echo $i; ?>"> <!-- for family member identifier -->
+                                        <input type="hidden" name="fname[]" value="<?php echo htmlspecialchars($_POST['fname'][$i] ?? ''); ?>">
+                                        <input type="hidden" name="mname[]" value="<?php echo htmlspecialchars($_POST['mname'][$i] ?? ''); ?>">
+                                        <input type="hidden" name="lname[]" value="<?php echo htmlspecialchars($_POST['lname'][$i] ?? ''); ?>">
+                                        <input type="hidden" name="suffix[]" value="<?php echo htmlspecialchars($_POST['suffix'][$i] ?? ''); ?>">
+                                        <input type="hidden" name="relation[]" value="<?php echo htmlspecialchars($_POST['relation'][$i] ?? ''); ?>">
+                                        <input type="hidden" name="sex[]" value="<?php echo htmlspecialchars($_POST['sex'][$i] ?? ''); ?>">
+                                        <input type="hidden" name="birthdate[]" value="<?php echo htmlspecialchars($_POST['birthdate'][$i] ?? ''); ?>">
+                                        <input type="hidden" name="civilstatus[]" value="<?php echo htmlspecialchars($_POST['civilstatus'][$i] ?? ''); ?>">
+                                        <input type="hidden" name="religion[]" value="<?php echo htmlspecialchars($_POST['religion'][$i] ?? ''); ?>">
+                                        <input type="hidden" name="schooling[]" value="<?php echo htmlspecialchars($_POST['schooling'][$i] ?? ''); ?>">
+                                        <input type="hidden" name="attainment[]" value="<?php echo htmlspecialchars($_POST['attainment'][$i] ?? ''); ?>">
+                                        <input type="hidden" name="occupation[]" value="<?php echo htmlspecialchars($_POST['occupation'][$i] ?? ''); ?>">
+                                        <input type="hidden" name="emp_status[]" value="<?php echo htmlspecialchars($_POST['emp_status'][$i] ?? ''); ?>">
+                                        <input type="hidden" name="emp_category[]" value="<?php echo htmlspecialchars($_POST['emp_category'][$i] ?? ''); ?>">
+                                        <input type="hidden" name="income_cash[]" value="<?php echo htmlspecialchars($_POST['income_cash'][$i] ?? ''); ?>">
+                                        <input type="hidden" name="income_type[]" value="<?php echo htmlspecialchars($_POST['income_type'][$i] ?? ''); ?>">
+                                        <input type="hidden" name="livelihood_training[]" value="<?php echo htmlspecialchars($_POST['livelihood_training'][$i] ?? ''); ?>">
+                                        <?php if ((isset($_POST['is_PWD'][$i]))) { ?>
+                                            <input type="hidden" name="is_PWD[<?php echo $i; ?>]" value="1">
+                                        <?php } else { ?>
+                                            <input type="hidden" name="is_PWD[<?php echo $i; ?>]" value="0">
+                                        <?php } ?>
+                                        <?php if ((isset($_POST['is_OFW'][$i]))) { ?>
+                                            <input type="hidden" name="is_OFW[<?php echo $i; ?>]" value="1">
+                                        <?php } else { ?>
+                                            <input type="hidden" name="is_OFW[<?php echo $i; ?>]" value="0">    
+                                        <?php } ?>
+                                        <?php if ((isset($_POST['is_solo_parent'][$i]))) { ?>
+                                            <input type="hidden" name="is_solo_parent[<?php echo $i; ?>]" value="1">
+                                        <?php } else { ?> 
+                                            <input type="hidden" name="is_solo_parent[<?php echo $i; ?>]" value="0">
+                                        <?php } ?>
+                                        <?php if ((isset($_POST['is_indigenous'][$i]))) { ?>
+                                            <input type="hidden" name="is_indigenous[<?php echo $i; ?>]" value="1">
+                                        <?php } else { ?> 
+                                            <input type="hidden" name="is_indigenous[<?php echo $i; ?>]" value="0">
+                                        <?php } ?>
+                                        
                                         <table border="1" cellspacing="0" style="width:100%; table-layout:fixed;">
                                             <tr>
                                                 <th>Full Name</th>
@@ -263,7 +316,7 @@
                                             </tr>
                                             <tr>
                                                 <th>Is an Indigenous Person (IP)?</th>
-                                                <td><?php echo isset($_POST['is_IP'][$i]) ? 'Yes' : 'No'; ?></td>
+                                                <td><?php echo isset($_POST['is_indigenous'][$i]) ? 'Yes' : 'No'; ?></td>
                                             </tr>
                                         </table>
                                     </div>
