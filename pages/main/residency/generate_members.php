@@ -132,7 +132,7 @@
                                     <option value="Self-Employed">Self-Employed</option>
                                 </select>
                             </td>
-                            <td>₱&nbsp;<input type="number" min="0" name="income_cash[]"></td>
+                            <td>₱&nbsp;<input type="number" min="0" step=".01" name="income_cash[]"></td>
                             <td><input type="text" name="income_type[]"></td>
                             <td colspan="2">
                                 <div class="indicate-others" style="display: flex;">
