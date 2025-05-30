@@ -1,7 +1,5 @@
 <?php
     include '../../../config/dbfetch.php';
-
-    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -10,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../assets/css/style.css">
     <script src="js/sweetalert2.js"></script>
-    <title>UBISH Dashboard | Home</title>
+    <title>UBISH Dashboard | Add Household</title>
 </head>
 <body>
     <style>
@@ -119,7 +117,9 @@
                         <label for="head"><b>Household Head/Respondent</b></label>
                         <div>
                             First Name: <input type="text" name="household_first_name">
+                            Middle Initial: <input type="text" name="household_middle_initial" maxlength="5">
                             Last Name: <input type="text" name="household_last_name">
+                            Suffix: <input type="text" name="household_suffix" maxlength="5">
                         </div>
                         
                         <label for="address"><b>Household Address</b></label>
@@ -302,10 +302,23 @@
                         -->
                         <script>
                             document.querySelector('form[action="confirm_household.php"]').addEventListener('submit', function(e) {
-                                const members = document.querySelectorAll('.family-member-table');
+                                const householdFirstName = document.querySelector('input[name="household_first_name"]')?.value.trim();
+                                const householdLastName = document.querySelector('input[name="household_last_name"]')?.value.trim();
+                                const householdNumber = document.querySelector('input[name="household_number"]')?.value.trim();
+                                const householdBarangay = document.querySelector('input[name="household_barangay"]')?.value.trim();
                                 let hasError = false;
                                 let errorMsg = '';
+
+                                if (!householdFirstName || !householdLastName || !householdNumber || !householdBarangay) {
+                                    hasError = true;
+                                    errorMsg += 'Please fill out all required household information:<br>';
+                                    if (!householdFirstName) errorMsg += 'Household Head First Name<br>';
+                                    if (!householdLastName) errorMsg += 'Household Head Last Name<br>';
+                                    if (!householdNumber) errorMsg += 'House Number/Code<br>';
+                                    if (!householdBarangay) errorMsg += 'Barangay<br>';
+                                }
                                 
+                                const members = document.querySelectorAll('.family-member-table');
                                 if (members.length === 0) {
                                     e.preventDefault();
                                     Swal.fire({
