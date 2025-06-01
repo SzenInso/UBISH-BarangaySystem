@@ -1,5 +1,11 @@
 <?php
     include '../../../config/dbfetch.php';
+
+    // access level verification
+    if (!isset($_SESSION['user_id']) || $accessLevel < 2) {
+        header("Location: ../dashboard.php");
+        exit;
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -228,7 +234,10 @@
                                 }
                             });
                         </script>
-                        <button type="submit" name="save-household" class="custom-cancel-button">Save Household</button>
+                        <div>
+                            <button type="button" class="custom-cancel-button" id="go-back-btn">Return to Residency Management</button>
+                            <button type="submit" name="save-household" class="custom-cancel-button">Save Household</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -269,6 +278,10 @@
 
         document.getElementById('generate-members-btn').addEventListener('click', function() {
             setTimeout(attachAgeListeners, 100);
+        });
+
+        document.getElementById('go-back-btn').addEventListener('click', function() {
+            window.location.href = '../../main/residency_management.php';
         });
         </script>
 </body>
