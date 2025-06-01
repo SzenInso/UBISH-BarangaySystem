@@ -1,6 +1,12 @@
 <?php
     include '../../../config/dbfetch.php';
 
+    // access level verification
+    if (!isset($_SESSION['user_id']) || $accessLevel < 2) {
+        header("Location: ../dashboard.php");
+        exit;
+    }
+
     if (isset($_POST['delete-resident'])) {
         $residentId = $_POST['resident_id'];
 

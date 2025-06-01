@@ -1,5 +1,11 @@
 <?php
     include '../../../config/dbfetch.php';
+    
+    // access level verification
+    if (!isset($_SESSION['user_id']) || $accessLevel < 2) {
+        header("Location: ../dashboard.php");
+        exit;
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
