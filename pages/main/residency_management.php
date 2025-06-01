@@ -35,6 +35,59 @@
             border-top: 5px solid #356859 !important;
             margin-top: 60px !important;
         }
+        .custom-cancel-button {
+            border: 2px solid gray;
+            background-color: white;
+            color: black;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .custom-cancel-button:hover {
+            background-color: lightgray;
+        }
+        .residency-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .residency-actions form {
+            margin: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table th, table td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            border: 2px solid gray;
+        }
+
+        table td {
+            border: 2px solid gray;
+        }
+
+        .info-box {
+            background: #e6f7e6;
+            border: 1px solid #356859;
+            border-radius: 6px;
+            padding: 16px;
+            margin-bottom: 20px;
+            color: #2b3d2f;
+            max-width: 1024px;
+            min-width: 0;
+            display: block;
+            box-sizing: border-box;
+            margin: 24px auto 20px auto;
+        }
     </style>
     <header>
         <div class="navigation">
@@ -95,161 +148,36 @@
                     $residencyStmt = $pdo->query($residencyQuery);
                     $residency = $residencyStmt->fetchAll();
                 ?>
+                <br>
                 <div class="residency-table-actions">
                     <label for="view-by">View By:</label>
                     <select id="residency-view">
-                        <option>Residency</option>
-                        <option>Household</option>
-                    </select>
-                    <label for="sort-by">Sort By:</label>
-                    <select id="residency-sort">
-                        <option id="id-asc">ID (Ascending)</option>
-                        <option id="id-desc">ID (Descending)</option>
-                        <option id="name-asc">Last Name (Ascending)</option>
-                        <option id="name-desc">Last Name (Descending)</option>
-                        <option id="bdate-asc">Birthdate (Ascending)</option>
-                        <option id="bdate-desc">Birthdate (Descending)</option>
+                        <option value="residency">Residency</option>
+                        <option value="household">Household</option>
                     </select>
                 </div>
-                <div class="residency-table">
-                    <?php 
-                        if ($residencyStmt->rowCount() < 1) {
-                            echo '<br><p>No residents found.</p>';
-                        } else {
-                    ?>
-                    <table border="1" cellpadding="10" cellspacing="0">
-                        <thead>
-                            <th>Residency ID</th>
-                            <th>Name</th>
-                            <th>Sex</th>
-                            <th>Birhtdate</th>
-                            <th>Age</th>
-                            <th>Civil Status</th>
-                            <th>Actions</th>
-                        </thead>
-                        <tbody>
-                            <?php
-                                foreach ($residency as $member) {
-                                    $r_id = htmlspecialchars($member['member_id']);
-
-                                    $name = htmlspecialchars($member['last_name']);
-                                    if (!empty($member['suffix'])) { $name .= ' ' . htmlspecialchars($member['suffix']); } // add suffix if available
-                                    $name .= ', ';
-                                    $name .= htmlspecialchars($member['first_name']); // add first name
-                                    // add middle initial if  available
-                                    if (!empty($member['middle_initial'])) {
-                                        $middleInitial = strtoupper(substr($member['middle_initial'], 0, 5)) . '.';
-                                        $name .= ' ' . htmlspecialchars($middleInitial);
-                                    }
-
-                                    $sex = ($member['sex'] === 'M') ? "Male" : "Female";
-                                    $birthdate = htmlspecialchars(date('F j, Y', strtotime($member['birthdate'])));
-                                    $age = date_diff(date_create($birthdate), date_create('today'))->y;
-                                    $civilStatus = htmlspecialchars($member['civil_status']);
-                            ?>
-                                    <tr>
-                                        <td><?php echo $r_id; ?></td>
-                                        <td><?php echo $name; ?></td>
-                                        <td><?php echo $sex; ?></td>
-                                        <td><?php echo $birthdate; ?></td>
-                                        <td><?php echo $age; ?></td>
-                                        <td><?php echo $civilStatus; ?></td>
-                                        <td>
-                                            <div class="residency-actions">
-                                                <form action="" method="POST">
-                                                    <button>View More</button>
-                                                </form>
-                                                <form action="" method="POST">
-                                                    <button>Update Resident</button>
-                                                </form>
-                                                <form action="" method="POST">
-                                                    <button>Delete Resident</button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                    </tr>
-                            <?php
-                                }
-                            ?>
-                        </tbody>
-                    </table>
-                    <?php } ?>
+                <div id="ajax-table-container">
+                    <!-- Table will be loaded here -->
                 </div>
-                <?php 
-                    $familyQuery = "
-                        SELECT * FROM households
-                        JOIN household_addresses ON households.household_address_id = household_addresses.household_address_id
-                        JOIN household_respondents ON households.household_respondent_id = household_respondents.household_respondent_id
-                        JOIN families ON households.household_id = families.household_id
-                    ";
-                    $familyStmt = $pdo->query($familyQuery);
-                    $families = $familyStmt->fetchAll();
-
-
-                ?>
-                <div class="residency-household">
-                    <?php
-                        if ($familyStmt->rowCount() < 1) {
-                            echo '<br><p>No households found.</p>';
-                        } else {
-                    ?>
-                    <table border="1" cellpadding="10" cellspacing="0">
-                        <thead>
-                            <th>Household ID</th>
-                            <th>Head/Respondent</th>
-                            <th>Address</th>
-                            <th>Family ID</th>
-                            <th>Actions</th>
-                        </thead>
-                        <tbody>
-                            <?php
-                                foreach ($families as $family) {
-                                    $householdId = htmlspecialchars($family['household_id']);
-
-                                    $respondent = htmlspecialchars($family['last_name']);
-                                    if (!empty($family['suffix'])) { $respondent .= ' ' . htmlspecialchars($family['suffix']); } // add suffix if available
-                                    $respondent .= ', ';
-                                    $respondent .= htmlspecialchars($family['first_name']); // add first name
-                                    // add middle initial if  available
-                                    if (!empty($family['middle_initial'])) {
-                                        $middleInitial = strtoupper(substr($family['middle_initial'], 0, 5)) . '.';
-                                        $respondent .= ' ' . htmlspecialchars($middleInitial);
-                                    }
-                                    
-                                    $addressParts = [];
-                                    if (!empty($family['house_number'])) { $addressParts[] = htmlspecialchars($family['house_number']); } // add house number if available
-                                    if (!empty($family['purok'])) { $addressParts[] = 'Purok ' . htmlspecialchars($family['purok']); } // add purok if available
-                                    if (!empty($family['street'])) { $addressParts[] = htmlspecialchars($family['street']); } // add street if available
-                                    if (!empty($family['district'])) { $addressParts[] = 'District ' . htmlspecialchars($family['district']); } // add district if available
-                                    if (!empty($family['barangay'])) { $addressParts[] = htmlspecialchars($family['barangay']); } // add barangay if available
-                                    $address = implode(', ', $addressParts); // combine all address parts
-
-                                    $familyId = htmlspecialchars($family['family_id']);
-                            ?>
-                                    <tr>
-                                        <td><?php echo $householdId; ?></td>
-                                        <td><?php echo $respondent; ?></td>
-                                        <td><?php echo $address; ?></td>
-                                        <td><?php echo $familyId; ?></td>
-                                        <td>
-                                            <form action="">
-                                                <button>View More</button>
-                                            </form>
-                                            <form action="">
-                                                <button>Update Household</button>
-                                            </form>
-                                            <form action="">
-                                                <button>Delete Household</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                            <?php
-                                }
-                            ?>
-                        </tbody>
-                    </table>
-                    <?php } ?>
-                </div>
+                <script>
+                    function loadTable(type) {
+                        var xhr = new XMLHttpRequest();
+                        var url = (type === 'household') ? 'household_table.php' : 'residency_table.php';
+                        xhr.open('GET', url, true);
+                        xhr.onreadystatechange = function() {
+                            if (xhr.readyState === 4 && xhr.status === 200) {
+                                document.getElementById('ajax-table-container').innerHTML = xhr.responseText;
+                            }
+                        };
+                        xhr.send();
+                    }
+                    document.getElementById('residency-view').addEventListener('change', function() {
+                        loadTable(this.value);
+                    });
+                    window.onload = function() {
+                        loadTable(document.getElementById('residency-view').value);
+                    };
+                </script>
             </div>
         </div>
     </main>

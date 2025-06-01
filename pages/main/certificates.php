@@ -204,25 +204,18 @@ if (isset($_POST['submit_certificate'])) {
                     <li><a href="../main/employee_table.php">Employee Table</a></li>
 
                     <!-- STANDARD -->
-                    <?php if ($accessLevel >= 2) {
-                        echo '<li class="active"><a href="../main/certificates.php">Certificate Requests</a></li>';
-                    } ?>
-                    <?php if ($accessLevel >= 2) {
-                        echo '<li><a href="../main/permits.php">Permit Requests</a></li>';
-                    } ?>
+                    <?php if ($accessLevel >= 2) { echo '<li><a href="../main/residency_management.php">Residency Management</a></li>'; } ?>
+                    <?php if ($accessLevel >= 2) { echo '<li class="active"><a href="../main/certificates.php">Certificate Requests</a></li>';} ?>
+                    <?php if ($accessLevel >= 2) { echo '<li><a href="../main/permits.php">Permit Requests</a></li>'; } ?>
                     <!-- STANDARD -->
 
                     <!-- FULL -->
-                    <?php if ($accessLevel >= 3) {
-                        echo '<li><a href="../main/account_requests.php">Account Requests</a></li>';
-                    } ?>
+                    <?php if ($accessLevel >= 3) { echo '<li><a href="../main/account_requests.php">Account Requests</a></li>'; } ?>
                     <!-- FULL -->
 
                     <h3>Reports</h3>
                     <!-- STANDARD -->
-                    <?php if ($accessLevel >= 2) {
-                        echo '<li><a href="../main/incidents.php">Incident Reports</a></li>';
-                    } ?>
+                    <?php if ($accessLevel >= 2) { echo '<li><a href="../main/incidents.php">Incident Reports</a></li>'; } ?>
                     <!-- STANDARD -->
 
                     <li><a href="../main/incident_table.php">Incident History</a></li>

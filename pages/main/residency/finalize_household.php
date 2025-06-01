@@ -124,7 +124,7 @@
                                 icon: 'success',
                                 confirmButtonText: 'OK'
                             }).then(() => {
-                                window.location.href='add_household.php';
+                                window.location.href='../residency_management.php';
                             });
                         });
                     </script>
@@ -144,7 +144,7 @@
                             icon: 'error',
                             confirmButtonText: 'OK'
                         }).then(() => {
-                            window.location.href='add_household.php';
+                            window.location.href='../residency_management.php';
                         });
                     });
                 </script>

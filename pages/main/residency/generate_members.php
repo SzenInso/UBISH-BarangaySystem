@@ -48,9 +48,9 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td><input type="date" name="birthdate[]" class="dobInput"></td>
+                            <td><input type="date" name="birthdate[]" class="birthdate-input"></td>
                             <td>
-                                <span class="ageDisplay"></span>
+                                <span class="age-display" style="margin-left:10px; color: black;"></span>
                                 <input type="hidden" name="age[]" class="ageHidden">
                             </td>
                             <td>

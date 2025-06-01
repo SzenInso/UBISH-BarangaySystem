@@ -1,5 +1,11 @@
 <?php
     include '../../../config/dbfetch.php';
+    
+    // access level verification
+    if (!isset($_SESSION['user_id']) || $accessLevel < 2) {
+        header("Location: ../dashboard.php");
+        exit;
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,6 +34,17 @@
             color: #2b3d2f !important;
             border-top: 5px solid #356859 !important;
             margin-top: 60px !important;
+        }
+        .custom-cancel-button {
+            border: 2px solid gray;
+            background-color: white;
+            color: black;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .custom-cancel-button:hover {
+            background-color: lightgray;
         }
     </style>
     <header>
@@ -328,8 +345,8 @@
                             }
                         ?>
                         <div class="member-submission-btns">
-                            <button type="submit" name="confirm-household">Confirm</button>
-                            <button type="button" onclick="window.history.back();">Go Back</button>
+                            <button class="custom-cancel-button" type="submit" name="confirm-household">Confirm</button>
+                            <button class="custom-cancel-button" type="button" onclick="window.history.back();">Go Back</button>
                         </div>
                     </form>
                 </div>

@@ -190,6 +190,7 @@ if (isset($_POST['cancel'])) {
                     <li><a href="../main/employee_table.php">Employee Table</a></li>
 
                     <!-- STANDARD -->
+                    <?php if ($accessLevel >= 2) { echo '<li><a href="../main/residency_management.php">Residency Management</a></li>'; } ?>
                     <?php if ($accessLevel >= 2) { echo '<li><a href="../main/certificates.php">Certificate Requests</a></li>'; } ?>
                     <?php if ($accessLevel >= 2) { echo '<li><a href="../main/permits.php">Permit Requests</a></li>'; } ?>
                     <!-- STANDARD -->

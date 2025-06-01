@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 01, 2025 at 05:44 AM
+-- Generation Time: Jun 01, 2025 at 07:07 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -263,8 +263,7 @@ CREATE TABLE `family_members` (
 
 INSERT INTO `family_members` (`member_id`, `family_id`, `first_name`, `middle_initial`, `last_name`, `suffix`, `relation`, `sex`, `birthdate`, `civil_status`, `religion`, `schooling`, `attainment`, `occupation`, `emp_status`, `emp_category`, `income_cash`, `income_kind`, `livelihood_training`, `is_senior_citizen`, `is_pwd`, `is_ofw`, `is_solo_parent`, `is_indigenous`, `remarks`) VALUES
 ('FM00001', 'FA00001', 'Ruben', '', 'Dumayda', 'Sr', 'Father', 'M', '1942-04-15', 'Married', 'Roman Catholic', 'Out of school', 'Elementary', 'Riprapping', 'Contractual', 'Private', 4000.00, '', '', 1, 0, 0, 0, 1, ''),
-('FM00002', 'FA00001', 'Gloria', 'A', 'Dumayda', '', 'Mother', 'F', '1970-01-31', 'Married', 'Roman Catholic', 'Out of school', 'Elementary', 'Vendor', 'Permanent', 'Private', 5000.00, '', '', 0, 0, 0, 0, 1, ''),
-('FM00003', 'FA00001', 'Richelle Joy', 'A', 'Dumayda', '', '', 'F', '1987-11-19', 'Single', 'Roman Catholic', 'Graduate', 'College', 'Pharmacy Assistant', 'Contractual', 'Private', 8000.00, '', '', 0, 0, 0, 0, 1, '');
+('FM00002', 'FA00001', 'Gloria', 'A', 'Dumayda', '', 'Mother', 'F', '1970-01-31', 'Married', 'Roman Catholic', 'Out of school', 'Elementary', 'Vendor', 'Permanent', 'Private', 5000.00, '', '', 0, 0, 0, 0, 1, '');
 
 -- --------------------------------------------------------
 
