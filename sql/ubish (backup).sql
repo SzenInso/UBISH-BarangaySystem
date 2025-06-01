@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 11, 2025 at 06:52 PM
+-- Generation Time: Jun 01, 2025 at 07:07 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ubish4.0`
+-- Database: `ubish5.0`
 --
 
 -- --------------------------------------------------------
@@ -90,7 +90,7 @@ CREATE TABLE `employee_details` (
   `civil_status` varchar(20) NOT NULL,
   `legislature` varchar(100) NOT NULL,
   `access_level` tinyint(4) NOT NULL,
-  `phone_no` varchar(11) NOT NULL,
+  `phone_no` varchar(13) NOT NULL,
   `picture` varchar(255) NOT NULL,
   `committee` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -100,16 +100,17 @@ CREATE TABLE `employee_details` (
 --
 
 INSERT INTO `employee_details` (`emp_id`, `first_name`, `middle_name`, `last_name`, `date_of_birth`, `sex`, `address`, `religion`, `civil_status`, `legislature`, `access_level`, `phone_no`, `picture`, `committee`) VALUES
-(1001, 'Admin', 'Admin', 'Admin', '2000-01-01', 'M', 'Philippines', 'Admin', 'Admin', 'Administrator', 4, '09123456789', '../../uploads/default_profile.jpg', NULL),
-(1002, 'Mark Simon', 'Zuilan', 'Bringas', '2005-02-16', 'M', 'Baguio City, Philippines', 'Roman Catholic', 'Single', 'Other Barangay Personnel', 1, '09123456789', '../../uploads/profiles/680e0acd0d07a.jpg', NULL),
-(1004, 'John', 'Smith', 'Doe', '2000-01-02', 'M', 'Philippines', 'Atheist', 'Legally Separated', 'Sangguniang Barangay Member', 2, '09111111111', '../../uploads/profiles/680f803160a28.jpg', NULL),
-(1009, 'Jamie', 'Smith', 'Brown', '2000-01-03', 'F', 'Philippines', 'Roman Catholic', 'Married', 'Barangay Secretary', 2, '09333333333', '../../uploads/profiles/680f94f412a96.jpg', NULL),
-(1013, 'Tarou', 'Tanaka', 'Sakamoto', '1997-11-21', 'M', 'Japan', 'Atheist', 'Married', 'Other Barangay Personnel', 1, '09444444444', '../../uploads/profiles/680e3def12dc7.png', NULL),
-(1014, 'Kento', 'Kokusen', 'Nanami', '1990-07-03', 'M', 'Japan', 'Shinto', 'Single', 'Barangay Secretary', 2, '09555555555', '../../uploads/profiles/680e412a573ca.jpg', NULL),
-(1020, 'Jane', 'Turner', 'Smith', '2000-01-01', 'F', 'Philippines', 'Atheist', 'Married', 'Barangay Secretary', 3, '09000000000', '../../uploads/profiles/6813a9c249b2a.jpg', NULL),
-(1028, 'Sarah Mae', 'Marquez', 'Capis', '2000-01-04', 'F', 'Manila', 'Roman Catholic', 'Married', 'Other Barangay Personnel', 1, '09111111111', '../../uploads/default_profile.jpg', NULL),
-(1029, 'Allan', 'Manuel', 'Garcia', '2000-01-03', 'M', 'Manila', 'Roman Catholic', 'Married', 'Other Barangay Personnel', 1, '09111111111', '../../uploads/default_profile.jpg', NULL),
-(1031, 'Kevin', 'Kaslana', 'Sanchez', '2000-05-12', 'M', 'Philippines', 'Roman Catholic', 'Single', 'Sangguniang Kabataan Treasurer', 2, '09111111111', '../../uploads/default_profile.jpg', 'Finance');
+(1001, 'Admin', 'Admin', 'Admin', '2001-01-01', 'M', 'Philippines', 'Roman Catholic', 'Single', 'Punong Barangay', 3, '+639123456789', '../../uploads/default_profile.jpg', NULL),
+(1002, 'Mark Simon', 'Zuilan', 'Bringas', '2005-02-16', 'M', 'Baguio City, Philippines', 'Roman Catholic', 'Single', 'Other Barangay Personnel', 1, '+639123456789', '../../uploads/profiles/680e0acd0d07a.jpg', NULL),
+(1004, 'John', 'Smith', 'Doe', '2000-01-02', 'M', 'Philippines', 'Atheist', 'Legally Separated', 'Sangguniang Barangay Member', 2, '+639111111111', '../../uploads/profiles/680f803160a28.jpg', NULL),
+(1009, 'Jamie', 'Smith', 'Brown', '2000-01-03', 'F', 'Philippines', 'Roman Catholic', 'Married', 'Barangay Secretary', 2, '+639151515151', '../../uploads/profiles/680f94f412a96.jpg', NULL),
+(1013, 'Tarou', 'Tanaka', 'Sakamoto', '1997-11-21', 'M', 'Japan', 'Atheist', 'Married', 'Other Barangay Personnel', 1, '+639444444444', '../../uploads/profiles/680e3def12dc7.png', NULL),
+(1014, 'Kento', 'Kokusen', 'Nanami', '1990-07-03', 'M', 'Japan', 'Shinto', 'Single', 'Barangay Secretary', 2, '+639555555555', '../../uploads/profiles/680e412a573ca.jpg', NULL),
+(1020, 'Jane', 'Turner', 'Smith', '2000-01-01', 'F', 'Philippines', 'Atheist', 'Married', 'Barangay Secretary', 3, '+639000000000', '../../uploads/profiles/6813a9c249b2a.jpg', NULL),
+(1028, 'Sarah Mae', 'Marquez', 'Capis', '2000-01-04', 'F', 'Manila', 'Roman Catholic', 'Married', 'Other Barangay Personnel', 1, '+639111111111', '../../uploads/default_profile.jpg', NULL),
+(1029, 'Allan', 'Manuel', 'Garcia', '2000-01-03', 'M', 'Manila', 'Roman Catholic', 'Married', 'Other Barangay Personnel', 1, '+639111111111', '../../uploads/default_profile.jpg', NULL),
+(1031, 'Kevin', 'Kaslana', 'Sanchez', '2000-05-12', 'M', 'Philippines', 'Roman Catholic', 'Single', 'Sangguniang Kabataan Treasurer', 2, '+639111111111', '../../uploads/default_profile.jpg', 'Finance'),
+(1032, 'Rogelio', 'M', 'Tayoan', '2025-04-28', 'M', 'Greenwater Village', 'toUpdate', 'Married', 'Punong Barangay', 3, '+639898767654', '../../uploads/default_profile.jpg', 'toUpdate');
 
 -- --------------------------------------------------------
 
@@ -144,39 +145,15 @@ INSERT INTO `employee_registration` (`registration_emp_id`, `first_name`, `middl
 (205, 'Jamie', 'Smith', 'Doe', '2000-12-31', 'I', 'Philippines', 'Atheist', 'Single', 'Other Barangay Personnel', 1, '09222222222', '../../uploads/temp/680cace2ef55d.jpg'),
 (206, 'Jamie', 'Smith', 'Doe', '2000-12-31', 'M', 'Philippines', 'Atheist', 'Single', 'Other Barangay Personnel', 1, '09222222222', '../../uploads/temp/680caeb2ad77e.jpg'),
 (207, 'Jane', 'Smith', 'Doe', '2000-01-02', 'F', 'Philippines', 'Atheist', 'Married', 'Barangay Secretary', 2, '09222222222', '../../uploads/temp/680cb23623f39.jpg'),
-(208, 'a', 'a', 'a', '1111-11-11', 'M', 'a', 'a', 'Legally Separated', 'Other Barangay Personnel', 1, '1', '../../uploads/default_profile.jpg'),
 (209, 'Jamie', 'Smith', 'Doe', '2000-01-03', 'I', 'Philippines', 'Atheist', 'Single', 'Other Barangay Personnel', 1, '09333333333', '../../uploads/default_profile.jpg'),
-(210, 'a', 'a', 'a', '1111-11-11', 'M', 'a', 'a', 'Single', 'Other Barangay Personnel', 1, '1', '../../uploads/default_profile.jpg'),
-(211, 'a', 'a', 'a', '1111-11-11', 'M', 'a', 'a', 'Single', 'Punong Barangay', 3, '1', '../../uploads/default_profile.jpg'),
 (212, 'Jamie', 'Smith', 'Doe', '2000-01-03', 'I', 'Philippines', 'Roman Catholic', 'Single', 'Other Barangay Personnel', 1, '09333333333', '../../uploads/default_profile.jpg'),
 (213, 'Mayor', 'Mayora', 'Major', '1999-01-01', 'F', 'Baguio City, Philippines', 'Roman Catholic', 'Married', 'Punong Barangay', 3, '09987654321', '../../uploads/temp/680cd13daccfb.jpg'),
-(214, 'a', 'a', 'a', '1111-11-11', 'M', 'a', 'a', 'Married', 'Punong Barangay', 3, '09111111111', '../../uploads/temp/680cd8abaeae8.jpg'),
-(215, 'q', 'q', 'q', '1111-11-11', 'F', 'q', 'q', 'Single', 'Other Barangay Personnel', 1, '09111111111', '../../uploads/default_profile.jpg'),
-(216, 'a', 'a', 'a', '1111-11-11', 'F', 'a', 'a', 'Single', 'Other Barangay Personnel', 1, '09999999999', '../../uploads/default_profile.jpg'),
-(217, 'q', 'q', 'q', '1111-11-11', 'M', 'q', 'q', 'Married', 'Punong Barangay', 3, '09111111111', '../../uploads/default_profile.jpg'),
-(218, 's', 's', 's', '1111-11-11', 'M', 's', 's', 'Single', 'Sangguniang Barangay Member', 2, '09111111111', '../../uploads/temp/680cdb61e1987.jpg'),
 (219, 'Hitori', 'Bocchi', 'Gotou', '2009-02-21', 'F', 'Japan', 'Shinto', 'Single', 'Other Barangay Personnel', 1, '09000000000', '../../uploads/temp/680cf3482d20b.jpg'),
-(220, 'a', 'a', 'a', '1111-11-11', 'M', 'a', 'a', 'Single', 'Punong Barangay', 3, '09111111111', '../../uploads/default_profile.jpg'),
-(221, 'a', 'a', 'a', '1111-11-11', 'M', 'a', 'a', 'Single', 'Punong Barangay', 3, '09111111111', '../../uploads/default_profile.jpg'),
 (222, 'Tarou', 'Tanaka', 'Sakamoto', '1997-11-21', 'M', 'Japan', 'Atheist', 'Married', 'Other Barangay Personnel', 1, '09444444444', '../../uploads/temp/680e3def12dc7.png'),
 (223, 'Kento', 'Kokusen', 'Nanami', '1990-07-03', 'M', 'Japan', 'Shinto', 'Single', 'Barangay Secretary', 2, '09555555555', '../../uploads/temp/680e3f3d12fd1.jpg'),
 (224, 'Kento', 'Kokusen', 'Nanami', '1990-07-03', 'M', 'Japan', 'Shinto', 'Single', 'Barangay Secretary', 2, '09555555555', '../../uploads/temp/680e412a573ca.jpg'),
-(225, 'a', 'a', 'a', '1111-11-11', 'M', 'a', 'a', 'Legally Separated', 'Other Barangay Personnel', 1, '09111111111', '../../uploads/default_profile.jpg'),
 (226, 'R J', 'Guerrero', 'Salcedo', '2004-04-01', 'F', 'Pangasinan', 'Roman Catholic', 'Divorced', 'Other Barangay Personnel', 1, '09504788697', '../../uploads/temp/68139752ef140.jpg'),
-(227, 'qwerty', 'qwerty', 'qwerty', '1111-11-11', 'M', 'qwerty', 'qwerty', 'Single', 'Other Barangay Personnel', 1, '09111111111', '../../uploads/default_profile.jpg'),
-(228, 'asdf', 'asdf', 'asdf', '1111-11-11', 'M', 'asdf', 'asdf', 'Single', 'Other Barangay Personnel', 1, '09111111111', '../../uploads/temp/6813a84816a15.jpg'),
-(229, 'zxcv', 'zxcv', 'zxcv', '1111-11-11', 'M', 'zxcv', 'zxcv', 'Single', 'Other Barangay Personnel', 1, '09111111111', '../../uploads/default_profile.jpg'),
 (230, 'Jane', 'Turner', 'Smith', '2000-01-01', 'F', 'Philippines', 'Atheist', 'Married', 'Barangay Secretary', 3, '09000000000', '../../uploads/temp/6813a9c249b2a.jpg'),
-(231, 'a', 'a', 'a', '1111-11-11', 'M', 'a', 'a', 'Single', 'Other Barangay Personnel', 1, '09222222222', '../../uploads/default_profile.jpg'),
-(232, 's', 's', 's', '1111-11-11', 'M', 's', 's', 'Single', 'Other Barangay Personnel', 1, '09222222222', '../../uploads/default_profile.jpg'),
-(233, 'q', 'q', 'q', '1111-11-11', 'M', 'q', 'q', 'Legally Separated', 'Other Barangay Personnel', 1, '09111111111', '../../uploads/temp/6813aae47a889.jpg'),
-(234, 'w', 'w', 'w', '1111-11-11', 'M', 'w', 'w', 'Legally Separated', 'Other Barangay Personnel', 1, '09111111111', '../../uploads/default_profile.jpg'),
-(235, 'a', 'a', 'a', '1111-11-11', 'M', 'a', 'a', 'Single', 'Other Barangay Personnel', 1, '09111111111', '../../uploads/default_profile.jpg'),
-(236, 'a', 'a', 'a', '1111-11-11', 'M', 'a', 'a', 'Single', 'Other Barangay Personnel', 1, '09111111111', '../../uploads/default_profile.jpg'),
-(237, 'q', 'q', 'q', '1111-11-11', 'M', 'q', 'q', 'Single', 'Other Barangay Personnel', 1, '09111111111', '../../uploads/default_profile.jpg'),
-(238, 'q', 'q', 'q', '1111-11-11', 'F', 'q', 'q', 'Single', 'Other Barangay Personnel', 1, '09111111111', '../../uploads/default_profile.jpg'),
-(239, 'a', 'a', 'a', '1111-11-11', 'M', 'a', 'a', 'Single', 'Other Barangay Personnel', 1, '09111111111', '../../uploads/default_profile.jpg'),
-(240, 's', 's', 's', '1111-11-11', 'M', 's', 's', 'Single', 'Other Barangay Personnel', 1, '09111111111', '../../uploads/default_profile.jpg'),
 (241, 'Allan', 'Manuel', 'Garcia', '2000-01-03', 'M', 'Manila', 'Roman Catholic', 'Married', 'Other Barangay Personnel', 1, '09111111111', '../../uploads/default_profile.jpg'),
 (242, 'Sarah Mae', 'Ramos', 'Marquez', '2000-01-04', 'F', 'Manila', 'Roman Catholic', 'Divorced', 'Other Barangay Personnel', 1, '09111111111', '../../uploads/default_profile.jpg');
 
@@ -222,7 +199,71 @@ INSERT INTO `employee_update` (`update_id`, `emp_id`, `update_first_name`, `upda
 (413, 1028, 'Sarah Mae', 'Marquez', 'Capiz', '2000-01-04', 'F', 'Manila', 'Roman Catholic', 'Married', 'Other Barangay Personnel', 1, 'Approved', '2025-05-07 23:46:34', NULL),
 (414, 1029, 'Allan', 'Manuel', 'Garcia', '2000-01-03', 'M', 'Baguio', 'Roman Catholic', 'Single', 'Other Barangay Personnel', 1, 'Denied', '2025-05-07 23:51:19', NULL),
 (415, 1028, 'Sarah Mae', 'Marquez', 'Capis', '2000-01-04', 'F', 'Manila', 'Roman Catholic', 'Married', 'Other Barangay Personnel', 1, 'Approved', '2025-05-07 23:52:13', 'Typo on last name.'),
-(416, 1001, 'Admin', 'Santos', 'Dela Cruz', '2000-01-01', 'M', 'Philippines', 'Atheist', 'Single', 'Punong Barangay', 3, 'Approved', '2025-05-08 00:13:46', 'Debug');
+(416, 1001, 'Admin', 'Santos', 'Dela Cruz', '2000-01-01', 'M', 'Philippines', 'Atheist', 'Single', 'Punong Barangay', 3, 'Approved', '2025-05-08 00:13:46', 'Debug'),
+(417, 1009, 'Jamie', 'Smith', 'Brown', '2000-01-03', 'M', 'Philippines', 'Roman Catholic', 'Married', 'Barangay Secretary', 2, 'Denied', '2025-05-20 16:22:25', NULL),
+(418, 1009, 'Jamie', 'Smith', 'Brown', '2003-01-03', 'F', 'Philippines', 'Roman Catholic', 'Married', 'Barangay Secretary', 2, 'Denied', '2025-05-20 16:22:40', NULL),
+(419, 1001, 'Admin', 'Admin', 'Admin', '2001-01-01', 'M', 'Philippines', 'Roman Catholic', 'Single', 'Punong Barangay', 3, 'Approved', '2025-05-20 16:25:24', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `families`
+--
+
+CREATE TABLE `families` (
+  `family_id` varchar(10) NOT NULL,
+  `household_id` varchar(10) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `families`
+--
+
+INSERT INTO `families` (`family_id`, `household_id`, `created_at`) VALUES
+('FA00001', 'HH00001', '2025-06-01 11:40:48');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `family_members`
+--
+
+CREATE TABLE `family_members` (
+  `member_id` varchar(10) NOT NULL,
+  `family_id` varchar(10) NOT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `middle_initial` varchar(5) DEFAULT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `suffix` varchar(10) DEFAULT NULL,
+  `relation` varchar(100) DEFAULT NULL,
+  `sex` varchar(1) NOT NULL,
+  `birthdate` date NOT NULL,
+  `civil_status` varchar(50) NOT NULL,
+  `religion` varchar(100) DEFAULT NULL,
+  `schooling` varchar(50) NOT NULL,
+  `attainment` varchar(50) DEFAULT NULL,
+  `occupation` varchar(150) DEFAULT NULL,
+  `emp_status` varchar(50) NOT NULL,
+  `emp_category` varchar(50) DEFAULT NULL,
+  `income_cash` decimal(10,2) DEFAULT NULL,
+  `income_kind` varchar(50) DEFAULT NULL,
+  `livelihood_training` text DEFAULT NULL,
+  `is_senior_citizen` tinyint(1) DEFAULT NULL,
+  `is_pwd` tinyint(1) DEFAULT NULL,
+  `is_ofw` tinyint(1) DEFAULT NULL,
+  `is_solo_parent` tinyint(1) DEFAULT NULL,
+  `is_indigenous` tinyint(1) DEFAULT NULL,
+  `remarks` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `family_members`
+--
+
+INSERT INTO `family_members` (`member_id`, `family_id`, `first_name`, `middle_initial`, `last_name`, `suffix`, `relation`, `sex`, `birthdate`, `civil_status`, `religion`, `schooling`, `attainment`, `occupation`, `emp_status`, `emp_category`, `income_cash`, `income_kind`, `livelihood_training`, `is_senior_citizen`, `is_pwd`, `is_ofw`, `is_solo_parent`, `is_indigenous`, `remarks`) VALUES
+('FM00001', 'FA00001', 'Ruben', '', 'Dumayda', 'Sr', 'Father', 'M', '1942-04-15', 'Married', 'Roman Catholic', 'Out of school', 'Elementary', 'Riprapping', 'Contractual', 'Private', 4000.00, '', '', 1, 0, 0, 0, 1, ''),
+('FM00002', 'FA00001', 'Gloria', 'A', 'Dumayda', '', 'Mother', 'F', '1970-01-31', 'Married', 'Roman Catholic', 'Out of school', 'Elementary', 'Vendor', 'Permanent', 'Private', 5000.00, '', '', 0, 0, 0, 0, 1, '');
 
 -- --------------------------------------------------------
 
@@ -248,6 +289,69 @@ CREATE TABLE `files` (
 INSERT INTO `files` (`file_id`, `title`, `file_name`, `file_path`, `uploaded_by`, `upload_date`, `privacy`, `file_type`) VALUES
 (20, 'Upload Test (PDF)', 'Upload Test (PDF)', '../../uploads/documents/680efec219838-test_pdf.pdf', 1, '2025-04-27 14:06:26', 'Public', NULL),
 (21, 'Test Document', 'Test Document', '../../uploads/documents/680f0043ccdf3-test_document.docx', 1, '2025-04-27 14:12:51', 'Public', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `households`
+--
+
+CREATE TABLE `households` (
+  `household_id` varchar(10) NOT NULL,
+  `household_address_id` varchar(10) NOT NULL,
+  `household_respondent_id` varchar(10) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `households`
+--
+
+INSERT INTO `households` (`household_id`, `household_address_id`, `household_respondent_id`, `created_at`) VALUES
+('HH00001', 'HA00001', 'HR00001', '2025-06-01 11:40:48');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `household_addresses`
+--
+
+CREATE TABLE `household_addresses` (
+  `household_address_id` varchar(10) NOT NULL,
+  `house_number` varchar(10) NOT NULL,
+  `purok` varchar(100) DEFAULT NULL,
+  `street` varchar(100) DEFAULT NULL,
+  `district` varchar(100) DEFAULT NULL,
+  `barangay` varchar(100) NOT NULL DEFAULT 'Greenwater Village'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `household_addresses`
+--
+
+INSERT INTO `household_addresses` (`household_address_id`, `house_number`, `purok`, `street`, `district`, `barangay`) VALUES
+('HA00001', '137', '5', '', '', 'Greenwater Village');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `household_respondents`
+--
+
+CREATE TABLE `household_respondents` (
+  `household_respondent_id` varchar(10) NOT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `middle_initial` varchar(5) DEFAULT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `suffix` varchar(5) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `household_respondents`
+--
+
+INSERT INTO `household_respondents` (`household_respondent_id`, `first_name`, `middle_initial`, `last_name`, `suffix`) VALUES
+('HR00001', 'Richelle Joy', 'A', 'Dumayda', '');
 
 -- --------------------------------------------------------
 
@@ -298,15 +402,16 @@ CREATE TABLE `login_details` (
 
 INSERT INTO `login_details` (`user_id`, `emp_id`, `username`, `email`, `password`) VALUES
 (1, 1001, 'admin', 'admin@email.com', 'admin@greenwater2025'),
-(2, 1002, 'mbringas', 'msimonbringas05v2@gmail.com', '$2y$10$uhb50SXESN/O6VzZd2V9h.lCwlpiRxZweMtR0W5qxH7xjpoFG43/e'),
-(4, 1004, 'jdoe', 'jdoe@email.com', '$2y$10$VCPFcQVgrnx1lzn4DxZWbedaopwO.0jAZWLzRMuMkqI7MMIfz5noq'),
+(2, 1002, 'mbringas', 'msimonbringas05v2@gmail.com', '$2y$10$wF97rR4rkSy9/ERCr1PZjeS0SQqh5I1xQFaNxkMitUxLx2zPXbtSe'),
+(4, 1004, 'jdoe', 'jdoe@email.com', 'test123'),
 (9, 1009, 'jamiedoe', 'jamied@email.com', '$2y$10$C0oC34M1ynaxxgdDXhHPxeWKHaVWUCcHB5wGfp6WTjz2VoA2kW4/C'),
 (13, 1013, 'sakamoto', 'sakamoto@tarou.com', '$2y$10$4iHzxPWm9Qmw9ebGUDK1FOE30fc80XjdVvEh0Nk/sHP0p6hPv8b5S'),
 (14, 1014, 'nanami', 'nanami@kento.com', '$2y$10$9CY88e9UqU7MBgVSkWJNY.i3WhhDPSmQnvaJKSmdnZQ2LCzYKRbGe'),
 (20, 1020, 'janedoe', 'janedoe@email.com', '$2y$10$OFVHhJoT5/TzdPXg5BDpfOz2p/itz4/0zW1FkQ.kRva5KUzVdQ7ae'),
 (28, 1028, 'sarahcapis', 'sarahcapis@gmail.com', '$2y$10$AAauWi/6TyEDfZkgmFSYt.U2wPk0vezsGqpMdubXTzIda871L3/9S'),
 (29, 1029, 'allangarcia', 'allangarcia@email.com', '$2y$10$aXtdoCiQmftQIOX4pw3LNerF61IMpGYTuk8cx0fJ.eSbzriKGdCCe'),
-(31, 1031, 'kevinsanchez', 'kevinsanchez@gmail.com', '$2y$10$rqH3Daiux8xjtV2riK/cy.HVpbMZ4Lm/esDkZn4A6ZpCGNIxTQcLi');
+(31, 1031, 'kevinsanchez', 'kevinsanchez@gmail.com', '$2y$10$rqH3Daiux8xjtV2riK/cy.HVpbMZ4Lm/esDkZn4A6ZpCGNIxTQcLi'),
+(32, 1032, 'tayoan', 'tayoan@123', '1234');
 
 -- --------------------------------------------------------
 
@@ -332,39 +437,15 @@ INSERT INTO `login_registration` (`registration_login_id`, `username`, `email`, 
 (305, 'jamiedoe', 'jamied@gmail.com', '$2y$10$seG.DrMp0eXS3l7ADtzIW.mT4.3oFPucenB.S7QrmrUfprclSC3RW'),
 (306, 'jamiedoe', 'jamied@gmail.com', '$2y$10$g1DKtk.PqdQn5Qd7qKxLy.PGTnm8l50H0KdCDbvZK/GutTkbLL6Oe'),
 (307, 'janedoe', 'janedoe@email.com', '$2y$10$8suHYTzlraplsOOpfTltpe/mpQ3tWk4zxlGYB4Pl2vJmUx6wb/Uzu'),
-(308, 'a', 'a@a', '$2y$10$gsmlEiGFEigFRhVeVtWFLurJDPaFyibZfToi5MjhqDhqygyk9bGxu'),
 (309, 'jamiedoe', 'jamied@gmail.com', '$2y$10$0b5aMkLWDA6XgAFOYmZZOuW/HCq9cuC3JwW2kR97STmzxiCGIweqO'),
-(310, 'a', 'a@a', '$2y$10$4rGjh49nnrfrmjhJhvngDurWXted42vBO5uJWh3LTExInypcazzVa'),
-(311, 'a', 'a@a', '$2y$10$vqTTD4cVAPBwWMj.SFatmuuoiXpaID0utdjt8b76mDBnO16Jz4rQS'),
 (312, 'jamiedoe', 'jamied@email.com', '$2y$10$bF8Afn4vKyOP3I7ENCePxe0f19VGzxX.ss1VBR0bMszk/YfZtA/Ia'),
 (313, 'mayor', 'mayor@gmail.com', '$2y$10$Z0zIgrdz7/cC5dHMz9cpYuKscp37zqakWTrA4iXch5ebWww6joNHS'),
-(314, 'a', 'a@a', '$2y$10$ajYZtL4yWiszo/VcpqSk7.3tsgeqwAQ6D6H5X9G/XnnYbOwwNoWEW'),
-(315, 'q', 'q@q', '$2y$10$zUD.d6RN.BUPxgfsHHnu9OWbDU/XUIfutu8rlxR5rnVCOZW0v9OKK'),
-(316, 'a', 'a@a', '$2y$10$fiy74fASccvgYl3OY3ZMz.2Yc.WPFMgW.9wNyW0IajX0ei47v1i9m'),
-(317, 'q', 'q@q', '$2y$10$FKZZpyn0Sjkth9uCwk9plemLZvlMfTUArGXn4Cx3yqJI20p14hjtO'),
-(318, 's', 's@s', '$2y$10$AV2UNkC32gTESbZddpLqZOI0CZ9JI03gVH/4vjtSbxmBjgP1cqEri'),
 (319, 'bocchi', 'bocchi@the.rock', '$2y$10$SEQTYjpR5QmwUxl.w5KuZuZwwvPKC96rnQaIZdZVO3sJL8L7WGC7C'),
-(320, 'a', 'a@a', '$2y$10$mkbStg9yYL1ODMSHHFf1eOyyB2z1ymPAAXu76HfWu/XNTHFQQu2UC'),
-(321, 'a', 'a@a', '$2y$10$dI/Fr1J/vBPHg/nQA/wYP.MRBfHR.s4K455dtxn4y4p...'),
 (322, 'sakamoto', 'sakamoto@tarou.com', '$2y$10$4iHzxPWm9Qmw9ebGUDK1FOE30fc80XjdVvEh0Nk/sHP0p6hPv8b5S'),
 (323, 'nanami', 'nanami@kento.jjk', '$2y$10$AVJgJ.vxrvQOz5kjdvM5QuGP7AG8ENBqLcPO4FjZprF0WlFlksXOe'),
 (324, 'nanami', 'nanami@kento.jjk', '$2y$10$9CY88e9UqU7MBgVSkWJNY.i3WhhDPSmQnvaJKSmdnZQ2LCzYKRbGe'),
-(325, 'a', 'a@a', '$2y$10$BTF/nlhljK/z8Co.6.XW/ujeZFBGhlfhCSBiBQH.qQTbAnjAmynZW'),
 (326, 'rjsalcedo', 'rjsalcedo@email.com', '$2y$10$TW3uBHsft8ADAtFyhh844.eT2as0duRVazSGTRBqnb5iorHZtV5y2'),
-(327, 'qwerty', 'qwerty@email.com', '$2y$10$rus0Rh7DHNAFS7UzgdtXguhpz/m646OyJOCls9wkQFGH8g/L5LsBy'),
-(328, 'asdf', 'asdf@email.com', '$2y$10$Eftmr24eFicr6bMHz7.YSeWaqPYq4P6Fq8UyNOp5ZJQqePxu7muNC'),
-(329, 'zxcv', 'zxcv@email.com', '$2y$10$WqQ6Hel6LnpvoAYVf9rRJ.Sc1B.tDdfCwa4msJZA/g44onMkKpkHq'),
 (330, 'janedoe', 'janedoe@email.com', '$2y$10$OFVHhJoT5/TzdPXg5BDpfOz2p/itz4/0zW1FkQ.kRva5KUzVdQ7ae'),
-(331, 'a', 'a@a', '$2y$10$H8/lookA.hQzFQ493da8.uvtGNzekdk2rB1L0tEyIAoRZdtXx5xam'),
-(332, 's', 's@s', '$2y$10$OdDmziVlbCn7H3a8acq7bunWu/KzcwUDRVqXmx6tlRgTJHHjOgdq.'),
-(333, 'q', 'q@q', '$2y$10$/YSp68BK7JBcC/xqxO0Jk.nYVvpzUtwWniEqHWUKrhbQCv6mpzQeC'),
-(334, 'w', 'w@w', '$2y$10$J3lRg3ZPQVili9TSfVagYukaWV1B7wzZio67BYdP0bdskbcp/RpGC'),
-(335, 'a', 'a@a', '$2y$10$pBUYt9XlwwUvHd8TdLSSh.l7qBSuWiFYKccDAyp/5sbofi6PqeCo6'),
-(336, 'a', 'a@a', '$2y$10$l8lH5i6vpNkgjbBH09njKeXwLz2mFgTXhudkQFHmFEv90x0EF0Evu'),
-(337, 'q', 'q@q', '$2y$10$MXEQ6zeRKcxG63GuvvXnyuscZYr2OlEtX9eWJKUWMPMZ0TH.gkf/C'),
-(338, 'q', 'q@q', '$2y$10$1x0hWo0nduY...z8ua/fdeO5lJg.Cv2t1uQTDbgSQtVu5vaXXnsGK'),
-(339, 'a', 'a@a', '$2y$10$jZruvUYJHytav3gHYbe91uKFo/7LgHPcd6olZgndWXJc17473PaVC'),
-(340, 's', 's@s', '$2y$10$LBT4TV6uRpFvcOzWYJqUyOQbF90mrriIO5kLtENHAKHZ17HaX84KO'),
 (341, 'allangarcia', 'allangarcia@email.com', '$2y$10$aXtdoCiQmftQIOX4pw3LNerF61IMpGYTuk8cx0fJ.eSbzriKGdCCe'),
 (342, 'sarahmarquez', 'sarahmarquez@gmail.com', '$2y$10$AAauWi/6TyEDfZkgmFSYt.U2wPk0vezsGqpMdubXTzIda871L3/9S');
 
@@ -393,41 +474,56 @@ INSERT INTO `registration` (`registration_id`, `registration_emp_id`, `registrat
 (105, 205, 305, 'Approved', '2025-04-26 17:52:52'),
 (106, 206, 306, 'Approved', '2025-04-26 18:00:29'),
 (107, 207, 307, 'Approved', '2025-04-26 18:15:32'),
-(108, 208, 308, 'Denied', '2025-04-26 18:16:50'),
 (109, 209, 309, 'Denied', '2025-04-26 18:28:51'),
-(110, 210, 310, 'Denied', '2025-04-26 18:38:52'),
-(111, 211, 311, 'Denied', '2025-04-26 18:42:51'),
 (112, 212, 312, 'Approved', '2025-04-26 18:51:55'),
 (113, 213, 313, 'Denied', '2025-04-26 20:28:10'),
-(114, 214, 314, 'Denied', '2025-04-26 20:59:30'),
-(115, 215, 315, 'Denied', '2025-04-26 20:59:55'),
-(116, 216, 316, 'Approved', '2025-04-26 21:09:37'),
-(117, 217, 317, 'Approved', '2025-04-26 21:10:00'),
-(118, 218, 318, 'Approved', '2025-04-26 21:11:05'),
 (119, 219, 319, 'Pending', '2025-04-26 22:53:19'),
-(120, 220, 320, 'Denied', '2025-04-27 16:41:17'),
-(121, 221, 321, 'Denied', '2025-04-27 18:56:15'),
 (122, 222, 322, 'Approved', '2025-04-27 22:24:31'),
 (123, 223, 323, 'Denied', '2025-04-27 22:35:59'),
 (124, 224, 324, 'Approved', '2025-04-27 22:38:16'),
-(125, 225, 325, 'Approved', '2025-05-01 23:36:30'),
 (126, 226, 326, 'Approved', '2025-05-01 23:46:39'),
-(127, 227, 327, 'Approved', '2025-05-02 00:58:07'),
-(128, 228, 328, 'Approved', '2025-05-02 00:58:55'),
-(129, 229, 329, 'Approved', '2025-05-02 01:00:40'),
 (130, 230, 330, 'Approved', '2025-05-02 01:05:18'),
-(131, 231, 331, 'Approved', '2025-05-02 01:07:01'),
-(132, 232, 332, 'Approved', '2025-05-02 01:08:10'),
-(133, 233, 333, 'Approved', '2025-05-02 01:10:03'),
-(134, 234, 334, 'Approved', '2025-05-02 01:10:26'),
-(135, 235, 335, 'Approved', '2025-05-07 23:30:39'),
-(136, 236, 336, 'Approved', '2025-05-07 23:32:03'),
-(137, 237, 337, 'Denied', '2025-05-07 23:38:26'),
-(138, 238, 338, 'Denied', '2025-05-07 23:38:59'),
-(139, 239, 339, 'Approved', '2025-05-07 23:39:24'),
-(140, 240, 340, 'Denied', '2025-05-07 23:42:10'),
 (141, 241, 341, 'Approved', '2025-05-07 23:43:57'),
 (142, 242, 342, 'Approved', '2025-05-07 23:45:04');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `residencycertreq`
+--
+
+CREATE TABLE `residencycertreq` (
+  `id` int(11) NOT NULL,
+  `firstname` varchar(50) NOT NULL,
+  `middle_initial` varchar(5) DEFAULT NULL,
+  `lastname` varchar(50) NOT NULL,
+  `suffix` varchar(10) DEFAULT NULL,
+  `age` int(11) NOT NULL,
+  `street` varchar(100) NOT NULL,
+  `barangay` varchar(100) NOT NULL,
+  `gender` enum('Male','Female') NOT NULL,
+  `years_residency` int(11) DEFAULT NULL,
+  `months_residency` int(11) DEFAULT NULL,
+  `purpose` text NOT NULL,
+  `status` enum('pending','approved','rejected') DEFAULT 'pending',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `residencycertreq`
+--
+
+INSERT INTO `residencycertreq` (`id`, `firstname`, `middle_initial`, `lastname`, `suffix`, `age`, `street`, `barangay`, `gender`, `years_residency`, `months_residency`, `purpose`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'test', 't', 'test', '', 23, 'test', 'test', 'Male', 3, NULL, 'test', 'pending', '2025-05-16 03:16:16', NULL),
+(2, 'test', 't', 'test', NULL, 4, 'test', 'test', 'Male', 4, NULL, 'test', 'pending', '2025-05-15 21:22:41', NULL),
+(3, 'test', 't', 'test', '', 4, 'test', 'test', 'Male', 4, NULL, 'test', 'pending', '2025-05-16 03:23:02', NULL),
+(4, 'Mark', 'D', 'De Leon', '', 45, 'No 43', 'Greenwater Village', 'Male', 5, NULL, 'Test', 'approved', '2025-05-16 03:26:17', '2025-05-16 15:13:02'),
+(5, 'test', 'e', 'test', '', 43, 'test', 'test', 'Male', 3, NULL, 'test', 'pending', '2025-05-16 10:34:28', NULL),
+(6, 'Zhaina', 'M', 'Tamangen', '', 23, 'No 32', 'Greenwater Village', 'Female', NULL, 9, 'Medical Assistance', 'approved', '2025-05-16 10:35:58', '2025-05-16 15:47:43'),
+(7, 'Ruth', 'D', 'Pugong', '', 23, 'Bahag', 'Asipulo', 'Female', 21, NULL, 'secret', 'rejected', '2025-05-16 10:38:01', '2025-05-16 15:11:41'),
+(8, 'test', '3', 'ts', 're', 34, 'There', 'Greenwater Village', 'Male', 4, NULL, 'hello', 'approved', '2025-05-16 10:39:18', '2025-05-16 15:10:30'),
+(9, 'Mark', 'Z', 'Simon', '', 20, 'Greenwater Village', 'Greenwater', 'Male', 20, NULL, 'Scholarship', 'approved', '2025-05-19 00:41:57', '2025-05-19 00:42:14');
 
 -- --------------------------------------------------------
 
@@ -494,11 +590,45 @@ ALTER TABLE `employee_update`
   ADD KEY `fk_emp_id` (`emp_id`);
 
 --
+-- Indexes for table `families`
+--
+ALTER TABLE `families`
+  ADD PRIMARY KEY (`family_id`),
+  ADD KEY `fk_household` (`household_id`);
+
+--
+-- Indexes for table `family_members`
+--
+ALTER TABLE `family_members`
+  ADD PRIMARY KEY (`member_id`),
+  ADD KEY `fk_family` (`family_id`);
+
+--
 -- Indexes for table `files`
 --
 ALTER TABLE `files`
   ADD PRIMARY KEY (`file_id`),
   ADD KEY `uploaded_by` (`uploaded_by`);
+
+--
+-- Indexes for table `households`
+--
+ALTER TABLE `households`
+  ADD PRIMARY KEY (`household_id`),
+  ADD KEY `fk_household_address` (`household_address_id`),
+  ADD KEY `fk_household_respondent` (`household_respondent_id`);
+
+--
+-- Indexes for table `household_addresses`
+--
+ALTER TABLE `household_addresses`
+  ADD PRIMARY KEY (`household_address_id`);
+
+--
+-- Indexes for table `household_respondents`
+--
+ALTER TABLE `household_respondents`
+  ADD PRIMARY KEY (`household_respondent_id`);
 
 --
 -- Indexes for table `incidents`
@@ -529,6 +659,12 @@ ALTER TABLE `registration`
   ADD KEY `fk_registration_login` (`registration_login_id`);
 
 --
+-- Indexes for table `residencycertreq`
+--
+ALTER TABLE `residencycertreq`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `security_questions`
 --
 ALTER TABLE `security_questions`
@@ -555,7 +691,7 @@ ALTER TABLE `attachments`
 -- AUTO_INCREMENT for table `employee_details`
 --
 ALTER TABLE `employee_details`
-  MODIFY `emp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1032;
+  MODIFY `emp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1034;
 
 --
 -- AUTO_INCREMENT for table `employee_registration`
@@ -567,7 +703,7 @@ ALTER TABLE `employee_registration`
 -- AUTO_INCREMENT for table `employee_update`
 --
 ALTER TABLE `employee_update`
-  MODIFY `update_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=417;
+  MODIFY `update_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=420;
 
 --
 -- AUTO_INCREMENT for table `incidents`
@@ -579,7 +715,7 @@ ALTER TABLE `incidents`
 -- AUTO_INCREMENT for table `login_details`
 --
 ALTER TABLE `login_details`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `login_registration`
@@ -592,6 +728,12 @@ ALTER TABLE `login_registration`
 --
 ALTER TABLE `registration`
   MODIFY `registration_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=143;
+
+--
+-- AUTO_INCREMENT for table `residencycertreq`
+--
+ALTER TABLE `residencycertreq`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `security_questions`
@@ -622,10 +764,29 @@ ALTER TABLE `employee_update`
   ADD CONSTRAINT `fk_emp_id` FOREIGN KEY (`emp_id`) REFERENCES `employee_details` (`emp_id`) ON DELETE CASCADE;
 
 --
+-- Constraints for table `families`
+--
+ALTER TABLE `families`
+  ADD CONSTRAINT `fk_household` FOREIGN KEY (`household_id`) REFERENCES `households` (`household_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `family_members`
+--
+ALTER TABLE `family_members`
+  ADD CONSTRAINT `fk_family` FOREIGN KEY (`family_id`) REFERENCES `families` (`family_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `files`
 --
 ALTER TABLE `files`
   ADD CONSTRAINT `files_ibfk_1` FOREIGN KEY (`uploaded_by`) REFERENCES `login_details` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `households`
+--
+ALTER TABLE `households`
+  ADD CONSTRAINT `fk_household_address` FOREIGN KEY (`household_address_id`) REFERENCES `household_addresses` (`household_address_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_household_respondent` FOREIGN KEY (`household_respondent_id`) REFERENCES `household_respondents` (`household_respondent_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `incidents`
