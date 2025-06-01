@@ -339,8 +339,8 @@
                             }
                         ?>
                         <div class="member-submission-btns">
-                            <button type="submit" name="confirm-household">Confirm</button>
-                            <button type="button" onclick="window.history.back();">Go Back</button>
+                            <button class="custom-cancel-button" type="submit" name="confirm-household">Confirm</button>
+                            <button class="custom-cancel-button" type="button" onclick="window.history.back();">Go Back</button>
                         </div>
                     </form>
                 </div>
