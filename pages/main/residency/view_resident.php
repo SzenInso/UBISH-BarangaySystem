@@ -29,17 +29,39 @@
         $resident = $stmt->fetch();
 
         if (!$resident) {
-            echo "<script>
-                alert('Resident not found.');
-                window.location.href = '../main/residency_management.php';
-            </script>";
+            echo "
+                <link rel='stylesheet' href='../../../assets/css/style.css'>
+                <script src='js/sweetalert2.js'></script>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        Swal.fire({
+                            title: 'Resident not found.',
+                            icon: 'info',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            window.location.href='../residency_management.php';
+                        });
+                    });
+                </script>
+            ";
             exit;
         }
     } else {
-        echo "<script>
-            alert('No resident selected.');
-            window.location.href = '../main/residency_management.php';
-        </script>";
+        echo "
+            <link rel='stylesheet' href='../../../assets/css/style.css'>
+            <script src='js/sweetalert2.js'></script>
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    Swal.fire({
+                        title: 'No resident selected.',
+                        icon: 'info',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        window.location.href='../residency_management.php';
+                    });
+                });
+            </script>
+        ";
         exit;
     }
 ?>
