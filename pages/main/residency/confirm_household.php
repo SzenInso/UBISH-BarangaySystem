@@ -1,7 +1,5 @@
 <?php
     include '../../../config/dbfetch.php';
-
-    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -125,7 +123,7 @@
 
                                     <table border="1" cellspacing="0" style="width:100%; table-layout:fixed;">
                                         <tr>
-                                            <th>Household Head</th>
+                                            <th>Household Head/Respondent</th>
                                             <td>
                                                 <?php 
                                                     echo isset($_POST['household_first_name']) && isset($_POST['household_last_name']) ? 
@@ -202,14 +200,15 @@
                                         <?php } else { ?> 
                                             <input type="hidden" name="is_indigenous[<?php echo $i; ?>]" value="0">
                                         <?php } ?>
-                                        
+                                        <input type="hidden" name="remarks[]" value="<?php echo htmlspecialchars($_POST['remarks'][$i] ?? ''); ?>">
                                         <table border="1" cellspacing="0" style="width:100%; table-layout:fixed;">
                                             <tr>
                                                 <th>Full Name</th>
                                                 <td>
                                                     <?php 
                                                         if (isset($_POST['fname'][$i]) && isset($_POST['lname'][$i])) {
-                                                            echo htmlspecialchars($_POST['fname'][$i]) . " " . htmlspecialchars($_POST['lname'][$i]);
+                                                            echo htmlspecialchars($_POST['fname'][$i]) . " " . htmlspecialchars(strtoupper($_POST['mname'][$i] ?? '')) . " " .
+                                                                htmlspecialchars($_POST['lname'][$i]) . " " . htmlspecialchars($_POST['suffix'][$i] ?? '');
                                                         } else { echo 'Not specified'; }
                                                     ?>
                                                 </td>
@@ -317,6 +316,10 @@
                                             <tr>
                                                 <th>Is an Indigenous Person (IP)?</th>
                                                 <td><?php echo isset($_POST['is_indigenous'][$i]) ? 'Yes' : 'No'; ?></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Remarks</th>
+                                                <td><?php echo isset($_POST['remarks'][$i]) ? htmlspecialchars($_POST['remarks'][$i]) : ''; ?></td>
                                             </tr>
                                         </table>
                                     </div>

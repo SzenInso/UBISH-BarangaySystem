@@ -9,21 +9,23 @@
                 <table border="1" cellspacing="0" style="width:100%; table-layout:fixed;">
                     <thead>
                         <tr>
-                            <th colspan="2">Household Member(s)</th>
+                            <th colspan="4">Household Member(s)</th>
                             <th rowspan="2">Relation to Head/Respondent</th>
                             <th rowspan="2">Sex</th>
-                            <th rowspan="2">Date of Birth</th>
-                            <th rowspan="2">Age</th>
                         </tr>
                         <tr>
                             <th>First Name</th>
+                            <th>Middle Initial</th>
                             <th>Last Name</th>
+                            <th>Suffix</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td><input type="text" name="fname[]"></td>
+                            <td><input type="text" name="mname[]" maxlength="5"></td>
                             <td><input type="text" name="lname[]"></td>
+                            <td><input type="text" name="suffix[]" maxlength="10"></td>
                             <td><input type="text" name="relation[]"></td>
                             <td>
                                 <select name="sex[]">
@@ -32,25 +34,25 @@
                                     <option value="F">Female</option>
                                 </select>
                             </td>
+                        </tr>
+                    </tbody>
+                    <thead>
+                        <tr>
+                            <th rowspan="2">Date of Birth</th>
+                            <th rowspan="2">Age</th>
+                            <th rowspan="2">Civil Status</th>
+                            <th rowspan="2">Religion</th>
+                            <th rowspan="2">Schooling</th>
+                            <th rowspan="2">Highest Educational Attainment</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
                             <td><input type="date" name="birthdate[]" class="dobInput"></td>
                             <td>
                                 <span class="ageDisplay"></span>
                                 <input type="hidden" name="age[]" class="ageHidden">
                             </td>
-                        </tr>
-                    </tbody>
-                    <thead>
-                        <tr>
-                            <th rowspan="2">Civil Status</th>
-                            <th rowspan="2">Religion</th>
-                            <th rowspan="2">Schooling</th>
-                            <th rowspan="2">Highest Educational Attainment</th>
-                            <th rowspan="2">Present Job/Occupation</th>
-                            <th rowspan="2">Livelihood Training</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
                             <td>
                                 <select name="civilstatus[]">
                                     <option value="" disabled selected>-- SELECT CIVIL STATUS</option>
@@ -90,19 +92,14 @@
                                     <option value="Vocational">Vocational</option>
                                 </select>
                             </td>
-                            <td><input type="text" name="occupation[]"></td>
-                            <td><input type="text" name="livelihood_training[]"></td>
                         </tr>
                     </tbody>
                     <thead>
                         <tr>
+                            <th rowspan="2">Present Job/Occupation</th>
+                            <th rowspan="2">Livelihood Training</th>
                             <th colspan="2">Employment</th>
                             <th colspan="2">Est. Monthly Income</th>
-                            <th colspan="2" rowspan="2">
-                                <p style="cursor: help;" title="Indicate if PWD, OFW, Solo Parent, and/or IP.">
-                                    Others
-                                </p>
-                            </th>
                         </tr>
                         <tr>
                             <th>Status</th>
@@ -113,6 +110,8 @@
                     </thead>
                     <tbody>
                         <tr>
+                            <td><input type="text" name="occupation[]"></td>
+                            <td><input type="text" name="livelihood_training[]"></td>
                             <td>
                                 <select name="emp_status[]">
                                     <option value="" disabled selected>-- SELECT EMPLOYMENT STATUS</option>
@@ -134,15 +133,26 @@
                             </td>
                             <td>₱&nbsp;<input type="number" min="0" step=".01" name="income_cash[]"></td>
                             <td><input type="text" name="income_type[]"></td>
-                            <td colspan="2">
-                                <div class="indicate-others" style="display: flex;">
-                                    <input type="checkbox" name="is_PWD[]" value="PWD">&nbsp;PWD&nbsp;
-                                    <input type="checkbox" name="is_OFW[]" value="OFW">&nbsp;OFW&nbsp;
-                                    <input type="checkbox" name="is_solo_parent[]" value="Solo Parent">&nbsp;Solo&nbsp;Parent&nbsp;
-                                    <input type="checkbox" name="is_indigenous[]" value="IP">&nbsp;IP&nbsp;
-                                </div>
-                            </td>
                         </tr>
+                    </tbody>
+                    <thead>
+                        <tr>
+                            <th colspan="3">Others</th>
+                            <th colspan="3">Remarks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <td colspan="3">
+                            <div class="indicate-others" style="display: flex;">
+                                <input type="checkbox" name="is_PWD[]" value="PWD">&nbsp;PWD&nbsp;
+                                <input type="checkbox" name="is_OFW[]" value="OFW">&nbsp;OFW&nbsp;
+                                <input type="checkbox" name="is_solo_parent[]" value="Solo Parent">&nbsp;Solo&nbsp;Parent&nbsp;
+                                <input type="checkbox" name="is_indigenous[]" value="IP">&nbsp;IP&nbsp;
+                            </div>
+                        </td>
+                        <td colspan="3">
+                            <textarea name="remarks[]" rows="3" style="width:100%; resize: vertical; max-height: 256px; padding: 8px;"></textarea>
+                        </td>
                     </tbody>
                 </table>
             </div>
