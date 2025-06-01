@@ -29,6 +29,17 @@
             border-top: 5px solid #356859 !important;
             margin-top: 60px !important;
         }
+        .custom-cancel-button {
+            border: 2px solid gray;
+            background-color: white;
+            color: black;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .custom-cancel-button:hover {
+            background-color: lightgray;
+        }
     </style>
     <header>
         <div class="navigation">

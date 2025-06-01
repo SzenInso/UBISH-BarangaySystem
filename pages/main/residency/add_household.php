@@ -121,21 +121,24 @@
                             Last Name: <input type="text" name="household_last_name">
                             Suffix: <input type="text" name="household_suffix" maxlength="5">
                         </div>
-                        
+                        <br>
                         <label for="address"><b>Household Address</b></label>
                         <div>
                             House Number/Code: <input type="text" name="household_number">
                             Purok: <input type="text" name="household_purok">
                             Street: <input type="text" name="household_street">
                         </div>
+                        <br>
                         <div>
                             District: <input type="text" name="household_district">
                             Barangay: <input type="text" name="household_barangay" value="Greenwater Village" readonly>
                         </div>
-
+                        <br>
                         <label for="num_members"><b>Number of Family Members</b></label>
                         <input type="number" id="num_members" min="1" max="20" style="width:60px;" value="1">
-                        <button type="button" name="generate_rows" id="generate-members-btn">Generate</button>
+                        <br>
+                        <button type="button" name="generate_rows" id="generate-members-btn" class="custom-cancel-button">Generate</button>
+                        <br>
 
                         <script>
                             document.getElementById('generate-members-btn').addEventListener('click', function(e) {
@@ -154,152 +157,7 @@
                             });
                         </script>
                         <div id="family-members-container"></div>
-                        <!--
-                        <div class="family-member">
-                            <div class="family-member-actions">
-                                <button type="button" class="add-member-btn">Add Member</button>
-                                <button type="button" class="remove-member-btn">Remove Member</button>
-                            </div>
-                            <div class="family-member-table">
-                                <p>Note: Please fill out the form below with the details of each household member.</p>
-                                <table border="1" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th colspan="2">Household Member(s)</th>
-                                            <th rowspan="2">Relation to Head</th>
-                                            <th rowspan="2">Sex</th>
-                                            <th rowspan="2">Date of Birth</th>
-                                            <th rowspan="2">Age</th>
-                                        </tr>
-                                        <tr>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><input type="text" name="fname[]"></td>
-                                            <td><input type="text" name="lname[]"></td>
-                                            <td><input type="text" name="relation[]"></td>
-                                            <td>
-                                                <select name="sex[]">
-                                                    <option value="" disabled selected>-- SELECT SEX</option>
-                                                    <option value="M">Male</option>
-                                                    <option value="F">Female</option>
-                                                </select>
-                                            </td>
-                                            <td><input type="date" name="birthdate[]" id="dobInput"></td>
-                                            <td>
-                                                <span id="ageDisplay"></span>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                    <thead>
-                                        <tr>
-                                            <th rowspan="2">Civil Status</th>
-                                            <th rowspan="2">Religion</th>
-                                            <th rowspan="2">Schooling</th>
-                                            <th rowspan="2">Highest Educational Attainment</th>
-                                            <th rowspan="2">Present Job/Occupation</th>
-                                            <th rowspan="2">Livelihood Training</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                    <select name="civilstatus[]">
-                                                        <option value="" disabled selected>-- SELECT CIVIL STATUS</option>
-                                                        <option value="Single">Single</option>
-                                                        <option value="Married">Married</option>
-                                                        <option value="Widowed/r">Widowed/r</option>
-                                                        <option value="Separated">Separated</option>
-                                                    </select>
-                                                </td>
-                                            <td>
-                                                <select name="religion[]">
-                                                    <option value="" disabled selected>-- SELECT RELIGION</option>
-                                                    <option value="Roman Catholic">Roman Catholic</option>
-                                                    <option value="Iglesia ni Cristo">Iglesia ni Cristo</option>
-                                                    <option value="Islam">Islam</option>
-                                                    <option value="Seventh Day Adventist">Seventh Day Adventist</option>
-                                                    <option value="Methodist">Methodist</option>
-                                                    <option value="Other">Other</option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <select name="schooling[]">
-                                                    <option value="" disabled selected>-- SELECT SCHOOLING</option>
-                                                    <option value="In school">In school</option>
-                                                    <option value="Out of school">Out of school</option>
-                                                    <option value="Not yet in school">Not yet in school</option>
-                                                    <option value="Graduate">Graduate</option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <select name="attainment[]">
-                                                    <option value="" disabled selected>-- SELECT ATTAINMENT</option>
-                                                    <option value="Elementary">Elementary</option>
-                                                    <option value="High School">High School</option>
-                                                    <option value="College">College</option>
-                                                    <option value="Post-Graduate">Post-Graduate</option>
-                                                    <option value="Vocational">Vocational</option>
-                                                </select>
-                                            </td>
-                                            <td><input type="text" name="occupation[]"></td>
-                                            <td><input type="text" name="livelihood_training[]"></td>
-                                        </tr>
-                                    </tbody>
-                                    <thead>
-                                        <tr>
-                                            <th colspan="2">Employment</th>
-                                            <th colspan="2">Est. Monthly Income</th>
-                                            <th colspan="2" rowspan="2">
-                                                <p style="cursor: help;" title="Indicate if PWD, OFW, Solo Parent, and/or IP.">
-                                                    Others
-                                                </p>
-                                            </th>
-                                        </tr>
-                                        <tr>
-                                            <th>Status</th>
-                                            <th>Category</th>
-                                            <th>Cash</th>
-                                            <th>Kind</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <td>
-                                            <select name="emp_status[]">
-                                                <option value="" disabled selected>-- SELECT EMPLOYMENT STATUS</option>
-                                                <option value="Permanent">Permanent</option>
-                                                <option value="Temporary">Temporary</option>
-                                                <option value="Contractual">Contractual</option>
-                                                <option value="Self-Employed">Self-Employed</option>
-                                                <option value="Others">Others</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <select name="emp_category[]">
-                                                <option value="" disabled selected>-- SELECT EMPLOYMENT CATEGORY</option>
-                                                <option value="Private">Private</option>
-                                                <option value="Government">Government</option>
-                                                <option value="Self-Employed">Self-Employed</option>
-                                            </select>
-                                        </td>
-                                        <td>₱&nbsp;<input type="number" min="0" name="income_cash[]"></td>
-                                        <td><input type="text" name="income_type[]"></td>
-                                        <td colspan="2">
-                                            <div class="indicate-others" style="display: flex;">
-                                                <input type="checkbox" name="is_PWD[]" value="PWD">&nbsp;PWD&nbsp;
-                                                <input type="checkbox" name="is_OFW[]" value="OFW">&nbsp;OFW&nbsp;
-                                                <input type="checkbox" name="is_solo_parent[]" value="Solo Parent">&nbsp;Solo&nbsp;Parent&nbsp;
-                                                <input type="checkbox" name="is_IP[]" value="IP">&nbsp;IP&nbsp;
-                                            </div>
-                                        </td>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        -->
+
                         <script>
                             document.querySelector('form[action="confirm_household.php"]').addEventListener('submit', function(e) {
                                 const householdFirstName = document.querySelector('input[name="household_first_name"]')?.value.trim();
@@ -370,7 +228,7 @@
                                 }
                             });
                         </script>
-                        <button type="submit" name="save-household">Save Household</button>
+                        <button type="submit" name="save-household" class="custom-cancel-button">Save Household</button>
                     </form>
                 </div>
             </div>
