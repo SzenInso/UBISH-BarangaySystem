@@ -66,9 +66,9 @@
                     $i = (int)$index;
                     $fm_id = generateCustomID($pdo, 'family_members', 'FM', 'member_id');
                     $fm_query = "INSERT INTO family_members (
-                        member_id, family_id, first_name, last_name, relation, sex, birthdate, civil_status, religion, schooling, attainment, occupation, emp_status, emp_category, income_cash, income_kind, livelihood_training, is_senior_citizen, is_PWD, is_OFW, is_solo_parent, is_indigenous
+                        member_id, family_id, first_name, middle_initial, last_name, suffix, relation, sex, birthdate, civil_status, religion, schooling, attainment, occupation, emp_status, emp_category, income_cash, income_kind, livelihood_training, is_senior_citizen, is_PWD, is_OFW, is_solo_parent, is_indigenous, remarks
                     ) VALUES (
-                        ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+                        ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
                     )";
 
                     // check if member is a senior citizen
@@ -85,7 +85,9 @@
                         $fm_id,
                         $fa_id,
                         $_POST['fname'][$i] ?? '',
+                        strtoupper($_POST['mname'][$i] ?? ''),
                         $_POST['lname'][$i] ?? '',
+                        $_POST['suffix'][$i] ?? '',
                         $_POST['relation'][$i] ?? '',
                         $_POST['sex'][$i] ?? '',
                         $_POST['birthdate'][$i] ?? '',
@@ -103,7 +105,8 @@
                         $_POST['is_PWD'][$i] ?? 0,
                         $_POST['is_OFW'][$i] ?? 0,
                         $_POST['is_solo_parent'][$i] ?? 0,
-                        $_POST['is_indigenous'][$i] ?? 0
+                        $_POST['is_indigenous'][$i] ?? 0,
+                        $_POST['remarks'][$i] ?? ''
                     ]);
                 }
             }

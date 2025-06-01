@@ -112,6 +112,11 @@
                     </select>
                 </div>
                 <div class="residency-table">
+                    <?php 
+                        if ($residencyStmt->rowCount() < 1) {
+                            echo '<br><p>No residents found.</p>';
+                        } else {
+                    ?>
                     <table border="1" cellpadding="10" cellspacing="0">
                         <thead>
                             <th>Residency ID</th>
@@ -126,7 +131,17 @@
                             <?php
                                 foreach ($residency as $member) {
                                     $r_id = htmlspecialchars($member['member_id']);
-                                    $name = htmlspecialchars($member['last_name'] . ', ' . $member['first_name']);
+
+                                    $name = htmlspecialchars($member['last_name']);
+                                    if (!empty($member['suffix'])) { $name .= ' ' . htmlspecialchars($member['suffix']); } // add suffix if available
+                                    $name .= ', ';
+                                    $name .= htmlspecialchars($member['first_name']); // add first name
+                                    // add middle initial if  available
+                                    if (!empty($member['middle_initial'])) {
+                                        $middleInitial = strtoupper(substr($member['middle_initial'], 0, 5)) . '.';
+                                        $name .= ' ' . htmlspecialchars($middleInitial);
+                                    }
+
                                     $sex = ($member['sex'] === 'M') ? "Male" : "Female";
                                     $birthdate = htmlspecialchars(date('F j, Y', strtotime($member['birthdate'])));
                                     $age = date_diff(date_create($birthdate), date_create('today'))->y;
@@ -158,6 +173,7 @@
                             ?>
                         </tbody>
                     </table>
+                    <?php } ?>
                 </div>
                 <?php 
                     $familyQuery = "
@@ -171,12 +187,17 @@
 
 
                 ?>
-                <div class="residency-family">
+                <div class="residency-household">
+                    <?php
+                        if ($familyStmt->rowCount() < 1) {
+                            echo '<br><p>No households found.</p>';
+                        } else {
+                    ?>
                     <table border="1" cellpadding="10" cellspacing="0">
                         <thead>
                             <th>Household ID</th>
+                            <th>Head/Respondent</th>
                             <th>Address</th>
-                            <th>Respondent</th>
                             <th>Family ID</th>
                             <th>Actions</th>
                         </thead>
@@ -184,6 +205,17 @@
                             <?php
                                 foreach ($families as $family) {
                                     $householdId = htmlspecialchars($family['household_id']);
+
+                                    $respondent = htmlspecialchars($family['last_name']);
+                                    if (!empty($family['suffix'])) { $respondent .= ' ' . htmlspecialchars($family['suffix']); } // add suffix if available
+                                    $respondent .= ', ';
+                                    $respondent .= htmlspecialchars($family['first_name']); // add first name
+                                    // add middle initial if  available
+                                    if (!empty($family['middle_initial'])) {
+                                        $middleInitial = strtoupper(substr($family['middle_initial'], 0, 5)) . '.';
+                                        $respondent .= ' ' . htmlspecialchars($middleInitial);
+                                    }
+                                    
                                     $addressParts = [];
                                     if (!empty($family['house_number'])) { $addressParts[] = htmlspecialchars($family['house_number']); } // add house number if available
                                     if (!empty($family['purok'])) { $addressParts[] = 'Purok ' . htmlspecialchars($family['purok']); } // add purok if available
@@ -191,13 +223,13 @@
                                     if (!empty($family['district'])) { $addressParts[] = 'District ' . htmlspecialchars($family['district']); } // add district if available
                                     if (!empty($family['barangay'])) { $addressParts[] = htmlspecialchars($family['barangay']); } // add barangay if available
                                     $address = implode(', ', $addressParts); // combine all address parts
-                                    $respondent = htmlspecialchars($family['first_name']) . ' ' . htmlspecialchars($family['last_name']);
+
                                     $familyId = htmlspecialchars($family['family_id']);
                             ?>
                                     <tr>
                                         <td><?php echo $householdId; ?></td>
-                                        <td><?php echo $address; ?></td>
                                         <td><?php echo $respondent; ?></td>
+                                        <td><?php echo $address; ?></td>
                                         <td><?php echo $familyId; ?></td>
                                         <td>
                                             <form action="">
@@ -216,6 +248,7 @@
                             ?>
                         </tbody>
                     </table>
+                    <?php } ?>
                 </div>
             </div>
         </div>
