@@ -238,5 +238,38 @@
         <hr>
         <p><?php echo "&copy; " . date('Y') . " | Unified Barangay Information Service Hub"; ?></p>
     </footer>
+    <script>
+        function calculateAge(birthdate) {
+            if (!birthdate) return '';
+            var today = new Date();
+            var bdate = new Date(birthdate);
+            var age = today.getFullYear() - bdate.getFullYear();
+            var m = today.getMonth() - bdate.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < bdate.getDate())) {
+                age--;
+            }
+            return (isNaN(age) || age < 0) ? '' : age + " year(s) old";
+        }
+
+        function attachAgeListeners() {
+            document.querySelectorAll('.birthdate-input').forEach(function(input) {
+                var tr = input.closest('tr');
+                var ageSpan = tr ? tr.querySelector('.age-display') : null;
+                if (ageSpan) {
+                    ageSpan.textContent = calculateAge(input.value);
+
+                    input.addEventListener('input', function() {
+                        ageSpan.textContent = calculateAge(this.value);
+                    });
+                }
+            });
+        }
+
+        attachAgeListeners();
+
+        document.getElementById('generate-members-btn').addEventListener('click', function() {
+            setTimeout(attachAgeListeners, 100);
+        });
+        </script>
 </body>
 </html>
