@@ -8,9 +8,6 @@
     ";
     $familyStmt = $pdo->query($familyQuery);
     $families = $familyStmt->fetchAll();
-    if ($familyStmt->rowCount() < 1) {
-        echo '<br><p>No households found.</p>';
-    } else {
 ?>
 
 <div class="info-box">
@@ -22,6 +19,12 @@
         <button type="submit" class="custom-cancel-button">Add Household</button>
     </form>
 </div>
+
+<?php
+if ($familyStmt->rowCount() < 1) {
+    echo '<br><p>No households found.</p>';
+} else {
+?>
 <table border="1" cellpadding="10" cellspacing="0">
     <thead>
         <th>Household ID</th>

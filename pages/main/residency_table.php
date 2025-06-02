@@ -3,15 +3,18 @@
     $residencyQuery = "SELECT * FROM family_members ORDER BY last_name, first_name";
     $residencyStmt = $pdo->query($residencyQuery);
     $residency = $residencyStmt->fetchAll();
-    if ($residencyStmt->rowCount() < 1) {
-        echo '<br><p>No residents found.</p>';
-    } else {
 ?>
 
 <div class="info-box">
     <h2>Residency Table</h2>
     <p>Here is the list of residents in the barangay. You can view, update, or delete resident information.</p>
 </div>
+
+<?php
+if ($residencyStmt->rowCount() < 1) {
+    echo '<br><p>No residents found.</p>';
+} else {
+?>
 <table border="1" cellpadding="10" cellspacing="0">
     <thead>
         <th>Residency ID</th>
@@ -27,12 +30,13 @@
         foreach ($residency as $member) {
             $r_id = htmlspecialchars($member['member_id']);
             $name = htmlspecialchars($member['last_name']);
-            if (!empty($member['suffix'])) { $name .= ' ' . htmlspecialchars($member['suffix']); }
             $name .= ', ';
             $name .= htmlspecialchars($member['first_name']);
             if (!empty($member['middle_initial'])) {
-                $middleInitial = strtoupper(substr($member['middle_initial'], 0, 5)) . '.';
-                $name .= ' ' . htmlspecialchars($middleInitial);
+                $name .= ' ' . htmlspecialchars(strtoupper($member['middle_initial'])) . '.';
+            }
+            if (!empty($member['suffix'])) {
+                $name .= ', ' . htmlspecialchars($member['suffix']);
             }
             $sex = ($member['sex'] === 'M') ? "Male" : "Female";
             $birthdate = htmlspecialchars(date('F j, Y', strtotime($member['birthdate'])));
@@ -66,5 +70,4 @@
         <?php } ?>
     </tbody>
 </table>
-
 <?php } ?>
