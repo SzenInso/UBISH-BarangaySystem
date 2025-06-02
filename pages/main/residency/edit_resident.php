@@ -428,7 +428,8 @@
                                             <option value="" disabled>-- SELECT ATTAINMENT</option>
                                             <option value="Elementary" <?php echo ($residentData['attainment'] === 'Elementary') ? "selected" : ''; ?>>Elementary</option>
                                             <option value="High School" <?php echo ($residentData['attainment'] === 'High School') ? "selected" : ''; ?>>High School</option>
-                                            <option value="College" <?php echo ($residentData['attainment'] === 'College') ? "selected" : ''; ?>>College</option>
+                                            <option value="College Undergraduate" <?php echo ($residentData['attainment'] === 'College Undergraduate') ? "selected" : ''; ?>>College Undergraduate</option>
+                                            <option value="College Graduate" <?php echo ($residentData['attainment'] === 'College Graduate') ? "selected" : ''; ?>>College Graduate</option>
                                             <option value="Post-Graduate" <?php echo ($residentData['attainment'] === 'Post-Graduate') ? "selected" : ''; ?>>Post-Graduate</option>
                                             <option value="Vocational" <?php echo ($residentData['attainment'] === 'Vocational') ? "selected" : ''; ?>>Vocational</option>
                                         </select>

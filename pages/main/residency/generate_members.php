@@ -38,7 +38,7 @@
                     </tbody>
                     <thead>
                         <tr>
-                            <th rowspan="2">Date of Birth</th>
+                            <th rowspan="2">Date of Birth (<i>dd-mm-yyyy</i>)</th>
                             <th rowspan="2">Age</th>
                             <th rowspan="2">Civil Status</th>
                             <th rowspan="2">Religion</th>
@@ -88,7 +88,8 @@
                                     <option value="" disabled selected>-- SELECT ATTAINMENT</option>
                                     <option value="Elementary">Elementary</option>
                                     <option value="High School">High School</option>
-                                    <option value="College">College</option>
+                                    <option value="College Undergraduate">College Undergraduate</option>
+                                    <option value="College Graduate">College Graduate</option>
                                     <option value="Post-Graduate">Post-Graduate</option>
                                     <option value="Vocational">Vocational</option>
                                 </select>
