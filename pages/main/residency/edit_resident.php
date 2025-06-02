@@ -417,6 +417,7 @@
                                             <option value="Out of school" <?php echo ($residentData['schooling'] === 'Out of school') ? "selected" : ''; ?>>Out of school</option>
                                             <option value="Not yet in school" <?php echo ($residentData['schooling'] === 'Not yet in school') ? "selected" : ''; ?>>Not yet in school</option>
                                             <option value="Graduate" <?php echo ($residentData['schooling'] === 'Graduate') ? "selected" : ''; ?>>Graduate</option>
+                                            <option value="No Data" <?php echo ($residentData['schooling'] === 'No Data') ? "selected" : ''; ?>>No Data</option>
                                         </select>
                                     </td>
                                 </tr>

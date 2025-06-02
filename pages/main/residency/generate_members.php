@@ -80,6 +80,7 @@
                                     <option value="Out of school">Out of school</option>
                                     <option value="Not yet in school">Not yet in school</option>
                                     <option value="Graduate">Graduate</option>
+                                    <option value="No Data">No Data</option>
                                 </select>
                             </td>
                             <td>
