@@ -52,9 +52,9 @@
                         <input type="hidden" name="resident_id" value="<?php echo $r_id; ?>">
                         <button class="custom-cancel-button">View More</button>
                     </form>
-                    <form action="" method="POST">
+                    <form action="residency/edit_resident.php" method="POST">
                         <input type="hidden" name="resident_id" value="<?php echo $r_id; ?>">
-                        <button class="custom-cancel-button">Update</button>
+                        <button class="custom-cancel-button" name="edit-resident">Update</button>
                     </form>
                     <form action="residency/delete_resident.php" method="POST">
                         <input type="hidden" name="resident_id" value="<?php echo $r_id; ?>">
