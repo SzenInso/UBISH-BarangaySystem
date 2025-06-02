@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 01, 2025 at 07:07 PM
+-- Generation Time: Jun 02, 2025 at 05:04 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -221,7 +221,7 @@ CREATE TABLE `families` (
 --
 
 INSERT INTO `families` (`family_id`, `household_id`, `created_at`) VALUES
-('FA00001', 'HH00001', '2025-06-01 11:40:48');
+('FA00001', 'HH00001', '2025-06-02 22:55:49');
 
 -- --------------------------------------------------------
 
@@ -262,8 +262,14 @@ CREATE TABLE `family_members` (
 --
 
 INSERT INTO `family_members` (`member_id`, `family_id`, `first_name`, `middle_initial`, `last_name`, `suffix`, `relation`, `sex`, `birthdate`, `civil_status`, `religion`, `schooling`, `attainment`, `occupation`, `emp_status`, `emp_category`, `income_cash`, `income_kind`, `livelihood_training`, `is_senior_citizen`, `is_pwd`, `is_ofw`, `is_solo_parent`, `is_indigenous`, `remarks`) VALUES
-('FM00001', 'FA00001', 'Ruben', '', 'Dumayda', 'Sr', 'Father', 'M', '1942-04-15', 'Married', 'Roman Catholic', 'Out of school', 'Elementary', 'Riprapping', 'Contractual', 'Private', 4000.00, '', '', 1, 0, 0, 0, 1, ''),
-('FM00002', 'FA00001', 'Gloria', 'A', 'Dumayda', '', 'Mother', 'F', '1970-01-31', 'Married', 'Roman Catholic', 'Out of school', 'Elementary', 'Vendor', 'Permanent', 'Private', 5000.00, '', '', 0, 0, 0, 0, 1, '');
+('FM00001', 'FA00001', 'Ruben', '', 'Dumayna', 'Sr', 'Father', 'M', '1942-04-15', 'Married', 'Roman Catholic', 'No Data', 'Elementary', 'Riprapping', 'Contractual', 'Private', 4000.00, '', '', 1, 0, 0, 0, 0, ''),
+('FM00002', 'FA00001', 'Gloria', '', 'Dumayna', '', 'Mother', 'F', '1970-01-31', 'Married', 'Roman Catholic', 'No Data', 'Elementary', 'Vendor', 'Permanent', 'Private', 5000.00, '', '', 0, 0, 0, 0, 0, ''),
+('FM00003', 'FA00001', 'Michael', '', 'Dumayna', '', 'Brother', 'M', '1986-03-05', 'Single', 'Roman Catholic', 'Not yet in school', 'Elementary', 'Farmer', 'Temporary', 'Private', 0.00, '', '', 0, 0, 0, 0, 0, ''),
+('FM00004', 'FA00001', 'Richelle Joy', 'A', 'Dumayna', '', '', 'F', '1987-11-19', 'Single', 'Roman Catholic', 'Graduate', 'College Graduate', 'Pharmacy Assistant', 'Contractual', 'Private', 8000.00, '', '', 0, 0, 0, 0, 0, ''),
+('FM00005', 'FA00001', 'Floribeth', '', 'Dumayna', '', 'Sister', 'F', '1989-10-06', 'Single', 'Roman Catholic', 'Not yet in school', 'College Undergraduate', 'Dealer', 'Self-Employed', 'Self-Employed', 0.00, '', '', 0, 0, 0, 0, 0, ''),
+('FM00006', 'FA00001', 'Mark Eric', '', 'Dumayna', '', 'Brother', 'M', '1991-08-08', 'Single', 'Roman Catholic', 'Not yet in school', 'College Undergraduate', 'Public Attendant', 'Contractual', 'Private', 5000.00, '', '', 0, 0, 0, 0, 0, ''),
+('FM00007', 'FA00001', 'Ruben', '', 'Dumayna', 'Jr', 'Brother', 'M', '1993-06-11', 'Single', 'Roman Catholic', 'In school', '', 'Student', 'Others', '', 0.00, '', '', 0, 0, 0, 0, 0, ''),
+('FM00008', 'FA00001', 'Karen', '', 'Dumayna', '', 'Sister', 'F', '1995-08-26', 'Single', 'Roman Catholic', 'In school', '', 'Student', 'Others', '', 0.00, '', '', 0, 0, 0, 0, 0, '');
 
 -- --------------------------------------------------------
 
@@ -308,7 +314,7 @@ CREATE TABLE `households` (
 --
 
 INSERT INTO `households` (`household_id`, `household_address_id`, `household_respondent_id`, `created_at`) VALUES
-('HH00001', 'HA00001', 'HR00001', '2025-06-01 11:40:48');
+('HH00001', 'HA00001', 'HR00001', '2025-06-02 22:55:49');
 
 -- --------------------------------------------------------
 
@@ -351,7 +357,7 @@ CREATE TABLE `household_respondents` (
 --
 
 INSERT INTO `household_respondents` (`household_respondent_id`, `first_name`, `middle_initial`, `last_name`, `suffix`) VALUES
-('HR00001', 'Richelle Joy', 'A', 'Dumayda', '');
+('HR00001', 'Richelle Joy', 'A', 'Dumayna', '');
 
 -- --------------------------------------------------------
 
