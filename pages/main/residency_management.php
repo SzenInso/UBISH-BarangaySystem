@@ -88,6 +88,28 @@
             box-sizing: border-box;
             margin: 24px auto 20px auto;
         }
+
+        .styled-search-bar {
+            width: 350px;
+            padding: 10px 16px;
+            border-radius: 6px;
+            border: 2px solid #356859;
+            font-size: 1.1rem;
+            margin-left: 24px;
+            background: #f8fff8;
+            transition: border-color 0.2s;
+        }
+        .styled-search-bar:focus {
+            outline: none;
+            border-color: #37966f;
+            background: #e6f7e6;
+        }
+
+        /* loading */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
     <header>
         <div class="navigation">
@@ -151,22 +173,33 @@
                 <br>
                 <div class="residency-table-actions">
                     <label for="view-by">View By:</label>
-                    <select id="residency-view">
+                    <select id="residency-view" style="width: 200px; padding: 8px; border-radius: 6px; border: 2px solid #356859; font-size: medium; background: #f8fff8;">
                         <option value="residency">Residency</option>
                         <option value="household">Household</option>
                     </select>
+                    <input type="text" id="search-bar" class="styled-search-bar" placeholder="Search by name...">
                 </div>
                 <div id="ajax-table-container">
                     <!-- Table will be loaded here -->
                 </div>
+                <div id="table-loader" style="display:none; text-align:center; margin: 24px 0;">
+                    <span style="display:inline-block; width:40px; height:40px; border:4px solid #b0b0b0; border-top:4px solid #356859; border-radius:50%; animation: spin 1s linear infinite;"></span>
+                    <div style="margin-top:8px; color:#888;">Loading...</div>
+                </div>
                 <script>
                     function loadTable(type) {
+                        document.getElementById('table-loader').style.display = 'block';
+                        document.getElementById('ajax-table-container').innerHTML = '';
                         var xhr = new XMLHttpRequest();
                         var url = (type === 'household') ? 'household_table.php' : 'residency_table.php';
                         xhr.open('GET', url, true);
                         xhr.onreadystatechange = function() {
-                            if (xhr.readyState === 4 && xhr.status === 200) {
-                                document.getElementById('ajax-table-container').innerHTML = xhr.responseText;
+                            if (xhr.readyState === 4) {
+                                document.getElementById('table-loader').style.display = 'none';
+                                if (xhr.status === 200) {
+                                    document.getElementById('ajax-table-container').innerHTML = xhr.responseText;
+                                    reapplySearch();
+                                }
                             }
                         };
                         xhr.send();
@@ -177,6 +210,23 @@
                     window.onload = function() {
                         loadTable(document.getElementById('residency-view').value);
                     };
+                    document.getElementById('search-bar').addEventListener('input', function() {
+                        const searchTerm = this.value.toLowerCase();
+                        // Wait for table to be loaded
+                        const table = document.querySelector('#ajax-table-container table');
+                        if (!table) return;
+                        const rows = table.querySelectorAll('tbody tr');
+                        rows.forEach(row => {
+                            const text = row.textContent.toLowerCase();
+                            row.style.display = text.includes(searchTerm) ? '' : 'none';
+                        });
+                    });
+
+                    // Re-apply search after AJAX table reload
+                    function reapplySearch() {
+                        const event = new Event('input');
+                        document.getElementById('search-bar').dispatchEvent(event);
+                    }
                 </script>
             </div>
         </div>
