@@ -190,7 +190,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../assets/css/style.css">
     <script src="js/sweetalert2.js"></script>
-    <title>UBISH Dashboard | Edit Resident</title>
+    <title>UBISH Dashboard | Update Resident</title>
 </head>
 <body>
     <style>
