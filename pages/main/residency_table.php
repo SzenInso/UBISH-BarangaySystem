@@ -50,7 +50,7 @@
                 <div class="residency-actions">
                     <form action="residency/view_resident.php" method="POST">
                         <input type="hidden" name="resident_id" value="<?php echo $r_id; ?>">
-                        <button class="custom-cancel-button">View More</button>
+                        <button class="custom-cancel-button">View Resident</button>
                     </form>
                     <form action="residency/edit_resident.php" method="POST">
                         <input type="hidden" name="resident_id" value="<?php echo $r_id; ?>">
