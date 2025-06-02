@@ -120,6 +120,7 @@
                                     <option value="Contractual">Contractual</option>
                                     <option value="Self-Employed">Self-Employed</option>
                                     <option value="Unemployed">Unemployed</option>
+                                    <option value="Retired">Retired</option>
                                     <option value="Others">Others</option>
                                 </select>
                             </td>

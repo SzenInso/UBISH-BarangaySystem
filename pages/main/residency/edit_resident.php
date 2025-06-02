@@ -455,6 +455,7 @@
                                             <option value="Contractual" <?php echo ($residentData['emp_status'] === "Contractual") ? "selected" : ''; ?>>Contractual</option>
                                             <option value="Self-Employed" <?php echo ($residentData['emp_status'] === "Self-Employed") ? "selected" : ''; ?>>Self-Employed</option>
                                             <option value="Unemployed" <?php echo ($residentData['emp_status'] === "Unemployed") ? "selected" : ''; ?>>Unemployed</option>
+                                            <option value="Retired" <?php echo ($residentData['emp_status'] === "Retired") ? "selected" : ''; ?>></option>
                                             <option value="Others" <?php echo ($residentData['emp_status'] === "Others") ? "selected" : ''; ?>>Others</option>
                                         </select>
                                     </td>
