@@ -1,0 +1,162 @@
+/* Page Title */
+.dashboard-content h1 {
+    font-size: 26px;
+    color: #2e5e4d;
+    margin-bottom: 25px;
+}
+
+/* Form Container */
+.announcement-posting-form {
+    background-color: #ffffff;
+    padding: 25px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    border-left: 5px solid #4caf50;
+}
+
+/* Section Block */
+.announcement-credentials {
+    margin-bottom: 20px;
+}
+
+.announcement-credentials h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+    color: #388e3c;
+}
+
+/* Input, File, and Textarea Fields */
+.announcement-credentials input[type="text"],
+.announcement-credentials input[type="file"],
+.announcement-credentials textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 15px;
+    border: 1px solid #cfcfcf;
+    border-radius: 6px;
+    background-color: #f9fdfb;
+    transition: border-color 0.3s;
+}
+
+.announcement-credentials input[type="text"]:focus,
+.announcement-credentials input[type="file"]:focus,
+.announcement-credentials textarea:focus {
+    border-color: #81c784;
+    outline: none;
+}
+
+/* Radio buttons */
+.privacy-options,
+.category-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    font-size: 15px;
+}
+
+.privacy-options label,
+.category-options label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 500;
+    color: #444;
+}
+
+/* Custom category */
+#customCategory {
+    margin-top: 10px;
+}
+
+/* Thumbnail Preview */
+.announcement-credentials img {
+    margin-top: 10px;
+    border-radius: 6px;
+    max-height: 100px;
+}
+
+/* Table for attachments */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+table th, table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    font-size: 15px;
+}
+
+table th {
+    background-color: #e8f5e9;
+    text-align: left;
+    color: #2e5e4d;
+}
+
+table td a {
+    text-decoration: none;
+    color: #1e88e5;
+}
+
+table td a:hover {
+    text-decoration: underline;
+}
+
+/* Form Buttons */
+button#postAnnouncement {
+    background-color: #66bb6a;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.3s;
+}
+
+button#postAnnouncement:hover {
+    background-color: #4caf50;
+}
+
+/* Cancel Button (a styled as button) */
+a button[type="button"] {
+    background-color: #cfd8dc;
+    color: #37474f;
+    border: none;
+    padding: 10px 20px;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+a button[type="button"]:hover {
+    background-color: #b0bec5;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .privacy-options,
+    .category-options {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .announcement-credentials input[type="text"],
+    .announcement-credentials textarea {
+        font-size: 14px;
+    }
+
+    table th, table td {
+        font-size: 14px;
+    }
+
+    .announcement-credentials img {
+        max-width: 100%;
+        height: auto;
+    }
+}

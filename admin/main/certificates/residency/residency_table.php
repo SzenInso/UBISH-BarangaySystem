@@ -37,7 +37,6 @@
                     <th>Residency Duration</th>
                     <th>Purpose</th>
                     <th>Actions</th>
-                    <th>PDF</th>
                 </tr>
             </thead>
             <tbody id="approved-requests-tbody">

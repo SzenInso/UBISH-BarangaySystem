@@ -113,232 +113,264 @@ if (isset($_POST['submit_incident'])) {
 
 <head>
     <meta charset="UTF-8">
-    <title>UBISH Dashboard | Incident Report</title>
-    <link rel="stylesheet" href="../../assets/css/style.css">
-    <style>
-        button {
-            border: 2px solid gray;
-            background-color: white;
-            color: black;
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        button:hover {
-            background-color: lightgray;
-        }
-
-        button:focus {
-            outline: none;
-        }
-
-        button.logout {
-            border: none;
-            background-color: white;
-            font-size: 16px;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="../../assets/css/style.css"> -->
+    <link rel="stylesheet" href="css/dashPages.css">
+    <link rel="icon" type="image/x-icon" href="../../assets/img/GreenwaterLogo.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <title>Greenwater Village Dashboard | Incident Report</title>
 </head>
 <body>
-    <style>
-    header {
-        background-color: #e1f3e2 !important;
-        border-bottom: 5px solid #356859 !important;
-    }
-    .logout {
-        background-color: #e1f3e2 !important;
-        color: #356859 !important;
-        font-weight: bold !important;
-        font-size: 1.1rem !important;
-    }
-    footer {
-        background-color: #d0e9d2 !important;
-        text-align: center !important;
-        padding: 20px !important;
-        color: #2b3d2f !important;
-        border-top: 5px solid #356859 !important;
-        margin-top: 60px !important;
-    }
-    </style>
-    <header>
-        <div class="navigation">
-            <div class="logo">
-                <img src="../../assets/img/greenwater-village-logo.jpg" alt="Greenwater Village Logo">
-                <h1>UBISH</h1>
-            </div>
-            <form method="POST">
-                <nav>
-                    <ul>
-                        <li>
-                            <button class="logout" style="cursor: pointer;" name="logout">Log Out</button>
-                        </li>
-                    </ul>
-                </nav>
-            </form>
-        </div>
-        <hr>
-    </header>
-
-    <main>
-        <div class="dashboard-main">
-            <div class="dashboard-sidebar">
-                <ul>
-                    <h3>Home</h3>
-                    <li><a href="../main/dashboard.php">Home</a></li>
-                    <li><a href="../main/account.php">Account</a></li>
-                    
-                    <h3>Documents & Disclosure</h3>
-                    <li><a href="../main/documents.php">Documents</a></li>
-                    <li><a href="../main/announcements.php">Post Announcement</a></li>
-                    
-                    <h3>Tables & Requests</h3>
-                    <li><a href="../main/employee_table.php">Employee Table</a></li>
-
-                    <!-- STANDARD -->
-                    <?php if ($accessLevel >= 2) { echo '<li><a href="../main/residency_management.php">Residency Management</a></li>'; } ?>
-                    <?php if ($accessLevel >= 2) { echo '<li><a href="../main/certificates.php">Certificate Requests</a></li>'; } ?>
-                    <?php if ($accessLevel >= 2) { echo '<li><a href="../main/permits.php">Permit Requests</a></li>'; } ?>
-                    <!-- STANDARD -->
-                    
-                    <!-- FULL -->
-                    <?php if ($accessLevel >= 3) { echo '<li><a href="../main/account_requests.php">Account Requests</a></li>'; } ?>
-                    <!-- FULL -->
-                    
-                    <h3>Reports</h3>
-                    <!-- STANDARD -->
-                    <?php if ($accessLevel >= 2) { echo '<li class="active"><a href="../main/incidents.php">Incident Reports</a></li>'; }  ?>
-                    <!-- STANDARD -->
-                    
-                    <li><a href="../main/incident_table.php">Incident History</a></li>
-                    <li><a href="../main/reports.php">Analytics</a></li>
-                </ul>
-            </div>
-
-            <div class="dashboard-content">
-                <h1>
-                    <center>Incident Report Form</center>
-                </h1><br>
-
-                <?php
-                if (!empty($errors)) {
-                    foreach ($errors as $error) {
-                        echo "<p style='color: red;'>$error</p>";
-                    }
-                }
-
-                if (!empty($success)) {
-                    echo "<p style='color: green;'>$success</p>";
-                }
-                ?>
-
-                <style>
-                    .incident-form {
-                        max-width: 800px;
-                        width: 100%;
-                        background-color: #f8f9fa;
-                        padding: 20px;
-                        border-radius: 8px;
-                        margin: 0 auto;
-                    }
-
-                    .incident-form label {
-                        display: block;
-                        font-size: 16px;
-                        margin-bottom: 8px;
-                        font-weight: 600;
-                        color: #333;
-                        text-align: left;
-                    }
-
-                    .incident-form input,
-                    .incident-form textarea {
-                        width: 100%;
-                        padding: 10px;
-                        margin-bottom: 20px;
-                        border: 2px solid gray;
-                        border-radius: 5px;
-                        font-size: 14px;
-                        color: #333;
-                        background-color: #fff;
-                        text-align: left;
-                    }
-
-                    .incident-form input:focus,
-                    .incident-form textarea:focus {
-                        outline: none;
-                        border-color: #007bff;
-                    }
-
-                    .incident-form textarea {
-                        resize: vertical;
-                        min-height: 100px;
-                    }
-
-                    .incident-form button:focus {
-                        outline: none;
-                    }
-
-                    .incident-form-container {
-                        display: flex;
-                        justify-content: space-between;
-                        gap: 20px;
-                    }
-
-                    .incident-form-container label,
-                    .incident-form-container input {
-                        width: 48%;
-                    }
-
-                    .incident-form-container input[name="incident_type"] {
-                        width: 100%;
-                    }
-
-                    .incident-form-container input[name="incident_date"] {
-                        width: 100%;
-                    }
-
-
-                </style>
-
-                <form method="POST" class="incident-form">
-
-                    <div class="incident-form-container">
-                        <label>Incident Type</label>
-                        <input type="text" name="incident_type" required>
-    
-                        <label>Incident Date:</label>
-                        <input type="date" name="incident_date" required>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <ul>
+                <h2>
+                    <div class="dashboard-greetings">
+                        <?php 
+                           $stmt = $pdo->prepare("SELECT * FROM employee_details WHERE emp_id = :emp_id");
+                            $stmt->execute([":emp_id" => $_SESSION['emp_id']]);
+                            $row = $stmt->fetch(PDO::FETCH_ASSOC); {
+                        ?>
+                        <?php
+                            }
+                        ?>
+                        <center>
+                        <div class="user-info d-flex align-items-center">
+                            <img src="<?php echo $row['picture']; ?>" 
+                                class="avatar img-fluid rounded-circle me-2" 
+                                alt="<?php echo $row['first_name']; ?>" 
+                                width="70" height="70">
+                        </div>
+                            <span class="text-dark fw-semibold"><?php echo $row['first_name']; ?></span>
+                        </center>
                     </div>
-                    
+                </h2>
 
-                    <label>Place of Incident:</label>
-                    <input type="text" name="place_of_incident" required>
+                <h3><i class="fas fa-home"></i> Home</h3>
+                <li class="active"><a href="../main/dashboard.php"><i class="fas fa-tachometer-alt"></i> Home</a></li>
+                <li><a href="../main/account.php"><i class="fas fa-user"></i> Account</a></li>
 
-                    <label>Reporting Person:</label>
-                    <input type="text" name="reporting_person" required>
+                <h3><i class="fas fa-folder-open"></i> Documents & Disclosure</h3>
+                <li><a href="../main/documents.php"><i class="fas fa-file-alt"></i> Documents</a></li>
+                <li><a href="../main/announcements.php"><i class="fas fa-bullhorn"></i> Post Announcement</a></li>
 
-                    <label>Home Address:</label>
-                    <textarea name="home_address" required></textarea>
+                <h3><i class="fas fa-table"></i> Tables & Requests</h3>
+                <li><a href="../main/employee_table.php"><i class="fas fa-users"></i> Employee Table</a></li>
 
-                    <label>Narrative of Incident:</label>
-                    <textarea name="narrative" required></textarea>
+                <!-- STANDARD ACCESS LEVEL -->
+                <?php if ($accessLevel >= 2): ?>
+                    <li><a href="../main/residency_management.php"><i class="fas fa-house-user"></i> Residency Management</a></li>
+                    <!-- <li><a href="../main/certificates.php"><i class="fas fa-certificate"></i> Certificate Requests</a></li> -->
+                    <!-- <li><a href="../main/permits.php"><i class="fas fa-id-badge"></i> Permit Requests</a></li> -->
+                <?php endif; ?>
 
-                    <label>Involved Parties:</label>
-                    <textarea name="involved_parties" required></textarea>
+                <!-- FULL ACCESS LEVEL -->
+                <?php if ($accessLevel >= 3): ?>
+                    <li><a href="../main/account_requests.php"><i class="fas fa-user-check"></i> Account Requests</a></li>
+                <?php endif; ?>
 
-                    <button type="submit" name="submit_incident">Submit Incident</button>
-                </form>
-            </div>
-        </div>
-    </main>
+                <h3><i class="fas fa-chart-bar"></i> Reports</h3>
+                <?php if ($accessLevel >= 2): ?>
+                    <li><a href="../main/incidents.php"><i class="fas fa-exclamation-circle"></i> Incident Reports</a></li>
+                <?php endif; ?>
+                <li><a href="../main/incident_table.php"><i class="fas fa-history"></i> Incident History</a></li>
+                <li><a href="../main/reports.php"><i class="fas fa-chart-line"></i> Analytics</a></li>
+            </ul>
+        </aside>
 
-    <footer>
-        <hr>
-        <p><?php echo "&copy; " . date('Y') . " | Unified Barangay Information Service Hub"; ?></p>
-    </footer>
+        <div class="main-content">
+            <header class="main-header">
+                <button class="hamburger" id="toggleSidebar">&#9776;</button>
+                <div class="header-container">
+                    <div class="logo">
+                        <img src="../../assets/img/GreenwaterLogo.jpg" alt="Greenwater Village Logo">
+                        <h1><span>Greenwater</span> <span>Village</span></h1>
+                    </div>
+                    <nav class="nav" id="nav-menu">
+                        <form method="POST">
+                            <ul class="nav-links">
+                                <li>
+                                    <button class="logout-btn" name="logout">Log Out</button>
+                                </li>
+                            </ul>
+                        </form>
+                    </nav>
+                </div>
+            </header>
+
+        <main class="content">
+                <div class="dashboard-content">
+                    <h1>
+                        <center>Incident Report Form</center>
+                    </h1><br>
+
+                    <?php
+                    if (!empty($errors)) {
+                        foreach ($errors as $error) {
+                            echo "<p style='color: red;'>$error</p>";
+                        }
+                    }
+
+                    if (!empty($success)) {
+                        echo "<p style='color: green;'>$success</p>";
+                    }
+                    ?>
+
+
+                    <form method="POST" class="incident-form">
+
+                        <div class="incident-form-container">
+                            <label>Incident Type</label>
+                            <input type="text" name="incident_type" required>
+        
+                            <label>Incident Date:</label>
+                            <input type="date" name="incident_date" required>
+                        </div>
+                        
+
+                        <label>Place of Incident:</label>
+                        <input type="text" name="place_of_incident" required>
+
+                        <label>Reporting Person:</label>
+                        <input type="text" name="reporting_person" required>
+
+                        <label>Home Address:</label>
+                        <textarea name="home_address" required></textarea>
+
+                        <label>Narrative of Incident:</label>
+                        <textarea name="narrative" required></textarea>
+
+                        <label>Involved Parties:</label>
+                        <textarea name="involved_parties" required></textarea>
+
+                        <button type="submit" name="submit_incident">Submit Incident</button>
+                    </form>
+                </div>
+        </main>
+
+            <footer class="main-footer">
+                <p><?php echo "&copy; " . date('Y') . " | Unified Barangay Information Service Hub"; ?></p>
+            </footer>
+        <!-- ending for the main content -->
+         </div>
+    <!-- ending for the class wrapper -->
+    </div>
+    <script>
+        const toggleBtn = document.getElementById('toggleSidebar');
+        const sidebar = document.getElementById('sidebar');
+
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+        });
+    </script>
+    <style>
+
+/* Title */
+.dashboard-content h1 {
+    font-size: 28px;
+    color: #2e5e4d; /* forest green */
+    margin-bottom: 15px;
+}
+
+/* Error and success messages */
+.dashboard-content p {
+    font-size: 14px;
+    margin: 8px 0;
+}
+
+.dashboard-content p[style*="color: red"] {
+    background-color: #ffe6e6;
+    padding: 8px 12px;
+    border-left: 4px solid #d9534f;
+    border-radius: 4px;
+}
+
+.dashboard-content p[style*="color: green"] {
+    background-color: #e1f4e3;
+    padding: 8px 12px;
+    border-left: 4px solid #5cb85c;
+    border-radius: 4px;
+}
+
+/* Form styling */
+.incident-form {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    max-width: 700px;
+    margin: auto;
+}
+
+.incident-form-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.incident-form-container label {
+    width: 100%;
+    font-weight: 600;
+    color: #2e5e4d;
+}
+
+.incident-form-container input[type="text"],
+.incident-form-container input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    background-color: #f7faf8;
+}
+
+/* Common inputs and textareas */
+.incident-form label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #2e5e4d;
+}
+
+.incident-form input[type="text"],
+.incident-form input[type="date"],
+.incident-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: #f7faf8;
+    transition: border 0.3s;
+}
+
+.incident-form input:focus,
+.incident-form textarea:focus {
+    outline: none;
+    border-color: #7cbf90; /* green outline on focus */
+}
+
+/* Submit button */
+.incident-form button[type="submit"] {
+    margin-top: 20px;
+    background-color: #a6dcb9; /* light green */
+    color: #2e5e4d;
+    padding: 12px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.incident-form button[type="submit"]:hover {
+    background-color: #8fd0a7;
+}
+
+    </style>
 </body>
 
 </html>

@@ -13,6 +13,7 @@ if (session_status() == PHP_SESSION_NONE) {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/index.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/login.css">
+    <link rel="icon" type="image/x-icon" href="<?= BASE_URL ?>assets/img/GreenwaterLogo.jpg">
     <script src="../../assets/js/sweetalert2.js"></script>
     <title>UBISH Dashboard | Login</title>
 </head>

@@ -1,3 +1,3 @@
 <?php
-    define('BASE_URL', '/UBISH-BarangaySystem/');
+    define('BASE_URL', '/UBISH-BarangaySystem-main/');
 ?>

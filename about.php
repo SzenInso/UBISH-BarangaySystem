@@ -6,8 +6,9 @@ include 'baseURL.php';
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Greenwater Village | About Us</title>
+	<link rel="icon" type="image/x-icon" href="assets/img/GreenwaterLogo.jpg">
 	<link rel="stylesheet" href="assets/css/index.css">
+	<title>Greenwater Village | About Us</title>
 </head>
 <body>
 	<?php include 'partials/header.php'; ?>

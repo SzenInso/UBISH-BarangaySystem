@@ -22,82 +22,95 @@ if (isset($_POST['reset-question'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../assets/css/style.css">
-    <title>UBISH Dashboard | Account</title>
-</head>
-<body>
-    <style>
-    header {
-        background-color: #e1f3e2 !important;
-        border-bottom: 5px solid #356859 !important;
-    }
-    .logout {
-        background-color: #e1f3e2 !important;
-        color: #356859 !important;
-        font-weight: bold !important;
-        font-size: 1.1rem !important;
-    }
-    footer {
-        background-color: #d0e9d2 !important;
-        text-align: center !important;
-        padding: 20px !important;
-        color: #2b3d2f !important;
-        border-top: 5px solid #356859 !important;
-        margin-top: 60px !important;
-    }
-    </style>
-    <header>
-        <div class="navigation">
-            <div class="logo">
-                <img src="../../assets/img/greenwater-village-logo.jpg" alt="Greenwater Village Logo">
-                <h1>UBISH</h1>
-            </div>
-            <form method="POST">
-                <nav>
-                    <ul>
-                        <li>
-                            <button class="logout" style="cursor: pointer;" name="logout">Log Out</button>
-                        </li>
-                    </ul>
-                </nav>
-            </form>
-        </div>
-        <hr>
-    </header>
-    <main>
-        <div class="dashboard-main">
-            <div class="dashboard-sidebar">
-                <ul>
-                    <h3>Home</h3>
-                    <li><a href="../main/dashboard.php">Home</a></li>
-                    <li class="active"><a href="../main/account.php">Account</a></li>
-                    
-                    <h3>Documents & Disclosure</h3>
-                    <li><a href="../main/documents.php">Documents</a></li>
-                    <li><a href="../main/announcements.php">Post Announcement</a></li>
-                    
-                    <h3>Tables & Requests</h3>
-                    <li><a href="../main/employee_table.php">Employee Table</a></li>
+    <link rel="stylesheet" href="css/dashPages.css">
+    <link rel="stylesheet" href="css/account.css">
+    <link rel="icon" type="image/x-icon" href="../../assets/img/GreenwaterLogo.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <title>Greenwater Village Dashboard | Account</title>
 
-                    <!-- STANDARD -->
-                    <?php if ($accessLevel >= 2) { echo '<li><a href="../main/residency_management.php">Residency Management</a></li>'; } ?>
-                    <?php if ($accessLevel >= 2) { echo '<li><a href="../main/certificates.php">Certificate Requests</a></li>'; } ?>
-                    <?php if ($accessLevel >= 2) { echo '<li><a href="../main/permits.php">Permit Requests</a></li>'; } ?>
-                    <!-- STANDARD -->
-                    
-                    <!-- FULL -->
-                    <?php if ($accessLevel >= 3) { echo '<li><a href="../main/account_requests.php">Account Requests</a></li>'; } ?>
-                    <!-- FULL -->
-                    
-                    <h3>Reports</h3>
-                    <!-- STANDARD -->
-                    <?php if ($accessLevel >= 2) { echo '<li><a href="../main/incidents.php">Incident Reports</a></li>'; }  ?>
-                    <!-- STANDARD -->
-                    
-                    <li><a href="../main/incident_table.php">Incident History</a></li>
-                    <li><a href="../main/reports.php">Analytics</a></li>
-                </ul>
-            </div>
+</head>
+
+<body>
+<div class="wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <ul>
+                <h2>
+                    <div class="dashboard-greetings">
+                        <?php 
+                           $stmt = $pdo->prepare("SELECT * FROM employee_details WHERE emp_id = :emp_id");
+                            $stmt->execute([":emp_id" => $_SESSION['emp_id']]);
+                            $row = $stmt->fetch(PDO::FETCH_ASSOC); {
+                        ?>
+                        <?php
+                            }
+                        ?>
+                        <center>
+                        <div class="user-info d-flex align-items-center">
+                            <img src="<?php echo $row['picture']; ?>" 
+                                class="avatar img-fluid rounded-circle me-2" 
+                                alt="<?php echo $row['first_name']; ?>" 
+                                width="70" height="70">
+                        </div>
+                            <span class="text-dark fw-semibold"><?php echo $row['first_name']; ?></span>
+                        </center>
+                    </div>
+                </h2>
+
+                <h3><i class="fas fa-home"></i> Home</h3>
+                <li class="active"><a href="../main/dashboard.php"><i class="fas fa-tachometer-alt"></i> Home</a></li>
+                <li><a href="../main/account.php"><i class="fas fa-user"></i> Account</a></li>
+
+                <h3><i class="fas fa-folder-open"></i> Documents & Disclosure</h3>
+                <li><a href="../main/documents.php"><i class="fas fa-file-alt"></i> Documents</a></li>
+                <li><a href="../main/announcements.php"><i class="fas fa-bullhorn"></i> Post Announcement</a></li>
+
+                <h3><i class="fas fa-table"></i> Tables & Requests</h3>
+                <li><a href="../main/employee_table.php"><i class="fas fa-users"></i> Employee Table</a></li>
+
+                <!-- STANDARD ACCESS LEVEL -->
+                <?php if ($accessLevel >= 2): ?>
+                    <li><a href="../main/residency_management.php"><i class="fas fa-house-user"></i> Residency Management</a></li>
+                    <!-- <li><a href="../main/certificates.php"><i class="fas fa-certificate"></i> Certificate Requests</a></li> -->
+                    <!-- <li><a href="../main/permits.php"><i class="fas fa-id-badge"></i> Permit Requests</a></li> -->
+                <?php endif; ?>
+
+                <!-- FULL ACCESS LEVEL -->
+                <?php if ($accessLevel >= 3): ?>
+                    <li><a href="../main/account_requests.php"><i class="fas fa-user-check"></i> Account Requests</a></li>
+                <?php endif; ?>
+
+                <h3><i class="fas fa-chart-bar"></i> Reports</h3>
+                <?php if ($accessLevel >= 2): ?>
+                    <li><a href="../main/incidents.php"><i class="fas fa-exclamation-circle"></i> Incident Reports</a></li>
+                <?php endif; ?>
+                <li><a href="../main/incident_table.php"><i class="fas fa-history"></i> Incident History</a></li>
+                <li><a href="../main/reports.php"><i class="fas fa-chart-line"></i> Analytics</a></li>
+            </ul>
+        </aside>
+
+
+    <div class="main-content">
+            <header class="main-header">
+                <button class="hamburger" id="toggleSidebar">&#9776;</button>
+                <div class="header-container">
+                    <div class="logo">
+                        <img src="../../assets/img/GreenwaterLogo.jpg" alt="Greenwater Village Logo">
+                        <h1><span>Greenwater</span> <span>Village</span></h1>
+                    </div>
+                    <nav class="nav" id="nav-menu">
+                        <form method="POST">
+                            <ul class="nav-links">
+                                <li>
+                                    <button class="logout-btn" name="logout">Log Out</button>
+                                </li>
+                            </ul>
+                        </form>
+                    </nav>
+                </div>
+            </header>
+
+    <main class="content">
             <div class="dashboard-content">
                 <h1>
                     <center>Account Page</center>
@@ -107,17 +120,7 @@ if (isset($_POST['reset-question'])) {
                     ?>
                     <img id="employee-picture" src="<?php echo $row['picture']; ?>" alt="Employee Picture"
                         title="<?php echo $row['first_name'] . ' ' . $row['middle_name'] . ' ' . $row['last_name']; ?>">
-                    <style>
-                        .account-main {
-                            display: flex;
-                            justify-content: space-between;
-                        }
 
-                        .employee-details,
-                        .account-details {
-                            margin: 0 16px;
-                        }
-                    </style>
                     <div class="account-main">
                         <div class="employee-details">
                             <table>
@@ -237,11 +240,20 @@ if (isset($_POST['reset-question'])) {
                     </div>
                 </form>
             </div>
-        </div>
     </main>
-    <footer>
-        <hr>
-        <p><?php echo "&copy; " . date('Y') . " | Unified Barangay Information Service Hub"; ?></p>
-    </footer>
+            <footer class="main-footer">
+                <p><?php echo "&copy; " . date('Y') . " | Unified Barangay Information Service Hub"; ?></p>
+            </footer>
+   </div> 
+</div>
+
+    <script>
+        const toggleBtn = document.getElementById('toggleSidebar');
+        const sidebar = document.getElementById('sidebar');
+
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+        });
+    </script>
 </body>
 </html>

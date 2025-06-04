@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="styles/sidebar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <ul>
+                <h3><i class="fas fa-home"></i> Home</h3>
+                <li class="active"><a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="#"><i class="fas fa-user"></i> Account</a></li>
+                <li><a href="#"><i class="fas fa-user-plus"></i> Account Creation</a></li>
+
+                <h3><i class="fas fa-folder-open"></i> Documents</h3>
+                <li><a href="#"><i class="fas fa-file-alt"></i> Docs</a></li>
+                <li><a href="#"><i class="fas fa-bullhorn"></i> Announcements</a></li>
+
+                <h3><i class="fas fa-chart-bar"></i> Reports</h3>
+                <li><a href="#"><i class="fas fa-users"></i> Employee</a></li>
+                <li><a href="#"><i class="fas fa-chart-line"></i> Analytics</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main content -->
+        <div class="main-content">
+            <!-- Header -->
+            <header class="main-header">
+                <button class="toggle-btn" id="toggleSidebar"><i class="fas fa-bars"></i></button>
+                <h1>UBISH Dashboard</h1>
+            </header>
+
+            <!-- Page Content -->
+            <main class="content">
+                <p>This is your dashboard content.</p>
+            </main>
+
+            <!-- Footer -->
+            <footer class="main-footer">
+                &copy; 2025 UBISH. All Rights Reserved.
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        const toggleBtn = document.getElementById('toggleSidebar');
+        const sidebar = document.getElementById('sidebar');
+
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+        });
+    </script>
+</body>
+</html>

@@ -123,173 +123,302 @@ function getDocumentsTable($pdo, $currentUserId)
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../assets/css/style.css">
-    <title>UBISH Dashboard | Documents</title>
-    <style>
-        .document-upload-form {
-            text-align: left;
-            margin: 0;
-            width: 100%;
-        }
+        <link rel="stylesheet" href="css/dash.css">
+    <link rel="icon" type="image/x-icon" href="../../assets/img/GreenwaterLogo.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <title>Greenwater Village Dashboard | Documents</title>
 
-        button {
-            border: 2px solid gray;
-            background-color: white;
-            color: black;
-            padding: 8px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        button:hover {
-            background-color: lightgray;
-        }
-
-        button.logout {
-            border: none;
-            background-color: white;
-            font-size: 16px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 24px 0;
-        }
-
-        table th,
-        table td {
-            padding: 8px 12px;
-            border: 1px solid #ddd;
-            text-align: center;
-        }
-
-        table th {
-            background-color: lightgray;
-        }
-
-        .document-credentials {
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-        }
-
-        .document-credentials input,
-        .document-credentials textarea {
-            margin-bottom: 16px;
-            width: 100%;
-            padding: 8px;
-            padding-left: 0px;
-            box-sizing: border-box;
-        }
-    </style>
 </head>
 
 <body>
-    <style>
-    header {
-        background-color: #e1f3e2 !important;
-        border-bottom: 5px solid #356859 !important;
-    }
-    .logout {
-        background-color: #e1f3e2 !important;
-        color: #356859 !important;
-        font-weight: bold !important;
-        font-size: 1.1rem !important;
-    }
-    footer {
-        background-color: #d0e9d2 !important;
-        text-align: center !important;
-        padding: 20px !important;
-        color: #2b3d2f !important;
-        border-top: 5px solid #356859 !important;
-        margin-top: 60px !important;
-    }
-    </style>
-    <header>
-        <div class="navigation">
-            <div class="logo">
-                <img src="../../assets/img/greenwater-village-logo.jpg" alt="Greenwater Village Logo">
-                <h1>UBISH</h1>
-            </div>
-            <form method="POST">
-                <nav>
-                    <ul>
-                        <li><button class="logout" style="cursor: pointer;" name="logout">Log Out</button></li>
-                    </ul>
-                </nav>
-            </form>
-        </div>
-        <hr>
-    </header>
-    <main>
-        <div class="dashboard-main">
-            <div class="dashboard-sidebar">
-                <ul>
-                    <h3>Home</h3>
-                    <li class="active"><a href="../main/dashboard.php">Home</a></li>
-                    <li><a href="../main/account.php">Account</a></li>
-                    <li><a href="../main/account_creation.php">Account Creation</a></li>
-                    <h3>Documents & Disclosure</h3>
-                    <li><a href="../main/documents.php">Documents</a></li>
-                    <li><a href="../main/announcements.php">Post Announcement</a></li>
-                    <h3>Tables & Requests</h3>
-                    <li><a href="../main/employee_table.php">Employee Table</a></li>
-                    <li><a href="../main/account_requests.php">Account Requests</a></li>
-                    <h3>Reports</h3>
-                    <li><a href="../main/incident_table.php">Incident History</a></li>
-                    <li><a href="../main/reports.php">Analytics</a></li>
-                </ul>
-            </div>
-            <div class="dashboard-content">
-                <h1><center>Documents</center></h1><br>
-                <div class="document-upload-form">
-                    <form method="POST" enctype="multipart/form-data">
-                        <div class="document-credentials">
-                            <h3>Document Title</h3>
-                            <input type="text" name="title" placeholder="Enter document title" required>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <ul>
+                <h2>
+                    <div class="dashboard-greetings">
+                        <?php 
+                           $stmt = $pdo->prepare("SELECT * FROM employee_details WHERE emp_id = :emp_id");
+                            $stmt->execute([":emp_id" => $_SESSION['emp_id']]);
+                            $row = $stmt->fetch(PDO::FETCH_ASSOC); {
+                        ?>
+                        <?php
+                            }
+                        ?>
+                        <center>
+                        <div class="user-info d-flex align-items-center">
+                            <img src="<?php echo $row['picture']; ?>" 
+                                class="avatar img-fluid rounded-circle me-2" 
+                                alt="<?php echo $row['first_name']; ?>" 
+                                width="70" height="70">
                         </div>
-                        <div class="document-credentials">
-                            <h3>Upload Document</h3>
-                            <input type="file" name="document" accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.jpg,.png" required>
-                            <button name="upload" id="uploadDocument">Upload</button>
-                        </div>
-                    </form>
+                        <span class="text-dark fw-semibold"><?php echo $row['first_name']; ?></span>
+                        </center>
+                    </div>
+                </h2> </br>
+                <h3><i class="fas fa-home"></i> Home</h3>
+                <li class="active"><a href="../main/dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="../main/account.php"><i class="fas fa-user"></i> Account</a></li>
+                <li><a href="../main/account_creation.php"><i class="fas fa-user-plus"></i> Account Creation</a></li>
+
+                <h3><i class="fas fa-folder-open"></i> Documents & Disclosure</h3>
+                <li><a href="../main/documents.php"><i class="fas fa-file-alt"></i> Documents</a></li>
+                <li><a href="../main/announcements.php"><i class="fas fa-bullhorn"></i> Post Announcement</a></li>
+
+                <h3><i class="fas fa-table"></i> Tables & Requests</h3>
+                <li><a href="../main/employee_table.php"><i class="fas fa-users"></i> Employee Table</a></li>
+                <li><a href="../main/account_requests.php"><i class="fas fa-user-check"></i> Account Requests</a></li>
+                <li><a href="certificates/certificates.php"><i class="fas fa-certificate"></i> Certificate Requests</a></li>
+
+                <h3><i class="fas fa-chart-bar"></i> Reports</h3>
+                <li><a href="../main/incident_table.php"><i class="fas fa-exclamation-circle"></i> Incident History</a></li>
+                <li><a href="../main/reports.php"><i class="fas fa-chart-line"></i> Analytics</a></li>
+            </ul>
+        </aside>
+
+        <div class="main-content">
+            <header class="main-header">
+                <button class="hamburger" id="toggleSidebar">&#9776;</button>
+                <div class="header-container">
+                    <div class="logo">
+                        <img src="../../assets/img/GreenwaterLogo.jpg" alt="Greenwater Village Logo">
+                        <h1><span>Greenwater</span> <span>Village</span></h1>
+                    </div>
+                    <nav class="nav" id="nav-menu">
+                        <form method="POST">
+                            <ul class="nav-links">
+                                <li>
+                                    <button class="logout-btn" name="logout">Log Out</button>
+                                </li>
+                            </ul>
+                        </form>
+                    </nav>
                 </div>
+            </header>
 
-                <h2><center>Uploaded Documents</center></h2>
-                <table class="documents-table">
-                    <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>File</th>
-                            <th>Type</th>
-                            <th>Uploaded By</th>
-                            <th>Upload Date</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php echo getDocumentsTable($pdo, $_SESSION['user_id']); ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </main>
-    <footer>
-        <hr>
-        <p><?php echo "&copy; " . date('Y') . " | Unified Barangay Information Service Hub"; ?></p>
-    </footer>
+        <main class="content">
+                <div class="dashboard-content">
+                    <h1><center>Documents</center></h1><br>
+                    <div class="document-upload-form">
+                        <form method="POST" enctype="multipart/form-data">
+                            <div class="document-credentials">
+                                <h3>Document Title</h3>
+                                <input type="text" name="title" placeholder="Enter document title" required>
+                            </div>
+                            <div class="document-credentials">
+                                <h3>Upload Document</h3>
+                                <input type="file" name="document" accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.jpg,.png" required>
+                                <button name="upload" id="uploadDocument">Upload</button>
+                            </div>
+                        </form>
+                    </div>
 
-    <script>
-        function confirmDelete(documentId) {
-            const confirmation = confirm("Are you sure you want to delete this document?");
-            if (confirmation) {
-                window.location.href = "delete_document.php?id=" + documentId;
+                    <h2><center>Uploaded Documents</center></h2>
+                    <table class="documents-table">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>File</th>
+                                <th>Type</th>
+                                <th>Uploaded By</th>
+                                <th>Upload Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php echo getDocumentsTable($pdo, $_SESSION['user_id']); ?>
+                        </tbody>
+                    </table>
+                </div>
+        </main>
+            <footer class="main-footer">
+                <p><?php echo "&copy; " . date('Y') . " | Unified Barangay Information Service Hub"; ?></p>
+            </footer>
+
+        <script>
+            function confirmDelete(documentId) {
+                Swal.fire({
+                    title: 'Delete Document?',
+                    text: "Are you sure you want to delete this document? This action cannot be undone.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#4caf50',
+                    confirmButtonText: 'Yes, delete it!',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "delete_document.php?id=" + documentId;
+                    }
+                });
+            }
+
+            const toggleBtn = document.getElementById('toggleSidebar');
+            const sidebar = document.getElementById('sidebar');
+
+            toggleBtn.addEventListener('click', () => {
+                sidebar.classList.toggle('collapsed');
+            });
+        </script>
+        <script src="../../assets/js/sweetalert2.js"></script>
+        <!-- ending for main content -->
+         </div>
+    <!-- ending for class wrapper -->
+     </div>
+
+     <style>
+        /* Headings */
+        .dashboard-content h1,
+        .dashboard-content h2 {
+            text-align: center;
+            color: #2e7d32;
+            margin-bottom: 15px;
+        }
+
+        /* Upload form container */
+        .document-upload-form {
+            background-color: #f1f8e9;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0, 64, 0, 0.05);
+        }
+
+        /* Input sections */
+        .document-credentials {
+            margin-bottom: 20px;
+        }
+        .document-credentials h3 {
+            margin-bottom: 8px;
+            color: #33691e;
+        }
+
+        /* Input styling */
+        .document-credentials input[type="text"],
+        .document-credentials input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #a5d6a7;
+            background-color: #ffffff;
+            font-size: 0.95rem;
+        }
+        .document-credentials input[type="text"]:focus,
+        .document-credentials input[type="file"]:focus {
+            outline: none;
+            border-color: #66bb6a;
+        }
+
+        /* Upload button */
+        #uploadDocument {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #43a047;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: background-color 0.3s ease;
+        }
+        #uploadDocument:hover {
+            background-color: #2e7d32;
+        }
+
+        /* Documents table */
+        .documents-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 0.95rem;
+            box-shadow: 0 2px 8px rgba(0, 64, 0, 0.05);
+        }
+        .documents-table thead {
+            background-color: #a5d6a7;
+        }
+        .documents-table thead th {
+            padding: 12px;
+            color: #1b5e20;
+            text-align: left;
+        }
+        .documents-table tbody td {
+            padding: 12px;
+            border-bottom: 1px solid #c8e6c9;
+            color: #2e7d32;
+        }
+        .documents-table tbody tr:nth-child(even) {
+            background-color: #f9fbe7;
+        }
+
+        /* Action buttons (View/Download/Delete) */
+        .documents-table .action-btn {
+            padding: 6px 12px;
+            margin-right: 5px;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .view-btn {
+            background-color: #66bb6a;
+            color: white;
+        }
+        .download-btn {
+            background-color: #43a047;
+            color: white;
+        }
+        .delete-btn {
+            background-color: #e53935;
+            color: white;
+        }
+        .view-btn:hover {
+            background-color: #388e3c;
+        }
+        .download-btn:hover {
+            background-color: #2e7d32;
+        }
+        .delete-btn:hover {
+            background-color: #c62828;
+        }
+
+        /* Responsive Table */
+        @media (max-width: 768px) {
+            .documents-table,
+            .documents-table thead,
+            .documents-table tbody,
+            .documents-table th,
+            .documents-table td,
+            .documents-table tr {
+                display: block;
+            }
+
+            .documents-table thead {
+                display: none;
+            }
+
+            .documents-table tbody tr {
+                margin-bottom: 15px;
+                background-color: #f1f8e9;
+                padding: 15px;
+                border-radius: 10px;
+            }
+
+            .documents-table td {
+                padding: 8px;
+                text-align: left;
+                position: relative;
+            }
+
+            .documents-table td::before {
+                content: attr(data-label);
+                font-weight: bold;
+                display: block;
+                margin-bottom: 6px;
+                color: #33691e;
             }
         }
-    </script>
-</body>
+     </style>
 
+</body>
 </html>

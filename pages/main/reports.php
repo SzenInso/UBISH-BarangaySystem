@@ -50,179 +50,157 @@ $incidentTypeData = $stmt4->fetchAll(PDO::FETCH_ASSOC);
 
 <head>
     <meta charset="UTF-8">
-    <title>UBISH Dashboard | Reports</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/dashPages.css">
+    <link rel="icon" type="image/x-icon" href="../../assets/img/GreenwaterLogo.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <script src="https://code.highcharts.com/highcharts.js"></script>
-    <link rel="stylesheet" href="../../assets/css/style.css">
-    <style>
-        .chart-container {
-            width: 90%;
-            max-width: 800px;
-            margin: 40px auto;
-        }
-
-        .tabs {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            margin-bottom: 5px;
-        }
-
-        .tab-btn {
-            border: 2px solid gray;
-            background-color: white;
-            color: black;
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        .tab-btn:hover {
-            background-color: lightgray;
-        }
-
-        .tab-btn.active {
-            background-color: gray;
-            color: white;
-        }
-
-        .tab-btn:focus {
-            outline: none;
-        }
-    </style>
+    <title>Greenwater Village Dashboard | Incident History</title>
 </head>
 
 <body>
-    <style>
-    header {
-        background-color: #e1f3e2 !important;
-        border-bottom: 5px solid #356859 !important;
-    }
-    .logout {
-        background-color: #e1f3e2 !important;
-        color: #356859 !important;
-        font-weight: bold !important;
-        font-size: 1.1rem !important;
-    }
-    footer {
-        background-color: #d0e9d2 !important;
-        text-align: center !important;
-        padding: 20px !important;
-        color: #2b3d2f !important;
-        border-top: 5px solid #356859 !important;
-        margin-top: 60px !important;
-    }
-    </style>
-    <header>
-        <div class="navigation">
-            <div class="logo">
-                <img src="../../assets/img/greenwater-village-logo.jpg" alt="Greenwater Village Logo">
-                <h1>UBISH</h1>
-            </div>
-            <form method="POST">
-                <nav>
-                    <ul>
-                        <li><button class="logout" name="logout">Log Out</button></li>
-                    </ul>
-                </nav>
-            </form>
-        </div>
-        <hr>
-    </header>
 
-    <main>
-        <div class="dashboard-main">
-<div class="dashboard-sidebar">
-                <ul>
-                    <h3>Home</h3>
-                    <li><a href="../main/dashboard.php">Home</a></li>
-                    <li><a href="../main/account.php">Account</a></li>
-                    
-                    <h3>Documents & Disclosure</h3>
-                    <li><a href="../main/documents.php">Documents</a></li>
-                    <li><a href="../main/announcements.php">Post Announcement</a></li>
-                    
-                    <h3>Tables & Requests</h3>
-                    <li><a href="../main/employee_table.php">Employee Table</a></li>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <ul>
+                <h2>
+                    <div class="dashboard-greetings">
+                        <?php 
+                           $stmt = $pdo->prepare("SELECT * FROM employee_details WHERE emp_id = :emp_id");
+                            $stmt->execute([":emp_id" => $_SESSION['emp_id']]);
+                            $row = $stmt->fetch(PDO::FETCH_ASSOC); {
+                        ?>
+                        <?php
+                            }
+                        ?>
+                        <center>
+                        <div class="user-info d-flex align-items-center">
+                            <img src="<?php echo $row['picture']; ?>" 
+                                class="avatar img-fluid rounded-circle me-2" 
+                                alt="<?php echo $row['first_name']; ?>" 
+                                width="70" height="70">
+                        </div>
+                            <span class="text-dark fw-semibold"><?php echo $row['first_name']; ?></span>
+                        </center>
+                    </div>
+                </h2>
 
-                    <!-- STANDARD -->
-                    <?php if ($accessLevel >= 2) { echo '<li><a href="../main/residency_management.php">Residency Management</a></li>'; } ?>
-                    <?php if ($accessLevel >= 2) { echo '<li><a href="../main/certificates.php">Certificate Requests</a></li>'; } ?>
-                    <?php if ($accessLevel >= 2) { echo '<li><a href="../main/permits.php">Permit Requests</a></li>'; } ?>
-                    <!-- STANDARD -->
-                    
-                    <!-- FULL -->
-                    <?php if ($accessLevel >= 3) { echo '<li><a href="../main/account_requests.php">Account Requests</a></li>'; } ?>
-                    <!-- FULL -->
-                    
-                    <h3>Reports</h3>
-                    <!-- STANDARD -->
-                    <?php if ($accessLevel >= 2) { echo '<li><a href="../main/incidents.php">Incident Reports</a></li>'; }  ?>
-                    <!-- STANDARD -->
-                    
-                    <li><a href="../main/incident_table.php">Incident History</a></li>
-                    <li class="active"><a href="../main/reports.php">Analytics</a></li>
-                </ul>
-            </div>
-            <div class="dashboard-content">
-                <h1>Generated Reports</h1>
-                <br>
-                <!-- primary tabs -->
-                <div class="tabs">
-                    <button class="tab-btn active" id="announcementTabBtn"
-                        onclick="showPrimaryTab('announcements')">Announcements</button>
-                    <button class="tab-btn" id="documentTabBtn" onclick="showPrimaryTab('documents')">Documents</button>
-                    <button class="tab-btn" id="incidentTabBtn" onclick="showPrimaryTab('incidents')">Incidents</button>
+                <h3><i class="fas fa-home"></i> Home</h3>
+                <li class="active"><a href="../main/dashboard.php"><i class="fas fa-tachometer-alt"></i> Home</a></li>
+                <li><a href="../main/account.php"><i class="fas fa-user"></i> Account</a></li>
+
+                <h3><i class="fas fa-folder-open"></i> Documents & Disclosure</h3>
+                <li><a href="../main/documents.php"><i class="fas fa-file-alt"></i> Documents</a></li>
+                <li><a href="../main/announcements.php"><i class="fas fa-bullhorn"></i> Post Announcement</a></li>
+
+                <h3><i class="fas fa-table"></i> Tables & Requests</h3>
+                <li><a href="../main/employee_table.php"><i class="fas fa-users"></i> Employee Table</a></li>
+
+                <!-- STANDARD ACCESS LEVEL -->
+                <?php if ($accessLevel >= 2): ?>
+                    <li><a href="../main/residency_management.php"><i class="fas fa-house-user"></i> Residency Management</a></li>
+                    <!-- <li><a href="../main/certificates.php"><i class="fas fa-certificate"></i> Certificate Requests</a></li> -->
+                    <li><a href="../main/permits.php"><i class="fas fa-id-badge"></i> Permit Requests</a></li>
+                <?php endif; ?>
+
+                <!-- FULL ACCESS LEVEL -->
+                <?php if ($accessLevel >= 3): ?>
+                    <li><a href="../main/account_requests.php"><i class="fas fa-user-check"></i> Account Requests</a></li>
+                <?php endif; ?>
+
+                <h3><i class="fas fa-chart-bar"></i> Reports</h3>
+                <?php if ($accessLevel >= 2): ?>
+                    <li><a href="../main/incidents.php"><i class="fas fa-exclamation-circle"></i> Incident Reports</a></li>
+                <?php endif; ?>
+                <li><a href="../main/incident_table.php"><i class="fas fa-history"></i> Incident History</a></li>
+                <li><a href="../main/reports.php"><i class="fas fa-chart-line"></i> Analytics</a></li>
+            </ul>
+        </aside>
+
+
+        <div class="main-content">
+            <header class="main-header">
+                <button class="hamburger" id="toggleSidebar">&#9776;</button>
+                <div class="header-container">
+                    <div class="logo">
+                        <img src="../../assets/img/GreenwaterLogo.jpg" alt="Greenwater Village Logo">
+                        <h1><span>Greenwater</span> <span>Village</span></h1>
+                    </div>
+                    <nav class="nav" id="nav-menu">
+                        <form method="POST">
+                            <ul class="nav-links">
+                                <li>
+                                    <button class="logout-btn" name="logout">Log Out</button>
+                                </li>
+                            </ul>
+                        </form>
+                    </nav>
                 </div>
-                <br>
-                <!-- secondary tabs: announcements -->
-                <div class="tabs" id="announcementTabs" style="display: block;">
-                    <button class="tab-btn active" onclick="showSecondaryTab('categoryTab')">By Category</button>
-                    <button class="tab-btn" onclick="showSecondaryTab('privacyTab')">By Privacy</button>
-                </div>
+            </header>
 
-                <!-- secondary tabs: documents -->
-                <div class="tabs" id="documentTabs" style="display: none;">
-                    <button class="tab-btn active" onclick="showSecondaryTab('documentTab')">By File Type</button>
-                </div>
+            <main class="content">
+                <div class="dashboard-content">
+                    <h1>Generated Reports</h1>
+                    <br>
+                    <!-- primary tabs -->
+                    <div class="tabs">
+                        <button class="tab-btn active" id="announcementTabBtn"
+                            onclick="showPrimaryTab('announcements')">Announcements</button>
+                        <button class="tab-btn" id="documentTabBtn" onclick="showPrimaryTab('documents')">Documents</button>
+                        <button class="tab-btn" id="incidentTabBtn" onclick="showPrimaryTab('incidents')">Incidents</button>
+                    </div>
+                    <br>
+                    <!-- secondary tabs: announcements -->
+                    <div class="tabs" id="announcementTabs" style="display: block;">
+                        <button class="tab-btn active" onclick="showSecondaryTab('categoryTab')">By Category</button>
+                        <button class="tab-btn" onclick="showSecondaryTab('privacyTab')">By Privacy</button>
+                    </div>
 
-                <!-- secondary tabs: incidents -->
-                <div class="tabs" id="incidentTabs" style="display: none;">
-                    <button class="tab-btn active" onclick="showSecondaryTab('incidentTypeTab')">By Incident
-                        Type</button>
-                </div>
+                    <!-- secondary tabs: documents -->
+                    <div class="tabs" id="documentTabs" style="display: none;">
+                        <button class="tab-btn active" onclick="showSecondaryTab('documentTab')">By File Type</button>
+                    </div>
 
-                <!-- charts: announcements -->
-                <div class="chart-container" id="categoryTab" style="display: block;">
-                    <h3>Announcements by Category</h3>
-                    <div id="categoryChart"></div>
-                </div>
+                    <!-- secondary tabs: incidents -->
+                    <div class="tabs" id="incidentTabs" style="display: none;">
+                        <button class="tab-btn active" onclick="showSecondaryTab('incidentTypeTab')">By Incident
+                            Type</button>
+                    </div>
 
-                <div class="chart-container" id="privacyTab" style="display: none;">
-                    <h3>Announcements by Privacy</h3>
-                    <div id="privacyChart"></div>
-                </div>
+                    <!-- charts: announcements -->
+                    <div class="chart-container" id="categoryTab" style="display: block;">
+                        <h3>Announcements by Category</h3>
+                        <div id="categoryChart"></div>
+                    </div>
 
-                <!-- charts: documents -->
-                <div class="chart-container" id="documentTab" style="display: none;">
-                    <h3>Documents by File Type</h3>
-                    <div id="documentChart"></div>
-                </div>
+                    <div class="chart-container" id="privacyTab" style="display: none;">
+                        <h3>Announcements by Privacy</h3>
+                        <div id="privacyChart"></div>
+                    </div>
 
-                <!-- charts: incidents -->
-                <div class="chart-container" id="incidentTypeTab" style="display: none;">
-                    <h3>Incidents by Type</h3>
-                    <div id="incidentTypeChart"></div>
-                </div>
-            </div>
-        </div>
-    </main>
+                    <!-- charts: documents -->
+                    <div class="chart-container" id="documentTab" style="display: none;">
+                        <h3>Documents by File Type</h3>
+                        <div id="documentChart"></div>
+                    </div>
 
-    <footer>
-        <hr>
-        <p>&copy; <?php echo date('Y'); ?> | Unified Barangay Information Service Hub</p>
-    </footer>
+                    <!-- charts: incidents -->
+                    <div class="chart-container" id="incidentTypeTab" style="display: none;">
+                        <h3>Incidents by Type</h3>
+                        <div id="incidentTypeChart"></div>
+                    </div>
+                </div>
+            </main>
+
+            <footer class="main-footer">
+                <p><?php echo "&copy; " . date('Y') . " | Unified Barangay Information Service Hub"; ?></p>
+            </footer>
+            <!-- ending for the main content -->
+        </div> 
+    <!-- ending for class wrapper -->
+    </div> 
+
 
     <!-- JAVASCRIPT BLOCK STARTS HERE -->
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
@@ -427,6 +405,95 @@ $incidentTypeData = $stmt4->fetchAll(PDO::FETCH_ASSOC);
 
         showPrimaryTab('announcements');
     </script>
-</body>
 
+        <script>
+        const toggleBtn = document.getElementById('toggleSidebar');
+        const sidebar = document.getElementById('sidebar');
+
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+        });
+    </script>
+    <style>
+        /* Title styling */
+        .dashboard-content h1 {
+            font-size: 28px;
+            color: #2e5e4d;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        /* Tab buttons */
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tab-btn {
+            background-color: #d7ede2;
+            color: #2e5e4d;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .tab-btn:hover {
+            background-color: #a6dcb9;
+        }
+
+        .tab-btn.active {
+            background-color: #2e5e4d;
+            color: #fff;
+        }
+
+        /* Chart container */
+        .chart-container {
+            background-color: #ffffff;
+            padding: 25px 30px;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .chart-container h3 {
+            font-size: 20px;
+            color: #2e5e4d;
+            margin-bottom: 15px;
+        }
+
+        /* Chart placeholders (for libraries like Chart.js, ApexCharts, etc.) */
+        .chart-container > div {
+            width: 100%;
+            min-height: 300px;
+        }
+
+        /* Responsive behavior */
+        @media (max-width: 768px) {
+            .tab-btn {
+                flex: 1 1 auto;
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            .chart-container {
+                padding: 20px;
+            }
+
+            .chart-container h3 {
+                font-size: 18px;
+            }
+        }
+
+        /* Fade-in animation for switching charts */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</body>
 </html>

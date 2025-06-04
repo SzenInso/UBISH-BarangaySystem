@@ -1,0 +1,123 @@
+
+/* Heading */
+.dashboard-content h1 {
+    text-align: center;
+    font-size: 2em;
+    color: #1e5631;
+    margin-bottom: 20px;
+}
+
+/* Filters Section */
+.employee-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 20px 0;
+    background-color: #e6f4ea;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #cde0d2;
+}
+
+.employee-filters-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 200px;
+}
+
+.employee-filters-container label {
+    font-weight: bold;
+    color: #2f4f4f;
+}
+
+.employee-filters-container select,
+.employee-filters-container button {
+    padding: 7px 12px;
+    border: 1px solid #a5d6a7;
+    border-radius: 5px;
+    background-color: #ffffff;
+    color: #2e7d32;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+/* Reset Button */
+#reset-sort-filter {
+    background-color: #c8e6c9;
+    border: none;
+    color: #1b5e20;
+    transition: background-color 0.3s;
+}
+
+#reset-sort-filter:hover {
+    background-color: #a5d6a7;
+}
+
+/* Delete Selected Button */
+#deleteSelectedEmp {
+    background-color: #d32f2f;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+#deleteSelectedEmp:hover {
+    background-color: #b71c1c;
+}
+
+/* Employee Table */
+#employee-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+#employee-table th,
+#employee-table td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #cde0d2;
+}
+
+#employee-table th {
+    background-color: #a5d6a7;
+    color: #1b5e20;
+    font-weight: bold;
+}
+
+#employee-table tr:nth-child(even) {
+    background-color: #f1f8f4;
+}
+
+#employee-table tr:hover {
+    background-color: #e0f2f1;
+}
+
+/* Profile Picture */
+#employee-table img {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #81c784;
+}
+
+/* Delete Button inside Table */
+#employee-table button[name="delete-employee"] {
+    background-color: #f44336;
+    border: none;
+    padding: 7px 14px;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+#employee-table button[name="delete-employee"]:hover {
+    background-color: #c62828;
+}

@@ -1,0 +1,149 @@
+.certificate-table-container {
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 100%;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.08);
+}
+
+.certificate-table-container h2 {
+    text-align: center;
+    color: #2d5c3f;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+.cert-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    background-color: #fff;
+}
+
+.cert-table thead {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.cert-table th,
+.cert-table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ccc;
+}
+
+.cert-table tr:nth-child(even) {
+    background-color: #f5f5f5;
+}
+
+.cert-table tr:hover {
+    background-color: #e0f2f1;
+}
+
+.action-btn {
+    padding: 6px 10px;
+    margin: 2px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.action-btn.view {
+    background-color: #64b5f6;
+    color: white;
+}
+
+.action-btn.approve {
+    background-color: #81c784;
+    color: white;
+}
+
+.action-btn.deny {
+    background-color: #e57373;
+    color: white;
+}
+
+.loading-cell,
+.error-cell {
+    text-align: center;
+    font-style: italic;
+    padding: 20px;
+    color: gray;
+}
+
+@media (max-width: 768px) {
+    .cert-table thead {
+        display: none;
+    }
+
+    .cert-table, .cert-table tbody, .cert-table tr, .cert-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .cert-table tr {
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        padding: 10px;
+    }
+
+    .cert-table td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+    }
+
+    .cert-table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: 45%;
+        padding-left: 15px;
+        font-weight: bold;
+        text-align: left;
+    }
+    .search-bar {
+    width: 100%;
+    max-width: 400px;
+    padding: 8px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+.table-wrapper {
+    overflow-x: auto;
+    margin-bottom: 30px;
+}
+.cert-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+}
+.cert-table th, .cert-table td {
+    padding: 8px;
+    border: 1px solid #ccc;
+}
+.cert-table th {
+    background-color: #f4f4f4;
+}
+.action-btn {
+    margin: 2px;
+    padding: 4px 10px;
+    border: none;
+    cursor: pointer;
+}
+.action-btn.view { background-color: #3498db; color: white; }
+.action-btn.approve { background-color: #2ecc71; color: white; }
+.action-btn.deny { background-color: #e74c3c; color: white; }
+.action-btn.pdf { background-color: #95a5a6; color: white; }
+
+}

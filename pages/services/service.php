@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<?= BASE_URL ?>css/index.css">
     <link rel="stylesheet" href="css/service.css">
-
+    <link rel="icon" type="image/x-icon" href="<?= BASE_URL ?>assets/img/GreenwaterLogo.jpg">
     <title>UBISH | Services</title>
 </head>
 <body>

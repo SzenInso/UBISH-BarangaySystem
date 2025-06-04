@@ -1,6 +1,6 @@
 <?php
     include '../../../config/dbfetch.php';
-    
+    include '../../../baseURL.php';
     // access level verification
     if (!isset($_SESSION['user_id']) || $accessLevel < 2) {
         header("Location: ../dashboard.php");
@@ -44,120 +44,91 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../assets/css/style.css">
-    <title>UBISH Dashboard | View Household</title>
+    <link rel="stylesheet" href="../css/dashPages.css">
+    <link rel="icon" type="image/x-icon" href="<?= BASE_URL ?>assets/img/GreenwaterLogo.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <title>Greenwater Village Dashboard | View Household</title>
 </head>
 <body>
-    <style>
-        header {
-            background-color: #e1f3e2 !important;
-            border-bottom: 5px solid #356859 !important;
-        }
-        .logout {
-            background-color: #e1f3e2 !important;
-            color: #356859 !important;
-            font-weight: bold !important;
-            font-size: 1.1rem !important;
-        }
-        footer {
-            background-color: #d0e9d2 !important;
-            text-align: center !important;
-            padding: 20px !important;
-            color: #2b3d2f !important;
-            border-top: 5px solid #356859 !important;
-            margin-top: 60px !important;
-        }
-        .household-information {
-            margin: 20px;
-            padding: 30px;
-            border: 2px solid #ccc;
-            border-radius: 10px;
-            background-color: #f9f9f9;
-            font-size: 1.2rem;
-            display: block;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .household-information h2 {
-            margin-bottom: 20px;
-            font-size: 2rem;
-            font-weight: bold;
-            color: #356859;
-        }
-        .family-card {
-            background: #fff;
-            border: 1.5px solid #b7d6b7;
-            border-radius: 8px;
-            margin-bottom: 24px;
-            padding: 18px 24px;
-            box-shadow: 0 2px 8px rgba(53, 104, 89, 0.06);
-        }
-        .family-card strong {
-            color: #356859;
-        }
-        .family-members-list {
-            margin: 12px 0 0 0;
-            padding-left: 24px;
-        }
-        .family-members-list li {
-            margin-bottom: 6px;
-            font-size: 1.08rem;
-        }
-        .no-members, .no-families {
-            color: #888;
-            font-style: italic;
-            margin-top: 8px;
-        }
-    </style>
-    <header>
-        <div class="navigation">
-            <div class="logo">
-                <img src="../../../assets/img/greenwater-village-logo.jpg" alt="Greenwater Village Logo">
-                <h1>UBISH</h1>
-            </div>
-            <form method="POST">
-                <nav>
-                    <ul>
-                        <li>
-                            <button class="logout" style="cursor: pointer;" name="logout">Log Out</button>
-                        </li>
-                    </ul>
-                </nav>
-            </form>
-        </div>
-        <hr>
-    </header>
-    <main>
-        <div class="dashboard-main">
-            <div class="dashboard-sidebar">
-                <ul>
-                    <h3>Home</h3>
-                    <li><a href="../../main/dashboard.php">Home</a></li>
-                    <li><a href="../../main/account.php">Account</a></li>
-                    
-                    <h3>Documents & Disclosure</h3>
-                    <li><a href="../../main/documents.php">Documents</a></li>
-                    <li><a href="../../main/announcements.php">Post Announcement</a></li>
-                    
-                    <h3>Tables & Requests</h3>
-                    <li><a href="../../main/employee_table.php">Employee Table</a></li>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <ul>
+                <h2>
+                    <div class="dashboard-greetings">
+                        <?php 
+                           $stmt = $pdo->prepare("SELECT * FROM employee_details WHERE emp_id = :emp_id");
+                            $stmt->execute([":emp_id" => $_SESSION['emp_id']]);
+                            $row = $stmt->fetch(PDO::FETCH_ASSOC); {
+                        ?>
+                        <?php
+                            }
+                        ?>
+                        <center>
+                        <div class="user-info d-flex align-items-center">
+                            <img src="../<?php echo $row['picture']; ?>" 
+                                class="avatar img-fluid rounded-circle me-2" 
+                                alt="<?php echo $row['first_name']; ?>" 
+                                width="70" height="70">
+                        </div>
+                            <span class="text-dark fw-semibold"><?php echo $row['first_name']; ?></span>
+                        </center>
+                    </div>
+                </h2>
 
-                    <!-- STANDARD -->
-                    <?php if ($accessLevel >= 2) { echo '<li class="active"><a href="../../main/residency_management.php">Residency Management</a></li>'; } ?>
-                    <?php if ($accessLevel >= 2) { echo '<li><a href="../../main/certificates.php">Certificate Requests</a></li>'; } ?>
-                    <?php if ($accessLevel >= 2) { echo '<li><a href="../../main/permits.php">Permit Requests</a></li>'; } ?>
-                    <!-- STANDARD -->
-                    
-                    <!-- FULL -->
-                    <?php if ($accessLevel >= 3) { echo '<li><a href="../../main/account_requests.php">Account Requests</a></li>'; } ?>
-                    <!-- FULL -->
-                    
-                    <h3>Reports</h3>
-                    <?php if ($accessLevel >= 2) { echo '<li><a href="../../main/incidents.php">Incident Reports</a></li>'; }  ?>
-                    <li><a href="../../main/incident_table.php">Incident History</a></li>
-                    <li><a href="../../main/reports.php">Analytics</a></li>
-                </ul>
-            </div>
+                <h3><i class="fas fa-home"></i> Home</h3>
+                <li class="active"><a href="../main/dashboard.php"><i class="fas fa-tachometer-alt"></i> Home</a></li>
+                <li><a href="../main/account.php"><i class="fas fa-user"></i> Account</a></li>
+
+                <h3><i class="fas fa-folder-open"></i> Documents & Disclosure</h3>
+                <li><a href="../main/documents.php"><i class="fas fa-file-alt"></i> Documents</a></li>
+                <li><a href="../main/announcements.php"><i class="fas fa-bullhorn"></i> Post Announcement</a></li>
+
+                <h3><i class="fas fa-table"></i> Tables & Requests</h3>
+                <li><a href="../main/employee_table.php"><i class="fas fa-users"></i> Employee Table</a></li>
+
+                <!-- STANDARD ACCESS LEVEL -->
+                <?php if ($accessLevel >= 2): ?>
+                    <li><a href="../main/residency_management.php"><i class="fas fa-house-user"></i> Residency Management</a></li>
+                    <!-- <li><a href="../main/certificates.php"><i class="fas fa-certificate"></i> Certificate Requests</a></li> -->
+                    <!-- <li><a href="../main/permits.php"><i class="fas fa-id-badge"></i> Permit Requests</a></li> -->
+                <?php endif; ?>
+
+                <!-- FULL ACCESS LEVEL -->
+                <?php if ($accessLevel >= 3): ?>
+                    <li><a href="../main/account_requests.php"><i class="fas fa-user-check"></i> Account Requests</a></li>
+                <?php endif; ?>
+
+                <h3><i class="fas fa-chart-bar"></i> Reports</h3>
+                <?php if ($accessLevel >= 2): ?>
+                    <li><a href="../main/incidents.php"><i class="fas fa-exclamation-circle"></i> Incident Reports</a></li>
+                <?php endif; ?>
+                <li><a href="../main/incident_table.php"><i class="fas fa-history"></i> Incident History</a></li>
+                <li><a href="../main/reports.php"><i class="fas fa-chart-line"></i> Analytics</a></li>
+            </ul>
+        </aside>
+
+    <div class="main-content">
+            <header class="main-header">
+                <button class="hamburger" id="toggleSidebar">&#9776;</button>
+                <div class="header-container">
+                    <div class="logo">
+                        <img src="../../../assets/img/GreenwaterLogo.jpg" alt="Greenwater Village Logo">
+                        <h1><span>Greenwater</span> <span>Village</span></h1>
+                    </div>
+                    <nav class="nav" id="nav-menu">
+                        <form method="POST">
+                            <ul class="nav-links">
+                                <li>
+                                    <button class="logout-btn" name="logout">Log Out</button>
+                                </li>
+                            </ul>
+                        </form>
+                    </nav>
+                </div>
+            </header>
+
+    <main class="content">
             <div class="dashboard-content">
                 <center><h1>View Household</h1></center>
                 <div class="household-information">
@@ -238,11 +209,112 @@
                     </form>
                 </div>
             </div>
-        </div>
     </main>
-    <footer>
-        <hr>
-        <p><?php echo "&copy; " . date('Y') . " | Unified Barangay Information Service Hub"; ?></p>
-    </footer>
+            <footer class="main-footer">
+                <p><?php echo "&copy; " . date('Y') . " | Unified Barangay Information Service Hub"; ?></p>
+            </footer>
+    <!-- ending for main content -->
+    </div>
+    <!-- ending for class wrapper -->
+    </div>
+    <script>
+        const toggleBtn = document.getElementById('toggleSidebar');
+        const sidebar = document.getElementById('sidebar');
+
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+        });
+    </script>
+    <style>
+        .dashboard-content h1 {
+            color: #2e5e4d;
+            font-size: 28px;
+            margin-bottom: 24px;
+        }
+
+        .dashboard-content h2 {
+            color: #3a7356;
+            font-size: 20px;
+            margin-bottom: 16px;
+            border-bottom: 2px solid #a9cdb6;
+            padding-bottom: 6px;
+        }
+
+        /* ===== Household Info Section ===== */
+        .household-information {
+            background-color: #ffffff;
+            border: 1px solid #d3e8db;
+            border-left: 6px solid #4ca471;
+            border-radius: 6px;
+            padding: 20px 25px;
+            margin-bottom: 24px;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.03);
+        }
+
+        .household-information p {
+            margin: 8px 0;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* ===== Buttons and Actions ===== */
+        .household-actions,
+        .resident-actions {
+            margin-top: 16px;
+            text-align: right;
+        }
+
+        .custom-cancel-button {
+            background-color: #4ca471;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .custom-cancel-button:hover {
+            background-color: #3e8d61;
+        }
+
+        /* ===== Family Card Styling ===== */
+        .family-card {
+            background-color: #f8fff8;
+            border: 1px solid #cfe9d7;
+            border-radius: 5px;
+            padding: 15px 20px;
+            margin-bottom: 16px;
+        }
+
+        .family-card strong {
+            color: #2f5c47;
+        }
+
+        /* ===== Family Members List ===== */
+        .family-members-list {
+            padding-left: 20px;
+            margin-top: 10px;
+        }
+
+        .family-members-list li {
+            margin-bottom: 6px;
+            font-size: 14.5px;
+        }
+
+        /* ===== Empty States ===== */
+        .no-members,
+        .no-families {
+            color: #7f8c8d;
+            font-style: italic;
+            background-color: #fffef6;
+            border-left: 4px solid #ffcd5d;
+            padding: 8px 12px;
+            margin-top: 12px;
+            border-radius: 4px;
+        }
+
+    </style>
 </body>
 </html>
