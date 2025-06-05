@@ -199,241 +199,306 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="css/dash.css">
+    <link rel="icon" type="image/x-icon" href="../../assets/img/GreenwaterLogo.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <script src="../../assets/js/sweetalert2.js"></script>
-    <title>UBISH Dashboard | Account Creation</title>
+    <title>Greenwater Village | Account Creation</title>
 </head>
 <body>
-    <style>
-    header {
-        background-color: #e1f3e2 !important;
-        border-bottom: 5px solid #356859 !important;
-    }
-    .logout {
-        background-color: #e1f3e2 !important;
-        color: #356859 !important;
-        font-weight: bold !important;
-        font-size: 1.1rem !important;
-    }
-    footer {
-        background-color: #d0e9d2 !important;
-        text-align: center !important;
-        padding: 20px !important;
-        color: #2b3d2f !important;
-        border-top: 5px solid #356859 !important;
-        margin-top: 60px !important;
-    }
-    </style>
-    <header>
-        <div class="navigation">
-            <div class="logo">
-                <img src="../../assets/img/greenwater-village-logo.jpg" alt="Greenwater Village Logo">
-                <h1>UBISH</h1>
-            </div>
-            <form method="POST">
-                <nav>
-                    <ul>
-                        <li>
-                            <button class="logout" style="cursor: pointer;" name="logout">Log Out</button>
-                        </li>
-                    </ul>
-                </nav>
-            </form>
-        </div>
-        <hr>
-    </header>
-    <main>
-        <div class="dashboard-main">
-            <div class="dashboard-sidebar">
-                <ul>
-                    <h3>Home</h3>
-                    <li><a href="../main/dashboard.php">Home</a></li>
-                    <li><a href="../main/account.php">Account</a></li>
-                    <li class="active"><a href="../main/account_creation.php">Account Creation</a></li>
-                    <h3>Documents & Disclosure</h3>
-                    <li><a href="../main/documents.php">Documents</a></li>
-                    <li><a href="../main/announcements.php">Post Announcement</a></li>
-                    <h3>Tables & Requests</h3>
-                    <li><a href="../main/employee_table.php">Employee Table</a></li>
-                    <li><a href="../main/account_requests.php">Account Requests</a></li>
-                    <h3>Reports</h3>
-                    <li><a href="../main/incident_table.php">Incident History</a></li>
-                    <li><a href="../main/reports.php">Analytics</a></li>
-                </ul>
-            </div>
-            <div class="dashboard-content">
-                <style>
-                    .account-creation-main {
-                        display: flex;
-                        justify-content: center;
-                        margin: 0 auto;
-                    }
-                    .account-creation-main input, 
-                    .account-creation-main select {
-                        margin-top: 4px;
-                        padding: 4px;
-                        width: 256px;
-                    }
-                    .account-creation-register button {
-                        border: 2px solid gray;
-                        background-color: white;
-                        color: black;
-                        padding: 8px;
-                        border-radius: 4px;
-                        cursor: pointer;
-                    }
-                    .account-creation-register button:hover {
-                        background-color: lightgray;
-                    }
-                    #phonenum {
-                        width: 223px;
-                    }
-                </style>
-                <h1>
-                    <center>Create an Account</center>
-                </h1><br>
-                <form method="POST" enctype="multipart/form-data">
-                    <div class="account-creation-profile">
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <ul>
+                <h2>
+                    <div class="dashboard-greetings">
+                        <?php 
+                            $query = "SELECT * FROM employee_details WHERE emp_id = :emp_id";
+                            $empDetails = $pdo->prepare($query);
+                            $empDetails->execute([":emp_id" => $_SESSION['emp_id']]);
+                            foreach ($empDetails as $row) {
+                        ?>
+                        <?php
+                            }
+                        ?>
                         <center>
-                            <img 
-                                id="profile-preview"
-                                src="../../uploads/default_profile.jpg" 
-                                alt="Profile Preview"
-                                style="width: 200px; height: 200px; object-fit: cover; border-radius: 50%;"
-                            >
+                        <div class="user-info d-flex align-items-center">
+                            <img src="<?php echo $row['picture']; ?>" 
+                                class="avatar img-fluid rounded-circle me-2" 
+                                alt="<?php echo $row['first_name']; ?>" 
+                                width="70" height="70">
+                        </div>
+                        <span class="text-dark fw-semibold"><?php echo $row['first_name']; ?></span>
                         </center>
-                        <br>
-                        <strong>Upload Profile Picture:&nbsp;</strong><input type="file" id="picture" name="picture" placeholder="Upload Photo">
-                        <script src="../../assets/js/profilePreview.js"></script>
                     </div>
-                    <br>
-                    <div class="account-creation-main">
-                        <!-- Employee Registration -->
-                        <div class="account-creation-container">
-                            <h3>Employee Details</h3>
-                            <table>
-                                <tr>
-                                    <td>First Name<span title="Required" style="color: crimson; cursor: pointer;">&nbsp;*</span></td>
-                                    <td><input type="text" name="fname" placeholder="Enter First Name"></td>
-                                </tr>
-                                <tr>
-                                    <td>Middle Name</td>
-                                    <td><input type="text" name="mname" placeholder="Enter Middle Name"></td>
-                                </tr>
-                                <tr>
-                                    <td>Last Name<span title="Required" style="color: crimson; cursor: pointer;">&nbsp;*</span></td>
-                                    <td><input type="text" name="lname" placeholder="Enter Last Name"></td>
-                                </tr>
-                                <tr>
-                                    <td>Date of Birth<span title="Required" style="color: crimson; cursor: pointer;">&nbsp;*</span></td>
-                                    <td><input type="date" name="dob"></td>
-                                </tr>
-                                <tr>
-                                    <td>Biological Sex<span title="Required" style="color: crimson; cursor: pointer;">&nbsp;*</span></td>
-                                    <td>
-                                        <select name="sex">
-                                            <option value="" disabled selected>Select Biological Sex</option>
-                                            <option value="M">Male</option>
-                                            <option value="F">Female</option>
-                                            <option value="I">Intersex</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Residential Address<span title="Required" style="color: crimson; cursor: pointer;">&nbsp;*</span></td>
-                                    <td><input type="text" name="address" placeholder="Enter Current Residential Address"></td>
-                                </tr>
-                                <tr>
-                                    <td>Religion<span title="Required" style="color: crimson; cursor: pointer;">&nbsp;*</span></td>
-                                    <td><input type="text" name="religion" placeholder="Enter Religion"></td>
-                                </tr>
-                                <tr>
-                                    <td>Civil Status<span title="Required" style="color: crimson; cursor: pointer;">&nbsp;*</span></td>
-                                    <td>
-                                        <select name="civilstatus">
-                                            <option value="" disabled selected>Select Civil Status</option>
-                                            <option value="Single">Single</option>
-                                            <option value="Married">Married</option>
-                                            <option value="Divorced">Divorced</option>
-                                            <option value="Widowed">Widowed</option>
-                                            <option value="Legally Separated">Legally Separated</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Legislature<span title="Required" style="color: crimson; cursor: pointer;">&nbsp;*</span></td>
-                                    <td>
-                                        <select name="legislature">
-                                            <option value="" disabled selected>Select Legislature</option>
-                                            <option value="Punong Barangay">Punong Barangay</option>
-                                            <option value="Barangay Secretary">Barangay Secretary</option>
-                                            <option value="Barangay Treasurer">Barangay Treasurer</option>
-                                            <option value="Sangguniang Barangay Member">Sangguniang Barangay Member</option>
-                                            <option value="Sangguniang Kabataan Chairperson">Sangguniang Kabataan Chairperson</option>
-                                            <option value="Sangguniang Kabataan Secretary">Sangguniang Kabataan Secretary</option>
-                                            <option value="Sangguniang Kabataan Treasurer">Sangguniang Kabataan Treasurer</option>
-                                            <option value="Sangguniang Kabataan Member">Sangguniang Kabataan Member</option>
-                                            <option value="Other Barangay Personnel">Other Barangay Personnel</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Committee</td>
-                                    <td><input type="text" name="committee" placeholder="Enter Committee"></td>
-                                </tr>
-                                <tr>
-                                    <td>Phone Number<span title="Required" style="color: crimson; cursor: pointer;">&nbsp;*</span></td>
-                                    <td>+63&nbsp;<input type="text" id="phonenum" name="phonenum" placeholder="Enter Valid Phone Number"></td>
-                                </tr>
-                                <script>
-                                    document.addEventListener('DOMContentLoaded', function () {
-                                        const phoneInput = document.getElementById('phonenum');
-                                        if (!phoneInput) return;    // if no input return none
+                </h2> </br>
+                <h3><i class="fas fa-home"></i> Home</h3>
+                <li class="active"><a href="../main/dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="../main/account.php"><i class="fas fa-user"></i> Account</a></li>
+                <li><a href="../main/account_creation.php"><i class="fas fa-user-plus"></i> Account Creation</a></li>
 
-                                        phoneInput.addEventListener('input', function () {
-                                            // only remove the first character if it's '0' and there's at least one more digit
-                                            if (this.value.length > 1 && this.value.charAt(0) === '0') {
-                                                this.value = this.value.slice(1);
-                                            }
-                                        });
-                                    });
-                                </script>
-                            </table>
-                        </div>
-                        <!-- Login Credentials Registration -->
-                        <div class="account-creation-container">
-                            <h3>Login Credentials</h3>
-                            <table>
-                                <tr>
-                                    <td>Username<span title="Required" style="color: crimson; cursor: pointer;">&nbsp;*</span></td>
-                                    <td><input type="text" name="username" placeholder="Enter Username"></td>
-                                </tr>
-                                <tr>
-                                    <td>Email Address</td>
-                                    <td><input type="email" name="email" placeholder="Enter Email"></td>
-                                </tr>
-                                <tr>
-                                    <td>Password<span title="Required" style="color: crimson; cursor: pointer;">&nbsp;*</span></td>
-                                    <td><input type="password" name="password" id="password" placeholder="Enter Password"></td>
-                                </tr>
-                                <tr>
-                                    <td>Confirm Password<span title="Required" style="color: crimson; cursor: pointer;">&nbsp;*</span></td>
-                                    <td><input type="password" name="confirmPassword" id="confirm-password" placeholder="Re-enter Password"></td>
-                                </tr>
-                            </table>
-                        </div>
+                <h3><i class="fas fa-folder-open"></i> Documents & Disclosure</h3>
+                <li><a href="../main/documents.php"><i class="fas fa-file-alt"></i> Documents</a></li>
+                <li><a href="../main/announcements.php"><i class="fas fa-bullhorn"></i> Post Announcement</a></li>
+
+                <h3><i class="fas fa-table"></i> Tables & Requests</h3>
+                <li><a href="../main/employee_table.php"><i class="fas fa-users"></i> Employee Table</a></li>
+                <li><a href="../main/account_requests.php"><i class="fas fa-user-check"></i> Account Requests</a></li>
+                <li><a href="certificates/certificates.php"><i class="fas fa-certificate"></i> Certificate Requests</a></li>
+
+                <h3><i class="fas fa-chart-bar"></i> Reports</h3>
+                <li><a href="../main/incident_table.php"><i class="fas fa-exclamation-circle"></i> Incident History</a></li>
+                <li><a href="../main/reports.php"><i class="fas fa-chart-line"></i> Analytics</a></li>
+            </ul>
+        </aside>
+
+        <div class="main-content">
+            <header class="main-header">
+                <button class="hamburger" id="toggleSidebar">&#9776;</button>
+                <div class="header-container">
+                    <div class="logo">
+                        <img src="../../assets/img/GreenwaterLogo.jpg" alt="Greenwater Village Logo">
+                        <h1><span>Greenwater</span> <span>Village</span></h1>
                     </div>
-                    <div class="account-creation-register">
-                        <button name="register">Register</button>
-                        <button name="cancel">Cancel</button>
-                    </div>
-                </form>
+                    <nav class="nav" id="nav-menu">
+                        <form method="POST">
+                            <ul class="nav-links">
+                                <li>
+                                    <button class="logout-btn" name="logout">Log Out</button>
+                                </li>
+                            </ul>
+                        </form>
+                    </nav>
+                </div>
+            </header>
+            <main class="content">
+             <div class="dashboard-content">
+        <div class="container">
+        <h1>Create an Account</h1>
+        <form method="POST" enctype="multipart/form-data">
+            <div class="account-creation-profile">
+                <img id="profile-preview" src="../../uploads/default_profile.jpg" alt="Profile Preview">
+                <br><br>
+                <label class="form-label"><strong>Upload Profile Picture:</strong></label>
+                <input type="file" class="form-control" id="picture" name="picture">
             </div>
+
+            <div class="account-creation-main">
+                <div class="account-creation-container">
+                    <h3>Employee Details</h3>
+                    <table>
+                        <tr>
+                            <td>First Name<span style="color: crimson"> *</span></td>
+                            <td><input type="text" name="fname" placeholder="Enter First Name"></td>
+                        </tr>
+                        <tr>
+                            <td>Middle Name</td>
+                            <td><input type="text" name="mname" placeholder="Enter Middle Name"></td>
+                        </tr>
+                        <tr>
+                            <td>Last Name<span style="color: crimson"> *</span></td>
+                            <td><input type="text" name="lname" placeholder="Enter Last Name"></td>
+                        </tr>
+                        <tr>
+                            <td>Date of Birth<span style="color: crimson"> *</span></td>
+                            <td><input type="date" name="dob"></td>
+                        </tr>
+                        <tr>
+                            <td>Biological Sex<span style="color: crimson"> *</span></td>
+                            <td>
+                                <select name="sex">
+                                    <option value="" disabled selected>Select Biological Sex</option>
+                                    <option value="M">Male</option>
+                                    <option value="F">Female</option>
+                                    <option value="I">Intersex</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Residential Address<span style="color: crimson"> *</span></td>
+                            <td><input type="text" name="address" placeholder="Enter Address"></td>
+                        </tr>
+                        <tr>
+                            <td>Religion<span style="color: crimson"> *</span></td>
+                            <td><input type="text" name="religion" placeholder="Enter Religion"></td>
+                        </tr>
+                        <tr>
+                            <td>Civil Status<span style="color: crimson"> *</span></td>
+                            <td>
+                                <select name="civilstatus">
+                                    <option value="" disabled selected>Select Civil Status</option>
+                                    <option value="Single">Single</option>
+                                    <option value="Married">Married</option>
+                                    <option value="Divorced">Divorced</option>
+                                    <option value="Widowed">Widowed</option>
+                                    <option value="Legally Separated">Legally Separated</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Legislature<span style="color: crimson"> *</span></td>
+                            <td>
+                                <select name="legislature">
+                                    <option value="" disabled selected>Select Legislature</option>
+                                    <option>Punong Barangay</option>
+                                    <option>Barangay Secretary</option>
+                                    <option>Barangay Treasurer</option>
+                                    <option>Sangguniang Barangay Member</option>
+                                    <option>Sangguniang Kabataan Chairperson</option>
+                                    <option>Sangguniang Kabataan Secretary</option>
+                                    <option>Sangguniang Kabataan Treasurer</option>
+                                    <option>Sangguniang Kabataan Member</option>
+                                    <option>Other Barangay Personnel</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Committee</td>
+                            <td><input type="text" name="committee" placeholder="Enter Committee"></td>
+                        </tr>
+                        <tr>
+                            <td>Phone Number<span style="color: crimson"> *</span></td>
+                            <td>
+                                <div style="display: flex; align-items: center;">
+                                    <span style="margin-right: 5px;">+63</span>
+                                    <input type="text" id="phonenum" name="phonenum" placeholder="e.g. 9123456789" maxlength="10" required
+                                        style="flex: 1; padding: 5px; border: 1px solid #ccc; border-radius: 4px;">
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="account-creation-container">
+                    <h3>Login Credentials</h3>
+                    <table>
+                        <tr>
+                            <td>Username<span style="color: crimson"> *</span></td>
+                            <td><input type="text" name="username" placeholder="Enter Username"></td>
+                        </tr>
+                        <tr>
+                            <td>Email Address</td>
+                            <td><input type="email" name="email" placeholder="Enter Email"></td>
+                        </tr>
+                        <tr>
+                            <td>Password<span style="color: crimson"> *</span></td>
+                            <td><input type="password" name="password" placeholder="Enter Password"></td>
+                        </tr>
+                        <tr>
+                            <td>Confirm Password<span style="color: crimson"> *</span></td>
+                            <td><input type="password" name="confirmPassword" placeholder="Confirm Password"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="account-creation-register">
+                <button type="submit" name="register">Register</button>
+                <button type="reset" name="cancel">Cancel</button>
+            </div>
+        </form>
+    </div>
+    </div>
+            </main>
+            <footer class="main-footer">
+                <p><?php echo "&copy; " . date('Y') . " | Unified Barangay Information Service Hub"; ?></p>
+            </footer>
         </div>
-    </main>
-    <footer>
-        <hr>
-        <p><?php echo "&copy; " . date('Y') . " | Unified Barangay Information Service Hub"; ?></p>
-    </footer>
+    </div>
+    <script>
+        document.getElementById('picture').addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById('profile-preview').src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+            const phoneInput = document.getElementById('phonenum');
+            if (phoneInput) {
+                phoneInput.addEventListener('input', function () {
+                    if (this.value.length > 1 && this.value.charAt(0) === '0') {
+                        this.value = this.value.slice(1);
+                    }
+                });
+            }
+        });
+        const toggleBtn = document.getElementById('toggleSidebar');
+        const sidebar = document.getElementById('sidebar');
+
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+        });
+    </script>
+    <style>
+        .container {
+            max-width: 1000px;
+            margin-top: 40px;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+        .account-creation-profile {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .account-creation-profile img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid #ccc;
+        }
+        .account-creation-container {
+            margin-bottom: 30px;
+        }
+        .account-creation-container h3 {
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        table {
+            width: 100%;
+        }
+        td {
+            padding: 10px;
+            vertical-align: middle;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .account-creation-register {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .account-creation-register button {
+            margin: 0 10px;
+            padding: 10px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .account-creation-register button[name="register"] {
+            background-color: #28a745;
+            color: white;
+        }
+        .account-creation-register button[name="cancel"] {
+            background-color: #dc3545;
+            color: white;
+        }
+    </style>
 </body>
 </html>

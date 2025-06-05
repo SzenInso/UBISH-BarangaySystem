@@ -1,0 +1,133 @@
+
+
+/* Page title */
+.dashboard-content h1 {
+    font-size: 28px;
+    color: #2e5e4d; /* forest green */
+    margin-bottom: 25px;
+}
+
+/* Main section */
+.profile-edit-main {
+    background-color: #ffffff;
+    padding: 20px 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Action buttons */
+.profile-edit-actions-multiple {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.profile-edit-actions-multiple button {
+    background-color: #a6dcb9; /* light green */
+    color: #2d3e33;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.profile-edit-actions-multiple button:hover {
+    background-color: #92cfa7;
+}
+
+.profile-edit-actions-multiple button:disabled {
+    background-color: #d6e5db;
+    color: #888;
+    cursor: not-allowed;
+}
+
+/* Table styles */
+#profile-edit-requests {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 14.5px;
+}
+
+#profile-edit-requests th, #profile-edit-requests td {
+    padding: 12px 10px;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+    vertical-align: middle;
+}
+
+#profile-edit-requests th {
+    background-color: #e0ece4; /* soft green-gray */
+    color: #2e5e4d;
+    font-weight: 600;
+}
+
+#profile-edit-requests tr:nth-child(even) {
+    background-color: #f8f8f8;
+}
+
+#profile-edit-requests img.profile-picture {
+    border: 2px solid #ccc;
+}
+
+/* View buttons */
+.view-update-btn {
+    background-color: #d7f2dd;
+    border: 1px solid #7cbf90;
+    color: #2e5e4d;
+    padding: 6px 12px;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.view-update-btn:hover {
+    background-color: #c1e8c8;
+}
+
+/* Approve/Deny buttons inside rows */
+.action-btns button {
+    background-color: #e7f1eb;
+    color: #2e5e4d;
+    border: 1px solid #9bbfae;
+    padding: 6px 10px;
+    border-radius: 5px;
+    margin: 2px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.action-btns button:hover {
+    background-color: #d0e6d9;
+}
+
+/* Expanded update section */
+.profile-edit-requests-view {
+    background-color: #f4f8f3;
+    padding: 20px;
+    margin-top: 10px;
+    border-left: 4px solid #88bfa1;
+    border-radius: 6px;
+    display: none;
+}
+
+.profile-edit-requests-view h3 {
+    color: #2e5e4d;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-size: 17px;
+}
+
+.profile-edit-requests-view p {
+    margin-bottom: 10px;
+    color: #444;
+}
+
+/* Small text & notes */
+.update-reason {
+    font-style: italic;
+    color: #555;
+}

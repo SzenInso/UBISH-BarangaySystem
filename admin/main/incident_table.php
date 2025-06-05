@@ -18,153 +18,225 @@ $incidents = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UBISH Dashboard | Incident History</title>
-    <link rel="stylesheet" href="../../assets/css/style.css">
-    <style>
-        .incident-table-container {
-            width: 100%;
-            padding: 20px;
-            background-color: #f8f9fa;
-            border-radius: 8px;
-            margin: 0 auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th,
-        td {
-            padding: 10px;
-            text-align: left;
-            border: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
+    <link rel="stylesheet" href="css/dash.css">
+    <link rel="icon" type="image/x-icon" href="../../assets/img/GreenwaterLogo.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <title>Greenwater Village Dashboard | Incident History</title>
 </head>
 
 <body>
-    <style>
-    header {
-        background-color: #e1f3e2 !important;
-        border-bottom: 5px solid #356859 !important;
-    }
-    .logout {
-        background-color: #e1f3e2 !important;
-        color: #356859 !important;
-        font-weight: bold !important;
-        font-size: 1.1rem !important;
-    }
-    footer {
-        background-color: #d0e9d2 !important;
-        text-align: center !important;
-        padding: 20px !important;
-        color: #2b3d2f !important;
-        border-top: 5px solid #356859 !important;
-        margin-top: 60px !important;
-    }
-    </style>
-    <header>
-        <div class="navigation">
-            <div class="logo">
-                <img src="../../assets/img/greenwater-village-logo.jpg" alt="Greenwater Village Logo">
-                <h1>UBISH</h1>
-            </div>
-            <form method="POST">
-                <nav>
-                    <ul>
-                        <li>
-                            <button class="logout" style="cursor: pointer;" name="logout">Log Out</button>
-                        </li>
-                    </ul>
-                </nav>
-            </form>
-        </div>
-        <hr>
-    </header>
-
-    <main>
-        <div class="dashboard-main">
-            <div class="dashboard-sidebar">
+    <div class="wrapper">
+            <!-- Sidebar -->
+            <aside class="sidebar" id="sidebar">
                 <ul>
-                    <h3>Home</h3>
-                    <li><a href="../main/dashboard.php">Home</a></li>
-                    <li><a href="../main/account.php">Account</a></li>
-                    <li><a href="../main/account_creation.php">Account Creation</a></li>
-                    <h3>Documents & Disclosure</h3>
-                    <li><a href="../main/documents.php">Documents</a></li>
-                    <li><a href="../main/announcements.php">Post Announcement</a></li>
-                    <h3>Tables & Requests</h3>
-                    <?php if ($accessLevel >= 2) {
-                        echo '<li><a href="../main/employee_table.php">Employee Table</a></li>';
-                    } ?>
-                    <?php if ($accessLevel >= 3) {
-                        echo '<li><a href="../main/account_requests.php">Account Requests</a></li>';
-                    } ?>
-                    <h3>Reports</h3>
-                    <li class="active"><a href="../main/incident_table.php">Incident History</a></li>
-                    <li><a href="../main/reports.php">Analytics</a></li>
+                    <h2>
+                        <div class="dashboard-greetings">
+                            <?php 
+                            $stmt = $pdo->prepare("SELECT * FROM employee_details WHERE emp_id = :emp_id");
+                                $stmt->execute([":emp_id" => $_SESSION['emp_id']]);
+                                $row = $stmt->fetch(PDO::FETCH_ASSOC); {
+                            ?>
+                            <?php
+                                }
+                            ?>
+                            <center>
+                            <div class="user-info d-flex align-items-center">
+                                <img src="<?php echo $row['picture']; ?>" 
+                                    class="avatar img-fluid rounded-circle me-2" 
+                                    alt="<?php echo $row['first_name']; ?>" 
+                                    width="70" height="70">
+                            </div>
+                            <span class="text-dark fw-semibold"><?php echo $row['first_name']; ?></span>
+                            </center>
+                        </div>
+                    </h2> </br>
+                    <h3><i class="fas fa-home"></i> Home</h3>
+                    <li class="active"><a href="../main/dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li><a href="../main/account.php"><i class="fas fa-user"></i> Account</a></li>
+                    <li><a href="../main/account_creation.php"><i class="fas fa-user-plus"></i> Account Creation</a></li>
+
+                    <h3><i class="fas fa-folder-open"></i> Documents & Disclosure</h3>
+                    <li><a href="../main/documents.php"><i class="fas fa-file-alt"></i> Documents</a></li>
+                    <li><a href="../main/announcements.php"><i class="fas fa-bullhorn"></i> Post Announcement</a></li>
+
+                    <h3><i class="fas fa-table"></i> Tables & Requests</h3>
+                    <li><a href="../main/employee_table.php"><i class="fas fa-users"></i> Employee Table</a></li>
+                    <li><a href="../main/account_requests.php"><i class="fas fa-user-check"></i> Account Requests</a></li>
+                    <li><a href="certificates/certificates.php"><i class="fas fa-certificate"></i> Certificate Requests</a></li>
+
+                    <h3><i class="fas fa-chart-bar"></i> Reports</h3>
+                    <li><a href="../main/incident_table.php"><i class="fas fa-exclamation-circle"></i> Incident History</a></li>
+                    <li><a href="../main/reports.php"><i class="fas fa-chart-line"></i> Analytics</a></li>
                 </ul>
-            </div>
+            </aside>
+        
+        <div class="main-content">
+                <header class="main-header">
+                    <button class="hamburger" id="toggleSidebar">&#9776;</button>
+                    <div class="header-container">
+                        <div class="logo">
+                            <img src="../../assets/img/GreenwaterLogo.jpg" alt="Greenwater Village Logo">
+                            <h1><span>Greenwater</span> <span>Village</span></h1>
+                        </div>
+                        <nav class="nav" id="nav-menu">
+                            <form method="POST">
+                                <ul class="nav-links">
+                                    <li>
+                                        <button class="logout-btn" name="logout">Log Out</button>
+                                    </li>
+                                </ul>
+                            </form>
+                        </nav>
+                    </div>
+                </header>
 
-            <div class="dashboard-content">
-                <h1>
-                    <center>Incident Report History</center>
-                </h1><br>
+            <main class="content">
+                <div class="dashboard-content">
+                    <h1>
+                        <center>Incident Report History</center>
+                    </h1><br>
 
-                <?php
-                if (!empty($errors)) {
-                    foreach ($errors as $error) {
-                        echo "<p style='color: red;'>$error</p>";
+                    <?php
+                    if (!empty($errors)) {
+                        foreach ($errors as $error) {
+                            echo "<p style='color: red;'>$error</p>";
+                        }
                     }
-                }
 
-                if (!empty($success)) {
-                    echo "<p style='color: green;'>$success</p>";
-                }
-                ?>
+                    if (!empty($success)) {
+                        echo "<p style='color: green;'>$success</p>";
+                    }
+                    ?>
 
-                <div class="incident-table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Incident Date</th>
-                                <th>Incident Type</th>
-                                <th>Place of Incident</th>
-                                <th>Reporting Person</th>
-                                <th>Home Address</th>
-                                <th>Narrative</th>
-                                <th>Involved Parties</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($incidents as $incident): ?>
+                    <div class="incident-table-container">
+                        <table>
+                            <thead>
                                 <tr>
-                                    <td><?= htmlspecialchars(date('F j, Y', strtotime($incident['incident_date']))) ?></td>
-                                    <td><?= htmlspecialchars($incident['incident_type']) ?></td>
-                                    <td><?= htmlspecialchars($incident['place_of_incident']) ?></td>
-                                    <td><?= htmlspecialchars($incident['reporting_person']) ?></td>
-                                    <td><?= nl2br(htmlspecialchars($incident['home_address'])) ?></td>
-                                    <td><?= nl2br(htmlspecialchars($incident['narrative'])) ?></td>
-                                    <td><?= nl2br(htmlspecialchars($incident['involved_parties'])) ?></td>
+                                    <th>Incident Date</th>
+                                    <th>Incident Type</th>
+                                    <th>Place of Incident</th>
+                                    <th>Reporting Person</th>
+                                    <th>Home Address</th>
+                                    <th>Narrative</th>
+                                    <th>Involved Parties</th>
                                 </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($incidents as $incident): ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars(date('F j, Y', strtotime($incident['incident_date']))) ?></td>
+                                        <td><?= htmlspecialchars($incident['incident_type']) ?></td>
+                                        <td><?= htmlspecialchars($incident['place_of_incident']) ?></td>
+                                        <td><?= htmlspecialchars($incident['reporting_person']) ?></td>
+                                        <td><?= nl2br(htmlspecialchars($incident['home_address'])) ?></td>
+                                        <td><?= nl2br(htmlspecialchars($incident['narrative'])) ?></td>
+                                        <td><?= nl2br(htmlspecialchars($incident['involved_parties'])) ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
+            </main>
+
+                <footer class="main-footer">
+                    <p><?php echo "&copy; " . date('Y') . " | Unified Barangay Information Service Hub"; ?></p>
+                </footer>
+        <!-- ending for the main content -->
         </div>
-    </main>
+    <!-- ending for class wrapper -->
+    </div>
+    <script>
+        const toggleBtn = document.getElementById('toggleSidebar');
+        const sidebar = document.getElementById('sidebar');
 
-    <footer>
-        <hr>
-        <p><?php echo "&copy; " . date('Y') . " | Unified Barangay Information Service Hub"; ?></p>
-    </footer>
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+        });
+    </script>
+    <style>
 
+        /* Heading */
+        .dashboard-content h1 {
+            font-size: 28px;
+            color: #2e5e4d;
+            margin-bottom: 20px;
+        }
+
+        /* Messages */
+        .dashboard-content p[style*="color: red"] {
+            background-color: #ffe6e6;
+            color: #a94442;
+            padding: 10px;
+            border-left: 5px solid #d9534f;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+
+        .dashboard-content p[style*="color: green"] {
+            background-color: #e1f4e3;
+            color: #3c763d;
+            padding: 10px;
+            border-left: 5px solid #5cb85c;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+
+        /* Table container */
+        .incident-table-container {
+            overflow-x: auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        /* Table styling */
+        .incident-table-container table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            table-layout: fixed;
+            word-wrap: break-word;
+        }
+
+        /* Table headers */
+        .incident-table-container thead {
+            background-color: #a6dcb9;
+            color: #2e5e4d;
+        }
+
+        .incident-table-container th {
+            text-align: left;
+            padding: 12px 10px;
+            font-weight: 600;
+            border-bottom: 2px solid #8fc9a3;
+        }
+
+        /* Table rows */
+        .incident-table-container td {
+            padding: 12px 10px;
+            vertical-align: top;
+            border-bottom: 1px solid #e6e6e6;
+            white-space: pre-line;
+        }
+
+        /* Zebra striping */
+        .incident-table-container tbody tr:nth-child(even) {
+            background-color: #f9fdfb;
+        }
+
+        /* Responsive text wrap for long content */
+        .incident-table-container td,
+        .incident-table-container th {
+            word-break: break-word;
+        }
+
+        /* Hover effect */
+        .incident-table-container tbody tr:hover {
+            background-color: #edf9f0;
+        }
+
+    </style>
 </body>
-
 </html>

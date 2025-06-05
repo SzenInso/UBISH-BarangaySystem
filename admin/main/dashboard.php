@@ -8,8 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../assets/css/style.css">
     <link rel="stylesheet" href="css/dash.css">
+    <link rel="icon" type="image/x-icon" href="../../assets/img/GreenwaterLogo.jpg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <title>UBISH Dashboard | Home</title>
+    <title>Greenwater Village | Dashboard</title>
 </head>
 <body>
     <div class="wrapper">
@@ -22,15 +23,22 @@
                             $query = "SELECT * FROM employee_details WHERE emp_id = :emp_id";
                             $empDetails = $pdo->prepare($query);
                             $empDetails->execute([":emp_id" => $_SESSION['emp_id']]);
-
                             foreach ($empDetails as $row) {
                         ?>
-                        <center>Welcome, <?php echo $row['first_name']; ?>!</center> <br>
                         <?php
                             }
                         ?>
+                        <center>
+                        <div class="user-info d-flex align-items-center">
+                            <img src="<?php echo $row['picture']; ?>" 
+                                class="avatar img-fluid rounded-circle me-2" 
+                                alt="<?php echo $row['first_name']; ?>" 
+                                width="70" height="70">
+                        </div>
+                        <span class="text-dark fw-semibold"><?php echo $row['first_name']; ?></span>
+                        </center>
                     </div>
-                </h2>
+                </h2> </br>
                 <h3><i class="fas fa-home"></i> Home</h3>
                 <li class="active"><a href="../main/dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
                 <li><a href="../main/account.php"><i class="fas fa-user"></i> Account</a></li>
@@ -59,10 +67,6 @@
                         <img src="../../assets/img/GreenwaterLogo.jpg" alt="Greenwater Village Logo">
                         <h1><span>Greenwater</span> <span>Village</span></h1>
                     </div>
-
-                    <!-- Hamburger Toggle Button -->
-                    <!-- <button class="hamburger" id="hamburger">&#9776;</button> -->
-
                     <nav class="nav" id="nav-menu">
                         <form method="POST">
                             <ul class="nav-links">
@@ -74,9 +78,10 @@
                     </nav>
                 </div>
             </header>
+            
             <main class="content">
                 <div class="dashboard-content">
-                    <h1><center>Barangay Dashboard</center></h1><br>
+                    <h1><center>Greenwater Village Dashboard</center></h1><br>
                     <br>
                     
                     <div class="dashboard-announcements">                  
@@ -176,14 +181,6 @@
         </div>
     </div>
     <script src="../../assets/js/announcementActions.js"></script>
-    <!-- <script>
-        const hamburger = document.getElementById("hamburger");
-        const navMenu = document.getElementById("nav-menu");
-
-        hamburger.addEventListener("click", () => {
-            navMenu.classList.toggle("active");
-        });
-    </script> -->
     
     <script>
         const toggleBtn = document.getElementById('toggleSidebar');

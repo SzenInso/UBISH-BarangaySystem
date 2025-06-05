@@ -78,7 +78,7 @@
     <title>UBISH Dashboard | Forgot Password</title>
     <link rel="stylesheet" href="<?= BASE_URL ?>css/index.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/login.css">
-
+    <link rel="icon" type="image/x-icon" href="<?= BASE_URL ?>assets/img/GreenwaterLogo.jpg">
     <script src="../../assets/js/sweetalert2.js"></script>
 </head>
 <body>

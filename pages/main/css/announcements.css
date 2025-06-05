@@ -1,0 +1,82 @@
+
+.form-title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 24px;
+    color: #2c3e50;
+}
+
+.announcement-form-container {
+    background: #ffffff;
+    padding: 32px;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.announcement-form .form-group {
+    margin-bottom: 20px;
+}
+
+.announcement-form label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.optional {
+    font-size: 0.9em;
+    color: #888;
+}
+
+.announcement-form input[type="text"],
+.announcement-form input[type="file"],
+.announcement-form textarea {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.announcement-form textarea {
+    resize: vertical;
+}
+
+.options-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.options-group label {
+    font-weight: normal;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
+#customCategory {
+    margin-top: 10px;
+}
+
+.announcement-form button {
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+.announcement-form button:hover {
+    background-color: #219150;
+}

@@ -115,11 +115,11 @@
                     document.addEventListener('DOMContentLoaded', function () {
                         Swal.fire({
                             title: 'Are you sure?',
-                            text: 'Are you sure you want to delete this employee: $employeeName?',
+                            html: 'Are you sure you want to delete this employee:<br><br> $employeeName?',
                             icon: 'warning',
                             showCancelButton: true,
                             confirmButtonColor: 'crimson',
-                            cancelButtonColor: 'white',
+                            cancelButtonColor: '#28a745',
                             confirmButtonText: 'Yes, delete.',
                             cancelButtonText: 'No, cancel',
                             customClass: {
@@ -162,7 +162,7 @@
                                 icon: 'warning',
                                 showCancelButton: true,
                                 confirmButtonColor: 'crimson',
-                                cancelButtonColor: 'white',
+                                cancelButtonColor: '#28a745',
                                 confirmButtonText: 'Yes, delete.',
                                 cancelButtonText: 'No, cancel',
                                 customClass: {
@@ -188,203 +188,232 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../assets/css/style.css">
+    <!-- <link rel="stylesheet" href="../../assets/css/style.css"> -->
+    <link rel="stylesheet" href="css/dashPages.css">
+    <link rel="icon" type="image/x-icon" href="../../assets/img/GreenwaterLogo.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="css/employee_table.css">
     <script src="../../assets/js/sweetalert2.js"></script>
     <script src="../../assets/js/checkboxes.js"></script>
-    <title>UBISH Dashboard | Account</title>
+    <title>Greenwater Village Dashboard | Account</title>
 </head>
-<body>
-    <style>
-    header {
-        background-color: #e1f3e2 !important;
-        border-bottom: 5px solid #356859 !important;
-    }
-    .logout {
-        background-color: #e1f3e2 !important;
-        color: #356859 !important;
-        font-weight: bold !important;
-        font-size: 1.1rem !important;
-    }
-    footer {
-        background-color: #d0e9d2 !important;
-        text-align: center !important;
-        padding: 20px !important;
-        color: #2b3d2f !important;
-        border-top: 5px solid #356859 !important;
-        margin-top: 60px !important;
-    }
-    </style>
-    <header>
-        <div class="navigation">
-            <div class="logo">
-                <img src="../../assets/img/greenwater-village-logo.jpg" alt="Greenwater Village Logo">
-                <h1>UBISH</h1>
-            </div>
-            <form method="POST">
-                <nav>
-                    <ul>
-                        <li>
-                            <button class="logout" style="cursor: pointer;" name="logout">Log Out</button>
-                        </li>
-                    </ul>
-                </nav>
-            </form>
-        </div>
-        <hr>
-    </header>
-    <main>
-        <div class="dashboard-main">
-            <div class="dashboard-sidebar">
-                <ul>
-                    <h3>Home</h3>
-                    <li><a href="../main/dashboard.php">Home</a></li>
-                    <li><a href="../main/account.php">Account</a></li>
-                    
-                    <h3>Documents & Disclosure</h3>
-                    <li><a href="../main/documents.php">Documents</a></li>
-                    <li><a href="../main/announcements.php">Post Announcement</a></li>
-                    
-                    <h3>Tables & Requests</h3>
-                    <li class="active"><a href="../main/employee_table.php">Employee Table</a></li>
 
-                    <!-- STANDARD -->
-                    <?php if ($accessLevel >= 2) { echo '<li><a href="../main/residency_management.php">Residency Management</a></li>'; } ?>
-                    <?php if ($accessLevel >= 2) { echo '<li><a href="../main/certificates.php">Certificate Requests</a></li>'; } ?>
-                    <?php if ($accessLevel >= 2) { echo '<li><a href="../main/permits.php">Permit Requests</a></li>'; } ?>
-                    <!-- STANDARD -->
-                    
-                    <!-- FULL -->
-                    <?php if ($accessLevel >= 3) { echo '<li><a href="../main/account_requests.php">Account Requests</a></li>'; } ?>
-                    <!-- FULL -->
-                    
-                    <h3>Reports</h3>
-                    <!-- STANDARD -->
-                    <?php if ($accessLevel >= 2) { echo '<li><a href="../main/incidents.php">Incident Reports</a></li>'; }  ?>
-                    <!-- STANDARD -->
-                    
-                    <li><a href="../main/incident_table.php">Incident History</a></li>
-                    <li><a href="../main/reports.php">Analytics</a></li>
-                </ul>
-            </div>
-            <div class="dashboard-content">
-                <h1>
-                    <center>Employee Table</center>
-                </h1><br>
-                <div id="employee-table-container">
-                    <form method="POST" action="../main/employee_table.php">
-                        <?php if ($accessLevel >= 3) { ?>
-                            <button type="submit" id="deleteSelectedEmp" name="delete-selected" style="justify-content: flex-start; cursor: pointer;">Delete Selected</button>
-                        <?php } ?>
-                        <br>
-                        <div class="employee-filters">
-                            <div class="employee-filters-container">                                
-                                <label for="sort">Sort By: </label>
-                                <select name="sort" id="sort">
-                                    <option value="" selected>None</option>
-                                    <option value="name_asc">Name (Ascending)</option>
-                                    <option value="name_desc">Name (Descending)</option>
-                                    <option value="access_control_asc">Access Control (Ascending)</option>
-                                    <option value="access_control_desc">Access Control (Descending)</option>
-                                </select>
-                            </div>
-                            <div class="employee-filters-container">                                
-                                <label for="filter-sex">Filter by Biological Sex: </label>
-                                <select name="filter-sex" id="filter-sex">
-                                    <option value="" selected>All</option>
-                                    <option value="M">Male</option>
-                                    <option value="F">Female</option>
-                                    <option value="I">Intersex</option>
-                                </select>
-                            </div>
+<body>
+
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <ul>
+                <h2>
+                    <div class="dashboard-greetings">
+                        <?php 
+                           $stmt = $pdo->prepare("SELECT * FROM employee_details WHERE emp_id = :emp_id");
+                            $stmt->execute([":emp_id" => $_SESSION['emp_id']]);
+                            $row = $stmt->fetch(PDO::FETCH_ASSOC); {
+                        ?>
+                        <?php
+                            }
+                        ?>
+                        <center>
+                        <div class="user-info d-flex align-items-center">
+                            <img src="<?php echo $row['picture']; ?>" 
+                                class="avatar img-fluid rounded-circle me-2" 
+                                alt="<?php echo $row['first_name']; ?>" 
+                                width="70" height="70">
+                        </div>
+                            <span class="text-dark fw-semibold"><?php echo $row['first_name']; ?></span>
+                        </center>
+                    </div>
+                </h2>
+
+                <h3><i class="fas fa-home"></i> Home</h3>
+                <li class="active"><a href="../main/dashboard.php"><i class="fas fa-tachometer-alt"></i> Home</a></li>
+                <li><a href="../main/account.php"><i class="fas fa-user"></i> Account</a></li>
+
+                <h3><i class="fas fa-folder-open"></i> Documents & Disclosure</h3>
+                <li><a href="../main/documents.php"><i class="fas fa-file-alt"></i> Documents</a></li>
+                <li><a href="../main/announcements.php"><i class="fas fa-bullhorn"></i> Post Announcement</a></li>
+
+                <h3><i class="fas fa-table"></i> Tables & Requests</h3>
+                <li><a href="../main/employee_table.php"><i class="fas fa-users"></i> Employee Table</a></li>
+
+                <!-- STANDARD ACCESS LEVEL -->
+                <?php if ($accessLevel >= 2): ?>
+                    <li><a href="../main/residency_management.php"><i class="fas fa-house-user"></i> Residency Management</a></li>
+                    <!-- <li><a href="../main/certificates.php"><i class="fas fa-certificate"></i> Certificate Requests</a></li> -->
+                    <!-- <li><a href="../main/permits.php"><i class="fas fa-id-badge"></i> Permit Requests</a></li> -->
+                <?php endif; ?>
+
+                <!-- FULL ACCESS LEVEL -->
+                <?php if ($accessLevel >= 3): ?>
+                    <li><a href="../main/account_requests.php"><i class="fas fa-user-check"></i> Account Requests</a></li>
+                <?php endif; ?>
+
+                <h3><i class="fas fa-chart-bar"></i> Reports</h3>
+                <?php if ($accessLevel >= 2): ?>
+                    <li><a href="../main/incidents.php"><i class="fas fa-exclamation-circle"></i> Incident Reports</a></li>
+                <?php endif; ?>
+                <li><a href="../main/incident_table.php"><i class="fas fa-history"></i> Incident History</a></li>
+                <li><a href="../main/reports.php"><i class="fas fa-chart-line"></i> Analytics</a></li>
+            </ul>
+        </aside>
+
+        <div class="main-content">
+            <header class="main-header">
+                <button class="hamburger" id="toggleSidebar">&#9776;</button>
+                <div class="header-container">
+                    <div class="logo">
+                        <img src="../../assets/img/GreenwaterLogo.jpg" alt="Greenwater Village Logo">
+                        <h1><span>Greenwater</span> <span>Village</span></h1>
+                    </div>
+                    <nav class="nav" id="nav-menu">
+                        <form method="POST">
+                            <ul class="nav-links">
+                                <li>
+                                    <button class="logout-btn" name="logout">Log Out</button>
+                                </li>
+                            </ul>
+                        </form>
+                    </nav>
+                </div>
+            </header>
+
+        <main class="content">
+                <div class="dashboard-content">
+                    <h1>
+                        <center>Employee Table</center>
+                    </h1><br>
+                    <div id="employee-table-container">
+                        <form method="POST" action="../main/employee_table.php">
+                            <!--
                             <?php if ($accessLevel >= 3) { ?>
-                                <div class="employee-filters-container">
-                                    <label for="filter-access-level">Filter By Access Level: </label>
-                                    <select name="filter-access-level" id="filter-access-level">
-                                        <option value="" selected>All</option>
-                                        <option value="1">Limited Access</option>
-                                        <option value="2">Standard Access</option>
-                                        <option value="3">Full Access</option>
+                                <button type="submit" id="deleteSelectedEmp" name="delete-selected" style="justify-content: flex-start; cursor: pointer;">Delete Selected</button>
+                            <?php } ?>
+                            -->
+                            <br>
+                            <div class="employee-filters">
+                                <div class="employee-filters-container">                                
+                                    <label for="sort">Sort By: </label>
+                                    <select name="sort" id="sort">
+                                        <option value="" selected>None</option>
+                                        <option value="name_asc">Name (Ascending)</option>
+                                        <option value="name_desc">Name (Descending)</option>
+                                        <option value="access_control_asc">Access Control (Ascending)</option>
+                                        <option value="access_control_desc">Access Control (Descending)</option>
                                     </select>
                                 </div>
-                            <?php } ?>
-                            <div class="employee-filters-container">
-                                <button name="reset-sort-filter" id="reset-sort-filter">Reset Sort and Filters</button>
+                                <div class="employee-filters-container">                                
+                                    <label for="filter-sex">Filter by Biological Sex: </label>
+                                    <select name="filter-sex" id="filter-sex">
+                                        <option value="" selected>All</option>
+                                        <option value="M">Male</option>
+                                        <option value="F">Female</option>
+                                        <option value="I">Intersex</option>
+                                    </select>
+                                </div>
+                                <?php if ($accessLevel >= 3) { ?>
+                                    <div class="employee-filters-container">
+                                        <label for="filter-access-level">Filter By Access Level: </label>
+                                        <select name="filter-access-level" id="filter-access-level">
+                                            <option value="" selected>All</option>
+                                            <option value="1">Limited Access</option>
+                                            <option value="2">Standard Access</option>
+                                            <option value="3">Full Access</option>
+                                        </select>
+                                    </div>
+                                <?php } ?>
+                                <div class="employee-filters-container">
+                                    <button name="reset-sort-filter" id="reset-sort-filter">Reset Sort and Filters</button>
+                                </div>
                             </div>
-                        </div>
-                        <script src="../../assets/js/sortAndFilter.js"></script>
-                        <table id="employee-table">
-                            <tr>
-                                <?php if ($accessLevel >= 3) { echo "<th>Selection</th>"; } ?>
-                                <th>Profile Picture</th>
-                                <th>Full Name</th>
-                                <th>Date of Birth</th>
-                                <th>Sex</th>
-                                <th>Address</th>
-                                <th>Religion</th>
-                                <th>Civil Status</th>
-                                <th>Legislature</th>
-                                <?php if ($accessLevel >= 3) { echo "<th>Access Level</th>"; } ?>
-                                <th>Phone Number</th>
-                                <?php if ($accessLevel >= 3) { echo "<th>Action</th>"; } ?>
-                            </tr>
-                            <?php foreach ($empAllDetails as $row) { ?>
+                            <script src="../../assets/js/sortAndFilter.js"></script>
+                            <table id="employee-table">
                                 <tr>
-                                    <?php if ($accessLevel >= 3) { ?>
-                                        <td>
-                                            <center>
-                                                <input 
-                                                    type="checkbox"
-                                                    class="deletion-checkbox" 
-                                                    name="select_employee[]" 
-                                                    value="<?php echo $row['emp_id']; ?>" 
-                                                    style="cursor: pointer;"
-                                                >
-                                            </center>
-                                        </td>
-                                    <?php } ?>
-                                    <td>
-                                        <img 
-                                            src="<?php echo $row['picture']; ?>"
-                                            alt="<?php echo $row['first_name'] . " " . $row['middle_name'] . " " . $row['last_name']; ?>"
-                                            title="<?php echo $row['first_name'] . " " . $row['middle_name'] . " " . $row['last_name']; ?>"
-                                            style="width: 75px; height: 75px; border-radius: 50%; object-fit: cover;"
-                                            loading="lazy"
-                                        >
-                                    </td>
-                                    <td><?php echo $row['first_name'] . " " . $row['middle_name'] . " " . $row['last_name']; ?>
-                                    </td>
-                                    <td><?php echo $row['date_of_birth']; ?></td>
-                                    <td><?php echo $row['sex']; ?></td>
-                                    <td><?php echo $row['address']; ?></td>
-                                    <td><?php echo $row['religion']; ?></td>
-                                    <td><?php echo $row['civil_status']; ?></td>
-                                    <td><?php echo $row['legislature']; ?></td>
-                                    <?php
-                                    if ($accessLevel >= 3) {
-                                        $accessLevel = array('Limited Access', 'Standard Access', 'Full Access', 'Administrator');
-                                        echo "<td>" . $accessLevel[$row['access_level'] - 1] . "</td>";
-                                    }
-                                    ?>
-                                    <td><?php echo $row['phone_no']; ?></td>
-                                    <?php if ($accessLevel >= 3) { ?>
-                                        <td>
-                                            <form method="POST">
-                                                <input type="hidden" name="emp_id" value="<?php echo $row['emp_id']; ?>">
-                                                <button type="submit" id="deleteEmp" name="delete-employee" style="cursor: pointer;">Delete</button>
-                                            </form>
-                                        </td>
-                                    <?php } ?>
+                                    <?php /* if ($accessLevel >= 3) { echo "<th>Selection</th>"; } */ ?>
+                                    <th>Employee ID</th>
+                                    <th>Profile Picture</th>
+                                    <th>Full Name</th>
+                                    <th>Date of Birth</th>
+                                    <th>Sex</th>
+                                    <th>Address</th>
+                                    <th>Religion</th>
+                                    <th>Civil Status</th>
+                                    <th>Legislature</th>
+                                    <?php if ($accessLevel >= 3) { echo "<th>Access Level</th>"; } ?>
+                                    <th>Phone Number</th>
+                                    <?php if ($accessLevel >= 3) { echo "<th>Action</th>"; } ?>
                                 </tr>
-                            <?php } ?>
-                        </table>
-                    </form>
+                                <?php foreach ($empAllDetails as $row) { ?>
+                                    <tr>
+                                        <!--
+                                        <?php if ($accessLevel >= 3) { ?>
+                                            <td>
+                                                <center>
+                                                    <input 
+                                                        type="checkbox"
+                                                        class="deletion-checkbox" 
+                                                        name="select_employee[]" 
+                                                        value="<?php echo $row['emp_id']; ?>" 
+                                                        style="cursor: pointer;"
+                                                    >
+                                                </center>
+                                            </td>
+                                        <?php } ?>
+                                        -->
+                                        <td><?php echo $row['emp_id']; ?></td>
+                                        <td>
+                                            <img 
+                                                src="<?php echo $row['picture']; ?>"
+                                                alt="<?php echo $row['first_name'] . " " . $row['middle_name'] . " " . $row['last_name']; ?>"
+                                                title="<?php echo $row['first_name'] . " " . $row['middle_name'] . " " . $row['last_name']; ?>"
+                                                style="width: 75px; height: 75px; border-radius: 50%; object-fit: cover;"
+                                                loading="lazy"
+                                            >
+                                        </td>
+                                        <td><?php echo $row['first_name'] . " " . $row['middle_name'] . " " . $row['last_name']; ?>
+                                        </td>
+                                        <td><?php echo $row['date_of_birth']; ?></td>
+                                        <td><?php echo $row['sex']; ?></td>
+                                        <td><?php echo $row['address']; ?></td>
+                                        <td><?php echo $row['religion']; ?></td>
+                                        <td><?php echo $row['civil_status']; ?></td>
+                                        <td><?php echo $row['legislature']; ?></td>
+                                        <?php
+                                        if ($accessLevel >= 3) {
+                                            $accessLevel = array('Limited Access', 'Standard Access', 'Full Access', 'Administrator');
+                                            echo "<td>" . $accessLevel[$row['access_level'] - 1] . "</td>";
+                                        }
+                                        ?>
+                                        <td><?php echo $row['phone_no']; ?></td>
+                                        <?php if ($accessLevel >= 3) { ?>
+                                            <td>
+                                                <form method="POST">
+                                                    <input type="hidden" name="emp_id" value="<?php echo $row['emp_id']; ?>">
+                                                    <button type="submit" id="deleteEmp" name="delete-employee" style="cursor: pointer;">Delete</button>
+                                                </form>
+                                            </td>
+                                        <?php } ?>
+                                    </tr>
+                                <?php } ?>
+                            </table>
+                        </form>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </main>
-    <footer>
-        <hr>
-        <p><?php echo "&copy; " . date('Y') . " | Unified Barangay Information Service Hub"; ?></p>
-    </footer>
+        </main>
+            <footer class="main-footer">
+                <p><?php echo "&copy; " . date('Y') . " | Unified Barangay Information Service Hub"; ?></p>
+            </footer>
+        <!-- ending for main content -->
+         </div>
+    <!-- ending for class wrapper -->
+    </div>
+    <script>
+        const toggleBtn = document.getElementById('toggleSidebar');
+        const sidebar = document.getElementById('sidebar');
+
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+        });
+    </script>
 </body>
 </html>

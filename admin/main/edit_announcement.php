@@ -306,194 +306,199 @@ if (isset($_POST['update-announcement'])) {
 
 ?>
 
-<!-- HTML STARTS HERE -->
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="css/dash.css">
+    <link rel="stylesheet" href="css/edit_announcement.css">
+    <link rel="icon" type="image/x-icon" href="../../assets/img/GreenwaterLogo.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <script src="../../assets/js/sweetalert2.js"></script>
-    <title>UBISH Dashboard | Edit Announcement</title>
+    <title>Greenwater Village Dashboard | Edit Announcement</title>
 </head>
 
 <body>
-    <header>
-        <div class="navigation">
-            <div class="logo">
-                <img src="../../assets/img/greenwater-village-logo.jpg" alt="Greenwater Village Logo">
-                <h1>UBISH</h1>
-            </div>
-            <form method="POST">
-                <nav>
-                    <ul>
-                        <li><button class="logout" style="cursor: pointer;" name="logout">Log Out</button></li>
-                    </ul>
-                </nav>
-            </form>
-        </div>
-        <hr>
-    </header>
-    <main>
-        <div class="dashboard-main">
-            <div class="dashboard-sidebar">
-                <ul>
-                    <h3>Home</h3>
-                    <li><a href="../main/dashboard.php">Home</a></li>
-                    <li><a href="../main/account.php">Account</a></li>
-                    <li><a href="../main/account_creation.php">Account Creation</a></li>
-                    <h3>Documents & Disclosure</h3>
-                    <li><a href="../main/documents.php">Documents</a></li>
-                    <li class="active"><a href="../main/announcements.php">Post Announcement</a></li>
-                    <h3>Tables & Requests</h3>
-                    <li><a href="../main/employee_table.php">Employee Table</a></li>
-                    <li><a href="../main/account_requests.php">Account Requests</a></li>
-                    <h3>Reports</h3>
-                    <li><a href="../main/incident_table.php">Incident History</a></li>
-                    <li><a href="../main/reports.php">Analytics</a></li>
-                </ul>
-            </div>
-            <div class="dashboard-content">
-                <h1>Edit Announcement</h1>
-                <style>
-                    .announcement-posting-form {
-                        text-align: left;
-                        margin: 0;
-                        padding: 16px;
-                        width: 100%;
-                    }
-
-                    .announcement-posting-form form {
-                        display: block;
-                        width: 100%;
-                    }
-
-                    .announcement-credentials {
-                        margin-bottom: 16px;
-                    }
-
-                    .announcement-credentials input,
-                    .announcement-credentials textarea {
-                        width: 100%;
-                        padding: 8px;
-                        box-sizing: border-box;
-                    }
-
-                    .privacy-options,
-                    .category-options {
-                        display: flex;
-                        gap: 32px;
-                        align-items: center;
-                        white-space: nowrap;
-                    }
-
-                    .privacy-options label,
-                    .category-options label {
-                        display: flex;
-                        align-items: center;
-                        gap: 8px;
-                        font-size: 14px;
-                        cursor: pointer;
-                    }
-                </style>
-                <div class="announcement-posting-form">
-                    <form method="POST" enctype="multipart/form-data">
-                        <div class="announcement-credentials">
-                            <h3>Announcement Title</h3>
-                            <input type="text" name="title"
-                                value="<?php echo htmlspecialchars($announcement['title']); ?>" required>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <ul>
+                <h2>
+                    <div class="dashboard-greetings">
+                        <?php 
+                            $query = "SELECT * FROM employee_details WHERE emp_id = :emp_id";
+                            $empDetails = $pdo->prepare($query);
+                            $empDetails->execute([":emp_id" => $_SESSION['emp_id']]);
+                            foreach ($empDetails as $row) {
+                        ?>
+                        <?php
+                            }
+                        ?>
+                        <center>
+                        <div class="user-info d-flex align-items-center">
+                            <img src="<?php echo $row['picture']; ?>" 
+                                class="avatar img-fluid rounded-circle me-2" 
+                                alt="<?php echo $row['first_name']; ?>" 
+                                width="70" height="70">
                         </div>
-                        <div class="announcement-credentials">
-                            <div style="display: flex;">
-                                <h3>Thumbnail</h3>
-                            </div>
-                            <input type="file" name="thumbnail" accept="image/*">
-                            <?php if ($announcement['thumbnail']) { ?>
-                                <p>Current Thumbnail: <img src="<?php echo htmlspecialchars($announcement['thumbnail']); ?>"
-                                        alt="Current Thumbnail" width="100"></p>
-                            <?php } ?>
-                        </div>
-                        <div class="announcement-credentials">
-                            <h3>Privacy</h3>
-                            <div class="privacy-options">
-                                <label><input type="radio" name="privacy" value="Public" <?php echo ($announcement['privacy'] == 'Public') ? 'checked' : ''; ?> required>
-                                    Public</label>
-                                <label><input type="radio" name="privacy" value="Private" <?php echo ($announcement['privacy'] == 'Private') ? 'checked' : ''; ?> required>
-                                    Private</label>
-                            </div>
-                        </div>
-                        <div class="announcement-credentials">
-                            <h3>Category</h3>
-                            <div class="category-options">
-                                <label><input type="radio" name="category" value="Public Notice" <?php echo ($announcement['category'] == 'Public Notice') ? 'checked' : ''; ?> required>
-                                    Public
-                                    Notice</label>
-                                <label><input type="radio" name="category" value="Report" <?php echo ($announcement['category'] == 'Report') ? 'checked' : ''; ?>> Report</label>
-                                <label><input type="radio" name="category" value="Event" <?php echo ($announcement['category'] == 'Event') ? 'checked' : ''; ?>> Event</label>
-                                <label><input type="radio" name="category" value="Emergency" <?php echo ($announcement['category'] == 'Emergency') ? 'checked' : ''; ?>> Emergency</label>
-                                <label><input type="radio" id="categoryOthers" name="category" value="Others" <?php echo (!in_array($announcement['category'], ['Public Notice', 'Report', 'Event', 'Emergency']) ? 'checked' : ''); ?>> Others</label>
-                                <input type="text" id="customCategory" name="custom-category"
-                                    placeholder="Enter custom category"
-                                    value="<?php echo (!in_array($announcement['category'], ['Public Notice', 'Report', 'Event', 'Emergency']) ? htmlspecialchars($announcement['category']) : ''); ?>"
-                                    style="<?php echo (!in_array($announcement['category'], ['Public Notice', 'Report', 'Event', 'Emergency']) ? 'display:block;' : 'display:none;'); ?>">
-                                <script src="../../assets/js/customCategory.js"></script>
-                            </div>
-                        </div>
-                        <div class="announcement-credentials">
-                            <h3>Announcement Description</h3>
-                            <textarea name="description" rows="5"
-                                required><?php echo htmlspecialchars($announcement['body']); ?></textarea>
-                        </div>
-                        <div class="announcement-credentials">
-                            <div style="display: flex;">
-                                <h3>Add More Attachments</h3>
-                            </div>
-                            <input type="file" name="attachments[]" multiple>
-                            <?php if (!empty($attachments)) { ?>
-                                <div class="announcement-credentials">
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th><h3>Current Attachments:</h3></th>
-                                                <th>Delete</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php foreach ($attachments as $attach) { ?>
-                                                <tr>
-                                                    <td>
-                                                        <a href="../../uploads/attachments/<?php echo htmlspecialchars($attach['file_path']); ?>"
-                                                            target="_blank" style="text-decoration: none; color: #007bff;">
-                                                            <?php echo htmlspecialchars($attach['file_name']); ?>
-                                                        </a>
-                                                    </td>
-                                                    <td style="text-align: center;">
-                                                        <label>
-                                                            <input type="checkbox" name="delete_attachments[]"
-                                                                value="<?php echo htmlspecialchars($attach['attachment_id']); ?>">
-                                                        </label>
-                                                    </td>
-                                                </tr>
-                                            <?php } ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                </ul>
-                            <?php } ?>
+                        <span class="text-dark fw-semibold"><?php echo $row['first_name']; ?></span>
+                        </center>
+                    </div>
+                </h2> </br>
+                <h3><i class="fas fa-home"></i> Home</h3>
+                <li class="active"><a href="../main/dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="../main/account.php"><i class="fas fa-user"></i> Account</a></li>
+                <li><a href="../main/account_creation.php"><i class="fas fa-user-plus"></i> Account Creation</a></li>
 
-                        </div>
-                        <button name="update-announcement" id="postAnnouncement">Update Announcement</button>
-                        <a href="../main/dashboard.php"><button type="button" id="postAnnouncement">Cancel</button></a>
-                    </form>
+                <h3><i class="fas fa-folder-open"></i> Documents & Disclosure</h3>
+                <li><a href="../main/documents.php"><i class="fas fa-file-alt"></i> Documents</a></li>
+                <li><a href="../main/announcements.php"><i class="fas fa-bullhorn"></i> Post Announcement</a></li>
+
+                <h3><i class="fas fa-table"></i> Tables & Requests</h3>
+                <li><a href="../main/employee_table.php"><i class="fas fa-users"></i> Employee Table</a></li>
+                <li><a href="../main/account_requests.php"><i class="fas fa-user-check"></i> Account Requests</a></li>
+                <li><a href="certificates/certificates.php"><i class="fas fa-certificate"></i> Certificate Requests</a></li>
+
+                <h3><i class="fas fa-chart-bar"></i> Reports</h3>
+                <li><a href="../main/incident_table.php"><i class="fas fa-exclamation-circle"></i> Incident History</a></li>
+                <li><a href="../main/reports.php"><i class="fas fa-chart-line"></i> Analytics</a></li>
+            </ul>
+        </aside>
+
+        <div class="main-content">
+            <header class="main-header">
+                <button class="hamburger" id="toggleSidebar">&#9776;</button>
+                <div class="header-container">
+                    <div class="logo">
+                        <img src="../../assets/img/GreenwaterLogo.jpg" alt="Greenwater Village Logo">
+                        <h1><span>Greenwater</span> <span>Village</span></h1>
+                    </div>
+                    <nav class="nav" id="nav-menu">
+                        <form method="POST">
+                            <ul class="nav-links">
+                                <li>
+                                    <button class="logout-btn" name="logout">Log Out</button>
+                                </li>
+                            </ul>
+                        </form>
+                    </nav>
                 </div>
-            </div>
-        </div>
-    </main>
-    <footer>
-        <hr>
-        <p><?php echo "&copy; " . date('Y') . " | Unified Barangay Information Service Hub"; ?></p>
-    </footer>
+            </header>
+
+            <main class="content">
+                <div class="dashboard-content">
+                    <h1>Edit Announcement</h1>
+                    <div class="announcement-posting-form">
+                        <form method="POST" enctype="multipart/form-data">
+                            <input type="hidden" name="announcement_id" value="<?php echo $announcement['announcement_id']; ?>">
+                            <div class="announcement-credentials">
+                                <h3>Announcement Title</h3>
+                                <input type="text" name="title"
+                                    value="<?php echo htmlspecialchars($announcement['title']); ?>" required>
+                            </div>
+                            <div class="announcement-credentials">
+                                <div style="display: flex;">
+                                    <h3>Thumbnail</h3>
+                                </div>
+                                <input type="file" name="thumbnail" accept="image/*">
+                                <?php if ($announcement['thumbnail']) { ?>
+                                    <p>Current Thumbnail: <img src="<?php echo htmlspecialchars($announcement['thumbnail']); ?>"
+                                            alt="Current Thumbnail" width="100"></p>
+                                <?php } ?>
+                            </div>
+                            <div class="announcement-credentials">
+                                <h3>Privacy</h3>
+                                <div class="privacy-options">
+                                    <label><input type="radio" name="privacy" value="Public" <?php echo ($announcement['privacy'] == 'Public') ? 'checked' : ''; ?> required>
+                                        Public</label>
+                                    <label><input type="radio" name="privacy" value="Private" <?php echo ($announcement['privacy'] == 'Private') ? 'checked' : ''; ?> required>
+                                        Private</label>
+                                </div>
+                            </div>
+                            <div class="announcement-credentials">
+                                <h3>Category</h3>
+                                <div class="category-options">
+                                    <label><input type="radio" name="category" value="Public Notice" <?php echo ($announcement['category'] == 'Public Notice') ? 'checked' : ''; ?> required>
+                                        Public
+                                        Notice</label>
+                                    <label><input type="radio" name="category" value="Report" <?php echo ($announcement['category'] == 'Report') ? 'checked' : ''; ?>> Report</label>
+                                    <label><input type="radio" name="category" value="Event" <?php echo ($announcement['category'] == 'Event') ? 'checked' : ''; ?>> Event</label>
+                                    <label><input type="radio" name="category" value="Emergency" <?php echo ($announcement['category'] == 'Emergency') ? 'checked' : ''; ?>> Emergency</label>
+                                    <label><input type="radio" id="categoryOthers" name="category" value="Others" <?php echo (!in_array($announcement['category'], ['Public Notice', 'Report', 'Event', 'Emergency']) ? 'checked' : ''); ?>> Others</label>
+                                    <input type="text" id="customCategory" name="custom-category"
+                                        placeholder="Enter custom category"
+                                        value="<?php echo (!in_array($announcement['category'], ['Public Notice', 'Report', 'Event', 'Emergency']) ? htmlspecialchars($announcement['category']) : ''); ?>"
+                                        style="<?php echo (!in_array($announcement['category'], ['Public Notice', 'Report', 'Event', 'Emergency']) ? 'display:block;' : 'display:none;'); ?>">
+                                    <script src="../../assets/js/customCategory.js"></script>
+                                </div>
+                            </div>
+                            <div class="announcement-credentials">
+                                <h3>Announcement Description</h3>
+                                <textarea name="description" rows="5"
+                                    required><?php echo htmlspecialchars($announcement['body']); ?></textarea>
+                            </div>
+                            <div class="announcement-credentials">
+                                <div style="display: flex;">
+                                    <h3>Add More Attachments</h3>
+                                </div>
+                                <input type="file" name="attachments[]" multiple>
+                                <?php if (!empty($attachments)) { ?>
+                                    <div class="announcement-credentials">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th><h3>Current Attachments:</h3></th>
+                                                    <th>Delete</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php foreach ($attachments as $attach) { ?>
+                                                    <tr>
+                                                        <td>
+                                                            <a href="../../uploads/attachments/<?php echo htmlspecialchars($attach['file_path']); ?>"
+                                                                target="_blank" style="text-decoration: none; color: #007bff;">
+                                                                <?php echo htmlspecialchars($attach['file_name']); ?>
+                                                            </a>
+                                                        </td>
+                                                        <td style="text-align: center;">
+                                                            <label>
+                                                                <input type="checkbox" name="delete_attachments[]"
+                                                                    value="<?php echo htmlspecialchars($attach['attachment_id']); ?>">
+                                                            </label>
+                                                        </td>
+                                                    </tr>
+                                                <?php } ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    </ul>
+                                <?php } ?>
+
+                            </div>
+                            <button name="update-announcement" id="postAnnouncement">Update Announcement</button>
+                            <a href="../main/dashboard.php"><button type="button" id="postAnnouncement">Cancel</button></a>
+                        </form>
+                    </div>
+                </div>
+            </main>
+            <footer class="main-footer">
+                <p><?php echo "&copy; " . date('Y') . " | Unified Barangay Information Service Hub"; ?></p>
+            </footer>
+        <!-- ending for the main content -->
+        </div>  
+    <!-- ending for the class wrapper -->
+    </div> 
+        <script>
+        const toggleBtn = document.getElementById('toggleSidebar');
+        const sidebar = document.getElementById('sidebar');
+
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+        });
+    </script>
 </body>
 
 </html>

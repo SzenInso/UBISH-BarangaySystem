@@ -119,30 +119,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../../assets/css/style.css">
+    <link rel="stylesheet" href="../css/dashPages.css">
+    <link rel="icon" type="image/x-icon" href="../../../assets/img/GreenwaterLogo.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <script src='../household/js/sweetalert2.js'></script>
-    <title>UBISH Dashboard | Update Resident</title>
+    <title>Greenwater Village Dashboard | Update Resident</title>
 </head>
 <body>
     <style>
-        header {
-            background-color: #e1f3e2 !important;
-            border-bottom: 5px solid #356859 !important;
-        }
-        .logout {
-            background-color: #e1f3e2 !important;
-            color: #356859 !important;
-            font-weight: bold !important;
-            font-size: 1.1rem !important;
-        }
-        footer {
-            background-color: #d0e9d2 !important;
-            text-align: center !important;
-            padding: 20px !important;
-            color: #2b3d2f !important;
-            border-top: 5px solid #356859 !important;
-            margin-top: 60px !important;
-        }
         .custom-cancel-button {
             border: 2px solid gray;
             background-color: white;
@@ -172,142 +156,184 @@
             padding: 8px 16px;
         }
     </style>
-    <header>
-        <div class="navigation">
-            <div class="logo">
-                <img src="../../../assets/img/greenwater-village-logo.jpg" alt="Greenwater Village Logo">
-                <h1>UBISH</h1>
-            </div>
-            <form method="POST">
-                <nav>
-                    <ul>
-                        <li>
-                            <button class="logout" style="cursor: pointer;" name="logout">Log Out</button>
-                        </li>
-                    </ul>
-                </nav>
-            </form>
-        </div>
-        <hr>
-    </header>
-    <main>
-        <div class="dashboard-main">
-            <div class="dashboard-sidebar">
-                <ul>
-                    <h3>Home</h3>
-                    <li><a href="../../main/dashboard.php">Home</a></li>
-                    <li><a href="../../main/account.php">Account</a></li>
-                    
-                    <h3>Documents & Disclosure</h3>
-                    <li><a href="../../main/documents.php">Documents</a></li>
-                    <li><a href="../../main/announcements.php">Post Announcement</a></li>
-                    
-                    <h3>Tables & Requests</h3>
-                    <li><a href="../../main/employee_table.php">Employee Table</a></li>
+    <div class="wrapper">
+                <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <ul>
+                <h2>
+                    <div class="dashboard-greetings">
+                        <?php 
+                           $stmt = $pdo->prepare("SELECT * FROM employee_details WHERE emp_id = :emp_id");
+                            $stmt->execute([":emp_id" => $_SESSION['emp_id']]);
+                            $row = $stmt->fetch(PDO::FETCH_ASSOC); {
+                        ?>
+                        <?php
+                            }
+                        ?>
+                        <center>
+                        <div class="user-info d-flex align-items-center">
+                            <img src="../<?php echo $row['picture']; ?>" 
+                                class="avatar img-fluid rounded-circle me-2" 
+                                alt="<?php echo $row['first_name']; ?>" 
+                                width="70" height="70">
+                        </div>
+                            <span class="text-dark fw-semibold"><?php echo $row['first_name']; ?></span>
+                        </center>
+                    </div>
+                </h2>
 
-                    <!-- STANDARD -->
-                    <?php if ($accessLevel >= 2) { echo '<li class="active"><a href="../../main/residency_management.php">Residency Management</a></li>'; } ?>
-                    <?php if ($accessLevel >= 2) { echo '<li><a href="../../main/certificates.php">Certificate Requests</a></li>'; } ?>
-                    <?php if ($accessLevel >= 2) { echo '<li><a href="../../main/permits.php">Permit Requests</a></li>'; } ?>
-                    <!-- STANDARD -->
-                    
-                    <!-- FULL -->
-                    <?php if ($accessLevel >= 3) { echo '<li><a href="../../main/account_requests.php">Account Requests</a></li>'; } ?>
-                    <!-- FULL -->
-                    
-                    <h3>Reports</h3>
-                    <!-- STANDARD -->
-                    <?php if ($accessLevel >= 2) { echo '<li><a href="../../main/incidents.php">Incident Reports</a></li>'; }  ?>
-                    <!-- STANDARD -->
-                    
-                    <li><a href="../main/incident_table.php">Incident History</a></li>
-                    <li><a href="../main/reports.php">Analytics</a></li>
-                </ul>
-            </div>
-            <div class="dashboard-content">
-                <center>
-                    <h1>Update Resident Information</h1>
-                </center>   
-                <div class="household-information">
+                <h3><i class="fas fa-home"></i> Home</h3>
+                <li class="active"><a href="../main/dashboard.php"><i class="fas fa-tachometer-alt"></i> Home</a></li>
+                <li><a href="../main/account.php"><i class="fas fa-user"></i> Account</a></li>
+
+                <h3><i class="fas fa-folder-open"></i> Documents & Disclosure</h3>
+                <li><a href="../main/documents.php"><i class="fas fa-file-alt"></i> Documents</a></li>
+                <li><a href="../main/announcements.php"><i class="fas fa-bullhorn"></i> Post Announcement</a></li>
+
+                <h3><i class="fas fa-table"></i> Tables & Requests</h3>
+                <li><a href="../main/employee_table.php"><i class="fas fa-users"></i> Employee Table</a></li>
+
+                <!-- STANDARD ACCESS LEVEL -->
+                <?php if ($accessLevel >= 2): ?>
+                    <li><a href="../main/residency_management.php"><i class="fas fa-house-user"></i> Residency Management</a></li>
+                <?php endif; ?>
+
+                <!-- FULL ACCESS LEVEL -->
+                <?php if ($accessLevel >= 3): ?>
+                    <li><a href="../main/account_requests.php"><i class="fas fa-user-check"></i> Account Requests</a></li>
+                <?php endif; ?>
+
+                <h3><i class="fas fa-chart-bar"></i> Reports</h3>
+                <?php if ($accessLevel >= 2): ?>
+                    <li><a href="../main/incidents.php"><i class="fas fa-exclamation-circle"></i> Incident Reports</a></li>
+                <?php endif; ?>
+                <li><a href="../main/incident_table.php"><i class="fas fa-history"></i> Incident History</a></li>
+                <li><a href="../main/reports.php"><i class="fas fa-chart-line"></i> Analytics</a></li>
+            </ul>
+        </aside>
+
+        <div class="main-content">
+        <header class="main-header">
+            <button class="hamburger" id="toggleSidebar">&#9776;</button>
+            <div class="header-container">
+                <div class="logo">
+                    <img src="../../../assets/img/GreenwaterLogo.jpg" alt="Greenwater Village Logo">
+                    <h1><span>Greenwater</span> <span>Village</span></h1>
+                </div>
+                <nav class="nav" id="nav-menu">
                     <form method="POST">
-                        <div class="household-information-actions">
-                            <input type="text" name="address_id" value="<?php echo htmlspecialchars($addressData['household_address_id'] ?? ''); ?>">
-                            <input type="text" name="respondent_id" value="<?php echo htmlspecialchars($respondentData['household_respondent_id'] ?? ''); ?>">
-                            <button type="submit" name="update-household" class="custom-cancel-button">Update Household</button>
-                        </div>
-                        <div class="household-details" style="border:1px solid #ccc; margin: 24px auto; border-radius:8px; padding:16px;">
-                            <h2>Household Address</h2>
-                            <table border="1" cellspacing="0" style="width:100%; table-layout:fixed;">
-                                <tr>
-                                    <th>House Number/Code <span style="color: crimson; cursor: help;" title="Required">*</span></th>
-                                    <td>
-                                        <input type="text" name="house_number" class="edit-residency-input" value="<?php echo htmlspecialchars($addressData['house_number'] ?? ''); ?>" >
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Purok</th>
-                                    <td>
-                                        <input type="text" name="purok" class="edit-residency-input" value="<?php echo htmlspecialchars($addressData['purok'] ?? ''); ?>" >
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Street</th>
-                                    <td>
-                                        <input type="text" name="street" class="edit-residency-input" value="<?php echo htmlspecialchars($addressData['street'] ?? ''); ?>" >
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>District</th>
-                                    <td>
-                                        <input type="text" name="district" class="edit-residency-input" value="<?php echo htmlspecialchars($addressData['district'] ?? ''); ?>" >
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Barangay</th>
-                                    <td>
-                                        Greenwater Village
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div class="respondent-details" style="border:1px solid #ccc; margin: 24px auto; border-radius:8px; padding:16px;">
-                            <h2>Household Head/Respondent</h2>
-                            <table border="1" cellspacing="0" style="width:100%; table-layout:fixed;">
-                                <tr>
-                                    <th>First Name</th>
-                                    <td>
-                                        <input type="text" name="first_name" class="edit-residency-input" value="<?php echo htmlspecialchars($respondentData['first_name'] ?? ''); ?>" >
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Middle Initial</th>
-                                    <td>
-                                        <input type="text" name="middle_initial" class="edit-residency-input" value="<?php echo htmlspecialchars($respondentData['middle_initial'] ?? ''); ?>" maxlength="5">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Last Name</th>
-                                    <td>
-                                        <input type="text" name="last_name" class="edit-residency-input" value="<?php echo htmlspecialchars($respondentData['last_name'] ?? ''); ?>" >
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Suffix</th>
-                                    <td>
-                                        <input type="text" name="suffix" class="edit-residency-input" value="<?php echo htmlspecialchars($respondentData['suffix'] ?? ''); ?>" maxlength="10">
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
+                        <ul class="nav-links">
+                            <li>
+                                <button class="logout-btn" name="logout">Log Out</button>
+                            </li>
+                        </ul>
+                    </form>
+                </nav>
+            </div>
+        </header>
+
+
+        <main class="content">
+                <div class="dashboard-content">
+                    <center>
+                        <h1>Update Resident Information</h1> </br>
+                    </center>   
+                    <div class="household-information">
+                        <form method="POST">
+                            <center>
+                            <div class="household-information-actions">
+                                <input type="text" name="address_id" value="<?php echo htmlspecialchars($addressData['household_address_id'] ?? ''); ?>">
+                                <input type="text" name="respondent_id" value="<?php echo htmlspecialchars($respondentData['household_respondent_id'] ?? ''); ?>">
+                                <button type="submit" name="update-household" class="custom-cancel-button">Update Household</button>
+                            </div>
+                            </center>
+
+                            <div class="household-details" style="border:1px solid #ccc; margin: 24px auto; border-radius:8px; padding:16px;">
+                                <h2>Household Address</h2>
+                                <table border="1" cellspacing="0" style="width:100%; table-layout:fixed;">
+                                    <tr>
+                                        <th>House Number/Code <span style="color: crimson; cursor: help;" title="Required">*</span></th>
+                                        <td>
+                                            <input type="text" name="house_number" class="edit-residency-input" value="<?php echo htmlspecialchars($addressData['house_number'] ?? ''); ?>" >
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Purok</th>
+                                        <td>
+                                            <input type="text" name="purok" class="edit-residency-input" value="<?php echo htmlspecialchars($addressData['purok'] ?? ''); ?>" >
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Street</th>
+                                        <td>
+                                            <input type="text" name="street" class="edit-residency-input" value="<?php echo htmlspecialchars($addressData['street'] ?? ''); ?>" >
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>District</th>
+                                        <td>
+                                            <input type="text" name="district" class="edit-residency-input" value="<?php echo htmlspecialchars($addressData['district'] ?? ''); ?>" >
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Barangay</th>
+                                        <td>
+                                            Greenwater Village
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="respondent-details" style="border:1px solid #ccc; margin: 24px auto; border-radius:8px; padding:16px;">
+                                <h2>Household Head/Respondent</h2>
+                                <table border="1" cellspacing="0" style="width:100%; table-layout:fixed;">
+                                    <tr>
+                                        <th>First Name</th>
+                                        <td>
+                                            <input type="text" name="first_name" class="edit-residency-input" value="<?php echo htmlspecialchars($respondentData['first_name'] ?? ''); ?>" >
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Middle Initial</th>
+                                        <td>
+                                            <input type="text" name="middle_initial" class="edit-residency-input" value="<?php echo htmlspecialchars($respondentData['middle_initial'] ?? ''); ?>" maxlength="5">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Last Name</th>
+                                        <td>
+                                            <input type="text" name="last_name" class="edit-residency-input" value="<?php echo htmlspecialchars($respondentData['last_name'] ?? ''); ?>" >
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Suffix</th>
+                                        <td>
+                                            <input type="text" name="suffix" class="edit-residency-input" value="<?php echo htmlspecialchars($respondentData['suffix'] ?? ''); ?>" maxlength="10">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </form>
+                <div class="resident-actions">
+                    <form method="POST">
+                        <center><button class="custom-cancel-button" name="go-back">Go Back</button></center>
                     </form>
                 </div>
-            </div>
-        </div>
-    </main>
-    <footer>
-        <hr>
+                    </div>
+                </div>
+        </main>
+    <footer class="main-footer">
         <p><?php echo "&copy; " . date('Y') . " | Unified Barangay Information Service Hub"; ?></p>
     </footer>
+    </div>
+    </div>
+    <script>
+        const toggleBtn = document.getElementById('toggleSidebar');
+        const sidebar = document.getElementById('sidebar');
+
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+        });
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.querySelector('.household-information form');
