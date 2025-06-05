@@ -1,5 +1,6 @@
 <?php
     include '../../config/dbconfig.php';
+    include '../../baseURL.php';
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
     }
@@ -94,51 +95,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../assets/css/style.css">
-    <link rel="icon" type="image/x-icon" href="../../assets/img/GreenwaterLogo.jpg">
+    <link rel="stylesheet" href="<?= BASE_URL ?>css/index.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/login.css">
+    <link rel="icon" type="image/x-icon" href="assets/img/GreenwaterLogo.jpg">
     <script src="../../assets/js/sweetalert2.js"></script>
-    <title>UBISH Dashboard | Reset Password</title>
+    <title>Greenwater Village | Reset Password</title>
 </head>
 <body>
-    <header>
-        <div class="navigation">
-            <div class="logo">
-                <img src="../../assets/img/greenwater-village-logo.jpg" alt="Greenwater Village Logo">
-                <h1>UBISH</h1>
-            </div>
-            <nav>
-                <ul>
-                    <li>
-                        <a href="../account/login.php">Log In</a>
-                    </li>
-                    <li>
-                        <a href="../account/register.php">Sign Up</a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-        <hr>
-    </header>
+
+    <?php include '../../partials/header.php'; ?>
     <main>
-        <form method="POST">
-            <div class="login-form">
-                <h1>Reset Password</h1><br>
-                <p>Reset password for: <?php echo $_SESSION['username']; ?></p>
-                <div class="login-credentials">
-                    <p>New Password</p>
-                    <input type="password" name="new-password" placeholder="Enter a new password">
-                </div>
-                <div class="login-credentials">
-                    <p>Confirm New Password</p>
-                    <input type="password" name="confirm-password" placeholder="Confirm the new password">
-                </div>
-                <div class="login-btns">
-                    <button name="reset-password">Reset Password</button>
-                </div>
-        </form>
-    </main>
-    <footer>
-        <hr>
-        <p><?php echo "&copy; " . date('Y') . " | Unified Barangay Information Service Hub"; ?></p>
-    </footer>
+    <div class="forgot-password-container login-form">
+        <form method="POST" class="forgot-password-form">
+            <h1>Reset Password</h1>
+            <p>Reset password for: <strong><?php echo htmlspecialchars($_SESSION['username']); ?></strong></p>
+
+            <div class="login-credentials">
+                <label for="new-password">New Password</label>
+                <input
+                    id="new-password"
+                    type="password"
+                    name="new-password"
+                    placeholder="Enter a new password"
+                    required
+                >
+            </div>
+
+            <div class="login-credentials">
+                <label for="confirm-password">Confirm New Password</label>
+                <input
+                    id="confirm-password"
+                    type="password"
+                    name="confirm-password"
+                    placeholder="Confirm the new password"
+                    required
+                >
+            </div>
+
+            <button type="submit" name="reset-password" class="submit-btn">Reset Password</button>
+        </form><br>
+        <a href="../account/login.php" class="back-link">← Go Back to Log In</a>
+    </div>
+</main>
+
+    <?php include '../../partials/footer.php'; ?>
 </body>
 </html>
