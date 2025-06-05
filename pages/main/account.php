@@ -91,24 +91,24 @@ if (isset($_POST['reset-question'])) {
 
 
     <div class="main-content">
-            <header class="main-header">
-                <button class="hamburger" id="toggleSidebar">&#9776;</button>
-                <div class="header-container">
-                    <div class="logo">
-                        <img src="../../assets/img/GreenwaterLogo.jpg" alt="Greenwater Village Logo">
-                        <h1><span>Greenwater</span> <span>Village</span></h1>
-                    </div>
-                    <nav class="nav" id="nav-menu">
-                        <form method="POST">
-                            <ul class="nav-links">
-                                <li>
-                                    <button class="logout-btn" name="logout">Log Out</button>
-                                </li>
-                            </ul>
-                        </form>
-                    </nav>
+        <header class="main-header">
+            <button class="hamburger" id="toggleSidebar">&#9776;</button>
+            <div class="header-container">
+                <div class="logo">
+                    <img src="../../assets/img/GreenwaterLogo.jpg" alt="Greenwater Village Logo">
+                    <h1><span>Greenwater</span> <span>Village</span></h1>
                 </div>
-            </header>
+                <nav class="nav" id="nav-menu">
+                    <form method="POST">
+                        <ul class="nav-links">
+                            <li>
+                                <button class="logout-btn" name="logout">Log Out</button>
+                            </li>
+                        </ul>
+                    </form>
+                </nav>
+            </div>
+        </header>
 
     <main class="content">
             <div class="dashboard-content">
@@ -241,9 +241,9 @@ if (isset($_POST['reset-question'])) {
                 </form>
             </div>
     </main>
-            <footer class="main-footer">
-                <p><?php echo "&copy; " . date('Y') . " | Unified Barangay Information Service Hub"; ?></p>
-            </footer>
+        <footer class="main-footer">
+            <p><?php echo "&copy; " . date('Y') . " | Unified Barangay Information Service Hub"; ?></p>
+        </footer>
    </div> 
 </div>
 
