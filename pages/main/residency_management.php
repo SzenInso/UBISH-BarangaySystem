@@ -111,6 +111,7 @@
                         <select id="residency-view" style="width: 200px; padding: 8px; border-radius: 6px; border: 2px solid #356859; font-size: medium; background: #f8fff8;">
                             <option value="residency">Residency</option>
                             <option value="household">Household</option>
+                            <option value="demographics">Demographics</option>
                         </select>
                         <input type="text" id="search-bar" class="styled-search-bar" placeholder="Search by name...">
                     </div>
@@ -126,7 +127,20 @@
                             document.getElementById('table-loader').style.display = 'block';
                             document.getElementById('ajax-table-container').innerHTML = '';
                             var xhr = new XMLHttpRequest();
-                            var url = (type === 'household') ? 'household_table.php' : 'residency_table.php';
+                            var url;
+                            if (type === 'household') {
+                                url = 'household_table.php';
+                            } else if (type === 'residency') {
+                                url = 'residency_table.php';
+                            } else if (type === 'demographics') {
+                                url = 'residency_demographics.php';
+                            }
+                            var searchBar = document.getElementById('search-bar');
+                            if (type === 'demographics') {
+                                searchBar.style.display = 'none';
+                            } else {
+                                searchBar.style.display = '';
+                            }
                             xhr.open('GET', url, true);
                             xhr.onreadystatechange = function() {
                                 if (xhr.readyState === 4) {
