@@ -18,12 +18,15 @@ if (isset($_POST['confirm'])) {
     $limitedAccess = array("Sangguniang Kabataan Member", "Other Barangay Personnel");
     $standardAccess = array("Sangguniang Barangay Member", "Sangguniang Kabataan Chairperson", "Barangay Secretary", "Barangay Treasurer");
     $fullAccess = array("Punong Barangay");
+    $admin = array("Administrator");
     if (in_array($legislature, $limitedAccess)) {
         $accesslvl = 1; // limited access
     } elseif (in_array($legislature, $standardAccess)) {
         $accesslvl = 2; // standard access
     } elseif (in_array($legislature, $fullAccess)) {
         $accesslvl = 3; // full access
+    } elseif (in_array($legislature, $admin)) {
+        $accesslvl = 4; // admin
     }
 
     $filePathQuery = "SELECT picture FROM employee_details WHERE emp_id = :emp_id";
@@ -461,6 +464,7 @@ if (isset($_POST['cancel'])) {
                                             <td>
                                                 <select name="legislature">
                                                     <option value="" disabled>Update Legislature</option>
+                                                    <option value="Administrator" <?php echo ($row['legislature'] === "Administrator") ? "selected" : ''; ?>>Administrator</option>
                                                     <option value="Punong Barangay" <?php echo ($row['legislature'] === "Punong Barangay") ? "selected" : ''; ?>>Punong Barangay</option>
                                                     <option value="Sangguniang Barangay Member" <?php echo ($row['legislature'] === "Sangguniang Barangay Member") ? "selected" : ''; ?>>Sangguniang Barangay Member</option>
                                                     <option value="Sangguniang Kabataan Chairperson" <?php echo ($row['legislature'] === "Sangguniang Kabataan Chairperson") ? "selected" : ''; ?>>Sangguniang Kabataan Chairperson</option>
