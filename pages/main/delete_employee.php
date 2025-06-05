@@ -19,6 +19,10 @@
                     unlink($profilePicture);
                 }
 
+                $deleteQuestionQuery = "DELETE FROM security_questions WHERE emp_id = :emp_id";
+                $deleteQuestion = $pdo->prepare($deleteQuestionQuery);
+                $deleteQuestion->execute([":emp_id" => $emp_id]);
+
                 $deleteEmpQuery = "DELETE FROM employee_details WHERE emp_id = :emp_id";
                 $deleteEmp = $pdo->prepare($deleteEmpQuery);
                 $deleteEmp->execute([":emp_id" => $emp_id]);
