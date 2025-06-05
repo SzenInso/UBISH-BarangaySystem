@@ -34,7 +34,7 @@
     </style>
 
     <div class="wrapper">
-        <!-- Sidebar -->
+                <!-- Sidebar -->
         <aside class="sidebar" id="sidebar">
             <ul>
                 <h2>
@@ -60,34 +60,34 @@
                 </h2>
 
                 <h3><i class="fas fa-home"></i> Home</h3>
-                <li class="active"><a href="../main/dashboard.php"><i class="fas fa-tachometer-alt"></i> Home</a></li>
-                <li><a href="../main/account.php"><i class="fas fa-user"></i> Account</a></li>
+                <li class="active"><a href="../../main/dashboard.php"><i class="fas fa-tachometer-alt"></i> Home</a></li>
+                <li><a href="../../main/account.php"><i class="fas fa-user"></i> Account</a></li>
 
                 <h3><i class="fas fa-folder-open"></i> Documents & Disclosure</h3>
-                <li><a href="../main/documents.php"><i class="fas fa-file-alt"></i> Documents</a></li>
-                <li><a href="../main/announcements.php"><i class="fas fa-bullhorn"></i> Post Announcement</a></li>
+                <li><a href="../../main/documents.php"><i class="fas fa-file-alt"></i> Documents</a></li>
+                <li><a href="../../main/announcements.php"><i class="fas fa-bullhorn"></i> Post Announcement</a></li>
 
                 <h3><i class="fas fa-table"></i> Tables & Requests</h3>
-                <li><a href="../main/employee_table.php"><i class="fas fa-users"></i> Employee Table</a></li>
+                <li><a href="../../main/employee_table.php"><i class="fas fa-users"></i> Employee Table</a></li>
 
                 <!-- STANDARD ACCESS LEVEL -->
                 <?php if ($accessLevel >= 2): ?>
-                    <li><a href="../main/residency_management.php"><i class="fas fa-house-user"></i> Residency Management</a></li>
+                    <li><a href="../../main/residency_management.php"><i class="fas fa-house-user"></i> Residency Management</a></li>
                     <!-- <li><a href="../main/certificates.php"><i class="fas fa-certificate"></i> Certificate Requests</a></li> -->
                     <!-- <li><a href="../main/permits.php"><i class="fas fa-id-badge"></i> Permit Requests</a></li> -->
                 <?php endif; ?>
 
                 <!-- FULL ACCESS LEVEL -->
                 <?php if ($accessLevel >= 3): ?>
-                    <li><a href="../main/account_requests.php"><i class="fas fa-user-check"></i> Account Requests</a></li>
+                    <li><a href=".././/main/account_requests.php"><i class="fas fa-user-check"></i> Account Requests</a></li>
                 <?php endif; ?>
 
                 <h3><i class="fas fa-chart-bar"></i> Reports</h3>
                 <?php if ($accessLevel >= 2): ?>
-                    <li><a href="../main/incidents.php"><i class="fas fa-exclamation-circle"></i> Incident Reports</a></li>
+                    <li><a href="../../main/incidents.php"><i class="fas fa-exclamation-circle"></i> Incident Reports</a></li>
                 <?php endif; ?>
-                <li><a href="../main/incident_table.php"><i class="fas fa-history"></i> Incident History</a></li>
-                <li><a href="../main/reports.php"><i class="fas fa-chart-line"></i> Analytics</a></li>
+                <li><a href="../../main/incident_table.php"><i class="fas fa-history"></i> Incident History</a></li>
+                <li><a href="../../main/reports.php"><i class="fas fa-chart-line"></i> Analytics</a></li>
             </ul>
         </aside>
 
