@@ -285,9 +285,11 @@
                     </h1><br>
                     <div id="employee-table-container">
                         <form method="POST" action="../main/employee_table.php">
+                            <!--
                             <?php if ($accessLevel >= 3) { ?>
                                 <button type="submit" id="deleteSelectedEmp" name="delete-selected" style="justify-content: flex-start; cursor: pointer;">Delete Selected</button>
                             <?php } ?>
+                            -->
                             <br>
                             <div class="employee-filters">
                                 <div class="employee-filters-container">                                
