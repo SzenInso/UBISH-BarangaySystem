@@ -273,9 +273,11 @@
                     </h1><br>
                     <div id="employee-table-container">
                         <form method="POST" action="../main/employee_table.php">
+                            <!--
                             <?php if ($accessLevel >= 3) { ?>
                                 <button type="submit" id="deleteSelectedEmp" name="delete-selected" style="justify-content: flex-start; cursor: pointer;">Delete Selected</button>
                             <?php } ?>
+                            -->
                             <br>
                             <div class="employee-filters">
                                 <div class="employee-filters-container">                                
@@ -315,7 +317,8 @@
                             <script src="../../assets/js/sortAndFilter.js"></script>
                             <table id="employee-table">
                                 <tr>
-                                    <?php if ($accessLevel >= 3) { echo "<th>Selection</th>"; } ?>
+                                    <?php /* if ($accessLevel >= 3) { echo "<th>Selection</th>"; } */ ?>
+                                    <th>Employee ID</th>
                                     <th>Profile Picture</th>
                                     <th>Full Name</th>
                                     <th>Date of Birth</th>
@@ -330,6 +333,7 @@
                                 </tr>
                                 <?php foreach ($empAllDetails as $row) { ?>
                                     <tr>
+                                        <!--
                                         <?php if ($accessLevel >= 3) { ?>
                                             <td>
                                                 <center>
@@ -343,6 +347,10 @@
                                                 </center>
                                             </td>
                                         <?php } ?>
+                                        -->
+                                        <td>
+                                            <?php echo $row['emp_id']; ?>
+                                        </td>
                                         <td>
                                             <img 
                                                 src="<?php echo $row['picture']; ?>"
