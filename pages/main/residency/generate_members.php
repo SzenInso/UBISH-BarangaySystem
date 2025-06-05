@@ -12,12 +12,12 @@
                 <tr>
                     <th colspan="4">Household Member(s)</th>
                     <th rowspan="2">Relation to Head/Respondent</th>
-                    <th rowspan="2">Sex</th>
+                    <th rowspan="2">Sex <span style="color: crimson; cursor: help;" title="Required">*</span></th>
                 </tr>
                 <tr>
-                    <th>First Name</th>
+                    <th>First Name <span style="color: crimson; cursor: help;" title="Required">*</span></th>
                     <th>Middle Initial</th>
-                    <th>Last Name</th>
+                    <th>Last Name <span style="color: crimson; cursor: help;" title="Required">*</span></th>
                     <th>Suffix</th>
                 </tr>
             </thead>
@@ -41,11 +41,11 @@
             <!-- Personal Info -->
             <thead>
                 <tr>
-                    <th>Date of Birth</th>
+                    <th>Date of Birth <span style="color: crimson; cursor: help;" title="Required">*</span></th>
                     <th>Age</th>
-                    <th>Civil Status</th>
+                    <th>Civil Status <span style="color: crimson; cursor: help;" title="Required">*</span></th>
                     <th>Religion</th>
-                    <th>Schooling</th>
+                    <th>Schooling <span style="color: crimson; cursor: help;" title="Required">*</span></th>
                     <th>Educational Attainment</th>
                 </tr>
             </thead>
@@ -105,9 +105,9 @@
                 <tr>
                     <th>Occupation</th>
                     <th>Livelihood Training</th>
-                    <th>Employment Status</th>
+                    <th>Employment Status <span style="color: crimson; cursor: help;" title="Required">*</span></th>
                     <th>Category</th>
-                    <th>Monthly Income (Cash)</th>
+                    <th>Monthly Income (Cash in ₱)</th>
                     <th>Income (Kind)</th>
                 </tr>
             </thead>
@@ -135,7 +135,7 @@
                             <option value="Self-Employed">Self-Employed</option>
                         </select>
                     </td>
-                    <td>₱ <input type="number" name="income_cash[]" min="0" step="0.01"></td>
+                    <td><input type="number" name="income_cash[]" min="0" step="0.01"></td>
                     <td><input type="text" name="income_type[]"></td>
                 </tr>
             </tbody>

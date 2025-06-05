@@ -133,9 +133,9 @@
                         <div class="section">
                             <label for="head"><b>Household Head/Respondent</b></label>
                             <div class="form-group">
-                                <label>First Name: <input type="text" name="household_first_name" class="input-field"></label>
+                                <label><span style="color: crimson; cursor: help;" title="Required">*</span> First Name: <input type="text" name="household_first_name" class="input-field"></label>
                                 <label>Middle Initial: <input type="text" name="household_middle_initial" maxlength="5" class="input-field"></label>
-                                <label>Last Name: <input type="text" name="household_last_name" class="input-field"></label>
+                                <label><span style="color: crimson; cursor: help;" title="Required">*</span> Last Name: <input type="text" name="household_last_name" class="input-field"></label>
                                 <label>Suffix: <input type="text" name="household_suffix" maxlength="5" class="input-field"></label>
                             </div>
                         </div>
@@ -143,13 +143,13 @@
                         <div class="section">
                             <label for="address"><b>Household Address</b></label>
                             <div class="form-group">
-                                <label>House Number/Code: <input type="text" name="household_number" class="input-field"></label>
+                                <label><span style="color: crimson; cursor: help;" title="Required">*</span> House Number/Code: <input type="text" name="household_number" class="input-field"></label>
                                 <label>Purok: <input type="text" name="household_purok" class="input-field"></label>
                                 <label>Street: <input type="text" name="household_street" class="input-field"></label>
                             </div>
                             <div class="form-group">
                                 <label>District: <input type="text" name="household_district" class="input-field"></label>
-                                <label>Barangay: <input type="text" name="household_barangay" value="Greenwater Village" readonly class="input-field readonly"></label>
+                                <label><span style="color: crimson; cursor: help;" title="Required">*</span> Barangay: <input type="text" name="household_barangay" value="Greenwater Village" readonly class="input-field readonly"></label>
                             </div>
                         </div>
                         <br>
