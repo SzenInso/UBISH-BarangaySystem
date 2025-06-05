@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 02, 2025 at 05:10 PM
+-- Generation Time: Jun 05, 2025 at 06:59 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -48,7 +48,7 @@ INSERT INTO `announcements` (`announcement_id`, `title`, `body`, `privacy`, `cat
 (2009, 'Holy Week 2025 Schedule', 'FROM MALACAÑANG:\r\n\r\nMemorandum Circular No. 81, s. 2025\r\n\r\nPursuant to Memorandum Circular No. 81, government offices shall adopt work-from-home (WFH) arrangements from 8:00 AM to 12:00 PM on April 16, 2025.\r\nWork shall be suspended from 12:00 PM onwards to give employees full opportunity to properly observe Maundy Thursday and Good Friday and to travel to and from the different regions.\r\nThe adoption of WFH and suspension of work for private companies and offices is left to the discretion of their respective employers.', 'Private', 'Memorandum', 1, '2025-04-17 11:06:26', '../../uploads/attachments/thumbnail_1744880786_thumbnailtest02.jpg', NULL),
 (2010, 'Test Announcement', 'This is a test description w/o thumbnail, w/o attachment.', 'Public', 'Test Category', 2, '2025-04-17 11:22:52', NULL, NULL),
 (2011, 'Test Private Announcement', 'This is a test private description w/o thumbnail, w/o attachment', 'Private', 'Test Category', 2, '2025-04-28 06:17:41', NULL, '2025-04-28 06:17:41'),
-(2020, 'Edited Test Announcement', 'Announcement for testing the edit function (edit: announcement has been edited)', 'Private', 'Test Category', 1, '2025-05-07 18:35:19', '../../uploads/attachments/thumbnail_1746635545_test.png', '2025-05-07 18:35:19');
+(2020, 'Edited Test Announcement', 'Announcement for testing the edit function', 'Private', 'Test Category', 1, '2025-06-05 11:28:24', '../../uploads/attachments/thumbnail_1746635545_test.png', '2025-06-05 11:28:24');
 
 -- --------------------------------------------------------
 
@@ -100,17 +100,11 @@ CREATE TABLE `employee_details` (
 --
 
 INSERT INTO `employee_details` (`emp_id`, `first_name`, `middle_name`, `last_name`, `date_of_birth`, `sex`, `address`, `religion`, `civil_status`, `legislature`, `access_level`, `phone_no`, `picture`, `committee`) VALUES
-(1001, 'Admin', 'Admin', 'Admin', '2001-01-01', 'M', 'Philippines', 'Roman Catholic', 'Single', 'Administrator', 4, '+639123456789', '../../uploads/default_profile.jpg', NULL),
+(1001, 'Admin', 'Admin', 'Admin', '2000-01-01', 'M', 'Philippines', 'Roman Catholic', 'Single', 'Administrator', 4, '+639123456789', '../../uploads/default_profile.jpg', NULL),
 (1002, 'Mark Simon', 'Zuilan', 'Bringas', '2005-02-16', 'M', 'Baguio City, Philippines', 'Roman Catholic', 'Single', 'Other Barangay Personnel', 1, '+639123456789', '../../uploads/profiles/680e0acd0d07a.jpg', NULL),
 (1004, 'John', 'Smith', 'Doe', '2000-01-02', 'M', 'Philippines', 'Atheist', 'Legally Separated', 'Sangguniang Barangay Member', 2, '+639111111111', '../../uploads/profiles/680f803160a28.jpg', NULL),
 (1009, 'Jamie', 'Smith', 'Brown', '2000-01-03', 'F', 'Philippines', 'Roman Catholic', 'Married', 'Barangay Secretary', 2, '+639151515151', '../../uploads/profiles/680f94f412a96.jpg', NULL),
-(1013, 'Tarou', 'Tanaka', 'Sakamoto', '1997-11-21', 'M', 'Japan', 'Atheist', 'Married', 'Other Barangay Personnel', 1, '+639444444444', '../../uploads/profiles/680e3def12dc7.png', NULL),
-(1014, 'Kento', 'Kokusen', 'Nanami', '1990-07-03', 'M', 'Japan', 'Shinto', 'Single', 'Barangay Secretary', 2, '+639555555555', '../../uploads/profiles/680e412a573ca.jpg', NULL),
-(1020, 'Jane', 'Turner', 'Smith', '2000-01-01', 'F', 'Philippines', 'Atheist', 'Married', 'Barangay Secretary', 3, '+639000000000', '../../uploads/profiles/6813a9c249b2a.jpg', NULL),
-(1028, 'Sarah Mae', 'Marquez', 'Capis', '2000-01-04', 'F', 'Manila', 'Roman Catholic', 'Married', 'Other Barangay Personnel', 1, '+639111111111', '../../uploads/default_profile.jpg', NULL),
-(1029, 'Allan', 'Manuel', 'Garcia', '2000-01-03', 'M', 'Manila', 'Roman Catholic', 'Married', 'Other Barangay Personnel', 1, '+639111111111', '../../uploads/default_profile.jpg', NULL),
-(1031, 'Kevin', 'Kaslana', 'Sanchez', '2000-05-12', 'M', 'Philippines', 'Roman Catholic', 'Single', 'Sangguniang Kabataan Treasurer', 2, '+639111111111', '../../uploads/default_profile.jpg', 'Finance'),
-(1032, 'Rogelio', 'M', 'Tayoan', '2025-04-28', 'M', 'Greenwater Village', 'toUpdate', 'Married', 'Punong Barangay', 3, '+639898767654', '../../uploads/default_profile.jpg', 'toUpdate');
+(1032, 'Rogelio', 'M', 'Tayoan', '2025-04-28', 'M', 'Greenwater Village', 'Roman Catholic', 'Married', 'Punong Barangay', 3, '+639898767654', '../../uploads/profiles/6841b129c3cb4.jpg', NULL);
 
 -- --------------------------------------------------------
 
@@ -193,16 +187,12 @@ INSERT INTO `employee_update` (`update_id`, `emp_id`, `update_first_name`, `upda
 (406, 1004, 'John', 'Smith', 'Doe', '2000-01-02', 'M', 'Philippines', 'Atheist', 'Legally Separated', 'Sangguniang Barangay Member', 2, 'Approved', '2025-04-27 22:02:37', 'Legally separated with Jane Doe on 04/27/2025.'),
 (407, 1009, 'Jamie', 'Smith', 'Brown', '2000-01-03', 'F', 'Philippines', 'Roman Catholic', 'Married', 'Barangay Secretary', 2, 'Approved', '2025-04-27 22:08:26', 'Promoted on 04/27/2025.'),
 (408, 1002, 'Wanderer', 'Scaramouche', 'Kabukimono', '2005-02-16', 'M', 'Baguio City, Philippines', 'Roman Catholic', 'Single', 'Other Barangay Personnel', 1, 'Denied', '2025-04-27 22:12:37', 'Bro I\'m literally Scaramouche.'),
-(409, 1013, 'Tarou', 'Tanaka', 'Sakamoto', '1997-11-21', 'M', 'Japan', 'Shinto', 'Married', 'Other Barangay Personnel', 1, 'Pending', '2025-04-27 22:39:21', 'Converted to Shintoism after marrying.'),
-(410, 1014, 'Kento', 'Kokusen', 'Nanami', '1990-07-03', 'M', 'Kuantan, Malaysia', 'Shinto', 'Single', 'Other Barangay Personnel', 1, 'Pending', '2025-04-27 22:41:12', 'Moved to retirement residence. Stepped down of Secretary position to settle in the new residence.'),
-(412, 1029, 'Allan', 'Manuel', 'Garcia', '2000-01-03', 'M', 'Baguio', 'Roman Catholic', 'Single', 'Other Barangay Personnel', 1, 'Denied', '2025-05-07 23:45:49', NULL),
-(413, 1028, 'Sarah Mae', 'Marquez', 'Capiz', '2000-01-04', 'F', 'Manila', 'Roman Catholic', 'Married', 'Other Barangay Personnel', 1, 'Approved', '2025-05-07 23:46:34', NULL),
-(414, 1029, 'Allan', 'Manuel', 'Garcia', '2000-01-03', 'M', 'Baguio', 'Roman Catholic', 'Single', 'Other Barangay Personnel', 1, 'Denied', '2025-05-07 23:51:19', NULL),
-(415, 1028, 'Sarah Mae', 'Marquez', 'Capis', '2000-01-04', 'F', 'Manila', 'Roman Catholic', 'Married', 'Other Barangay Personnel', 1, 'Approved', '2025-05-07 23:52:13', 'Typo on last name.'),
 (416, 1001, 'Admin', 'Santos', 'Dela Cruz', '2000-01-01', 'M', 'Philippines', 'Atheist', 'Single', 'Punong Barangay', 3, 'Approved', '2025-05-08 00:13:46', 'Debug'),
 (417, 1009, 'Jamie', 'Smith', 'Brown', '2000-01-03', 'M', 'Philippines', 'Roman Catholic', 'Married', 'Barangay Secretary', 2, 'Denied', '2025-05-20 16:22:25', NULL),
 (418, 1009, 'Jamie', 'Smith', 'Brown', '2003-01-03', 'F', 'Philippines', 'Roman Catholic', 'Married', 'Barangay Secretary', 2, 'Denied', '2025-05-20 16:22:40', NULL),
-(419, 1001, 'Admin', 'Admin', 'Admin', '2001-01-01', 'M', 'Philippines', 'Roman Catholic', 'Single', 'Punong Barangay', 3, 'Approved', '2025-05-20 16:25:24', NULL);
+(419, 1001, 'Admin', 'Admin', 'Admin', '2001-01-01', 'M', 'Philippines', 'Roman Catholic', 'Single', 'Punong Barangay', 3, 'Approved', '2025-05-20 16:25:24', NULL),
+(420, 1001, 'Admin', 'Admin', 'Admin', '2000-01-01', 'M', 'Philippines', 'Roman Catholic', 'Single', 'Punong Barangay', 3, 'Approved', '2025-06-05 17:23:56', NULL),
+(421, 1032, 'Rogelio', 'M', 'Tayoan', '2025-04-28', 'M', 'Greenwater Village', 'Roman Catholic', 'Married', 'Punong Barangay', 3, 'Approved', '2025-06-05 18:32:59', NULL);
 
 -- --------------------------------------------------------
 
@@ -293,7 +283,6 @@ CREATE TABLE `files` (
 --
 
 INSERT INTO `files` (`file_id`, `title`, `file_name`, `file_path`, `uploaded_by`, `upload_date`, `privacy`, `file_type`) VALUES
-(20, 'Upload Test (PDF)', 'Upload Test (PDF)', '../../uploads/documents/680efec219838-test_pdf.pdf', 1, '2025-04-27 14:06:26', 'Public', NULL),
 (21, 'Test Document', 'Test Document', '../../uploads/documents/680f0043ccdf3-test_document.docx', 1, '2025-04-27 14:12:51', 'Public', NULL);
 
 -- --------------------------------------------------------
@@ -411,13 +400,7 @@ INSERT INTO `login_details` (`user_id`, `emp_id`, `username`, `email`, `password
 (2, 1002, 'mbringas', 'msimonbringas05v2@gmail.com', '$2y$10$wF97rR4rkSy9/ERCr1PZjeS0SQqh5I1xQFaNxkMitUxLx2zPXbtSe'),
 (4, 1004, 'jdoe', 'jdoe@email.com', 'test123'),
 (9, 1009, 'jamiedoe', 'jamied@email.com', '$2y$10$C0oC34M1ynaxxgdDXhHPxeWKHaVWUCcHB5wGfp6WTjz2VoA2kW4/C'),
-(13, 1013, 'sakamoto', 'sakamoto@tarou.com', '$2y$10$4iHzxPWm9Qmw9ebGUDK1FOE30fc80XjdVvEh0Nk/sHP0p6hPv8b5S'),
-(14, 1014, 'nanami', 'nanami@kento.com', '$2y$10$9CY88e9UqU7MBgVSkWJNY.i3WhhDPSmQnvaJKSmdnZQ2LCzYKRbGe'),
-(20, 1020, 'janedoe', 'janedoe@email.com', '$2y$10$OFVHhJoT5/TzdPXg5BDpfOz2p/itz4/0zW1FkQ.kRva5KUzVdQ7ae'),
-(28, 1028, 'sarahcapis', 'sarahcapis@gmail.com', '$2y$10$AAauWi/6TyEDfZkgmFSYt.U2wPk0vezsGqpMdubXTzIda871L3/9S'),
-(29, 1029, 'allangarcia', 'allangarcia@email.com', '$2y$10$aXtdoCiQmftQIOX4pw3LNerF61IMpGYTuk8cx0fJ.eSbzriKGdCCe'),
-(31, 1031, 'kevinsanchez', 'kevinsanchez@gmail.com', '$2y$10$rqH3Daiux8xjtV2riK/cy.HVpbMZ4Lm/esDkZn4A6ZpCGNIxTQcLi'),
-(32, 1032, 'tayoan', 'tayoan@123', '1234');
+(32, 1032, 'tayoan', 'tayoan@123', '$2y$10$6FzvtX2Rw1vCPXjM8fAUMOj/rylAjIhK6FtiZxLKWhq6DYIaAFvr.');
 
 -- --------------------------------------------------------
 
@@ -553,10 +536,7 @@ INSERT INTO `security_questions` (`security_id`, `emp_id`, `question`, `answer`)
 (502, 1001, 'What is your mother\'s maiden name?', '$2y$10$gHUtjp6VlkLbCZlqoAXkEuHqZxmz1JDcpb4qNJWK36mAK/QXAWbxm'),
 (503, 1004, 'What was your childhood best friend’s nickname?', '$2y$10$Jzo7j62nxGkrSQj1n407F.wCijRv5NerEnZFWT/gh6eLyovog.YGS'),
 (504, 1009, 'What was your childhood best friend’s nickname?', '$2y$10$.9wJWF9.AHtxa3mH2xVlFu1D1ZvPKdO/canCU1W7w9UTzC/gmvC6S'),
-(505, 1020, 'What was your childhood best friend’s nickname?', '$2y$10$bPoErhkvQFElWxQsCtID3OzNO.DLROWUHGT5qFWIUXtOm4BUYbaga'),
-(506, 1013, 'What is your mother\'s maiden name?', '$2y$10$e4qxpaNtsRo4/zyyHxzaye5AVyFIvkY2GNv1PLMlxtxzd3Hk5.tXS'),
-(507, 1029, 'What city were you born in?', '$2y$10$QjfyXnMzKqeZzyXscm1Di.odRpbMldmvkzr5ai92CPtlABcY740JC'),
-(508, 1028, 'What city were you born in?', '$2y$10$4MVaiOmbhMd2LnwoHbTCROsO5uKKHUYNuWsgoJh9w9TUHx0bYS1zi');
+(509, 1032, 'What is your mother\'s maiden name?', '$2y$10$vYeUgm.GHYhQJOSPLb2nXOvvyFhUp2AUrn9AuBLQbAuStCD68eHWe');
 
 --
 -- Indexes for dumped tables
@@ -685,19 +665,19 @@ ALTER TABLE `security_questions`
 -- AUTO_INCREMENT for table `announcements`
 --
 ALTER TABLE `announcements`
-  MODIFY `announcement_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2022;
+  MODIFY `announcement_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2023;
 
 --
 -- AUTO_INCREMENT for table `attachments`
 --
 ALTER TABLE `attachments`
-  MODIFY `attachment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3038;
+  MODIFY `attachment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3039;
 
 --
 -- AUTO_INCREMENT for table `employee_details`
 --
 ALTER TABLE `employee_details`
-  MODIFY `emp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1034;
+  MODIFY `emp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1035;
 
 --
 -- AUTO_INCREMENT for table `employee_registration`
@@ -709,7 +689,7 @@ ALTER TABLE `employee_registration`
 -- AUTO_INCREMENT for table `employee_update`
 --
 ALTER TABLE `employee_update`
-  MODIFY `update_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=420;
+  MODIFY `update_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=422;
 
 --
 -- AUTO_INCREMENT for table `incidents`
@@ -721,7 +701,7 @@ ALTER TABLE `incidents`
 -- AUTO_INCREMENT for table `login_details`
 --
 ALTER TABLE `login_details`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `login_registration`
@@ -745,7 +725,7 @@ ALTER TABLE `residencycertreq`
 -- AUTO_INCREMENT for table `security_questions`
 --
 ALTER TABLE `security_questions`
-  MODIFY `security_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=509;
+  MODIFY `security_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=510;
 
 --
 -- Constraints for dumped tables
