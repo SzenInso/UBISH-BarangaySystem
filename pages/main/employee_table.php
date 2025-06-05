@@ -327,7 +327,8 @@
                             <script src="../../assets/js/sortAndFilter.js"></script>
                             <table id="employee-table">
                                 <tr>
-                                    <?php if ($accessLevel >= 3) { echo "<th>Selection</th>"; } ?>
+                                    <?php /* if ($accessLevel >= 3) { echo "<th>Selection</th>"; } */ ?>
+                                    <th>Employee ID</th>
                                     <th>Profile Picture</th>
                                     <th>Full Name</th>
                                     <th>Date of Birth</th>
@@ -342,6 +343,7 @@
                                 </tr>
                                 <?php foreach ($empAllDetails as $row) { ?>
                                     <tr>
+                                        <!--
                                         <?php if ($accessLevel >= 3) { ?>
                                             <td>
                                                 <center>
@@ -355,6 +357,8 @@
                                                 </center>
                                             </td>
                                         <?php } ?>
+                                        -->
+                                        <td><?php echo $row['emp_id']; ?></td>
                                         <td>
                                             <img 
                                                 src="<?php echo $row['picture']; ?>"
